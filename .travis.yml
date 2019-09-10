@@ -6,6 +6,7 @@ before_install:
 script:
 - cd vorlesung/01_vorlesung/
 - pdflatex -interaction=nonstopmode -halt-on-error 01_mda_vorlesung.tex
+- cd ../..
 deploy:
   provider: releases
   api_key:
