@@ -6,3 +6,12 @@ before_install:
 script:
 - cd vorlesung/01_vorlesung/
 - pdflatex -interaction=nonstopmode -halt-on-error 01_mda_vorlesung.tex
+deploy:
+  provider: releases
+  api_key:
+    secure: N7Jn8tmHBrUvUrgH/RpcNekZW+3E/8gBV/dJjjHX72xJF4fshX+oAlLPdoFeiA4g3E1xuep6HJtTcrsMDN5DkJoEHaFyY6UYCCAtYNQdGB8JpxM2EUnMg6Lpkxbl2tlYOD6TgC57lF0gVna6sygEeLwkmJ4Pl4/jXgIUNSSyrd/aqkOm0jQzcscLniBGEHuuS+TUt7w0I2oE+ay9aIln6UOXyHDkAgM84X1DhdsaKgwN8QtEjnyAmK6HohLrzv0SmZ7/+4emrsyfimlzAFhj8LpJHsvBo9VRzhrexCXIh+F5f9f3FXbY5PJK+wIVSxmoJjfijHJ12ML35g7/nv+Et8Wn6e4VeamLyl0cZfux9MV/zEtTijt+DCgqthAeyrQ12+xX1GIRxzI8glDULR+CQtOdtubMk99WhnmWlWOjw3TaMD0q9Sx7FfuONd6iwiu7yyLJE+Q5ColhQHfx9d6yvGkyYyUxMUWSPwLnXBhLGo4GUEO8BQuYD5iq7/i5Wgoj1JJ4AHfJZKVd7N1Lgil3vvtRIWB323G40T7FYRXaRETG4sgKRwiBFNaG4KpLfjbcE7Dk3SUm9FxUHusHY+VYAdFt1JAar9WG2PVdndI3pz9VL4QHz2SKE2UIX92DqcCdGtKZEjjdvZIQqlxDVChq36wL8J3mrMF2jEW2+9MQ5Do=
+  file: vorlesung/01_vorlesung/01_mda_vorlesung.pdf
+  skip_cleanup: true
+  on:
+    repo: dhueser/MDA-Vorlesung-iprom-tu-bs
+    tags: true
