@@ -1,35 +1,3 @@
-\documentclass[a4paper,12pt,DIV=15]{scrartcl}
-\usepackage[ngerman]{babel}
-\usepackage[utf8]{inputenc}
-\usepackage{longtable}
-\usepackage{amsmath}
-\usepackage{enumerate}
-\usepackage{graphicx}
-\usepackage[hidelinks]{hyperref}
-\usepackage{scrpage2}
-\pagestyle{scrheadings}
-\ifoot{MDA, 1.V, IPROM/PTB}
-\ofoot{dorothee.hueser@ptb.de}
-\cfoot{\thepage}
-\usepackage{setspace}
-\onehalfspacing
-\setlength{\parskip}{10pt} 
-\setlength{\parindent}{0pt}
-\title{Einführung: Messtechnik und Statistik}
-\author{Dr.\ habil.\ Dorothee Hüser, PTB}
-\date{\today}
-\begin{document}
-
-\maketitle
-
-\begin{center}
-\Large{Erste Vorlesung zu\\
-\textbf{Messdatenauswertung und Messunsicherheit (MDA)}}
-
-\large{Modulverantwortlicher: Prof. Dr.-Ing. R. Tutsch\\
-iprom, TU Braunschweig}
-\end{center}
-
 
 \section{Grundlegende Begriffe}
 Um über einen Sachverhalt kommunizieren zu können, müssen seine Gegenstände, Inhalt und Vorgänge
@@ -291,7 +259,7 @@ Die Methoden der Statistik dienen als Werkzeug zur Auswertung der Daten in der M
 	\item Je nach Betrachtungsweise nehmen die indirekten Messgrößen entweder
 		die Rolle \glqq Ausgangsgrößen\grqq ~ $(A_1, \dots, A_{n_A})$ oder 
 			der \glqq Zustandsgrößen\grqq ~ $(Z_1, \dots, Z_{n_Z})$
-			oder der \glqq Eingangssgrößen\grqq ~ $(E_1, \dots, E_{n_E})$ ein.
+			oder der \glqq Eingangsgrößen\grqq \\ $(E_1, \dots, E_{n_E})$ ein.
 \begin{equation}
 (E_1, \dots, E_{n_E}) \xrightarrow{\mathrm{System} (Z_1, \dots, Z_{n_Z})} (A_1, \dots, A_{n_A})
 \label{allgemeinSystem}
@@ -328,7 +296,7 @@ in eine Tabelle ein und zeichnen sie in ein Diagramm, Abb.~\ref{Ohm1}:
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=80mm]{media/learn_estimation_ohm.pdf}
+\includegraphics[width=80mm]{01_vorlesung/media/learn_estimation_ohm.pdf}
 \caption{Regressionbeispiel: Modellparameter finden, dessen Wert am besten zu den Daten passt}
 \label{Ohm1}
 \end{center}
@@ -409,7 +377,7 @@ Der ermittelte Wert für $R$ mit den Daten aus der Tabelle ist $12.34~\mathrm{\O
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=80mm]{media/learn_estimation_ohm_esti.pdf}
+\includegraphics[width=80mm]{01_vorlesung/media/learn_estimation_ohm_esti.pdf}
 \label{OhmResult}
 \caption{Regressionsbeispiel: Der geschätze Wert des Modellparameters im Vergleich zum wahren.}
 \end{center}
@@ -425,7 +393,7 @@ Ein Maß für die Breite der Gaußglocke ist das $\sigma_{\varepsilon}$ bei etwa
 Ihr Quadrat wird \textbf{Varianz} genannt.
 \begin{figure}
 \begin{center}
-\includegraphics[width=80mm]{media/breite_norm_pdf.pdf}
+\includegraphics[width=80mm]{01_vorlesung/media/breite_norm_pdf.pdf}
 \label{normpdf}
 \caption{Breite der Normalverteilung.}
 \end{center}
@@ -547,4 +515,4 @@ streuen (als Regressanden), so dass
 für $R$ und $U_0$.
 \end{itemize}
 
-\end{document}
+
