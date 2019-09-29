@@ -6,5 +6,4 @@ Diese Vorlesung ist ein Modul des Studiengangs _Messtechnik und Analytik_ im Fac
 - Dr. rer. nat. Wolfgang Schmid
 Das Modul gibt einen umfangreichen Überblick über die Grundlagen der Messdatenauswertung und der rechnerischen Ermittlung der zugeordneten Unsicherheiten.
 
-## 1. Vorlesung: _Einführung: Messtechnik und Statistik_
-wird in Kürze eingestellt
+

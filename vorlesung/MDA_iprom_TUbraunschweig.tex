@@ -1,0 +1,105 @@
+\documentclass[a4paper,11pt]{book}
+%\usepackage[total={6in, 9.5in}]{geometry}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry} %Seitenaufbau
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{longtable}
+\usepackage{amsmath}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage{verbatim}
+\usepackage{color}
+\definecolor{airforceblue}{rgb}{0.36, 0.54, 0.66}
+\definecolor{darkairforceblue}{rgb}{0.28, 0.4, 0.5}
+\definecolor{darkblue}{rgb}{0.10, 0.15, 0.4}
+\usepackage{setspace}
+%\usepackage{scrpage2}
+%\pagestyle{scrheadings}
+%\ofoot{MDA-Vorlesung, WS 2019/20 ~~-~~ iprom, TU-BS und PTB}
+%-----------------Kopf/Fuß-------------------------
+\usepackage{fancyhdr}
+ 
+\pagestyle{fancy}
+\fancyhf{}
+%E for even page
+%O for odd page
+%L for left side
+%C for centered
+%R for right side
+\fancyhead[RE]{\rightmark}
+\fancyhead[LO]{\leftmark}
+\fancyhead[LE,RO]{\thepage}
+%
+\fancyfoot[LE,RO]{MDA, WS 2019/20}
+\fancyfoot[RE,LO]{iprom, TU-BS und PTB}
+%
+\renewcommand{\headrulewidth}{2pt}
+\renewcommand{\footrulewidth}{1pt}
+%--------------------------------------------------
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+  {\normalfont\sffamily\huge\bfseries\color{airforceblue}}
+  {\chaptertitlename\ \thechapter}{20pt}{\Huge}
+\titleformat{\section}
+  {\normalfont\sffamily\Large\bfseries\color{darkairforceblue}}
+  {\thesection}{1em}{}
+%--------------------------------------------------
+
+%--------------------------------------------------
+\onehalfspacing
+\setlength{\parskip}{10pt} 
+\setlength{\parindent}{0pt}
+\title{\normalfont\sffamily\bfseries{\Huge{Messdatenauswertung und Messunsicherheit (MDA)}}}
+\author{Dr.\ habil.\ Dorothee Hüser und Dr.-Ing.\ Gerd Ehret\\
+Physikalisch-Technische Bundesanstalt\\
+Modulverantwortlicher: Prof. Dr.-Ing. R. Tutsch\\
+iprom, TU Braunschweig}
+\begin{document}
+\frontmatter                            % only in book class (roman page #s)
+\maketitle                              % Print title page.
+\tableofcontents                        % Print table of contents
+\mainmatter                             % only in book class (arabic page #s)
+
+\chapter{Einführung: Messtechnik und Statistik}
+\include{01_vorlesung/01_mda_vorlesung}
+%
+\chapter{Konzepte der Statistik für die Messdatenanalyse}
+\include{02_vorlesung/02_Konzepte_Statistik_fuer_DA}
+%
+\chapter{Lineare Regression (Ausgleichsrechnung)}
+\include{03_vorlesung/03_lineare_Regression}
+%
+\chapter{Optimierung nichtlinearer Modelle}
+%
+\chapter{Wahrscheinlichkeiten und Hypothesentests}
+%
+\chapter{Auswertung von Mess- und Ringvergleichen}
+%
+\chapter{Messunsicherheitsfortpflanzung\\ linearer Modelle}
+%
+\chapter{Lösungen zu den Aufgaben\\ zum Selbststudium}
+\include{03_vorlesung/Loesung_LinRegression}
+
+
+\begin{thebibliography}{------}
+    \bibitem[Fla02]{Fla02} B. P. Flannery, W. H. Press, S. A. Teukolsky, and W. T. Vetterling. Numerical Recipes in C. Cambridge University Press, 2. edition (1992-2002)
+%    \bibitem[Els07]{Els07} C. Elster: Calculation of unceratinty
+%	in the presence of prior knowledge, Metrologia 44, 111-116, (2007)
+%    \bibitem[Cox06]{Cox06} M.G. Cox, B.R.L. Siebert:The use of
+%    a Monte Carlo method for evaluating ..., Metrologie 43, S178-88,
+%    (2006)
+%    \bibitem[GUMS1]{GUMS1} 
+%    JCGM 101:2008; Evaluation of measurement data — Supplement 1 to the 
+%    “Guide to the expression of uncertainty in measurement” — 
+%    Propagation of distributions using a Monte Carlo method (2008); \newline 
+%    https://www.bipm.org/utils/common/documents/jcgm/JCGM\_101\_2008\_E.pdf
+%    \bibitem[Wue08]{Wue08} Gerd Wübbeler, Michael Krystek and Clemens Elster: % % %    Evaluation of measurement uncertainty
+%    and its numerical calculation by a Monte Carlo method
+%    Meas. Sci. Technol. 19 (2008) 084009 (4pp)
+%   doi:10.1088/0957-0233/19/8/084009
+\end{thebibliography}
+
+\end{document}
+
+
