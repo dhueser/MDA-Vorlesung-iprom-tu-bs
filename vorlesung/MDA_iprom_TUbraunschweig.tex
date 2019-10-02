@@ -10,6 +10,11 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{verbatim}
 \usepackage{color}
+% wird fuer die Quantiltabellen gebraucht:
+\usepackage{array}
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+\newcolumntype{N}{@{}m{0pt}@{}}
+% --
 \definecolor{airforceblue}{rgb}{0.36, 0.54, 0.66}
 \definecolor{darkairforceblue}{rgb}{0.28, 0.4, 0.5}
 \definecolor{darkblue}{rgb}{0.10, 0.15, 0.4}
@@ -68,11 +73,13 @@ iprom, TU Braunschweig}
 \include{02_vorlesung/02_lin_Regression}
 %
 \chapter{Optimierung nichtlinearer Modelle}
+\include{03_vorlesung/03_Optim_nichtlin_Modelle}
 %
 \chapter{Konzepte der Statistik für die Messdatenanalyse}
 \include{04_vorlesung/04_Konzepte_Statistik_fuer_DA}
 %
 \chapter{Wahrscheinlichkeiten und Hypothesentests}
+\include{05_vorlesung/05_Wahrscheinlichkeiten_Hypothesen}
 %
 \chapter{Auswertung von Mess- und Ringvergleichen}
 %
@@ -80,6 +87,7 @@ iprom, TU Braunschweig}
 %
 \chapter{Lösungen zu den Aufgaben\\ zum Selbststudium}
 \include{02_vorlesung/Loesung_LinRegression}
+\include{05_vorlesung/05_Loesungen}
 
 
 \begin{thebibliography}{------}

@@ -1,0 +1,135 @@
+\section{Hilfe zu den Übungsaufgaben \ref{AufgVorl5} zum Selbststudium}
+
+\textbf{\large Hilfestellung Aufgabe 1}
+
+Ein Gnu-Octave/Matlab Skript für KS-Tests verschiedener Stichproben
+kann beispielsweise so aussehen:
+\begin{verbatim}
+function learn_KS(flagnew)
+  N1 = 2000; mu1 = 23; s1 = 3;
+  N2 = 450; mu2 = 35; s2 = 5;
+  if (flagnew==1)
+    x1 = s1*randn(N1,1) + mu1;
+    x2 = s2*randn(N2,1) + mu2;
+    save 'learn_robust.dat' x1 x2
+  else
+    load('learn_robust.dat');
+  end
+  x = [x1; x2];
+  KStest(x1, 10);
+  KStest(x2, 20);
+  KStest(x, 0);
+  di = abs(x - mean(x));
+  medd = median(di);
+  iuse = find( di < medd );
+  for itest = 1:4
+    KStest(x(iuse), itest);
+    di = abs(x(iuse) - mean(x));
+    medd = median(di);
+    iuse2 = find( di < medd );
+    iuse = iuse(iuse2);
+  end
+end
+function KStest(x, iplt)
+  alpha = 0.05;
+  Ntot = length(x)
+  [xsort, isort] = sort(x, 'ascend');
+  h = [1:Ntot]'/Ntot;
+  xbar = mean(x)
+  sbar = std(x)
+  g = normcdf( xsort, xbar, sbar);
+  K = sqrt(-0.5*log(alpha/2))/sqrt(Ntot);
+  figure(3000+iplt);
+  plot( xsort, h, 'k-;{\fontsize{14}empirisches Histogramm};', ...
+        xsort, g, 'r-;{\fontsize{14}Vert. aus Mittelw./ empir. Var.};');
+  xlabel('X', 'fontsize', 14);
+  ylabel('Wahrscheinlichkeitsdichte', 'fontsize', 12);
+  title(['Stichprobenumfang: ' num2str(Ntot)], 'fontsize', 14);
+  grid on;
+  legend(gca, 'location', 'northwest');
+  set(gca, 'fontsize', 14, 'linewidth', 2);
+%
+  figure(3100+iplt);
+  plot( xsort, abs(g - h), 'b.;{\fontsize{14}abs. Diff.};', ...
+        [xsort(1); xsort(Ntot)], [K; K], 'r-;{\fontsize{14}K_{\alpha,J}};');
+  xlabel('X', 'fontsize', 14);
+  ylabel('abs. Differenz d. Wahrscheinlichkeitsdichte', 'fontsize', 12);
+  title(['Stichprobenumfang J = ' num2str(Ntot)], 'fontsize', 14);
+  legend(gca, 'location', 'northwest');
+  grid on;
+  set(gca, 'fontsize', 14, 'linewidth', 2);
+end
+\end{verbatim}
+
+\textbf{\large Lösung zu Aufgabe 2}
+
+Gegeben seien zwei Stichproben
+
+Stichprobe 1:
+
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+21 & 33 & 19 & 39 & 7\\
+\hline
+\end{tabular}
+
+Stichprobe 2:
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+53 & 69 & 63 & 47 & 49 & 44 & 47 & 44 & 38\\
+\hline
+\end{tabular}
+
+\begin{itemize}
+\item[a)] Zu jeder der beiden Stichproben die Mittelwerte und Standardabweichungen:
+
+Stichprobe 1: Mittelwert $\bar x_1 = $ (21 + 33 + 19 + 39 + 7)/5 = 23.8,
+Standardabweichung $s_1 = $ $\sqrt{((21-23.8)^2 + (33-23.8)^2 + (19-23.8)^2 + (39-23.8)^2 + (7-23.8)^2)/(5-1)}$ $= 12.54$
+
+Stichprobe 2: Mittelwert $\bar x_2 = 50.44$, Standardabweichung $s_2 = 9.83$
+
+\item[b)] Nullhypothese $H_0$: $\mu_1 = \mu_2$
+$$
+T \; = \; \frac{\bar x_1 \, - \, \bar x_2}{\sqrt{\bar s_1^2 + \bar s_2^2}}
+$$
+Varianzen der Mittelwerte:
+$$
+\bar s_1^2 = \frac{s_1^2}{5} = \frac{(12.54)^2}{5} = 31.44
+\qquad
+\bar s_2^2 = \frac{s_2^2}{9} = \frac{(9.83)^2}{9} = 10.73
+$$
+damit
+$$
+T \; = \; \frac{23.8 \, - \, 50.44}{\sqrt{31.44 + 10.73}} = -5.84
+$$
+t-Quantil für Signifikanzniveau $\alpha = 0.05$ für zweiseitige Verteilung:
+$t_{1-\alpha/2,\nu} = t_{0.975,5+9-2} = 2.18$
+
+Ergebnis: $|T| = 5.84 > 2.18$ also Nullhypothese ablehnen
+
+\item[c)] Nullhypothese $H_0$: $s_2^2 = \sigma_0^2$ mit $\sigma_0 = 6$
+$$
+T \; = \; \nu \, \left( \frac{s_2}{\sigma_0} \right)^2
+$$
+mit $\nu = 9-1$ für Stichprobe 2
+$$
+T \; = \; 8 \, \left( \frac{9.83}{6} \right)^2 = 21.45
+$$
+$\chi^2$-Quantile für Signifikanzniveau $\alpha = 0.05$ sind
+$\chi^2_{\alpha/2,\nu} = \chi^2_{0.025,8} = 2.180$ und
+$\chi^2_{1-\alpha/2,\nu} = \chi^2_{0.975,8} = 17.535$
+
+Gilt $\chi^2_{\alpha/2,\nu} < T < \chi^2_{1-\alpha/2,\nu}$?
+
+Ergebnis: $2.180 < 21.45$ aber $21.45$ ist nicht kleiner als $17.535$, also $H_0$ ablehnen
+
+\item[c)] Nullhypothese $H_0$: $s_2^2 = \sigma_0^2$ mit $\sigma_0 = 9$
+$$
+T \; = \; 8 \, \left( \frac{9.83}{9} \right)^2 = 9.53
+$$
+Ergebnis:
+T liegt zwischen den Quantilen $2.180 < 9.53 < 17.535$, also $H_0$ annehmen
+\end{itemize}
+
+
