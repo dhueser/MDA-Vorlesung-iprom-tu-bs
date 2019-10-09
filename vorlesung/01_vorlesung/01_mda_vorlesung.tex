@@ -204,12 +204,15 @@ Die Beobachtungen zu Größen werden in der Wahrscheinlichkeitstheorie mit dem B
 \section{Modelle und Statistik}
 Hinter jedem Messvorgang und jeder Messgröße stehen physikalische Prinzipien und Naturgesetze, die
 als Modell beschrieben werden. Ein Modell wird dargestellt durch eine Vorstellung darüber wie die
-indirekten Messgrößen mit den direkten Messgrößen miteinander verknüpft sind.
-Das Modell liefert als Ergebnis modellierte Werte für die direkten Größen (Modellannahmen über die direkten Größen):
+indirekten Messgrößen und die direkten Messgrößen miteinander verknüpft sind. Liegen Werte für indirekte
+Messgrößen vor, beispielsweise aus älteren Experimenten oder aus heuritischen Annahmen, so liefert
+das Modell als Ergebnis modellierte Werte für die direkten Größen (Modellannahmen über die direkten Größen):
 \begin{equation}
 (Y_1, \dots, Y_M) \xrightarrow{\mathrm{Modell}} (X_1, \dots, X_N)
 \label{forwardModel}
 \end{equation}
+Die Modellrechnung ist vorwärts gerichtet und wird direkt berechnet.
+
 In der messtechnischen Realität liegen Beobachtungen zu den direkten Messgrößen vor, aus denen die Werte für die
 indirekten Messgrößen zu schätzen sind:
 \begin{equation}
@@ -244,20 +247,20 @@ Die Methoden der Statistik dienen als Werkzeug zur Auswertung der Daten in der M
 		und \textsl{indirekten Messgrößen} die Rede. Sind die indirekten Messgrößen durch
 		Schätzverfahren zu ermitteln, wird auch von \textbf{Daten} und \textbf{Modellparametern}
 		gesprochen.
-		In der Systemtheorie wird von \textbf{Eingangsgrößen} und \textbf{Ausgangsgröße}
+		In der Systemtheorie wird von \textbf{Eingangsgrößen} und \textbf{Ausgangsgrößen}
 		und im Zusammenhang mit zeitabhängigen Größen (z.B.\ in der Elektrotechnik und
 		in der Akustik) wird von
 		\textbf{Eingangssignalen} und \textbf{Ausgangssignalen} gesprochen. 
 	\item Die Regressionsrechnung als Teilgebiet der Statistik kennt Eingangsgrößen als
 		\textbf{Regressoren} und Ausgangsgrößen als \textbf{Regressanden}.
 			Es handelt sich in beiden Fällen um Daten: Die an Geräten eingestellten Werte für die
-			Eingangsgrößen werden als vorgegebenen Werte ohne Streuung behandelt, und als
+			Eingangsgrößen werden als vorgegebene Werte ohne Streuung behandelt, und als
 			Regressoren bezeichnet. Die mittels Messinstrument beobachteten Werte für die Ausgangsgrößen
 			werden als Beobachtungen behandelt, die einer zufälligen Streuung unterliegen, und
-			als Regressoren bezeichnet. Die Regressionsrechnung schätzt Modellparameter, die in de
+			als Regressoren bezeichnet. Die Regressionsrechnung schätzt Modellparameter, die in der
 			Systemtheorie auch \textbf{Zustandsgrößen} genannt werden können.
 	\item Je nach Betrachtungsweise nehmen die indirekten Messgrößen entweder
-		die Rolle \glqq Ausgangsgrößen\grqq ~ $(A_1, \dots, A_{n_A})$ oder 
+		die Rolle der \glqq Ausgangsgrößen\grqq ~ $(A_1, \dots, A_{n_A})$ oder 
 			der \glqq Zustandsgrößen\grqq ~ $(Z_1, \dots, Z_{n_Z})$
 			oder der \glqq Eingangsgrößen\grqq \\ $(E_1, \dots, E_{n_E})$ ein.
 \begin{equation}
@@ -269,11 +272,22 @@ Die Methoden der Statistik dienen als Werkzeug zur Auswertung der Daten in der M
 			der indirekten Messgrößen sind die indirekten Größen die Eingangsgrößen und die
 			direkten Messgrößen die Ausgangsgrößen. Das bedeutet, dass in
 			der Messtechnik beides, die Regressoren und Regressanden die direkten 
-			Messgrößen sind und die Modellparameter dann die indirekten Messgrößen genannt.
+			Messgrößen sind und die Modellparameter dann die indirekten Messgrößen darstellen.
 \end{itemize}
-Das gängige Verfahren der frequentistischen Statistik
-zum Schätzen von Modellparametern ist die \textbf{Maximum-Likelihood}-Methode, die wir anhand eines kleinen
-Regressionsbeispiels betrachten wollen:
+Gängiges Verfahren der Statistik zum Schätzen von Modellparametern ist die \textbf{Maximum-Likelihood}-Methode.
+Bei diesem Verfahren werden die Modellparameter einzig aus den Beobachtungen der direkten Messgrößen
+bestimmt. Auf dieses Teilgebiet der Statistik wird auch mit der Bezeichnung \textsl{frequentistische}
+Statistik Bezug genommen, um es von den statistischen Verfahren abzugrenzen, bei denen Vorwissen über
+die zu schätzenden Parameter sowie über die Wahrscheinlichkeitsverteilungen der beteiligten Größen, einbezogen wird.
+Im Falle der \textsl{frequentistischen} Methoden wird beim Schätzverfahren nach der \textbf{Maximum-Likelihood}-Methode
+vorausgesetzt, dass die beteiligten Zufallsgrößen normalverteilt sind. Die \textsl{frequentistischen} Methoden lassen
+aber auch andere Schätzer zu: Vornehmen einer Umgewichtung der Abweichungen oder anstelle der Normalverteilung die
+Laplaceverteilung verwenden. Darauf kommen wir im Laufe der Vorlesungreihe zurück. Die statistischen Verfahren, bei denen
+die Wahrscheinlichkeitsdichten und die Vorkenntnisse über Schätzparameter direkt eingearbeitet werden, nennt man
+\textsl{bayesische} Methoden.
+
+Die Idee der Maximum-Likelihood-Methode wollen wir hier anhand eines kleinen
+Regressionsbeispiels illustrieren:
 \begin{itemize}
 \item Präzisionsstromquelle mit genau einstellbarer Stromstärke $I$;
 \item Messung der Spannung $U$ mit Voltmeter;
@@ -303,7 +317,7 @@ in eine Tabelle ein und zeichnen sie in ein Diagramm, Abb.~\ref{Ohm1}:
 \end{figure}
 
 Ob die Spannungswerte zu dem Modell \glqq passen\grqq ~wird bewertet, wobei das Modell
-besagt dass die Spannungswerte gleich dem Widerstand, der genau eine konstante Größe sein soll,
+besagt, dass die Spannungswerte gleich dem Widerstand, der genau eine konstante Größe sein soll,
 multipliziert mit den eingestellten Werten der Stromstärke seien. Das Bewertungskriterium ist
 \glqq die Treffer-Wahrscheinlichkeit Spannungswert liegt auf Widerstand mal Strom\grqq.
 Wir gehen davon aus, dass die Abweichungen $\varepsilon_i \; = \; U_i \, - \, R I_i$ normalverteilt sind, also
@@ -316,7 +330,7 @@ Das Produkt aller Wahrscheinlichkeiten $p(U_i,I_i | R)$ heißt \textbf{Likelihoo
 \begin{equation}
 L((U_1,\dots, U_J), (I_1,\dots,I_J) | R) \; = \; \prod\limits_{i = 1}^J \, p(U_i,I_i | R)
 \end{equation}
-Unsere Modellparameter bzw.\ der Modellparameter, die wir ermitteln wollen, ist $R$ und
+Unsere Modellparameter bzw.\ der Modellparameter, die bzw.\ den wir ermitteln wollen, ist $R$ und
 für die Streuung der Werte des Parameters $R$ verwenden wir das Formelzeichen $\sigma_R$.
 
 In der frequentistischen Statistik wird von der Vorstellung ausgegangen, dass es einen wahren Wert für
@@ -338,14 +352,17 @@ Solch eine Optimierungsaufgabe heißt \textbf{Maximum-Likelihood}-Verfahren.
 \end{equation}
 d.h.\ nach den Gesetzen der Potenzrechnung
 \begin{equation}
-\max_{R} \; e^{-\frac{1}{2} \sum\limits_{i = 1}^J \, \left(\frac{\varepsilon_i}{\sigma_\varepsilon}\right)^2}
+\max_{R} \; e^{-\frac{1}{2} \sum\limits_{i = 1}^J \, \left(\frac{\varepsilon_i}{\sigma_\varepsilon}\right)^2} .
 \end{equation}
 Das Maximum der Gaußfunktion liegt an der Stelle, an der der Exponent minimal wird.
 Wir maximieren die Likelihood, wenn wir ihren Logarithmus minimieren:
 \begin{equation}
 \min_{R} \; \sum_{i = 1}^J \, \left(\frac{\varepsilon_i}{\sigma_\varepsilon}\right)^2
 \end{equation}
-dazu suchen wir die Nullstelle der Ableitung nach dem Modellparameter. Hätten wir nicht nur $R$ sondern viele,
+dazu suchen wir die Nullstelle der Ableitung nach dem Modellparameter.
+Auf die Suche des Minimums wird auch mit dem Terminus \textsl{Methode der kleinsten Abweichungsquadrate} oder
+\textsl{Least Mean Square Method} Bezug genommen.
+Hätten wir nicht nur $R$ sondern viele,
 dann würden wir den Gradienten bilden.
 \begin{equation}
 \frac{\partial}{\partial R} \; \sum_{i = 1}^J \, \left(\frac{\varepsilon_i}{\sigma_\varepsilon}\right)^2 \; = \; 0
@@ -360,7 +377,7 @@ Wir multiplizieren mit dem Faktor $\sigma_\varepsilon$
 \end{equation}
 und führen die Differentiation durch
 \begin{equation}
-\sum_{i = 1}^J \, 2 \left(U_i \, - \, R \, I_i\right) \, I_i \; = \; 0
+\sum_{i = 1}^J \, 2 \left(U_i \, - \, R \, I_i\right) \, I_i \; = \; 0 .
 \end{equation}
 Für viele Modellparameter gäbe es entsprechend viele solche Gleichungen mit den jeweiligen Ableitungen, so dass
 dann hier ein lineares Gleichungssystem stünde, das zu lösen wäre.
@@ -404,9 +421,9 @@ Das zweite statistische Moment dieser Verteilung
 \end{equation}
 ist gleich dem Quadrat von $\sigma_\varepsilon$, also der Varianz der Gaußverteilung
 \begin{equation}
-\int_{-\infty}^\infty \, \varepsilon^2 \,  \frac{1}{\sqrt{2 \pi} \sigma_{\varepsilon}} \, e^{-\frac{1}{2} \left(\frac{\varepsilon}{\sigma_\varepsilon}\right)^2} \, \mathrm{d} \varepsilon  \; = \; \sigma_{\varepsilon}^2
+\int_{-\infty}^\infty \, \varepsilon^2 \,  \frac{1}{\sqrt{2 \pi} \sigma_{\varepsilon}} \, e^{-\frac{1}{2} \left(\frac{\varepsilon}{\sigma_\varepsilon}\right)^2} \, \mathrm{d} \varepsilon  \; = \; \sigma_{\varepsilon}^2 .
 \end{equation}
-diskretisiert entspricht
+Diskretisiert entspricht dies
 \begin{equation}
 \frac{1}{\sqrt{2 \pi} \sigma_\varepsilon} \, e^{-\frac{1}{2} \left(\frac{\varepsilon}{\sigma_{\varepsilon}}\right)^2} \, \mathrm{d} \varepsilon
 \end{equation}
@@ -414,7 +431,7 @@ einer relativen Häufigkeit $\frac{n_k}{J-1}$ in der $k$-ten Klasse der Breite $
 Wenn wir nun kein Histogramm mit gleichgroßen Klassenbreiten bilden, sondern zu jedem $\varepsilon_i$ eine Klasse mit der relativen
 Häufigkeit $\frac{1}{J-1}$ betrachten, dann haben wir so ungefähr für das $\sigma_{\varepsilon}^2$
 \begin{equation}
-\sum_{i=1}^J \, \varepsilon_i^2 \,  \frac{1}{J-1}  \; \approx \; \sigma_{\varepsilon}^2
+\sum_{i=1}^J \, \varepsilon_i^2 \,  \frac{1}{J-1}  \; \approx \; \sigma_{\varepsilon}^2 .
 \end{equation}
 Wir nennen diese Breite wegen der Näherung nicht $\sigma_{\varepsilon}^2$. Diese Näherung ist nur ein ungefährer Schätzwert 
 und wird \textbf{empirische Varianz} genannt:
@@ -441,7 +458,7 @@ Der Differenzenquotient ist also
 \frac{\Delta R}{\Delta U} \; = \; \frac{1}{I}
 \end{equation}
 was bei diesem linearen Zusammenhang direkt hinkommt. Allgemein passt es für stetige Modelle auch bei nichtlinearem Zusammenhang
-für genügend kleine Änderungen. Deshalb wird die Empfindlichkeit, die \textbf{Sensitivität}, definiert
+für genügend kleine Änderungen. Deshalb wird die Empfindlichkeit, die \textbf{Sensitivität}, definiert als die lokale Steigung
 \begin{equation}
 c  \; = \; \frac{\partial R}{\partial U}
 \end{equation}
@@ -452,6 +469,11 @@ s_R^2  \; = \; \left(\frac{\partial R}{\partial U}\right)^2 \, s_{\varepsilon}^2
 Hier hätte ich auch direkt $s_R$ aufschreiben können, aber die quadratische Schreibweise wird erforderlich, wenn es um mehrere Größen geht. In den folgenden Vorlesungen werden wir das Konzept der Fortpflanzung der Varianzen kennen lernen.
 
 Die Varianzen sind ein Maß für die Unsicherheit von Messungen. Die \textbf{Messunsicherheit} ist zentrales Thema in der Messtechnik.
+Im Wörterbuch der Metrologie (VIM)
+\begin{verbatim}
+https://www.bipm.org/utils/common/documents/jcgm/JCGM_200_2012.pdf
+\end{verbatim}
+wird sie wie folgt definiert:
 \begin{quote}
 \textbf{Messunsicherheit; Unsicherheit} (engl. \textsl{measurement uncertainty; uncertainty}): 
 nichtnegativer Parameter, der die Streuung der Werte kennzeichnet, die der Messgröße
@@ -477,38 +499,35 @@ https://www.bipm.org/utils/common/documents/jcgm/JCGM_100_2008_E.pdf
 
 In vielen Fällen reicht es, die Varianzen der einzelnen direkten Messgrößen zu untersuchen sowie
 den Zusammenhang zwischen der Variation einer direkten Messgröße und die dadurch verusachte
-Veränderung der indirekten. Dieser Zusammenhang ist zentrales Thema der Bestimmung von Messunsicherheiten
+Veränderung der indirekten, also die Empfindlichkeit/Sensitivität.
+Dieser Zusammenhang ist zentrales Thema der Bestimmung von Messunsicherheiten
 und wird im Laufe dieser Vorlesung eingehend beleuchtet.
 Vielfach gibt es nicht nur einen Zusammenhang zwischen einer direkten mit einer indirekten Messgröße,
 sondern auch einen Zusammenhang zwischen den direkten Messgrößen untereinander.
 
-In dieser Vorlesungsreihe liegt das Hauptaugenmerk auf linearen Zusammenhängen zwischen Messgrößen,
-zum einen zwischen den direkten untereinander und zum anderen zwischen der indirekten mit den jeweiligen
-direkten. Die lineare Beziehung zwischen den direkten Größen untereindander wird für die Unsicherheitsfortpflanzung
-sowie für die lineare Regression benötigt. Das Maß für den linearen Zusammenhang wird \textbf{Korrelation} genannt.
+In dieser Vorlesungsreihe liegt das Hauptaugenmerk auf linearen Zusammenhängen zwischen Messgrößen.
+Für viele Anwendungen greifen lineare Ansätze. Wenn die betrachteten Bereiche der Variation von Größen
+genügend klein sind, so lassen sich auch nichtlineare Modelle durch eine Linearisierung in einer gewissen
+Umgebung approximieren.
+
+Das Maß für den linearen Zusammenhang wird \textbf{Korrelation} genannt.
 Bei der linearen Regression geht es um Modelle mit indirekten Messgrößen,
-die als Koeffizienten eines Polynoms auftreten. Um den Grad des Polynoms zu ermitteln, wird untersucht bis
-mit welchem Potenzgesetz ein paar direkter Messgrößen zu verknüpfen ist (welchen Grad das Polynom hat),
+die als Koeffizienten eines Polynoms auftreten. Um den Grad des Polynoms zu ermitteln, wird untersucht
+mit welchem Potenzgesetz ein Paar direkter Messgrößen zu verknüpfen ist (welchen Grad das Polynom hat),
 so dass die Korrelation groß ist.
 
 
 \section{Charakterisierung von linearem Zusammenhang zwischen Größen}
 
 
-Bei dem Beispiel mit dem Ohm'schen Gesetz hatten wir uns auch mit der Modellgleichung $U = R I$ befasst.
+Bei dem Beispiel mit dem Ohm'schen Gesetz hatten wir uns mit der Modellgleichung $U = R I$ befasst.
 Dabei waren $U$ und $I$ die beiden physikalischen Größen, die unterschiedliche Werte angenommen haben und
-einen linearen Zusammenhang. Hier haben wir also eine Gerade, Polynom vom Grad 1.
-
-Für eine Bewertung von Wechselwirkungen zwischen Effekten werden in der Statistik Maße
-definiert, die die Stärke und eventuell auch Richtung eines Zusammenhangs zwischen dem
-Auftreten zufälliger Ereignisse quantifizieren sollen. Wir hatten das Beispiel des Ohm'schen
-Gesetzes betrachtet, bei dem es einen Zusammenhang zwischen Stromstärke und elektrischer
-Spannung gibt. Der Zusammenhang ist in diesem Beispiel ein linearer.
+über einen linearen Zusammenhang verknüpft sind. Hier haben wir also eine Gerade, Polynom vom Grad 1.
 
 Für die Charakterisierung \textsl{linearer} Zusammenhänge ist der
 \textbf{Korrelationskoeffizient} $\rho$ ein Maß, mit dem quantifiziert wird, wie
 stark zwei Größen linear miteinander verknüpft sind.
-Der Korrelationskoeffizient ist definiert, dass er Werte zwischen $-1$ und
+Der Korrelationskoeffizient ist so definiert, dass er Werte zwischen $-1$ und
 $1$ annehmen kann. Gibt es einen direkten linearen Zusammenhang zwischen zwei Zufallsgrößen
 $X_1$ und $X_2$, so wird man zu einer Beobachtung der einen Größe mit kleinem Wert
 auch einen kleinen Wert bei der anderen Größe beobachten und wenn die eine Größe einen
@@ -519,8 +538,7 @@ Größe große Werte zur zweiten Größe auftreten und umgekehrt, so liegt $\rho
 In beiden Fällen sagt man, dass die Größen \textbf{korreliert} seien.
 
 Gibt es überhaupt gar keinen Zusammenhang zwischen dem, was an Werten zu der einen Größe beobachtet
-wird mit dem, was an Werten zu der anderen Größe beobachtet wird, so ist $\rho = 0$ und man
-sagt die beiden Größen seien \textbf{unkorreliert}.
+wird mit dem, so ist $\rho = 0$ und man sagt: Die beiden Größen seien \textbf{unkorreliert}.
 
 \begin{figure}
 	\begin{center}
@@ -585,7 +603,7 @@ und für die empirsche Varianz und Kovarianz gilt entsprechend
 s_{1}^2 \; := \; s_{1,1} \; = \; 
 \frac{1}{J-1} \, \sum_{j = 1}^J (X_{1,j} - \bar x_1)^2 .
 \end{equation}
-Wir haben bereits in der 2. Vorlesung gesehen, dass bei der Steigung der Regressionsgraden
+Wir werden im nächsten Kapitel sehen, dass bei der Steigung der Regressionsgraden
 (Aufgabe 1) genau so ein Term $\sum_{j = 1}^J (X_{1,j} - \bar x_1)(X_{2,j} - \bar x_2)$
 im Zähler steht.
 
