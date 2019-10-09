@@ -1,12 +1,25 @@
 
 \section{Konzept der Maximum-Likelihood-Methode zum Lösen inverser Probleme}
 
-Bei der Messdatenanalyse geht es um die Schätzung von physikalischen Größen, die
-indirekt über das Messen anderer Größen, direkter Messgrößen, ermittelt werden.
+In den letzen drei Kapiteln (Vorlesungswochen) haben wir einen Einblick in die
+Vorgehensweise der Maximum-Likelihood-Methode erhalten:
+\begin{enumerate}
+\item Die Idee von \textsl{Modell} und \textsl{Lösen inverser Probleme} wurde
+  genannt.
+\item Zur Lösung inverser Probleme wurde das Schätzen von Parametern, die
+ linear in die Modellgleichung eingehen, durch \textsl{lineare Regression} vorgestellt.
+\item Ein Einblick in mögliche Verfahren zur Lösung inverser Probleme durch
+  Schätzen von Parametern, die nicht-linear in die Modellgleichung eingehen
+  wurde gegeben. Hier wurden kurz drei Verfahren zur \textsl{nicht-linearen Optimierung}
+  vorgestellt.
+\end{enumerate}
+Wir haben dabei gesehen, dass es bei der Messdatenanalyse um die Schätzung von
+physikalischen Größen geht, die indirekt über das Messen anderer Größen,
+direkter Messgrößen, ermittelt werden.
 Die Aufgabe der Messtechnik lässt sich auch beschreiben als die Bestimmung
-des Wertes von physikalischen Größen durch Messverfahren, die auf physikalischen Prinzipien
-basieren. Die von einem Sensorsystem angezeigten Größen sind dabei
-im allgemeinem andere Größen als diejenigen, die zu messen sind.
+des Wertes von physikalischen Größen durch Messverfahren, die auf
+physikalischen Prinzipien basieren. Die von einem Sensorsystem angezeigten
+Größen sind dabei im allgemeinem andere Größen als diejenigen, die zu messen sind.
 
 Wir hatten in der ersten Vorlesung zur Verdeutlichung der Aufgabenstellung
 aus den einem Messsystem direkt zugänglichen Größen die gesuchten physikalischen
@@ -76,7 +89,7 @@ Der Schätzvorgang wird als \textsl{Lösen eines inversen Problems} interpretier
 \label{inverseProblem}
 \end{equation}
 
-Während der ersten Vorlesung vor zwei Wochen wurde Ihnen das Konzept der
+Dazu wurde das Konzept der
 \textsl{Maximum-Likelihood}-Methode vorgestellt, aus
 der die Methode der kleinsten Residuenquadratsumme hervorgeht. Die Wahrscheinlichkeit,
 dass ein Messwert um den Wert $\varepsilon$ von dem geschätzten Modell abweicht, folgt
@@ -93,12 +106,12 @@ Die Symbolik $p(\varepsilon | \theta_1,\dots,\theta_M, \sigma)$ wird gesprochen:
 Wahrscheinlichkeit $p$ des Eintretens des Ereignises $\varepsilon$
 gegeben die Parameter $\theta_1,\dots,\theta_M$ und $\sigma$.
 \end{quote}
-Der Sprachgebrauch \glqq Eintretens des Ereignises $\varepsilon$\grqq ~stellt die
+Der Sprachgebrauch \glqq Eintretens des Ereignisses $\varepsilon$\grqq ~stellt die
 Sprechweise der Statistik dar. In den angewandten Wissenschaften, Messtechnik,
 Elektrotechnik, etc.\ spricht man von der Wahrscheinlichkeit, dass die Messgröße
 oder hier die Abweichung der Messgröße vom Modell einen Wert $\varepsilon$ annimmt.
 
-Vor einer Woche wurden Sie mit der Regressionsrechnung vertraut gemacht, die
+In Kapitel \ref{KapitellinReg} wurden Sie mit der Regressionsrechnung vertraut gemacht, die
 eine spezielle Anwendung der Maximum-Likelihood-Methode darstellt, bei der
 Größen beteiligt sind, die keine Zufallsgrößen darstellen, die Regressoren.
 Die Residuen und entsprechend die Regressanden sind die Zufallsgrößen,
@@ -235,15 +248,6 @@ Oberflächenmessgerät sein, bei dem die Sensorik in vertikaler Richtung zur Mes
 Topographie ein optischer oder taktiler Punktsensor sein kann und die horizontale Achse durch einen
 Schlitten mit einem Wegmesssystem in Form eines Glasmaßstabs sein kann.
 
-\begin{figure}
-\begin{center}
-\includegraphics[width=100mm]{04_vorlesung/media/ResiduenVarianzen.pdf}
-\end{center}
-\caption{Veranschaulichung für Schätzung von Geradenparametern durch
-Minimierung der Summe der Quadrate der Residuen bei verschiedenen Varianzen 
-$\sigma_1^2$ und $\sigma_2^2$ der beiden direkten Messgrößen $X_1$ und $X_2$
-\label{ResiduenVarianzen}}
-\end{figure}
 Angenommen Größe $X_1$ zu Gl.~(\ref{TLSgerade}) streue normalverteilt mit $\sigma_1$ und
 $X_2$ mit $\sigma_2$, so müsste man beispielsweise die Residuen aus Gl.~(\ref{TLSgerade}) in
 Vektorkomponenten parallel zu den die beiden Größen repäsentierenden Achsen zerlegen

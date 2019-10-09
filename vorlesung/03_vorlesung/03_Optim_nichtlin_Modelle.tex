@@ -2,10 +2,22 @@
 \section{Konzepte von Optimierungsverfahren für nichtlineare Modelle}
 Während dieser Vorlesungsreihe beleuchten wir die Thematik physikalische Größen zu ermitteln, die
 indirekt zugänglich sind. Sie werden über eine Modellbildung als Modellparameter approximiert.
-Eine Schätzung der Modellparameter erfolgt durch Variation, also durch Optimierung derart, dass die 
-Abweichungen des Modells von beobachteten Werten einer Messung direkt zugänglicher Größen minimal werden.
-Dazu haben wir eine Optimierungszielfunktion $Q$, \textsl{Zielfunktional} oder \textsl{Kostenfunktion}
-genannt, definiert. Wir sind von normalverteilten Abweichungen ausgegangen und haben uns
+In den bisherigen Kapiteln hatten wir uns damit befasst, Modellparameter linearer Modelle, zu schätzen.
+Die Besonderheit dabei ist, dass die \textsl{Kostenfunktion} $Q$ eine lineare Abhängigkeit von den
+Modellparametern hat, so dass die Modellparameter
+im Fall der Ausgleichsrechnung nach der Methode der kleinsten Quadrate durch Lösen eines 
+linearen Gleichungssystems ermittelt werden können.
+Im vorangegangen Kapitel wurde in Gl.~(\ref{linRegGleichungssystem}), Gl.~(\ref{GleichungssytemKostenfkt})
+ und Gl.~(\ref{LsgRegressionGlSys}) gezeigt, dass das Gleichungssystem
+aufgestellt wird, indem der Gradient, der die Kostenfunktion nach den Modellparametern ableitet, gleich Null
+gesetzt wird, um das Maximum zu finden.
+
+Für den Fall, dass die Modellparameter nicht linear in die Kostenfunktion $Q$,
+auch \textsl{Zielfunktional} genannt, eingehen,
+erfolgt die Schätzung der Modellparameter durch Variation, also durch Optimierung derart, um
+das Minimum der Optimierungszielfunktion $Q$ zu finden.
+
+Wir sind von normalverteilten Abweichungen ausgegangen und haben uns
 die Likelihoodverteilungen angeschaut. Als Beispiel nehmen wir ein Modell mit 2 Parametern, bei
 dem eine Gerade durch den Ursprung des Koordinatensystems eines dreidimensionalen
 Raums gehe und bei dem alle drei Achsen von der gleichen physikalischen Dimension seien.
@@ -17,7 +29,7 @@ Ein Punkt $\mathbf{r}$, der exakt auf der Geraden liegt, erfülle
 \mathbf{u}(\alpha,\theta) \; = \; \left(\begin{array}{c}
 \cos(\alpha) \sin(\theta)\\
 \sin(\alpha) \sin(\theta)\\
-\cos(\theta) \end{array}\right) \qquad \mathrm{und} \qquad \lambda \in I \!\! R
+\cos(\theta) \end{array}\right) \qquad \mathrm{und} \qquad \lambda \in I \!\! R.
 \end{equation}
 \begin{figure}
 \begin{center}
@@ -27,8 +39,8 @@ Ein Punkt $\mathbf{r}$, der exakt auf der Geraden liegt, erfülle
 Likelihood für normalverteilte Residuen (\textsl{rechts}).\label{LSoptiExample1}}
 \end{figure}
 
-Abb.~\ref{LSoptiExample1} zeigt das Modell als schwarz gestrichelte Gerade und die Beobachtungen als blaue Kreise, rechts die Likelihoodverteilung. Wir hatten bereits ausführlich darüber gesprochen, dass die Suche des Maximums der Likelihood in die Suche des Minimums übergeht. Es gelte nun diejenige Geradenrichtung zu finden, für die die senkrechten Abstände,
-die Residuen $\varepsilon_j$,  der beobachteten Punkte (Messpunkte) $\mathbf{r}_{\mathrm{Mess},j} = (X_{1,j}, X_{2,j}, X_{3,j})^\mathsf{T}$ minimal sind. Für das Kriterium für minimale Abstände setzen wir wieder voraus, dass die Messpunkte gaußverteilt um eine Gerade streuen. Den Betrag für die senkrechten Abstände berechnen wir mit
+Abb.~\ref{LSoptiExample1} zeigt das Modell als schwarz gestrichelte Gerade und die Beobachtungen als blaue Kreise, sowie rechts die Likelihoodverteilung. Wir hatten bereits ausführlich darüber gesprochen, dass die Suche des Maximums der Likelihood in die Suche des Minimums übergeht. Es gelte nun diejenige Geradenrichtung zu finden, für die die senkrechten Abstände,
+die Residuen $\varepsilon_j$,  der beobachteten Punkte (Messpunkte) $\mathbf{r}_{\mathrm{Mess},j} = (X_{1,j}, X_{2,j}, X_{3,j})^\mathsf{T}$ minimal sind. Für das Kriterium für minimale Abstände, also die Kostenfunktion $Q$, setzen wir wieder voraus, dass die Messpunkte gaußverteilt um eine Gerade streuen. Den Betrag für die senkrechten Abstände berechnen wir mit
 \begin{equation}
 \varepsilon(\alpha,\theta)_j \; = \; \left| \mathbf{r}_{\mathrm{Mess},j} \; - \;
 ( \mathbf{r}_{\mathrm{Mess},j} \cdot \mathbf{u}(\alpha,\theta) ) \, \mathbf{u}(\alpha,\theta) \right|
@@ -40,14 +52,14 @@ die Wahrscheinlichkeitsdichte gemäß
 p(\varepsilon_1,\dots,\varepsilon_J | \alpha, \theta)
 \propto e^{-\frac{1}{2} \, \sum\limits_{j=1}^J \, \left(\frac{\varepsilon(\alpha,\theta)_j}{\sigma} \right)^2} .
 \end{equation}
-Für den Schätzvorgang machen wir einen Optimierungsvorgang gemäß der Methode der kleinsten
+Für den Schätzvorgang wählen wir wieder für das Zielfunktional $Q$ die Summe der Quadrate der Residuen $Q = \sum \varepsilon_j^2$,
+also einen Optimierungsvorgang gemäß der Methode der kleinsten
 Residuenquadratsumme (RQS).
 \begin{equation}
 \min_{\alpha,\theta} \, \sum\limits_{j=1}^J \, \varepsilon(\alpha,\theta)_j^2 .
 \end{equation}
 Die Optimierungsrechnung bietet sehr unterschiedliche Methoden für eine Minimumsuche.
-Das Funktional, das es zu Minimieren gilt, wird auch \textsl{Zielfunktional} oder \textsl{Kostenfunktion}
-genannt, allgemein werden wir es mit dem Symbol $Q$ bezeichnet.
+
 Wir können sie grob danach einteilen
 \begin{itemize}
 \item ob das nächste Modellparametertupel gemäß einer gewissen Strategie aus
@@ -57,9 +69,9 @@ werden.
 \end{itemize}
 Ein möglicher, vielfach genutzer Ansatz für das Verwenden mehrerer Vorgängertupel mit den dazugehörigen Werten der RQS
 ist die Simplexmethode nach Nelder und Mead aus dem Jahr 1965. Er wird als Bibliotheksfunktion \texttt{fmins}
-in Matlab und Gnu-Octave zur Verfügung gestellt. Mit Simplex ist ein Vieleck gemeint, das $M+1$ hat für $M$
-Parameter Ecken, in unserem Beispiel also drei Ecken für zwei Parameter, was in Abb.~\ref{LSoptiExample1NM} durch
-schwarz umrandete weiße Punkte, die mit gestrichelten Linien verbunden sind, skizziert ist. Zum Aufbau eines
+in Matlab und Gnu-Octave zur Verfügung gestellt. Mit Simplex ist ein Vieleck gemeint, das $M+1$ Ecken hat für $M$
+Parameter, in unserem Beispiel also drei Ecken für zwei Parameter, was in Abb.~\ref{LSoptiExample1NM} durch
+schwarz umrandete weiße Punkte, die mit schwarzen, durchgezogenen Linien verbunden sind, skizziert ist. Zum Aufbau eines
 Startsimplex wird ein Startwerttupel $\mathbf{p}_{0,0}$ des Modellparametervektors gewählt und zu jedem Parameter ein
 weiterer Vektor, der eine Variation $\Delta P_m$ repräsentiert:
 \begin{equation}
@@ -104,7 +116,7 @@ noch eine zu große Mulde darunter liegt und eines der Simplexbeine angezogen we
 
 Dieses Verfahren eignet sich auch für zu minimierende Zielfunktionale, die nicht so schön stetig
 differenzierbar, d.h.\ glatt, in der Talmulde sind. Für Messungen mit Beobachtungen, die nicht gaußverteilt
-streuen, sondern stark abweichende Punkte aufweisen, greift man auf andere Verteilungen zu.
+streuen, sondern stark abweichende Punkte aufweisen, greift man auf andere Verteilungen zurück.
 Eine mögliche Verteilung kann die Laplaceverteilung sein
 \begin{equation}
 p(\varepsilon_1,\dots,\varepsilon_J | \alpha, \theta)
@@ -115,7 +127,7 @@ Residuen ist. Bei dem zu minimierenden Exponenten
 \begin{equation}
 \min_{\alpha,\theta} \, \sum\limits_{j=1}^J \, | \varepsilon(\alpha,\theta)_j |
 \end{equation}
-bildet sich die Minimumsmulde durch die Betragsbildung zu einer scharfen Spitze ausprägt.
+bildet sich die Minimumsmulde durch die Betragsbildung zu einer ausgeprägt scharfen Spitze aus.
 Im Minimum gibt es also keine einheitliche Steigung. Je nach Richtung, von der man sich ihr nähert,
 gibt es sehr unterschiedliche Steigungen, was soviel bedeutet wie die Nichtstetigkeit der
 Steigungsfunktion. Steigungen im mehrdimensionalen Raum heißen Gradienten. Die Gradientenfunktion
@@ -135,12 +147,12 @@ und Gradienten eingezeichnet als Pfeile (\textsl{links}) und Beträge der
 Gradienten als Funktion der 2 zu schätzenden Parameter (\textsl{rechts}).\label{LSoptiExample1Grad}}
 \end{figure}
 Für zu minimierende Zielfunktionale wie wir sie bei normalverteilten Residuen, also bei
-den rundlichen, stetig differenzierbaren Residuenquadratsummen haben, können wir Verfahren
-einsetzen, die nicht nur die RQS direkt, sondern auch deren Gradienten verwenden.
+den rundlichen, stetig differenzierbaren Kostenfunktionen als Residuenquadratsummen haben, können wir Verfahren
+einsetzen, die nicht nur die Kostenfunktion $Q$ direkt, sondern auch deren Gradienten $\nabla Q$ verwenden.
 Hierzu wird \textsl{ein} Startwertetupel (nicht wie bei der Simplexmethode $M+1$)
 für die Modellparameter gebracht. Es wird der Gradient, also die Richtung des steilsten
-Abhangs der RQS-Funktion zusammen mit dem Wert der Steigung, an der Position des Startwerttupels
-bestimmt. Dieses Verfahren beleuchten wir im folgenden Abschnitt anhand unseres Beispiels ein wenig genauer.
+Abhangs der Kostenfunktion zusammen mit dem Wert der Steigung an der Position des Startwerttupels
+bestimmt. Dieses Verfahren beleuchten wir im folgenden Abschnitt anhand unseres Beispiels etwas genauer.
 
 \section{Gradientenverfahren für nichtlineare Zielfunktionale}
 
@@ -202,7 +214,7 @@ Die beiden Parameter $\alpha,\theta$ fassen wir zusammen in einen Parametervekto
 betrachten im folgenden den Allgemeinfall für $M$ Parameter $\mathbf{p} = (P_1,\dots,P_M)^\mathsf{T}$.
 Die Residuen sind dann jeweils Funktion des Parametervektors
 $\boldsymbol \varepsilon(\mathbf{p}) = (\varepsilon_1(\mathbf{p}), \dots, \varepsilon_J(\mathbf{p}))^\mathsf{T}$,
-so dass sich entsprechend die Kostenfunktion $Q$ Funktion des Parametervektors ist
+so dass die Kostenfunktion $Q$ entsprechend Funktion des Parametervektors ist
 \begin{equation}
 Q(\mathbf{p}) \; = \; \boldsymbol \varepsilon^\mathsf{T}(\mathbf{p}) \, \boldsymbol \varepsilon(\mathbf{p}),
 \label{Zielfunktional}
@@ -230,10 +242,10 @@ Bei der Suche nach dem Minimum wird mit einem Tupel von Parametern angefangen, a
 mit einem Startwertvektor $\mathbf{p}_0$. Dann wird ein Schrittvektor $\Delta \mathbf{p}_0$ ermittelt,
 der gegangen wird, um
 zu einem Nachfolgepunkt im Raum der Modellparamter zu gelangen $\mathbf{p}_1 = \mathbf{p}_0 + \Delta \mathbf{p}_0$.
-Dies erfolgt solange, bis wir beliebig dicht an dem Minimum von $Q$ gelangt sind. Es gibt damit eine
+Dies erfolgt solange, bis der Parametervektor beliebig dicht an das Minimum von $Q$ gelangt sind. Es gibt damit eine
 gewisse Anzahl $K$ von Iterationschritten, derart dass der Vektor $\mathbf{p}_K = \mathbf{\hat p}$ für minimales
 $Q$ als Tupel von Schätzwerten für die Modellparameter verwendet wird.
-Die einzelnen Iterationsschritte $\kappa$ bedeuten eine Revsion des Modellparametervektors
+Die einzelnen Iterationsschritte $\kappa$ bedeuten eine Revision des Modellparametervektors
 \begin{equation}
 \mathbf{p}_\kappa = \mathbf{p}_{\kappa-1} + \Delta \mathbf{p}_{\kappa-1}
 \label{Revisionsschritt}
@@ -262,7 +274,8 @@ wir die Residuen $\varepsilon_j$ in Taylorreihe bis zum linearen Term
 \end{array}\right).
 \label{TaylorResi1}
 \end{equation}
-Hier bilden die partiellen Ableitungen der einzelnen Residuen als $J \times M$-Jakobimatrix
+Hier bilden die partiellen Ableitungen der einzelnen Residuen nach allen Parametern eine $J \times M$-Matrix, die \textsl{Jakobimatrix}
+genannt wird:
 \begin{equation}
 \boldsymbol{J}^{(\kappa)} \; = \; \left(\begin{array}{ccc}
 \left. \frac{\partial \varepsilon_1}{\partial P_1} \right|_{\mathbf{p}_\kappa} & \dots & \left. \frac{\partial \varepsilon_1}{\partial P_M} \right|_{\mathbf{p}_\kappa} \\
@@ -274,7 +287,7 @@ Der hochgestellte und in Klammern gesetzte Index $\kappa$
 an dem Symbol für die \textsl{Jacobimatrix}, soll bedeuten,
 dass dies die \textsl{Jacobimatrix} für den Parametervektor an der Stelle
 $\mathbf{p}_\kappa$ ist, also für die Position der Modellparameter beim $\kappa$-ten Interationsschritt.
-Die Jacobimatrix ist ein $J \times M$-Matrix. Der Begriff Jacobimatrix bedeutet nur, dass es
+Der Begriff Jacobimatrix bedeutet nur, dass es
 sich um eine Matrix partieller Ableitungen handelt.
 \begin{quote}
 Die \textsl{Jacobimatrix} (benannt nach Carl Gustav Jacob Jacobi; auch 
@@ -302,8 +315,7 @@ Einsetzen dieser Jacobimatrix in Gl.~(\ref{TaylorResi1}) liefert dann
 \label{TaylorResi2}
 \end{equation}
 Wir schreiben Gl.~(\ref{TaylorResi2}) in Vektorschreibweise, mit $\boldsymbol{\varepsilon}$ hier als Spaltenvektor
-der einzelnen Residuen (anders als vorige Woche für die Vektorkomonenten als Projektionen auf die Achsen der direkten
-Messgrößen).
+der einzelnen Residuen.
 \begin{equation}
 \boldsymbol{\varepsilon}(\mathbf{p})
 \; = \; 
@@ -345,7 +357,7 @@ d.h.
 -  \boldsymbol{J}^{(\kappa) \textsf{T}} \, \boldsymbol{\varepsilon}(\mathbf{p}_\kappa) .
 \label{GradientQlinGl3}
 \end{equation}
-Die Lösung dieses linearen Gleichungssystems liefert und den Inkrementvektor $\Delta \mathbf{p}_\kappa$
+Die Lösung dieses linearen Gleichungssystems liefert den Inkrementvektor $\Delta \mathbf{p}_\kappa$,
 mit dem wir den Schritt zur nächsten Position $\mathbf{p}_{\kappa+1} \; = \; \mathbf{p}_{\kappa} \, + \,
 \Delta \mathbf{p}_{\kappa}$ gehen. Die Iterationen enden, wenn der Betrag der Gradientenfunktion oder
 das Quadrat nahe Null, also kleiner als eine sehr kleine Zahl $\epsilon$ ist:
@@ -367,7 +379,7 @@ nur schwerlich, oder gar nicht verfügbar ist. Das bedeutet, dass nicht klar ist
 der Gradient dazu führt, dass der Parametervektor in eine Mulde hinab klettert, oder auf
 einen Berggipfel oder entlang eines Sattelpunktes spaziert.
 
-Die Numeriker haben Verfahren entwickelt, die auf dieser Grundidee, den Gradienten
+Die Numeriker haben Verfahren entwickelt, die auf dieser Grundidee den Gradienten
 der Zielfunktion (Summe der Quadrate der Residuen) zu berechnen
 basieren, aber ausgereiferter sind hinsichtlich Stabilität und Konvergenz.
 Der sog.\ der \textsl{Levenberg-Marquardt}-Algorithmus ist eine solche gradientenbasierte Methode,
@@ -395,7 +407,7 @@ Die Problematik, dass sich der Vektor $\Delta \mathbf{p}_{\kappa}$, den wir im
 Folgenden \textsl{Inkrementvektor} nennen, verirrt und auf
 einen Berggipfel oder entlang eines Sattelpunktes spaziert, soll anhand eines Beispielsignals
 illustriert werden. Das Beispiel ist ein zeitabhängiges Spannungssignal mit sinusförmigem Verlauf,
-dem als Störung zum einen Signal mit höherer Frequenz und kleinerer Amplitude aufmoduliert ist
+dem als Störung zum einen ein Signal mit höherer Frequenz und kleinerer Amplitude aufmoduliert ist
 und zum anderen ein normalverteiltes weißes Rauschen.
 Die Amplitude von $5 \, V$ sei fest vorgegeben, aber die zu schätzenden Modellparameter seien
 die Wellenlänge und die Phasenlage des Signals. Abb.~\ref{LSoptiExampleSinus} zeigt das Signal als
@@ -410,7 +422,8 @@ Hier sehen wir, dass sowohl die Maxima als auch die Minima die Nullstellen bilde
 
 Der \textsl{Levenberg-Marquardt}-Algorithmus ist ein Gradientenverfahren, bei dem das lineare
 Gleichungssystems (\ref{GradientQlinGl3}) 
-durch Einführen eines Dämpfungsterms, der als Schrittweitenfaktor den Inkrementvektor
+durch Einführen eines Dämpfungsterms erweitert wird. Der Dämpfungsterm stellt einen
+Schrittweitenfaktor dar, der den Inkrementvektor
 so modifiziert, dass das Optimierungsverfahren besser konvergiert. Dieser
 Algorithmus wurde unabhängig voneinander von Levenberg (1944), Girard (1958), Wynne (1959), 
 Morrison (1960) und Marquardt (1963) vorgeschlagen. In der Literatur wird heutzutage meist vom 
@@ -435,7 +448,7 @@ Q \; = \; \left( \boldsymbol{\varepsilon}(\mathbf{p}_\kappa)
 \; + \; \boldsymbol{J}^{(\kappa)} \Delta \mathbf{p} \right) .
 \label{ZielfunktionalTaylorResi}
 \end{equation}
-Damit hatten wir im vorigen Kapitel einen Ansatz erhalten, der
+Damit hatten wir im vorigen Abschnitt einen Ansatz erhalten, der
 ein bezüglich des Inkrementvektors $\Delta \mathbf{p}_\kappa$ lineares Gleichungssystem
 geliefert hatte. Wir notieren Gl.~(\ref{GradientQlinGl3}) hier noch einmal
 \begin{equation*}
@@ -466,7 +479,7 @@ der Inkrementschritte $\Delta \mathbf{p}_\kappa$ entsprechend verringert wird.
 
 Diese Methode, die  Länge des Inkrementvektors 
 $\Delta \mathbf{p}_\kappa$ zu verbessern, also die Werte für den
-Dämpfungsparameter $\mu$ zu wählen, ist heuristisch.
+Dämpf\-ungs\-parameter $\mu$ zu wählen, ist heuristisch.
 Es gibt eine Vielzahl von Methoden und Möglichkeiten und wir gucken uns
 eine davon an, um einen Einblick zu erhalten, wie soetwas aussehen kann.
 
@@ -634,12 +647,12 @@ function [s,mu,sflag] = korrektur(F,DF,x,p,mu,beta0,beta1,tol)
 end
 %
 function s = Delta_p(F,DF,x,p,mu)
-	JTJ = DF(x,p)'*DF(x,p);
-	s = -( JTJ + mu*diag(JTJ) )\(DF(x,p)'*F(x,p));
+  JTJ = DF(x,p)'*DF(x,p);
+  s = -( JTJ + mu*diag(JTJ) )\(DF(x,p)'*F(x,p));
 end
 %
 function gradQabs = abbruchkrit(F,DF,x,p)
-	gradQabs = ( F(x,p)'*DF(x,p) * DF(x,p)'*F(x,p) );
+  gradQabs = ( F(x,p)'*DF(x,p) * DF(x,p)'*F(x,p) );
 end
 \end{verbatim}
 
@@ -710,7 +723,8 @@ gefittete Werte: lambda = 29.91  phi/pi = 0.18
 \section{Gradientenverfahren mit unterschiedlichen Varianzen}
 
 Die Varianzen (und Kovarianzen) der Residuen sind immer auch Funktion der Modellparameter, sie
-lassen sich nur bei den in der heutigen Vorlesung betrachteten Beispielen ausklammern, also
+lassen sich den Fällen ausklammern, bei denen die Streuung der Messpunkte um das Modell im wesentlichen
+gleich ist, also
 \begin{equation}
 Q(\mathbf{p}) \; = \;
  \frac{\boldsymbol{\varepsilon}(\mathbf{p})^\mathsf{T} \, \boldsymbol{\varepsilon}(\mathbf{p})}{\sigma^2(\mathbf{p}))}
@@ -725,10 +739,9 @@ und
 was einfach mit $\frac{\sigma^2(\mathbf{p})}{2}$ multipliziert werden kann, so dass wir mit
 den Residuen wie oben beschreiben weiter arbeiten können, indem wir diese in Taylorreihe entwickeln.
 
-Für den Fall, dass es eine Varianz für ein Residuum eines Beobachtungstupels
-$(X_{1,j},\dots,X_{N,j})$ gibt, die Varianz also eine skalare Größe hinsichtlich
-des Raumes der direkten Messgrößen ist, können wir $\sqrt{\sigma_j^2} = \sigma_j$ 
-den Residuen zuordnen mit
+Für den Fall, dass es unterschiedliche Varianzen für Residuen der verschiedenen Beobachtungstupel
+$(X_{1,j},\dots,X_{N,j})$ gibt, ordnen wir $\sqrt{\sigma_j^2} = \sigma_j$ 
+den Residuen zu mit
 \begin{equation}
 Q(\mathbf{p}) \; = \;
   \left(\begin{array}{ccc}
@@ -791,15 +804,36 @@ und mit Dämpfungs- bzw.\ Marquardtparameter
 \label{ZielfunktionalGradTaylorResiDaempfW}
 \end{equation}
 
-In der vorigen Vorlesung hatten wir angesprochen, dass es aber auch Fragestellungen gibt,
-für die es sein kann, dass die unterschiedlichen
-direkten Messgrößen $X_i$ unterschiedliche Varianzen $\sigma_i^2$ aufweisen. Ein Beispiel dafür
-war eine Gerade in einer Ebene mit den Modellparametern $\alpha$ für den Winkel und
+Es gibt aber auch Fragestellungen mit unterschiedlichen Varianzen $\sigma_i^2$ 
+zu den direkten Messgrößen $X_i$. Ein Beispiel dafür
+\begin{figure}
+\begin{center}
+\includegraphics[width=100mm]{03_vorlesung/media/ResiduenVarianzen.pdf}
+\end{center}
+\caption{Veranschaulichung für Schätzung von Geradenparametern durch
+Minimierung der Summe der Quadrate der Residuen bei verschiedenen Varianzen 
+$\sigma_1^2$ und $\sigma_2^2$ der beiden direkten Messgrößen $X_1$ und $X_2$
+\label{ResiduenVarianzen}}
+\end{figure}
+ist eine Gerade in einer Ebene mit den Modellparametern $\alpha$ für den Winkel und
 $d$ für den Abstand der Geraden vom Koordinatenursprung
 \begin{equation}
+\varepsilon_j \; = \; 
+\left(\begin{array}{c} X_{1,j}\\ X_{2,j}\end{array}\right) \cdot
+\left(\begin{array}{c} -\sin(\alpha)\\ \cos(\alpha)\end{array}\right) \; - \; d .
+\label{TLSgerade}
+\end{equation}
+Hier stehen die Residuen $\varepsilon_j$ des $j$-ten Messpunktes $(X_{1,j}, X_{2,j})$ 
+senkrecht auf der Modellgeraden, siehe Abb.~\ref{ResiduenVarianzen}, weil beide
+Messgrößen $X_1$ und $X_2$ gleichermaßen Zufallsgrößen sind und nicht eine davon
+ein Regressor ist die andere ein Regressand ist. Bei dieser \textsl{Least-Square} Methode
+spricht man auch von \textsl{Total Least-Square} Methode, weil \glqq total\grqq ~alle Größen
+streuen können, also Zufallsgrößen sind.
+
+\begin{equation}
 Q(\alpha, d) \; = \;
- \left(\frac{\varepsilon_j(\alpha, d) \sin(\alpha)}{\sigma_1}\right)^2
-\; + \; \left(\frac{\varepsilon_j(\alpha, d) \cos(\alpha)}{\sigma_2}\right)^2 .
+\sum\limits_{j=1}^J \,  \left(\frac{\varepsilon_j(\alpha, d) \sin(\alpha)}{\sigma_1}\right)^2
+\; + \; \sum\limits_{j=1}^J \, \left(\frac{\varepsilon_j(\alpha, d) \cos(\alpha)}{\sigma_2}\right)^2 .
 \end{equation}
 Hier haben wir also die $\sigma_i^2$ als Varianzen der Abweichungskomponenten
 der Messgröße $X_i$ (vektorwertige Residuen!) für alle $j=1,\dots,J$ Beobachtungen
