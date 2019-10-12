@@ -1,5 +1,5 @@
 
-\section{Konzept der Maximum-Likelihood-Methode zum Lösen inverser Probleme}
+\section{Konzepte zum Lösen inverser Probleme}
 
 In den letzen drei Kapiteln (Vorlesungswochen) haben wir einen Einblick in die
 Vorgehensweise der Maximum-Likelihood-Methode erhalten:
@@ -9,7 +9,7 @@ Vorgehensweise der Maximum-Likelihood-Methode erhalten:
 \item Zur Lösung inverser Probleme wurde das Schätzen von Parametern, die
  linear in die Modellgleichung eingehen, durch \textsl{lineare Regression} vorgestellt.
 \item Ein Einblick in mögliche Verfahren zur Lösung inverser Probleme durch
-  Schätzen von Parametern, die nicht-linear in die Modellgleichung eingehen
+  Schätzen von Parametern, die nicht-linear in die Modellgleichung eingehen,
   wurde gegeben. Hier wurden kurz drei Verfahren zur \textsl{nicht-linearen Optimierung}
   vorgestellt.
 \end{enumerate}
@@ -21,27 +21,37 @@ des Wertes von physikalischen Größen durch Messverfahren, die auf
 physikalischen Prinzipien basieren. Die von einem Sensorsystem angezeigten
 Größen sind dabei im allgemeinem andere Größen als diejenigen, die zu messen sind.
 
-Wir hatten in der ersten Vorlesung zur Verdeutlichung der Aufgabenstellung
+Wir hatten in der ersten Vorlesung, in Abschnitt \ref{ModelleStatistik},
+das Beispiel \glqq Beugung am Gitter\grqq ~betrachtet, 
+um die Aufgabenstellung zu verstehen, dass man
 aus den einem Messsystem direkt zugänglichen Größen die gesuchten physikalischen
-Größen zu gewinnen das Beispiel \glqq Beugung am Gitter\grqq ~betrachtet:
-\begin{quote}
-Ein Gitter wird mit kohärentem Licht beleuchtet. Das transmittierte Licht fällt auf eine CCD-Kamera, die
-die Intensitäten in Abhängigkeit von der Position auf dem CCD-Chip aufnimmt. Es gibt dabei $N = 3$ direkte Größen:
-zwei Ortskoordinaten $(x, y)$ auf dem CCD und der dazugehörige Intensitätswert $I$. Die Anzahl der CCD-Pixel ist die
-Anzahl $J$ der Beobachtungen, $(x_1, y_1, I_1), \dots, (x_J, y_J, I_J)$.
+Größen gewinnen möchte. Dabei wurde der Begriff des \textsl{Lösens inverser Probleme}
+eingeführt. Nachdem wir bereits Methoden zur Ermittlung von indirekten
+Messgrößen als Modellparameter kennen gelernt haben, haben wir die Chance uns
+unter den Ideen dieses Konzeptes mehr vorstellen zu können.
 
-Die gesuchte Information ist die Gitterkonstante $g$ und eventuell auch noch die
-Breite der Spalte $b$. Dabei sind die Gitterkonstante $g$ und Breite der Spalte $b$ 
-die indirekten Messgröße. 
+Darüber hinaus wurde in Abschnitt \ref{ModelleStatistik} schon mal erwähnt, dass
+es etwas unterschiedliche Konzepte oder Heransgehensweisen für Schätzverfahren gibt.
+Auf der einen Seite steht der sogenannte \textsl{frequentistische} Ansatz, bei dem allein
+Beobachtungswerte direkter Größen verwendet werden und die Annahmen über die
+Verteilung der Streuung der direkten Größen impliziet schon ins Schätzverfahren
+selber eingebaut ist. Der Begriff Frequenz von englischen \textsl{frequency} übernommen
+heißt hier \textsl{Häufigkeit} und nicht \textsl{Frequenz} wie wir das im Deutschen
+vielfach mit einer periodischen Bewegung verbunden verstehen. Aber auch die
+Deutsche Sprache kennt die Sprechweise: \glqq Dies oder jenes Restaurant oder so
+wird gut frequentiert\grqq ~im Sinne von \glqq wird häufig besucht\grqq.
 
-Zum Modell gehören die physikalischen Gesetze der Fraunhofer-Beugung, zudem auch weitere Größen,
-wie die Wellenlänge der Beleuchtung, der Abstand zwischen CCD und dem zu untersuchenden Gitter,
-der groß genug sein muss, damit die Gesetze der Fernfeldoptik gelten und so weiter.
-Um aus den Abständen der Intensitätsmaxima auf den Abstand der Spalte zu schließen,
-werden die Zusammenhänge des Beugungphänomens der Wellenoptik gebraucht.
-\end{quote}
+Eine Verallgemeinerung der Schätzmethoden wurde in den letzten Jahrzehnten
+in die Messdatenanalyse eingeführt, bei der auch die Modellparameter selber als
+Zufallsgrößen behandelt werden. Auch ihnen wird eine Streuung, also
+Wahrscheinlichkeitsverteilung zugrunde gelegt. Bei diesen Verfahren lassen sich
+Schätzwerte und Werte zur Unsicherheit der Modellparameter in die aktuelle
+Schätzung mit einbeziehen. Diese verallgemeinerten Methoden, die die Modellparameter
+als Zufallsgrößen betrachten, werden \textsl{bayesische} Methoden genannt.
 
-Allgemein gibt es zwei Blickrichtungen, die messtechnische Aufgabe zu betrachten,
+Bevor wir diese beiden Ansätze (frequentistisch und bayesisch) gegenüber
+stellen und vergleichen, wollen wir folgende
+zwei Blickrichtungen, messtechnische Aufgaben zu betrachten, beleuchten:
 \begin{itemize}
 \item als Modell von der Physik des Messprinzips gemeinsam mit dem statistischen
 Modell, dass die Größen Zufallsgrößen sind,
@@ -66,18 +76,18 @@ indirekten Größen können nur geschätzt werden, oftmals auch nur approximiert
 weil die Modelle den physikalischen Sachverhalt nur annähernd beschreiben;
 denn die Realität ist deutlich komplexer und wird von vielfältigen Einflussfaktoren
 bestimmt. Die approximierenden und zufällig streuenden Größen, die die indirekten Messgrößen
-repräsentieren, nennen wir \textsl{Modellparameter}.
+repräsentieren, sind die Modellparameter.
 Die Abweichungen der Modellparameter entstehen also zum einen
 durch vereinfachende Modellannahmen und zum anderen durch zufällige Einflüsse wie das
 thermische Rauschen von Elektronik oder Vibrationen im Laborraum.
 
-Als gemeinsamen Bezeichner für Modellparameter wählen wir im folgenden
-$\mathbf{p} = (P_1, \dots, P_M)$.
+Im vorigen Kapitel hatten wir bereits den Bezeichner $\mathbf{p}$ für die Modellparameter
+verwendet: $\mathbf{p} = (P_1, \dots, P_M)$.
 Der Buchstabe $\mathbf{p}$ steht hier einfach nur für den Anfangbuchstaben
 von dem Begriff Parameter und der Fettdruck weist darauf hin, dass es ein Vektor mit vielen
 Einzelparametern sein kann und dient ferner dazu, das Symbol von dem für die Wahrscheinlichkeitsdichte
 zu unterscheiden. Diese wird mit $p$ für den Anfangsbuchstaben von \textsl{probability} bezeichnet.
-Für die einzelnen Parameter $P_m$ haben wir den Großbuchstaben gewählt, um die Unterscheidung zur
+Für die einzelnen Parameter $P_m$ verwenden wir hier den Großbuchstaben, um die Unterscheidung zur
 Wahrscheinlichkeitsdichtefunktion zu haben, sowie in Anlehnung an die Konvention Großbuchstaben
 $X_i$ und $Y_m$ für die Messgrößen zu verwenden.
 \begin{equation}
@@ -89,9 +99,8 @@ Der Schätzvorgang wird als \textsl{Lösen eines inversen Problems} interpretier
 \label{inverseProblem}
 \end{equation}
 
-Dazu wurde das Konzept der
-\textsl{Maximum-Likelihood}-Methode vorgestellt, aus
-der die Methode der kleinsten Residuenquadratsumme hervorgeht. Die Wahrscheinlichkeit,
+Dazu haben wir die \textsl{Maximum-Likelihood}-Methode kennen gelernt, und gesehen, wie
+aus ihr die Methode der kleinsten Residuenquadratsumme hervorgeht. Die Wahrscheinlichkeit,
 dass ein Messwert um den Wert $\varepsilon$ von dem geschätzten Modell abweicht, folgt
 einer Normalverteilung. Mit anderen Worten kann man auch sagen, dass
 die Verteilung der Residuen eine Gaußverteilung ist.
@@ -109,7 +118,8 @@ gegeben die Parameter $\theta_1,\dots,\theta_M$ und $\sigma$.
 Der Sprachgebrauch \glqq Eintretens des Ereignisses $\varepsilon$\grqq ~stellt die
 Sprechweise der Statistik dar. In den angewandten Wissenschaften, Messtechnik,
 Elektrotechnik, etc.\ spricht man von der Wahrscheinlichkeit, dass die Messgröße
-oder hier die Abweichung der Messgröße vom Modell einen Wert $\varepsilon$ annimmt.
+oder hier die Abweichung der Messgröße vom Modell einen Wert $\varepsilon$ annimmt oder
+dass dieser Wert \glqq beobachtet\grqq ~wird.
 
 In Kapitel \ref{KapitellinReg} wurden Sie mit der Regressionsrechnung vertraut gemacht, die
 eine spezielle Anwendung der Maximum-Likelihood-Methode darstellt, bei der
@@ -117,18 +127,18 @@ Größen beteiligt sind, die keine Zufallsgrößen darstellen, die Regressoren.
 Die Residuen und entsprechend die Regressanden sind die Zufallsgrößen,
 für die die in Gl.~(\ref{Maximumlikelihood1}) formulierte Wahrscheinlichkeitsdichte
 angenommen wird.
-Diese Modellannahme, dass die \textsl{Residuen} als normalverteilt angenommen werden,
-hatten wir Vorl.~2 wie folgt formuliert:
+Diese Modellannahme, dass die \textsl{Residuen} als normalverteilt seien,
+hatten wir in Abschnitt \ref{RegressionsIdee} wie folgt formuliert:
 \begin{quote}
 Die abhängigen Größen $Y$, d.h.\ die \textsl{Regressanden} streuen und ihre Residuen sind
 	normalverteilt mit Erwartungswert $E(\varepsilon) = 0$ und Varianz $\mathrm{Var}(\varepsilon) = \sigma^2$. 
 	Die Residuen sind \textsl{unabhängig und identisch verteilt}, kurz u.i.v.
 	\begin{equation}
-	\varepsilon \; \overset{u.i.v.}{\sim} \; \mathcal{N}(0,\sigma) .
+	\varepsilon \; \overset{\mathrm{u.i.v.}}{\sim} \; \mathcal{N}(0,\sigma) .
 	\label{Resinormalverteilt}
 	\end{equation}
 \end{quote}
-Ein Residuum der linearen Regression mit $Y$ als Regressand und $X$ als Regressoren
+Ein Residuum der linearen Regression mit $Y$ als Regressand und $X_i$ als Regressoren
 hat folgende Gestalt
 \begin{equation}
 \varepsilon_j \; = \; Y_j \; - \; \sum\limits_{i=1}^{M} \theta_i \, X_{i,j}
@@ -146,11 +156,12 @@ einzigen Zufallsgröße $X$ mit einem Modellparameter $\mu$ ist einfach
 
 Ein Residuum nach der Methode der kleinsten Quadrate für ein Modell ohne Regressoren,
 also mit allen beteiligten Größen als Zufallsgrößen, lässt sich allgemein nicht mit
-einem Ansatz darstellen, in dem die Modellparameter linear sind. Bereits bei einer
+einem Ansatz darstellen, in dem die Modellparameter linear sind. In Abschnitt
+\ref{unterschiedVar} haben wir gesehen, dass bereits bei einer
 Geraden, für die sowohl die Abzissengröße $X_1$ als auch die Ordinatengröße $X_2$ streut,
-ist der Ansatz nichtlinear. Der Modellparameter Steigung der Geraden ist der Tangenz des
-Winkels $\alpha$ der Geraden relativ zur Abzisse. Der zweite Modellparameter
-ist der Abstand $d$ der Geraden vom Koordinatenursprung. Das Residuum $\varepsilon_j$ stellt den
+die Modellparameter nichtlinear in die Kostenfuntion eingehen.
+Die Modellparameter sind der Steigungswinkel $\alpha$ der Geraden relativ zur Abzisse und
+der Abstand $d$ der Geraden vom Koordinatenursprung. Das Residuum $\varepsilon_j$ stellt den
 Abstand des $j$-ten Messpunktes $(X_{1,j}, X_{2,j})$ zum Modell dar, siehe Abb.~\ref{ResiduenVarianzen}.
 \begin{equation}
 \varepsilon_j \; = \; 
@@ -158,29 +169,34 @@ Abstand des $j$-ten Messpunktes $(X_{1,j}, X_{2,j})$ zum Modell dar, siehe Abb.~
 \left(\begin{array}{c} -\sin(\alpha)\\ \cos(\alpha)\end{array}\right) \; - \; d .
 \label{TLSgerade}
 \end{equation}
-Bei der Lösung von inversen Problemen, bei denen im Gegensatz zur linearen
-Regression eine nichtlineare Verknüpfung der Modellparameter vorliegt, lassen
-sich die Parameter nicht mehr durch Lösen eines linearen Gleichungssystems bestimmen.
+Wir haben in vorherigen Kapitel gesehen, dass 
+bei der Lösung von inversen Problemen, bei denen im Gegensatz zur linearen
+Regression eine nichtlineare Verknüpfung der Modellparameter vorliegt,
+die Parameter nicht mehr durch Lösen eines linearen Gleichungssystems
+bestimmen werden können.
 Die Schätzung von Modellparametern besteht dann darin, die Modellparameter auszuprobieren,
-d.h.\ viele unterschiedliche Werte vorzugeben, und das Ergebnis der 
-Modellrechnungen (\ref{forwardModel2}) mit den beobachteten Werten zu vergleichen, solange,
-bis das Ergebnis \glqq gut zu den beobachteten Werten passt\grqq. Numerisch dienen
-dazu entsprechende Optimierungsverfahren.
+d.h.\ viele unterschiedliche Werte vorzugeben,
 \begin{equation}
 (P_1, \dots, P_M) \xrightarrow{\mathrm{Modell}} (X_{\mathrm{Modell},1,j}, \dots, X_{\mathrm{Modell},N,j})
 \label{forwardModel2}
 \end{equation} 
+ und das Ergebnis der 
+Modellrechnungen (\ref{forwardModel2}) mit den beobachteten Werten zu vergleichen, solange,
+bis das Ergebnis \glqq gut zu den beobachteten Werten passt\grqq, die Kostenfunktion minimal wird.
+Wir haben dazu im vorigen Kapitel einen Einblick erhalten, wie numerische entsprechende 
+Optimierungsverfahren prinzipiell funktionieren.
 Im Fall der linearen Regression repäsentiert $\mathbf{p} = (\theta_1,\dots,\theta_M)$,
 im Fall der Geraden $\mathbf{p} = (\alpha, d)$ und im Fall der Einzelgröße
 $\mathbf{p} = \mu$.
 
-Die beiden Annahmen, dass - wie wir letzte Woche bereits bei der linearen Regression
+Die beiden Annahmen, dass - wie wir in Kapitel \ref{KapitellinReg} bereits bei der linearen Regression
 aufgeschrieben hatten - jede einzelne Beobachtung unabhängig und identisch verteilt 
 (u.i.v) ist, sind Voraussetzung der Maximum-Likelihood-Methode:
 \begin{itemize}
 \item Jeder Messpunkt wurde unabhängig von allen anderen gewonnen.
 \item Jeder Messpunkt ist identisch verteilt (sie haben die gleiche Streuung).
 \end{itemize}
+
 Die gemeinsame Wahrscheinlichkeitsdichte, engl.\ \textsl{joint probability density}, der
 Residuen von $j$ voneinander unabhängigen Messungen ist dann das Produkt der
 Wahrscheinlichkeitsdichten $p(\varepsilon_j | \mathbf{p}, \sigma)$
@@ -189,9 +205,13 @@ jedes Residuums:
 p(\varepsilon_1,\dots,\varepsilon_J | \mathbf{p}, \sigma) \; = \; 
 \prod\limits_{j = 1}^J \, p(\varepsilon_j | \mathbf{p}, \sigma) \; = \; 
  \frac{1}{(\sigma \sqrt{2 \pi})^J} \prod\limits_{j = 1}^J \, 
-e^{-\frac{1}{2} \left(\frac{\varepsilon_j}{\sigma}\right)^2}
+e^{-\frac{1}{2} \left(\frac{\varepsilon_j}{\sigma}\right)^2}.
 \end{equation}
-und mit Anwendung des Potenzgesetzes ist dies
+Anhand des kleinen Beispiels mit dem ohm'schen Gesetz haben wir in Abschnitt \ref{ModelleStatistik}
+gesehen (Gln.~(\ref{MaxiLikeR1}), (\ref{MaxiLikeR2}) und Gl.~(\ref{MaxiLikeLSQ})),
+wie die Maximum-Likelihood-Methode in die Methode der kleinsten Summe der
+Residuenquadrate überführt wird:
+Unter Anwendung des Potenzgesetzes wird das Produkt der Wahrscheinlichkeiten also
 \begin{equation}
 p(\varepsilon_1,\dots,\varepsilon_J | \mathbf{p}, \sigma) \; = \; 
  \frac{1}{(\sigma \sqrt{2 \pi})^J}  \, 
@@ -200,7 +220,7 @@ e^{-\frac{1}{2} \sum\limits_{j = 1}^J \left(\frac{\varepsilon_j}{\sigma}\right)^
 \end{equation}
 Für die Maximum-Likelihood-Methode wird diese Wahrscheinlichkeitsdichte sorum gesehen,
 dass die in den Residuen steckenden Beobachtungen vorgegeben sind, und die 
-Parameter $\mathbf{p}$ durch Maximieren der Verteilung gesucht wird und sich daraus
+Parameter $\mathbf{p}$ durch Maximieren der Verteilung gesucht werden und sich daraus
 die Streuung der Residuen $\sigma$ ergibt. Die Residuen sind Funktion der
 Beobachtungen $X_{1,j},\dots,X_{N,j}$ und der Parameter $\mathbf{p}$, also
 $\varepsilon_j = \varepsilon(X_{1,j},\dots,X_{N,j}, \mathbf{p})$. 
@@ -239,7 +259,7 @@ sondern nur, dass für alle Beobachtungen die identischen Varianzen gelten.
 
 Wenn der Messpunkt wie in Gl.~(\ref{TLSgerade}) ein Vektor aus zwei Größen ist, die nicht
 dieselbe physikalische Dimension haben oder zwar dieselbe physikalische Dimension, aber dennoch
-unterschiedliche stark streuen, weil die Messprinzipien sich unterscheiden, dann stellt sich
+unterschiedlich stark streuen, weil die Messprinzipien sich unterscheiden, dann stellt sich
 die Darstellung der Residuen komplizierter dar. Ein Beispiel für unterschiedliche physikalische
 Dimensionen kann wieder das mit der Messung eines elektrischen Widerstandes sein, bei dem $X_1$ eine
 Strommessung und $X_2$ eine Spannungsmessung repräsentieren kann.
@@ -342,9 +362,10 @@ Zur Maximierung der in Gl.~(\ref{LikelihoodKov2}) gegebenen
 \section{Konzept der bayesischen Verfahren zum Lösen inverser Probleme}
 
 Für komplexere Fragestellungen hinsichtlich der Varianzen und hinsichtlich der Möglichkeit,
-sukzessive neue Informationen durch weitere Beobachtungen hinzuzufügen und damit die Werte von
-interessierenden indirekten Messgrößen immer weiter zu verbessern, stoßen die gängigen Ansätze wie
-die Maximum-Likelihood-Methode an gewisse Grenzen. Insbesondere die Möglichkeit, bereits durch
+sukzessive neue Informationen durch weitere Beobachtungen zu bereits geschätzten Modellparametern
+hinzuzufügen und damit die Werte von
+interessierenden indirekten Messgrößen immer weiter zu verbessern, stoßen die gängigen Ansätze
+der Maximum-Likelihood-Methode an gewisse Grenzen. Insbesondere die Möglichkeit, bereits durch
 vergangene Optimierungsprozesse gewonnene Parameter durch Gewinnen neuer Beobachtungen zu verändern,
 ist nicht Gegenstand der \glqq herkömmlichen\grqq ~Statistik. Mit \glqq herkömmlich\grqq ~ist
 an dieser Stelle die \textsl{frequentistische} Statistik gemeint, bei der empirisch aus
@@ -354,7 +375,7 @@ Die lineare Regression ist ein Teilgebiet der \textsl{frequentistischen} Statist
 
 In der Statistik gibt es dazu zweierlei Blickrichtungen:
 \begin{enumerate}
-\item In \textbf{frequentistischen Statistik} wird angenommen,
+\item In der \textbf{frequentistischen Statistik} wird angenommen,
 dass der Wert einer indirekten Messgröße unbekannt, aber konstant/ fest ist und deshalb
 auch \textsl{wahrer Wert} genannt wird. In Bezug auf die direkt messbaren Größen wird angenommen,
 dass sie aufgrund des Mangels an Erkenntnis über alle möglichen Einflüsse und Abläufe im Messprozess
@@ -484,7 +505,7 @@ p_\mathrm{L}(\{X_{1,1}, \dots, X_{1,J}\} | y, s) \; p_\mathcal{N}(y | y_0, s_0) 
 mit $C$ als Normierungsfaktor derart zu wählen, dass die integrierte Wahrscheinlichkeit Eins ist, d.h.
 $$
 \int\limits_{-\infty}^\infty  \int\limits_0^\infty \; p(y, s | \{X_{1,1}, \dots, X_{1,J}\}, y_0, s_0) \;
-\operatorname{d}s \, \operatorname{d}y \; = \; 1 .
+\mathrm{d}s \, \mathrm{d}y \; = \; 1 .
 $$
 Die Verteilungsdichte $p(y, s | \{X_{1,1}, \dots, X_{1,J}\}, y_0, s_0)$ ist Funktion der
 Variablen $y$ und $s$ mit vorgegebenen Parametern 
@@ -505,7 +526,7 @@ p(y | \{X_{1,1}, \dots, X_{1,J}\}, y_0, s_0)  \; = \;
 \end{equation}
 Diese Verteilung wird \textsl{Randverteilung} oder \textsl{Marginalverteilung} genannt.
 Allgemeiner gilt: Gegeben zwei Zufallsgrößen $A$ und $B$ mit gemeinsamer Verteilungsdichte
-$p(A, B)$ dann heißen die Verteilungen der einzelnen Zufallsgrößen
+$p(A, B)$; dann heißen die Verteilungen der einzelnen Zufallsgrößen
 $A$ und $B$ die Randverteilungen des Zufallsvektors $(A, B)$.
 
 Als Schätzwert für $Y$ berechnen wir den Erwartungswert des Modellparameters $\mu$
@@ -557,7 +578,7 @@ repräsentiert, deren Charakteristik im Kurvenverlauf
 Wir werden später in der 5.\ Vorlesung auf diesen Verteilungtyp zurück kommen.
 
 Allgemein betrachten wir für beide Fälle eine Wahrscheinlichkeitsdichtefunktion $p \! : y \mapsto p(y)$.
-Der Definitionsbereich für $y$ reicht von minus bis plus Unendlich reicht. Von Interesse ist der Kernbereich
+Der Definitionsbereich für $y$ reicht von minus bis plus Unendlich. Von Interesse ist der Kernbereich
 der Dichteverteilung für eine spezifizierte Wahrscheinlichkeit $1-\alpha$, beispielsweise
 $1-\alpha = 0.95$ oder $0.90$ oder so.
 Dies ist die Wahrscheinlichkeit einer Größe, einen Messwert im Bereich (Intervall) $[y_\mathrm{min}, y_\mathrm{max}]$,

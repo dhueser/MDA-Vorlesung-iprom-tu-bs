@@ -202,6 +202,8 @@ Die Beobachtungen zu Größen werden in der Wahrscheinlichkeitstheorie mit dem B
 
 
 \section{Modelle und Statistik}
+\label{ModelleStatistik}
+
 Hinter jedem Messvorgang und jeder Messgröße stehen physikalische Prinzipien und Naturgesetze, die
 als Modell beschrieben werden. Ein Modell wird dargestellt durch eine Vorstellung darüber wie die
 indirekten Messgrößen und die direkten Messgrößen miteinander verknüpft sind. Liegen Werte für indirekte
@@ -349,15 +351,18 @@ Die Zielfunktion unseres Optimierungsvorgangs ist also:
 Solch eine Optimierungsaufgabe heißt \textbf{Maximum-Likelihood}-Verfahren.
 \begin{equation}
 \max_{R} \; \prod\limits_{i = 1}^J \,  e^{-\frac{1}{2} \left(\frac{\varepsilon_i}{\sigma_\varepsilon}\right)^2}
+\label{MaxiLikeR1}
 \end{equation}
 d.h.\ nach den Gesetzen der Potenzrechnung
 \begin{equation}
 \max_{R} \; e^{-\frac{1}{2} \sum\limits_{i = 1}^J \, \left(\frac{\varepsilon_i}{\sigma_\varepsilon}\right)^2} .
+\label{MaxiLikeR2}
 \end{equation}
 Das Maximum der Gaußfunktion liegt an der Stelle, an der der Exponent minimal wird.
 Wir maximieren die Likelihood, wenn wir ihren Logarithmus minimieren:
 \begin{equation}
 \min_{R} \; \sum_{i = 1}^J \, \left(\frac{\varepsilon_i}{\sigma_\varepsilon}\right)^2
+\label{MaxiLikeLSQ}
 \end{equation}
 dazu suchen wir die Nullstelle der Ableitung nach dem Modellparameter.
 Auf die Suche des Minimums wird auch mit dem Terminus \textsl{Methode der kleinsten Abweichungsquadrate} oder

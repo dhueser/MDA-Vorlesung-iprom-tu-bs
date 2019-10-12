@@ -721,10 +721,13 @@ gefittete Werte: lambda = 29.91  phi/pi = 0.18
 \end{verbatim}
 
 \section{Gradientenverfahren mit unterschiedlichen Varianzen}
+\label{unterschiedVar}
 
-Die Varianzen (und Kovarianzen) der Residuen sind immer auch Funktion der Modellparameter, sie
-lassen sich den Fällen ausklammern, bei denen die Streuung der Messpunkte um das Modell im wesentlichen
-gleich ist, also
+Die Varianzen (und Kovarianzen) der Residuen sind immer auch Funktion der Modellparameter. Als wir die
+Maximum-Likelihood-Methode eingeführt haben, hatten wir sie ausgeklammert und bei der Bestimmung
+des Minimums über die Summer der kleinsten Residuenquadrate weggekürzt. Sie
+lassen sich für den Fall ausklammern, bei dem die Streuung bezüglich des Modells
+für alle Messpunkte gleich ist, also
 \begin{equation}
 Q(\mathbf{p}) \; = \;
  \frac{\boldsymbol{\varepsilon}(\mathbf{p})^\mathsf{T} \, \boldsymbol{\varepsilon}(\mathbf{p})}{\sigma^2(\mathbf{p}))}
@@ -751,7 +754,9 @@ Q(\mathbf{p}) \; = \;
  \vdots\\ \frac{\varepsilon_J(\mathbf{p})}{\sigma_J(\mathbf{p})}\end{array} \right)
 \label{ZielfunktionalJmitW}
 \end{equation}
-d.h.\ kurz ohne jedesmal $(\mathbf{p})$ mitzuschreiben
+d.h.\ kurz ohne jedesmal das \glqq Funktion von $\mathbf{p}$\grqq oder
+\glqq abhängig von $\mathbf{p}$\grqq, also $(\mathbf{p})$,
+mitzuschreiben
 \begin{equation}
 Q(\mathbf{p}) \; = \;
   \boldsymbol{\varepsilon}^\textsf{T}
@@ -838,7 +843,7 @@ Q(\alpha, d) \; = \;
 Hier haben wir also die $\sigma_i^2$ als Varianzen der Abweichungskomponenten
 der Messgröße $X_i$ (vektorwertige Residuen!) für alle $j=1,\dots,J$ Beobachtungen
 und nicht Varianzen $\sigma_j^2$ für das skalarwertige Residuum der $j$-ten Beobachtung.
-Die allgemeine Form mit Kovarianzen hatten wir letzte Woche wie folgt aufgeschrieben
+Die allgemeine Form mit Kovarianzen sieht dann also so aus
 \begin{equation}
 Q(\mathbf{p}) \; = \;
  \sum\limits_{j=1}^J \, \vec \varepsilon(X_{1,j},\dots,X_{N,j},\mathbf{p})^\mathsf{T} \, 
@@ -850,25 +855,26 @@ die Residuen in Taylorreihe entwickelt, sondern die Gradientenfunktion $\nabla Q
 
 
 \section{Robuste Schätzverfahren}
+\label{robustEstimation}
 
-Wir haben bereits eine Kostenfunktion $Q$ mit Gewichtsfaktoren kennengelernt, Gl.~(\ref{ZielfunktionalJmitW2}),
+Wir haben nun eine Kostenfunktion $Q$ mit Gewichtsfaktoren kennengelernt, Gl.~(\ref{ZielfunktionalJmitW2}),
 bei der die Gewichte die Kehrwerte der Varianzen sind $w_j = \frac{1}{\sigma_j^2}$, sich eigentlich
 aus der Abweichung der Beobachtungen vom Modell ergeben. Wenn kein {\`a} priori Wissen über
 diese Varianzen vorliegt, aber bekannt ist, dass die Verteilung der
-Residuen aller Beobachtungen nicht gauß\-ver\-teilt ist, gilt es, diese so zu behandeln, dass man
-dennoch die Maximum-Likelihood-Methode anwenden kann. Es kommt vor, dass einzelne Beobachtungen
+Residuen aller Beobachtungen nicht gauß\-ver\-teilt ist, soll das Problem dennoch mit der
+Maximum-Likelihood-Methode gelöst werden. Es kommt vor, dass einzelne Beobachtungen
 sehr weit von der Erwartung entfernt sind. Man sagt, dass sie signifikant abweichen. Die Gaußverteilung
 erlaubt dieses auch, denn sie hat einen Definitionsbereich für die Residuen $\varepsilon$,
-der von minus Unendlich bis plus Unendlich geht, ihre Ausläufer auch \textsl{Tails} genannt
+der von minus Unendlich bis plus Unendlich geht, ihre Ausläufer auch \textsl{Tails} genannt,
 sind unbegrenzt. Die Wahrscheinlichkeit ist aber sehr gering, kleiner als $5~\%$, dass der Betrag der
 Residuen $\varepsilon$ einen Wert annimmt, der größer als
 $1.65 \, \sigma$ ist, aber er kann auftreten. Liegen deutlich mehr als $5~\%$
 der Beobachtungen außerhalb eines Vertrauensintervalls von beispielsweise $[-3 \sigma, 3 \sigma]$,
-dann ist dies ein Indiz dafür, dass das Modell unzureichend ist. Es kann sein, dass es auch nicht
+dann ist dies ein Indiz dafür sein, dass das Modell unzureichend ist. Es kann sein, dass es auch nicht
 um ein vollständigeres Modell geht, sondern darum, nur die zum betrachteten Modell passenden Beobachtungen
 berücksichtigen zu wollen. Die übrigen Beobachtungen sollen als Ausreißer, die nicht zum
-eigentlichen zu untersuchenden Prozesse gehören, nicht an dem \textsl{Least-Square-Fit}
-beteiligt werden.
+eigentlichen zu untersuchenden Prozess gehören, nicht an dem \textsl{Least-Square-Fit}
+beteiligt werden oder zumindest ihre Beteiligung daran (ihr Gewicht) reduziert wird.
 
 Die Idee für die Realisierung dieser Aufgabe ist, die Verteilung der Residuen durch Umgewichten so zu verändern, das
 sie wieder die Gestalt einer Normalverteilung bekommt. Wir führen Gewichtsfaktoren $w = \delta$ ein,
@@ -880,7 +886,7 @@ $\delta \! : \varepsilon \mapsto \delta(\varepsilon)$ für die gilt
 \quad \tilde \varepsilon \sim {\cal N}(0,\sigma) .
 \end{equation}
 Mit Hilfe der Gewichtsfunktion werden aus den Residuen die Gewichtsfaktoren
-$w_j = \delta_j = \delta(\varepsilon_j)$ berechnet. Da man die Residuen erst nacht
+$w_j = \delta_j = \delta(\varepsilon_j)$ berechnet. Da man die Residuen erst nach
 Schätzung der Modellparameter gewinnt, erfordert dies wie bei der nichtlinearen Optimierung
 auch sonst, einen iterativen Prozess.
 
@@ -902,12 +908,12 @@ geschätzt mit $\mathbf{p}_0$.
 Wir betrachten wieder ein einfaches Beispiel, in dem es nur einen Parameter $y$ gibt und eine 
 Messgröße $X_1$ mit $J$ Beobachtungen $(X_{1,1},\dots,X_{1,J})$.
 Dabei wird davon ausgegangen, dass die Beobachtungen zu einer Grundgesamtheit, also zu einem Parameter gehören.
-Die Beobachtungswerte werden histogrammiert. Das Histogramm ist in Abb.~\ref{biasExample} dargestellt.
+Die Beobachtungswerte werden histogrammiert. Das Histogramm ist in Abb.~\ref{biasExampleKap3} dargestellt.
 \begin{figure}
 \begin{center}
 \includegraphics[width=90mm]{03_vorlesung/media/learn_robust.pdf}
 \caption{Beispiel für nicht erwartungsgemäße Beobachtungen}
-\label{biasExample}
+\label{biasExampleKap3}
 \end{center}
 \end{figure}
 Für das Histogramm werden $K \, = \, 80$ Klassen (engl.\ \textsl{bins}) gewählt, die Anzahl der Beobachtungen umfasst $J \, = \, 2200$.
@@ -932,10 +938,11 @@ wobei die Anzahl der Klassen $K$ ist.
 
 Die Anzahl der Einzelbeobachtungen, für die gilt
 \begin{equation}
-\xi_{\mathrm{G}, k-1} \; \leq \; X_{1,j} \; <  \xi_{\mathrm{G}, k}
+\xi_{\mathrm{G}, k-1} \; \leq \; X_{1,j} \; <  \xi_{\mathrm{G}, k},
 \end{equation}
-und für $k = K$ auch bei der rechten Intervallgrenze ein $\leq$ verwendet wird, nennen
-wir \textsl{Häufigkeit} $n_k$. Damit ist die diskrete Funktion $n(\xi)$ die Häufigkeitsverteilung.
+nennen wir \textsl{Häufigkeit} $n_k$. Bei der letzten Klasse, also für
+$k = K$ wird auch bei der rechten Intervallgrenze ein $\leq$.
+Damit ist die diskrete Funktion $n(\xi)$ die Häufigkeitsverteilung.
 
 Der Schätzwert für den Parameter ist nach der Maximum-Likelihood / Least-Square-Methode der
 Mittelwert, der hier den Wert $25.47$ annimmt. In Wirklichkeit gehören die Beobachtungswerte gar nicht zu
@@ -958,7 +965,7 @@ wobei $\kappa$ der Zähler für den Iterationsschritt ist und $c^{(\kappa)}$ ein
 c^{(\kappa)} \; = \; \mathrm{median} \mid X_{1,j} \, - \, y^{(\kappa)} \mid 
 \end{equation}
 Die Kostenfunktion, deren Gewichte von den iterativ bestimmten Residuen und damit von den
-interativ geschätzten Parametern abhängt, stellt ein nichtlineares Optimierungsproblem
+iterativ geschätzten Parametern abhängt, stellt ein nichtlineares Optimierungsproblem
 $ \min_{\mathbf{p}} Q(\mathbf{p}) $ dar, mit
 \begin{equation}
 Q(\mathbf{p}) \; = \; \sum_{j=1}^J \; \varepsilon_j^2 \;
@@ -979,7 +986,7 @@ wobei $H$ für \textsl{Heaviside}- oder Sprungfunktion steht.
 Der Median von den Absolutbeträgen der Residuen $\varepsilon_j \, = \, X_{1,j} \, - \, y^{(\kappa)}$ wird dadurch gewonnen,
 dass man die Werte der Größe nach sortiert und dann den mittleren nimmt, also den, auf dem Platz in der Mitte der sortierten
 Anordnung liegt.
-Abb.~\ref{RobustIter} stellt die ursprüngliche Häufigkeitsverteilung aus Abb.~\ref{biasExample} als
+Abb.~\ref{RobustIter} stellt die ursprüngliche Häufigkeitsverteilung aus Abb.~\ref{biasExampleKap3} als
 durchgezogene, schwarze Linie dar. Nach dem ersten Iterationsschritt der Umgewichtung, hat sich die Verteilung so verändert,
 wie es durch die blaue gestrichpunktete Linie gezeigt wird, zu der ein Mittelwert von $24.20$ gehört. Nach mehr als acht Iterationen
 wurde ein Mittelwert von $23.23$ erzielt und die mit rot gestrichelter Verteilungskurve eingezeichnet sind.
