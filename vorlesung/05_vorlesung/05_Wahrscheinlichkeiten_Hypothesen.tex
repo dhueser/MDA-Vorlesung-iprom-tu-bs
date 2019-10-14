@@ -3,7 +3,8 @@
 
 Das \textsl{Signifikanzniveau} $\alpha$ und die dazu komplementäre Wahrscheinlichkeit,
 das \textsl{Vertrauensniveau} $1 - \alpha$ spielen eine zentrale Rolle bei der Bewertung
-von Messergebnissen. Als wir in Vorlesung 3 die Konzepte der statistischen Auswertung behandelt hatten,
+von Messergebnissen. Als wir in Kapitel~\ref{KonzepteinverseProbleme} die Konzepte der statistischen Auswertung
+behandelt hatten,
 haben wir diese beiden Begriffe gemeinsam mit dem des \textsl{Vertrauensintervalls} bzw.\
 \textsl{Credible Interval} eingeführt, mit dem gemeinsamen Oberbegriff \textsl{Überdeckungsintervall}.
 Es ist das Intervall, in dem mit einer Wahrscheinlichkeit von $P(X_1) = 1 - \alpha$ die
@@ -26,9 +27,9 @@ dass wir \textsl{eine Hypothese aufstellen}.
 Die Normalverteilung (Gaußverteilung) ist die grundlegende Verteilungsdichtefunktion
 zur Beschreibung zufälliger Prozesse, beispielsweise Zerfallsprozesse und Diffusionsprozesse.
 Bei rein stochastischen Prozessen wird von Zufallsgrößen ausgegangen, deren
-Wahrscheinlichkeitsdichteverteilung eine Normalverteilung ist.
+Wahrscheinlichkeitsdichteverteilung eine Normalverteilung ist
 \begin{equation}
-p(X) \; = \; \frac{1}{\sqrt{2 \pi} \, \sigma} \, e^{-\frac{1}{2}\left(\frac{X - \mu}{\sigma}\right)^2}
+p(X) \; = \; \frac{1}{\sqrt{2 \pi} \, \sigma} \, e^{-\frac{1}{2}\left(\frac{X - \mu}{\sigma}\right)^2}.
 \end{equation}
 Verteilungen wie die Poisson-Verteilung und die Binominal-Verteilung gehen für
 unendlich viele Beobachtungen oder Stichprobenentnahmen in die Gaußverteilung über.
@@ -43,7 +44,7 @@ asymptotisch einer stabilen Verteilung.
 Bei endlicher und positiver Varianz der Zufallsgrößen ist ihre Summe annähernd
 normalverteilt, was die Sonderstellung der Normalverteilung erklärt.
 
-Hierzu wird das Ziehen eines Wertes (machen einer Beobachtung) als Zufallsgröße
+Hierzu wird das Ziehen eines Wertes (das Machen einer Beobachtung) als Zufallsgröße
 interpretiert.
 Damit betrachten wir eine Stichprobe als Folge von Zufallsgrößen. Sind die Elemente
 einer Stichprobe Zufallsgrößen, die
@@ -64,11 +65,11 @@ lange Ausläufer hat, gibt es eine kleine Wahrscheinlichkeit $\alpha$ dafür, da
 weiter abseits liegende Werte gibt. Deshalb gilt es zu untersuchen,
 ob solch ein Wert in der Tat im Rahmen der Normalverteilung weiter weg liegt
 oder aber ob er auf Basis eines anderen Effektes gewonnen
-wurde, er - statistisch formuliert - zu einer anderen Grundgesamtheit gehören könnte.
+wurde, ob er - statistisch formuliert - zu einer anderen Grundgesamtheit gehören könnte.
 
 Der \textsl{Kolmogorow-Smirnow-Test} ist ein möglicher Test zum Prüfen, ob eine aus Beobachtungen
 empirisch ermittelte Verteilung zu einer für die statistische Analyse der Beobachtungen
-zugrundegelegte (erwartete) Wahrscheinlichkeitsdichtefunktion passt.
+zugrundegelegten (erwarteten) Wahrscheinlichkeitsdichtefunktion passt.
 
 % 30. Okt 2017
 
@@ -83,19 +84,27 @@ Umgewichten um die Verteilungform der Normalverteilung anzupassen \textsl{links}
 \label{biasExample}
 \end{center}
 \end{figure}
-Bei dem in Abb.~\ref{biasExample} dargestellten Beispiel zur Veranschaulichung der robusten Statistik
-hatten wir in der vorigen Vorlesung
-zunächst einfach durch Betrachten des Histogramms die Verteilung der Beobachtungen subjektiv 
-bewertet. Dabei haben wir bewertet, ob alle Beobachtungen der Zufallsgröße $X_1$ zu einer
-Grundgesamtheit mit gaußverteilten Wahrscheinlichkeiten gehört und durch \glqq genaues
-Hingucken\grqq ~gesehen, dass es ein \textsl{Subsample} - einen Teil der Stichprobe - gibt,
-der \glqq da nicht zu passt\grqq, sondern ein kleines Nebenmaximum liefert.
-
-Diese Vorgehensweise ist subjektiv und kann bei der Bewertung sehr vieler Stichproben sehr
-personalaufwendig sein. Das muss also objektiviert und automatisiert werden.
-Dazu bedienen wir uns des Statistikerwerkzeugs \textsl{Hypothesentest}.
-
-Es gibt unterschiedliche Typen von Hypothesentests, einer davon ist der \textsl{Kolmogorow-Smirnow-Test}. Er ist ein statistischer Test auf Übereinstimmung zweier Wahrscheinlichkeitsverteilungen.
+Das in Abb.~\ref{biasExample} dargestellte Beispiel zeigt dieselben Diagramme und
+Daten, die wir in Abschnitt~\ref{robustEstimation} bereits zur Veranschaulichung
+robuster Schätzverfahren behandelt hatten. Den robusten Schätzverfahren liegt die
+im folgenden erläuterte statistische Betrachtung zugrunde: Es liegt eine Annahme
+(Hypothese) darüber vor, welcher Gestalt die Wahrscheinlichkeitsverteilung der
+Beobachtungen ist und ob ein Reihe von Beobachtung zu einer gemeinsamen Verteilung
+gehören oder zu unterschiedlichen Verteilungen. Technisch gesehen stellen sich die
+Fragen, die statistisch formuliert lauten \glqq gehören Beobachtungen zu einer 
+Verteilung\grqq ~oder \glqq gehören Beobachtungen zu mehreren verschiedenen Verteilungen\grqq,
+als 
+\begin{itemize}
+\item \glqq stammen die Messwerte aus einem Prozess\grqq ~oder \glqq aus unterschiedlichen
+Prozessen\grqq, 
+\item \glqq werden alle Messwerte von demselben Effekt beeinflusst \grqq ~oder \glqq gibt es
+für verschiedene Gruppen aus der Messreihe unterschiedliche beeinflussende Effekte\grqq.
+\end{itemize}
+Die Annahmen bzw.\ Hypothesen bezüglich der Verteilungen zur Wahrscheinlichkeit
+von Beobachtungswerten werden geprüft. Diese Art der Prüfung wird \textsl{Hypothesentest}
+genannt. Es gibt unterschiedliche Typen von Hypothesentests, einer davon ist 
+der \textsl{Kolmogorow-Smirnow-Test}.
+Er ist ein statistischer Test auf Übereinstimmung zweier Wahrscheinlichkeitsverteilungen.
 
 Der Test verwendet die kumulierten Wahrscheinlichkeitsfunktionen
 \begin{equation}
@@ -105,17 +114,15 @@ Das hat den Vorteil, dass
 die Verteilung der empirischen Häufigkeiten ohne Histogrammierung, d.h.\ ohne Einteilung in Klassen,
 erfolgen kann.
 
-Wir wollen damit prüfen, ob die Beobachtungen des im vorherigen Abschnitt zur robusten
+Wir wollen damit prüfen, ob die Beobachtungen des in Abschnitt~\ref{robustEstimation} zur robusten
 Schätzung betrachteten Beispiels der Annahme folgt, zu der Grundgesamtheit \textsl{genau einer}
-Zufallsgröße zu gehören. Ferner nehmen wir an, dass ihre Ausprägungen (Beobachtungswerte)
+Zufallsgröße $X_1$ zu gehören. Ferner nehmen wir an, dass ihre Ausprägungen (Beobachtungswerte)
 unabhängig und identisch der Normalverteilung folgen.
-
 \begin{quote}
 Die Nullhypothese lautet:\\
 Die Beobachtungen zu $X_1$ gehören zu einer
 normalverteilten Grundgesamtheit.
 \end{quote}
-
 Wir prüfen, ob die Stichprobe $(X_{1,1}, X_{1,2}, \dots, X_{1,J})$ bezüglich
 des Mittelwertes $y \, = \, \frac{1}{J} \sum_{j=1}^J X_{1,j}$ und der
 empirischen Varianz $s^2 \, = \, \frac{1}{J-1} \sum_{j=1}^J (X_{1,j} \, - \, y)^2$ normalverteilt
@@ -262,13 +269,13 @@ das vierte statistische Moment
 \begin{equation}
 \int\limits_{-\infty}^{\infty} \, X^4 \, p(X) \, \mathrm{d} X \; =: \; \mu^{(4)}(X)
 \end{equation}
-gewonnen, bei dem die Zufallsgröße um ihren Erwartungswert verschoben und auf die Wurzel ihrer
+gewonnen wird, bei dem die Zufallsgröße um ihren Erwartungswert verschoben und auf die Wurzel ihrer
 Varianz normiert
 \begin{equation}
 \operatorname{Kurt}(X) \; = \;  \int\limits_{-\infty}^{\infty} \, \left(\frac{X - \operatorname{E}(X)}{\sigma}
 \right)^4 \, p(X) \, \operatorname{d} X
 \end{equation}
-geliefert. Das vierte statistische Moment der normierten Zufallsgröße heißt
+wird. Das vierte statistische Moment der normierten Zufallsgröße heißt
 \textsl{Kurtosis}.
 
 % ======
@@ -310,7 +317,7 @@ geliefert. Das vierte statistische Moment der normierten Zufallsgröße heißt
 
 \section{Vertrauensintervall und t-Verteilung}
 
-Wir hatten bereits in Vorlesung 3 angesprochen, wie
+Wir hatten bereits in Kapitel \ref{KonzepteinverseProbleme} angesprochen, wie
 \textsl{Vertrauensintervall} $[x_1, x_2]$, Wahrscheinlichkeistdichtefunktion $p$,
 \textsl{Signifikanzniveau} $\alpha$ und \textsl{Vertrauensniveau} $1-\alpha$ zusammen hängen.
 Das Vertrauensintervall gibt den Bereich an, in dem ein Ereignis mit 
@@ -328,7 +335,7 @@ Das heißt mit anderen Worten:
 Unsere Größe nimmt mit Wahrscheinlichkeit $1$ irgend einen beliebigen
 Wert zwischen minus und plus Unendlich an.
 
-Auch hatten wir in Vorl.~3 durchgenommen, wie man aus unterschiedlichen vorliegenden
+Auch hatten wir in Kapitel \ref{KonzepteinverseProbleme} durchgenommen, wie man aus unterschiedlichen vorliegenden
 Informationen eine Wahrscheinlichkeitsdichteverteilung berechnet, um den
 Erwartungswert
 \begin{equation}
@@ -341,16 +348,24 @@ das Über\-deck\-ungs\-intervall
 \end{equation}
 zu ermitteln.
 
-Falls über die reinen Beobachtungen $X_{1,j}$ hinaus keine
-Informationen vorliegen, also keine vorherigen Ergebnisse (kein $Prior$)
-und keine weiteren beeinflussenden Verteilungen. Und falls davon
-ausgegangen wird, dass die Beobachtungen normalverteilt sind,
-kann man zur Berechnung eines Überdeckungsintervalls
+Man kann zur Berechnung eines Überdeckungsintervalls
 rechenzeiteffizient auf vorhandene tabellierte Werte für
-die Umkehrfunktion der Normalverteilung zurück greifen. Für kleine
+die Umkehrfunktion der Normalverteilung zurück greifen, wenn
+folgendes der Fall ist:
+\begin{itemize}
+\item Über die reinen Beobachtungen $X_{1,j}$ hinaus liegen keine
+Informationen vor, also keine vorherigen Ergebnisse zu den zu
+schätzenden Modellparameter (kein \textsl{Prior})
+und keine weiteren beeinflussenden Verteilungen. 
+\item Es kann davon ausgegangen werden, dass die Streuung der
+einzelnen Beobachtungswerte um das Modell
+normalverteilt sind.
+\end{itemize}
+Für kleine
 Stichprobenumfänge wird eine der Normalverteilung ähnliche Verteilung
 herangezogen, die je kleiner der Stichprobenumfang ist, um so stärker ausgeprägte
-Ausläufer (\textsl{Tails}) hat. Diese werden wir etwas später beleuchten.
+Ausläufer (\textsl{Tails}) hat, die $t$-Verteilung. Diese werden wir im Laufe
+dieses Kapitels beleuchten.
 
 Zunächst erörtern wir die Berechnung der Vertrauensintervalle auf Basis
 tabellierter Werte von Integrationsgrenzen zu ausgesuchten Ver\-trauens\-niveaus
@@ -419,7 +434,7 @@ Die Wahrscheinlichkeit für Beobachtungen im linken \textsl{Tail} ist
 \end{equation*}
 
 Aufgrund der Symmetrie der Standardnormalverteilung ist die Wahrscheinlichkeit für das Liegen von
-Wertem im rechten \textsl{Tail} ebenfalls $0.025$. Wir rechnen also zusammen, dass mit
+Werten im rechten \textsl{Tail} ebenfalls $0.025$. Wir rechnen also zusammen, dass mit
 einer Wahrscheinlichkeit von $0.05 = 0.025+0.025$ Werte in den beiden \textsl{Tails} außerhalb
 des Intervalls $[-1.960, 1.960]$ liegen können. Somit ist die Wahrscheinlichkeit, dass sie
 innerhalb des Intervalls liegen $1 - 0.05 = 0.95$
@@ -481,7 +496,7 @@ Grundgesamtheit mit $\mu \, = \, 42$ und $\sigma \, = \, 5$.}
 \end{center}
 \end{figure}
 Wenn wir aus einer sehr großen Stichprobe, die einer Grundgesamtheit entnommen wurde,
-disjunkte Teilstichproben kleinerem Umfang ($J < 100$) in Grüppchen bilden, so können wir
+disjunkte Teilstichproben von kleinerem Umfang ($J < 100$) in Grüppchen unterteilen, so können wir
 beobachten, dass sowohl die Mittelwerte streuen als auch die Varianzen.
 Diese Grüppchen oder Teilstichproben können wir als mehrere Stichproben aus einer normalverteilten
 Grundgesamtheit ansehen. 
@@ -598,8 +613,8 @@ einfach $t$-Verteilung genannt.
 
 %-----------------
 Diese Wahrscheinlichkeitsdichteverteilung wurde anfang des 20. Jahrhunderts von
-William Sealy Gosset entwickelt. Sie wird
-Tatsache gerecht wird, dass die Varianz zunimmt mit kleiner werdendem Stichprobenumfang.
+William Sealy Gosset entwickelt. Sie wird der
+Tatsache gerecht, dass die Varianz zunimmt mit kleiner werdendem Stichprobenumfang.
 Gosset veröffentlichte 1908 erstmals zu dem Thema während er als Chemiker für die Guinness-Brauerei
 in Dublin arbeitete. Er entwickelte einen Test zum Vergleich von Mittelwerten
 einzelner Stichproben als eine billige Art und Weise, die Qualität des Stout
@@ -607,10 +622,10 @@ zu überwachen. Dieser Test wird entsprechend der zugrunde gelegten Wahrscheinli
 $t$-Test genannt.
 Da sein Arbeitgeber die Veröffentlichung nicht gestattete, veröffentlichte Gosset sie unter
 dem Pseudonym Student. Die zugehörige Theorie wurde erst durch die
-Arbeiten von R. A. Fisher belegt, der die Verteilung \textsl{Students}-Verteilung (engl.\
+Arbeiten von R. A. Fisher belegt, der die Verteilung \textsl{Student}-Verteilung (engl.\
 \textsl{Student's distribution}) nannte.
 
-Die $t$-Verteilung bezieht sich eine standardnormalverteilte Zufallsgröße $Z$ und sieht wie folgt aus
+Die $t$-Verteilung bezieht sich auf eine standardnormalverteilte Zufallsgröße $Z$ und sieht wie folgt aus
 \begin{equation}
 p_{\nu}(Z) \; = \; 
 {\frac {\Gamma \left({\frac {\nu+1}{2}}\right)}{{\sqrt {\nu \pi }} \;
@@ -842,7 +857,7 @@ Y \; = \; y \, \pm \, t_{1-\alpha/2,\nu} \bar s .
 %===============
 
 
-\section{t-Test}
+\section{t-Test - Mittelwerttest}
 
 
 Nicht nur um die Qualität von schwarzem Bier (Stout) zu überprüfen, sondern ganz
@@ -907,10 +922,14 @@ Die gemeinsame Anzahl der Freiheitsgrade für \textsl{gepoolte} Samples, die fü
 \end{equation}
 und für NICHT \textsl{gepoolte}
 \begin{equation}
-\nu \; = \; \frac{ \bar s_1^2 + \bar s_2^2}{ \frac{\bar s_1^2}{J_1 - 1} + \frac{\bar s_2^2}{J_2 - 1} } .
+\nu \; = \;
+ \frac{ \left(\frac{s_1^2}{J_1} +\frac{s_2^2}{J_2}\right)^2}{ 
+  \frac{\left(\frac{s_1^2}{J_1}\right)^2}{J_1 - 1} + \frac{\left(\frac{s_2^2}{J_2}\right)^2}{J_2 - 1} } .
 \label{dofnonpooled}
 \end{equation}
-
+Die Herleitung zur Berechnung der Anzahl der Freiheitsgrade für nicht gepoolte Stichproben
+wird in Kapitel \ref{unsicherheitsfortpfLin} dran kommen. Gl.~(\ref{dofnonpooled}) wird auch
+Satterthwaite'sche Gleichung genannt.
 
 Bei $\nu = J_1 + J_2 - 2$ Freiheitsgraden, bei dem hier betrachteten Beispiel ist dies
 $\nu = 98$ ist $t_{1-\frac{1}{2} \alpha, \, \nu} = t_{0.975, 98} = 1.985$.
@@ -963,7 +982,7 @@ y_i \; = \; \frac{1}{J_i} \, \sum_{j=1}^{J_i} \, X_{i,j} \qquad
  s_i^2 \; = \; \frac{1}{J_i-1} \, \sum_{j=1}^{J_i} \, (X_{i,j} \, - \, y_i)^2
 \end{equation}
 so haben wir anhand der zuvor behandelten Beispiele festgestellt,
-dass nicht nur die Mittelwerte $y_i$ und sondern auch die Varianzen $s_i^2$ streuen.
+dass nicht nur die Mittelwerte $y_i$ sondern auch die Varianzen $s_i^2$ streuen.
 Die Charakteristik der Verteilungsdichte der Varianzen hängt vom
 Stichprobenumfang $J_i$ ab. Der Stichprobenumfang entspricht der Anzahl der Freiheitsgrade.
 
@@ -994,7 +1013,7 @@ Q \; \sim \; \chi^2 .
 Die Definition der $\chi^2$-Verteilungsdichtefunktion braucht nicht auswendig gelernt zu 
 werden. Der Umgang mit den Quantiltabellen ist aber zu üben.
 Wichtig zu wissen ist, dass die $\chi^2$-Verteilungs\-dichte\-funktion für
-einen positiven Wertebereich gilt, sie Ihr Maximum in der Nähe von $Q = J$ hat, sie um so
+einen positiven Wertebereich gilt, sie ihr Maximum in der Nähe von $Q = J$ hat, sie um so
 schiefer und breiter ist, je kleiner $J$ ist und die Verteilungsdichte der Varianzen
 \begin{equation}
 s_{\mu,i}^2 \; = \; \frac{1}{J_i} \, \sum_{j=1}^{J_i} \, (X_{i,j} \, - \, \mu)^2
