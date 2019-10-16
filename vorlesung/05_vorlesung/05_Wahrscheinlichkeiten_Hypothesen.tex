@@ -1150,16 +1150,30 @@ T \; > \; \chi^2_{1-\alpha, \nu} .
 http://www.itl.nist.gov/div898/handbook/eda/section3/eda358.htm
 \end{verbatim} 
 
-\section{Schlussfolgerungen aus Hypothesentests}
+\section{Anwendung von Hypothesentests}
 
+Anwendung finden die Hypothesentests im Bereich der Qualitätssicherung in der Produktion (siehe beispielsweise
+zur Prüfung des Stout in der Guinessbrauerei schon vor 100 Jahren), oder im Bereich der Naturwissenschaften
+(Biologie, Chemie, Pharmazie, Medizien) zum Nachweis von Substanzen. Es geht darum, dass zu bewerten ist,
+mit welcher Wahrscheinlichkeit Beobachtungen zu welcher Verteilung gehören.
+Einer Entscheidung liegen Regeln zugrunde. Mit dem t-Test haben wir die Regeln kennengelernt, über
+die wir entscheiden, ob zwei Datensätze zu der gleichen gaußverteilten Grundgesamtheit - der gleichen
+Normalverteilung mit demselben Erwartungswert gehören. 
+
+Als nächstes wollen wir untersuchen, welche Fehler mit welcher Wahrscheinlichkeit dabei entstehen können.
+Anschließend wollen wir uns ansehen, wie eine Stichprobe mit einer Toleranzvorgabe verglichen wird.
+Die Toleranzvorgabe liefert ein Intervall, dessen Lage mit der Lage der Wahrscheinlichkeitsverteilung
+der zu untersuchenden Stichprobe verglichen wird.
+
+\subsection{Entscheidung bei Vergleich zweier Stichproben}
 \begin{figure}
 \begin{center}
 \includegraphics[width=100mm]{05_vorlesung/media/entscheidungsfehlertypen.pdf}
 \caption{\label{entscheidungsfehler} Die Ereignisse (beobachtete Werte) aus der linken Wahrscheinlichkeitsdichteverteilung,
  die in deren \textsl{Tails} liegen, werden mit einem Signifikanzniveau von $\alpha$ verworfen.
- Die Ereignisse (beobachtete Werte) aus der rechten Wahrscheinlichkeitsdichteverteilung,
- die in dessen linkem \textsl{Tail} liegen, werden mit Wahrscheinlichkeit $\beta$ als der
- linken Wahrscheinlichkeitsdichte zugehörig erachtet.}
+ Die Ereignisse (beobachtete Werte) aus der rechten Wahrscheinlichkeitsdichteverteilung, die in dessen linkem
+ \textsl{Tail} liegen, werden mit Wahrscheinlichkeit $\beta$ als der linken Wahrscheinlichkeit zugehörig
+ erachtet.}
 \end{center}
 \end{figure}
 Den Hypothesentests, die wir uns angesehen haben, ist gemeinsam, dass
@@ -1228,6 +1242,70 @@ function plot_entscheidungsfehler()
 end
 \end{verbatim}
 
+\subsection{Konformitätswahrscheinlichkeiten}
+Nachdem wir gesehen haben wie wir zwei Hypothesen über die Lage zweier Wahrscheinlichkeitsdichteverteilungen
+verglichen haben, befassen wir uns jetzt mit dem Vergleich eines Intervalls, einem Toleranzintervall, mit einer
+Wahrscheinlichkeitsdichteverteilung. Für die Fertigung werden in den Konstruktionszeichnungen zu den Merkmalen
+von Bauteilen die Toleranzen eingetragen, innerhalb derer die Merkmale des Werkstücks liegen müssen. Wie nun
+bewertet man nach Fertigstellung des Werkstücks, ob ein Merkmal innerhalb einer Toleranzvorgabe liegt? Ein Merkmal
+wird durch einen Messvorgang geprüft. Der Messvorgang liefert ein Ergebnis: Einen Zahlenwert für das Merkmal und
+ein Überdeckungsintervall zusammen mit einem Vertrauensniveau. Anstelle von Überdeckungsintervall und Vertrauensniveau
+kann auch direkt eine Wahrscheinlichkeitsdichteverteilung angegeben werden, ist aber sehr unüblich in der industriellen
+Praxis. Für die Bewertung, ob das gefertigte Werkstück mit der Vorgabe der Konstruktion übereinstimmt, konform ist,
+werden Messergebnis und Toleranzvorgabe verglichen.
+
+Als Ergänzung zum \glqq Guide of Uncertainty\grqq gibt es das Dokument
+\textsl{Evaluation of measurement data - The role of measurement uncertainty in conformity assessment},
+das darlegt, wie Konformitätsbewertungen vorzunehem sind.
+\begin{verbatim}
+https://www.bipm.org/utils/common/documents/jcgm/JCGM_106_2012_E.pdf
+\end{verbatim}
+Dort heißt es in Paragraph 7.1.1
+\begin{quote}
+An item conforms to a specified requirement if the true value of its associated property $Y$ lies in the tolerance
+interval. Knowledge of $Y$ is conveyed by a probability density function $p(y|{X_1,\dots,X_J})$
+so that a statement of conformity is always an inference,
+with some probability of being true. Denoting the set of permissible (conforming) values
+$Y$ by $C$, the conformance probability, denoted by $p_\mathrm{c}$, is given by
+\begin{equation}
+	p_\mathrm{c} = P(Y \in C | {X_1,\dots,X_J}) = \int\limits_C p(y|{X_1,\dots,X_J}) \mathrm{d}y.
+\end{equation}
+\end{quote}
+Im Originaldokument werden Sie eine etwas andere Schreibweise für die Bezeichner in der Formel vorfinden.
+Hier ist es so aufgeschrieben, wie es zu der Notation innerhalb dieses Vorlesungsskriptes, insbesondere
+zu Kapitel \ref{KonzepteinverseProbleme}, passt.
+Für die Toleranz wird in der Richtlinie zur Konformitätsbewertung zur Wahrung der Allgemeingültigkeit
+eine Menge $C$ angegeben. Falls die Größe $Y$ eine skalarwertige Größe wie bei dem Beispiel, anhand dessen
+wir in Kapitel \ref{KonzepteinverseProbleme} das Prinzip der bayesischen Statistik illustriert haben,
+so steht $C$ für ein Intervall $C = [y_\mathrm{L}, y_\mathrm{U}]$. Dabei sollen der Index L für \glqq lower
+limit\grqq ~und der Index U für \glqq upper limit\grqq ~stehen.
+
+Die Wahrscheinlichkeit $p_\mathrm{c}$, dass die Beobachtungen ${X_1,\dots,X_J}$ innerhalb des Toleranzintervalls
+$C = [y_\mathrm{L}, y_\mathrm{U}]$ liegen, ist
+\begin{equation}
+	p_\mathrm{c} =  \int\limits_{y_\mathrm{L}}^{y_\mathrm{U}} p(y|{X_1,\dots,X_J}) \mathrm{d}y.
+\end{equation}
+Für den Fall, dass von einer normalverteilten Stichprobe ausgegangen werden kann und dass eine Einzelgröße
+vorliegt, wird auch der Stichprobe ${X_1,\dots,X_J}$ der Schätzer $\bar y$ aus einfacher Mittelwertbildung
+gewonnen ($\bar y = \sum_{j=1}^J X_j$) und die Varianz als empirische Varianz $s$ aus
+$s = \frac{1}{J-1}\sum (X_j - \bar y)^2$ und für die Wahrscheinlichkeitsdichte $p$ die Gaußverteilung:
+\begin{equation}
+	p_\mathrm{c} = \frac{1}{\sqrt{2 \pi} s} \int\limits_{y_\mathrm{L}}^{y_\mathrm{U}} 
+	e^{-\frac{1}{2}\left(\frac{y - \bar y}{s}\right)^2} \mathrm{d}y
+\end{equation}
+Die Größe $\frac{y - \bar y}{s}$ ist eine normierte Zufallsgröße. Die Integrationsgrenzen können gleichfalls
+normiert werden: $z = \frac{y - \bar y}{s}$, $z_\mathrm{L} = \frac{y_\mathrm{L} - \bar y}{s}$ und
+$z_\mathrm{U} = \frac{y_\mathrm{U} - \bar y}{s}$, so dass die Tabellenwerke oder Bibliotheksfunktion
+für die gauß'sche Fehlerfunktion (\textsl{error function}) wie folgt verwendet werden kann:
+\begin{equation}
+p_\mathrm{c} = \frac{1}{\sqrt{2 \pi}} \int\limits_{-\infty}^{z_\mathrm{U}} 
+	e^{-\frac{1}{2} z^2} \mathrm{d}z - 
+	\frac{1}{\sqrt{2 \pi}} \int\limits_{-\infty}^{z_\mathrm{L}} e^{-\frac{1}{2} z^2} \mathrm{d}z
+\end{equation}
+d.h.
+\begin{equation}
+	p_\mathrm{c} = \mathrm{erf}(z_\mathrm{U}) - \mathrm{erf}(z_\mathrm{L}).
+\end{equation}
 
 
 %\bibliography{$BIBLIO/math}
