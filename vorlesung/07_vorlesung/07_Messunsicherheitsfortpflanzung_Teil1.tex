@@ -133,13 +133,18 @@ betrifft univariate und explizite Modelle,
   \item die Zufallsgrößen betreffen, deren Streuung (\textsl{dispersion}) normalverteilt oder
   $t$-verteilt ist.
   \end{itemize}
-Hier wird die Varianz der indirekten Größe als lineare Funktion der Varianzen
-der indirekten Größen modelliert, die Varianzen werden \glqq fortgepflanzt\grqq.\\
-$\rightarrow$ Vorlesung 8
+Die indirekte Messgröße $Y$ ist damit Linearkombination der direkten Messgrößen $X_i$, d.h.
+$Y = \sum X_i$, so dass für die Varianz $\operatorname{Var}(Y) = \operatorname{Var}(\sum X_i)$
+gemäß Gl.~(\ref{univarLinearFortpflanzungKap1}) aus Abschnitt \ref{Kap1Kovarianzen} gilt
 \begin{equation}
 \operatorname{Var}(Y) = \sum_{i=1}^N \sum_{k=1}^N  c_i c_k \operatorname{Cov}(X_i, X_k)
 \label{univarLinearFortpflanzung}
 \end{equation}
+Da sich viele physikalischen Zusammenhänge für definierte Bereiche linearisieren lassen
+findet Gl.~(\ref{univarLinearFortpflanzung}) in großen Teilen der Messdatenanalyse
+Anwendung und ist in der Literatur als das \textsl{Gesetz zur Fortpflanzung von Messunsicherheiten}
+bekannt.
+
 \item JCGM 101:2008 \textsl{Evaluation of measurement
 data - Supplement 1 to the Guide to the expression of
 uncertainty in measurement - Propagation of distributions using a Monte Carlo method}; 
@@ -286,70 +291,59 @@ dort Beispiel 2.2 mit Abb.~3.
 
 \section{M.U.F. für univariate, explizite indirekte Größe, linear von direkten Größen abhängig}
 
-Im folgenden wird Gl.~(\ref{univarLinearFortpflanzung}) herleitet, also gezeigt,
+
+In der ersten Vorlesung, in Abschnitt \ref{Kap1Kovarianzen}, wurden die Varianz und Kovarianz
+von Zufallsgrößen eingeführt. In dem Zusammenhang haben wir die Rechenregeln für Erwartungswerte,
+Summen, Produkte und Skalierungen dazu eingeführt. Auf Grundlage dieser Rechenregeln haben
+wir die Varianz einer Zufallsgröße, die Linearkombination von mehreren Zufallsgrößen $X_i$ ist,
+als Funktion der Kovarianzen der Zufallsgrößen $X_i$ bestimmt.
+Wir wiederholen hier noch mal kurz die Herleitung zu Gl.~(\ref{univarLinearFortpflanzungKap1})
+und damit also Gl.~(\ref{univarLinearFortpflanzung}) und zeigen,
 weshalb die Varianz einer indirekten Größe, die linear
 von den direkten Messgrößen gemäß Gl.~(\ref{univarLinear}) abhängt, Funktion der Kovarianzen
 und Varianzen der direkten Messgrößen ist.
 
-Da sich viele physikalischen Zusammenhänge für definierte Bereiche linearisieren lassen
-findet Gl.~(\ref{univarLinearFortpflanzung}) in großen Teilen der Messdatenanalyse
-Anwendung und ist in der Literatur als das \textsl{Gesetz zur Fortpflanzung von Messunsicherheiten}
-bekannt.
-
-Grundlage für die Fortpflanzung der Messunsicherheiten linearer
-Modelle ist folgende Beziehung für die Varianz einer Summe von Zufallsgrößen
 \begin{equation}
-\operatorname {Var}\left(\sum _{{i=1}}^{N}X_{i}\right) \; = \;
-\sum _{{i,j=1}}^{N}\operatorname {Cov}(X_{i},X_{j}),
+\operatorname {Var}\left(Y\right) \; = \;
+\operatorname {Var}\left(\sum _{{i=1}}^{N}c_i X_{i}\right) \; = \;
+\sum _{{i,k=1}}^{N}\operatorname {Cov}(c_i X_{i}, c_k X_{k}),
 \label{VarianzSummeISTSummeKovarianz}
 \end{equation}
-die wir hiermit herleiten: Die Varianz ist nach Definition
-\begin{equation}
-\operatorname {Var}\left(\sum _{{i=1}}^{N}X_{i}\right) \; = \;
+Mit
+\begin{equation*}
+\operatorname {Var}\left(\sum _{{i=1}}^{N}c_i X_{i}\right) \; = \;
 \int\limits_{-\infty}^{\infty} \dots \int\limits_{-\infty}^{\infty}
-\, \left[ \left(\sum_{i=1}^N X_i\right) \; - \; E(\sum_{i=1}^N X_i) \right]^2 \, p(X_1, \dots, X_N)
+\, \left[ \left(\sum_{i=1}^N c_i X_i\right) \; - \; E(\sum_{i=1}^N c_i X_i) \right]^2 \, p(X_1, \dots, X_N)
 \, \operatorname{d}X_1 \dots \operatorname{d}X_N .
-\end{equation}
-Da der Erwartungswert einer Summe von Zufallsgrößen gleich der Summe der 
-Erwartungswerte jeder einzelnen dieser Zufallsgrößen ist, gilt
+\end{equation*}
+und
 $$
-\left(\sum_{i=1}^N X_i \right) \; - \; E\left(\sum_{i=1}^N X_i\right) \; = \;
-\left(\sum_{i=1}^N X_i \right) \; - \; \sum_{i=1}^N E(X_i) 
-$$
-so dass gilt
-\begin{equation}
-\operatorname {Var}\left(\sum _{{i=1}}^{N}X_{i}\right) \; = \;
-\int\limits_{-\infty}^{\infty} \dots \int\limits_{-\infty}^{\infty}
-\, \left[ \sum_{i=1}^N \left(X_i \; - \; E(X_i)\right) \right]^2 \, p(X_1, \dots, X_N)
-\, \operatorname{d}X_1 \dots \operatorname{d}X_N .
-\end{equation}
-Mit Anwendung des Assoziativgesetzes
-$$
-\arraycolsep=3.5pt\def\arraystretch{1.8}
-\begin{array}{ll}
-\left[ \sum\limits_{i=1}^N \left(X_i \; - \; E(X_i)\right) \right]^2 & =
-\left[ \sum\limits_{i=1}^N \left(X_i \; - \; E(X_i)\right) \right] \;
-\left[ \sum\limits_{k=1}^N \left(X_k \; - \; E(X_k)\right) \right] \\
- & = \sum\limits_{i=1}^N \sum\limits_{k=1}^N  \left(X_i \; - \; E(X_i)\right) \;
-      \left(X_k \; - \; E(X_k)\right) \\
-\end{array}
+\left(\sum_{i=1}^N c_i X_i \right) \; - \; E\left(\sum_{i=1}^N c_i X_i\right) \; = \;
+\left(\sum_{i=1}^N c_i X_i \right) \; - \; \sum_{i=1}^N c_i E(X_i) 
 $$
 gilt
 \begin{equation}
-\operatorname {Var}\left(\sum _{{i=1}}^{N}X_{i}\right) \; = \;
+\operatorname {Var}\left(\sum _{{i=1}}^{N}c_i X_{i}\right) \; = \;
 \int\limits_{-\infty}^{\infty} \dots \int\limits_{-\infty}^{\infty}
-\, \sum_{i=1}^N \sum_{k=1}^N  \left(X_i \; - \; E(X_i)\right) \;
-      \left(X_k \; - \; E(X_k)\right) \, p(X_1, \dots, X_N)
+\, \left[ \sum_{i=1}^N \left(c_i X_i \; - \; E(c_i X_i)\right) \right]^2 \, p(X_1, \dots, X_N)
 \, \operatorname{d}X_1 \dots \operatorname{d}X_N .
 \end{equation}
+Mit Anwendung des Assoziativgesetzes gilt
+\begin{equation*}
+\operatorname {Var}\left(\sum _{{i=1}}^{N}c_i X_{i}\right) \; = \;
+\int\limits_{-\infty}^{\infty} \dots \int\limits_{-\infty}^{\infty}
+\, \sum_{i=1}^N \sum_{k=1}^N \, c_i \,  \left(X_i \; - \; E(X_i)\right) \;
+      c_k \, \left(X_k \; - \; E(X_k)\right) \, p(X_1, \dots, X_N)
+\, \operatorname{d}X_1 \dots \operatorname{d}X_N .
+\end{equation*}
 Durch Berechnung der Marginalverteilungen und weil $\int p(X_j) \, \operatorname{d}X_j = 1$
 für alle $j$, die weder $i$ noch $k$ sind erhalten wir
 \begin{equation}
-\operatorname {Var}\left(\sum _{{i=1}}^{N}X_{i}\right) \; = \;
-\sum_{i=1}^N \sum_{k=1}^N  \;
+\operatorname {Var}\left(\sum _{{i=1}}^{N}c_i X_{i}\right) \; = \;
+\sum_{i=1}^N \sum_{k=1}^N  \; 
 \int\limits_{-\infty}^{\infty} \int\limits_{-\infty}^{\infty}
-\, \left(X_i \; - \; E(X_i)\right) \;
-      \left(X_k \; - \; E(X_k)\right) \, p(X_i, X_k)
+\, c_i \, \left(X_i \; - \; E(X_i)\right) \;
+     c_k \, \left(X_k \; - \; E(X_k)\right) \, p(X_i, X_k)
 \, \operatorname{d}X_i \operatorname{d}X_k .
 \end{equation}
 Der Term auf der rechten Seite ist genau die Kovarianz der beiden 
@@ -363,50 +357,38 @@ $$
       \left(X_k \; - \; E(X_k)\right) \, p(X_i, X_k)
 \, \operatorname{d}X_i \operatorname{d}X_k
 $$
-haben wir somit die
-Beziehung Gl.~(\ref{VarianzSummeISTSummeKovarianz}) erhalten und können diese
-noch so umsortieren, dass die Terme für die Varianzen und die Korrelationsterme
-getrennt aufgeschreiben sind:
+erhalten wir das Fortpflanzungsgesetz in der Form, wie wir es aus Abschnitt \ref{Kap1Kovarianzen}
+Gl.~(\ref{univarLinearFortpflanzungKap1}) bereits kennen gelernt haben.
 \begin{equation}
-{\begin{aligned}\operatorname {Var}\left(\sum _{{i=1}}^{N}X_{i}\right) & 
-= \sum _{i=1}^{N}\sum _{k=1}^{N}\operatorname {Cov}(X_{i},X_{k})\\
- & = \sum _{{i=1}}^{N}\operatorname {Var}(X_{i})+
-     \sum _{{i,k=1,i\neq k}}^{N}\operatorname {Cov}(X_{i},X_{k})\\
-& = \sum _{i=1}^{N}\operatorname {Var}(X_{i})+2\sum _{{i=1}}^{{N-1}}
-  \sum _{k=i+1}^{N}\operatorname {Cov}(X_{i},X_{k}) ,
-\end{aligned}}
-\label{VarianzSummeX2Kovarianz}
-\end{equation}
-Jetzt verwenden wir nicht nur die Summe von Zufallsgrößen, sondern die
-mit reellen, konstanten Koeffizienten $c_i$ gewichtete Summe:
-\begin{equation}
-{\begin{aligned}\operatorname {Var}\left(\sum _{{i=1}}^{N} \, c_i \, X_{i}\right) & 
-= \sum _{i=1}^{N}\sum _{k=1}^{N}\operatorname {Cov}(c_i X_{i}, c_k X_{k})\\
+{\begin{aligned}
+\operatorname {Var}\left(Y\right) & =
+\operatorname {Var}\left(\sum _{{i=1}}^{N} \, c_i \, X_{i}\right) \\
+ & = \sum _{i=1}^{N}\sum _{k=1}^{N}\operatorname {Cov}(c_i X_{i}, c_k X_{k})\\
  & = \sum _{{i=1}}^{N} \, c_i^2 \, \operatorname {Var}(X_{i})+
      \sum _{{i,k=1,i\neq k}}^{N} \, c_i c_k \,  \operatorname {Cov}(X_{i},X_{k})\\
 & = \sum _{{i=1}}^{N} \, c_i^2 \operatorname {Var}(X_{i})+2\sum _{{i=1}}^{{N-1}}
   \sum _{{k=i+1}}^{N} \, c_i c_k \operatorname {Cov}(X_{i},X_{k}).
 \end{aligned}}
-\label{KovarianzSumme}
+\label{univarLinearFortpflanzungKap7}
 \end{equation}
-Gleichung (\ref{KovarianzSumme}) entspricht Gl.~(\ref{univarLinearFortpflanzung})
-und repräsentiert das Gesetz zur Fortpflanzung von Messunsicherheiten in einer
-in einigen Fällen bevorzugten Schreibweise. Bei getrennter Betrachtung der
-beiden Terme mit den Varianzen $\operatorname {Var}(X_{i})$
-und mit den Kovarianzen $\operatorname {Cov}(X_{i},X_{k})$ wird deutlich, ob
+Bei getrennter Betrachtung der beiden Terme mit den Varianzen $\operatorname {Var}(X_{i})$
+und mit den Kovarianzen $\operatorname {Cov}(X_{i},X_{k})$, also
+in der Notation $\sum \, c_i^2 \operatorname {Var}(X_{i})+2\sum
+ \sum \, c_i c_k \operatorname {Cov}(X_{i},X_{k})$, wird deutlich, ob
 die direkten Messgrößen korrelieren oder nicht.
 
-In der zweiten Vorlesung wurde der Korrelationkoeffizient 
-$\rho_{i,k} = \frac{\operatorname {Cov}(X_{i},X_{k})}{\sqrt{\operatorname {Var}(X_{i}) \operatorname {Var}(X_{k})}}$
-eingeführt, sowie die Standardabweichung $\sigma_i = \sqrt{\operatorname {Var}(X_{i})}$, so dass wir
-dieses Gesetz auch wie folgt aufschreiben können
+Es gibt Anwendungen, bei denen die Korrelationkoeffizienten, definiert in
+Abschnitt \ref{Kap1Kovarianzen} Gl.~(\ref{KorrelationskoeffizientKap1})
+$\rho_{i,k} = \frac{\operatorname {Cov}(X_{i},X_{k})}{\sqrt{\operatorname {Var}(X_{i}) \operatorname {Var}(X_{k})}}$,
+angegeben wird und die Standardabweichungen $\sigma_i = \sqrt{\operatorname {Var}(X_{i})}$, so dass 
+das Unsicherheitsfortpflanzungsgesetz auch in dieser Form aufgeschrieben wird
 \begin{equation}
-\sigma_Y^2  = 
+\operatorname {Var}\left(Y\right) = \sigma_Y^2  = 
 \sum _{{i=1}}^{N} \, c_i^2 \sigma_i^2 \, + \, 2\sum _{{i=1}}^{{N-1}}
   \sum _{{k=i+1}}^{N} \, c_i c_k \rho_{i,k} \sigma_i \sigma_k ,
 \label{FortpflaKorrStd}
 \end{equation}
-wobei $\sigma_Y$ auch \textsl{kombinierte Standardabweichung} genannt wird.
+und $\sigma_Y$ dabei dann \textsl{kombinierte Standardabweichung} genannt wird.
 
 Oftmals, so auch im \textsl{Guide} für Messunsicherheit GUM - JCGM 100, wird anstelle der 
 Bezeichnung $\rho_{i,k}$ die
@@ -436,7 +418,8 @@ und
 \operatorname{Cov}(X_i, X_k) \; \equiv \; 
 \sigma_{i,k} \; \equiv \; u(X_i,X_k)
 \end{equation}
-
+Hier sind keine Tippfehler bezüglich der Quadrate, es gilt tatsächlich $u^2(X_i) = u(X_i,X_i)$
+sowie $\sigma^2(X_i) = \sigma(X_i,X_i)$.
 
 Im JCGM 100-Dokument des \textsl{Guide} für Messunsicherheit GUM in Absatz 5.2.4
 werden als typische Ursachen für die Korrelation von Eingangsgrößen  folgende aufgeführt:
@@ -544,8 +527,12 @@ wie stark sich die indirekte Größe $Y$ gemäß der Steigung (Gradienten) des K
 empfindlich die indirekte Größe auf Änderungen der direkten Größen reagiert, d.h.\ wie sensistiv
 das Modell an der Position $\bar{\mathbf{x}}$ ist.
 
-Dazu bilden wir analog zu Gl.~(\ref{KovarianzSumme}) die Varianz der gewichteten Summe
-der Zufallsgrößen $\Delta X_i$
+Als nächstes wollen wir wieder das Fortpflanzungsgesetz für die Messunsicherheit
+in der Gestalt von Gl.~(\ref{univarLinearFortpflanzungKap7}) erhalten, wobei jetzt die Koeffizienten
+$c_i$ die Steigungen der Tangenten $\frac{\partial f}{\partial X_i}$ an der Stelle
+der geschätzten Erwartungswerte sind.
+
+Die Varianz der gewichteten Summe der Zufallsgrößen $\Delta X_i$ ist
 \begin{equation}
 \operatorname{Var}(Y) 
 = \operatorname{Var}\left(\left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}}\right) + 
@@ -557,7 +544,7 @@ $\operatorname{Var}\left(\left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}}\right) 
 \operatorname{Var}(Y) 
 = \operatorname{Var}\left(\sum_{i=1}^N c_i \Delta X_i\right)
 \end{equation}
-wird, was also die Form der Gl.~(\ref{KovarianzSumme}) annimmt, so dass gilt
+wird, was also die Form der letzten Zeile von Gl.~(\ref{univarLinearFortpflanzungKap7}) annimmt, so dass gilt
 \begin{equation}
 \operatorname {Var}\left(Y\right)
 = \sum _{{i=1}}^{N} \, c_i^2 \operatorname {Var}(\Delta X_{i})+2\sum _{{i=1}}^{{N-1}}

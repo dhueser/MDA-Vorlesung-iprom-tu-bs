@@ -593,12 +593,13 @@ mit welchem Potenzgesetz ein Paar direkter Messgrößen zu verknüpfen ist (welc
 so dass die Korrelation groß ist.
 
 
-\section{Charakterisierung von linearem Zusammenhang zwischen Größen}
-
+\section{Ko-Varianzen von Zufallsgrößen}
+\label{Kap1Kovarianzen}
 
 Bei dem Beispiel mit dem Ohm'schen Gesetz hatten wir uns mit der Modellgleichung $U = R I$ befasst.
-Dabei waren $U$ und $I$ die beiden physikalischen Größen, die unterschiedliche Werte angenommen haben und
-über einen linearen Zusammenhang verknüpft sind. Hier haben wir also eine Gerade, Polynom vom Grad 1.
+Dabei waren $U$ und $I$ die beiden physikalischen Größen, die proportional unterschiedliche Werte annehmen.
+Sie sind direkt über einen linearen Zusammenhang verknüpft. Der lineare Zusammenhang
+ist durch eine Gerade, ein Polynom vom Grad 1, darstellen.
 
 Für die Charakterisierung \textsl{linearer} Zusammenhänge ist der
 \textbf{Korrelationskoeffizient} $\rho$ ein Maß, mit dem quantifiziert wird, wie
@@ -683,6 +684,23 @@ Wir werden im nächsten Kapitel sehen, dass bei der Steigung der Regressionsgrad
 (Aufgabe 1) genau so ein Term $\sum_{j = 1}^J (X_{1,j} - \bar x_1)(X_{2,j} - \bar x_2)$
 im Zähler steht.
 
+Für standardnormalverteilte Zufallsgrößen $Z_i$ mit $Z \sim \mathcal{N}(0,1)$ 
+und $i = 1,2$ in die sich
+die Größen $X_i$ wie folgt umrechnen lassen
+\begin{equation}
+Z_i \; = \; \frac{X_i \, - \, \operatorname{E}(X_i)}{\sqrt{\operatorname {Var}(X_{i})}}
+\end{equation}
+ist die Kovarianz gleich dem Korrelationskoeffizienten
+\begin{equation}
+\rho_{i,k} \; = \; \operatorname {Cov}(Z_{i},Z_{k})
+\end{equation}
+was äquivalent ist zu
+\begin{equation}
+\rho_{i,k} \; = \; \frac{\operatorname {Cov}(X_{i},X_{k})}{\sqrt{\operatorname {Var}(X_{i})} \, \sqrt{\operatorname {Var}(X_{k})}} .
+\label{KorrelationskoeffizientKap1}
+\end{equation}
+
+
 Für das Verständnis der Gesamtzusammenhänge ist der Sprachgebrauch für Zufallsgrößen sowie
 der Sprachgebrauch des Erwartungswertes von Zufallgrößen von Bedeutung. 
 
@@ -694,9 +712,13 @@ $p(X)$ die Wahrscheinlichkeitsdichteverteilung dazu, so heißt
 X^\prime \, p(X^\prime) \, \operatorname{d} X^\prime
 \end{equation}
 Erwartungswert der Zufallsgröße $X$.
-Ist diese Zufallsgröße eine Verknüpfung von anderen Zufallsgrößen und setzen wir die
-Verknüpfung ein, so wird der Erwartungwert mit derselben Verknüpfung gebildet.
-Betrachten wir zum Beispiel die Verknüpfung Addition $X = X_1 + X_2$
+
+Zur Berechnung der Varianz einer indirekten Messgröße, die linear abhängig ist
+von direkten Messgrößen, benötigen wir die algebraischen Grundregeln für
+Erwartungswerte: Addition, Multiplikation und Skalierung.
+
+\begin{itemize}
+\item Summe: $X = X_1 + X_2$
 \begin{equation}
 \operatorname{E}(X_1 + X_2) \; := \;  \int\limits_{-\infty}^{\infty} \int\limits_{-\infty}^{\infty}
 (X_1^\prime + X_2^\prime) \, p(X_1^\prime, X_2^\prime) \, \operatorname{d} X_1^\prime \, \operatorname{d} X_2^\prime
@@ -733,8 +755,7 @@ also
 In Worten heißt dies: Der Erwartungswert einer Summe von Zufallsgrößen ist die
 Summe der Erwartungswerte der Zufallsgrößen.
 
-Als nächstes betrachten wir das Produkt zweier Zufallsgrößen
-$X = X_1 \cdot X_2$
+\item Produkt: $X = X_1 \cdot X_2$
 \begin{equation}
 \operatorname{E}(X_1 \cdot X_2) \; := \; 
 \int\limits_{-\infty}^{\infty} \int\limits_{-\infty}^{\infty}
@@ -756,8 +777,7 @@ also
 \operatorname{Cov}(X_1, X_2)  \; = \; \operatorname{E}\left((X_1 - \operatorname{E}(X_1)) 
 \cdot (X_2 - E(X_2)) \right)  .
 \end{equation}
-Ferner ist zu bemerken, dass sich aus diesen Beziehungen für die
-Kovarianz ergibt
+und auch
 \begin{equation}
 \begin{array}{ll}
 \operatorname{Cov}(X_1, X_2)
@@ -771,37 +791,44 @@ X_1 \, \operatorname{E}(X_2) + \operatorname{E}(X_1) \, \operatorname{E}(X_2) \r
 \end{equation}
 Per Definitionem gilt
 \begin{equation}
-\operatorname {Var}(X) \; := \; \operatorname {Cov}(X,X) .
+\operatorname {Var}(X) \; := \; \operatorname {Cov}(X,X)
 \end{equation}
-Daraus folgt, dass für die Varianz einer Zufallsgröße,
-die das Produkt einer Zufallsgröße $X$ mit einem konstanten, festen reellen Faktor $b$ ist, gilt
+
+\item Skalierung:
+Zufallsgröße $X$ mit einem konstanten, festen reellen Faktor $b$ multiplizieren
+\begin{equation}
+\arraycolsep=3.5pt\def\arraystretch{1.8}
+\begin{array}{ll}
+\operatorname {Var}(b X) & = \; \operatorname{E}((b X)^2) \; = \; 
+ \int\limits_{-\infty}^{\infty}
+ (b X^\prime)^2 \, p(X^\prime) \, \operatorname{d} X^\prime\\
+ & =\;  \int\limits_{-\infty}^{\infty} \, b^2 \,
+ (X^\prime)^2 \, p(X^\prime) \, \operatorname{d} X^\prime\\
+ & =\;  b^2 \, \underbrace{\int\limits_{-\infty}^{\infty} \, 
+ (X^\prime)^2 \, p(X^\prime) \, \operatorname{d} X^\prime}_{\operatorname {Var}(X)}
+\end{array}
+\end{equation}
 \begin{equation}
 \operatorname {Var}(b X) \; := \; b^2 \, \operatorname {Var}(X)
 \end{equation}
-%Für einen Zufallsgrößenvektor $\boldsymbol{X}$ multipliziert mit einer Matrix 
-%$\boldsymbol{B}$, deren Elemente konstante, feste reelle Zahlen sind, gilt entsprechend
-%\begin{equation}
-%\operatorname {Cov}(\boldsymbol{B} \boldsymbol{X}) \; := \; \boldsymbol{B} \,
-% \operatorname {Cov}(\boldsymbol{X}) \, \boldsymbol{B}^\mathsf{T} .
-%\label{CovarianzKonstMatrix}
-%\end{equation}
-%Das ist jetzt nicht trivial herzuleiten, aber wir wollen jetzt keine Vorlesung in Lineare
-%Algebra halten. Wir werden diese Beziehung für die Bestimmung der Standardabweichung der
-%Modellparameter in der linearen Regression brauchen. Das hochgestellte $\mathsf{T}$ steht für
-%transponiert.
+\end{itemize}
 
-Eine weitere wichtige Beziehung ist folgende zur
-\textbf{Varianz einer Summe von Zufallsgrößen}:
+
+Wenn wir die Varianz einer indirekten Messgröße, die linear von mehreren direkten Messgrößen
+abhängt, ermitteln wollen, so entspricht dies der Bestimmung der
+\textbf{Varianz einer Summe von Zufallsgrößen}. Sie ist gleich der Summe der
+paarweisen Kovarianzen aller Zufallsgrößen (hier der direkten Messgrößen)
 \begin{equation}
-\operatorname {Var}\left(\sum _{{i=1}}^{N}X_{i}\right) \; = \;
-\sum _{{i,j=1}}^{N}\operatorname {Cov}(X_{i},X_{j})
+\operatorname {Var}\left(\sum _{{i=1}}^{N} c_i \, X_{i}\right) \; = \;
+\sum _{{i,j=1}}^{N}\operatorname {Cov}(c_i X_{i},c_j X_{j})
 \label{VarianzSummeISTSummeKovarianz}
 \end{equation}
-Die Varianz ist nach Definition
+Wir leiten jetzt her, weshalb Gl.~(\ref{VarianzSummeISTSummeKovarianz}) gilt:
+Die Varianz ist gemäß ihrer Definition
 \begin{equation}
-\operatorname {Var}\left(\sum _{{i=1}}^{N}X_{i}\right) \; = \;
+\operatorname {Var}\left(\sum _{{i=1}}^{N}c_i X_{i}\right) \; = \;
 \int\limits_{-\infty}^{\infty} \dots \int\limits_{-\infty}^{\infty}
-\, \left[ \left(\sum_{i=1}^N X_i\right) \; - \; E(\sum_{i=1}^N X_i) \right]^2 \, p(X_1, \dots, X_2)
+\, \left[ \left(\sum_{i=1}^N c_i X_i\right) \; - \; E(\sum_{i=1}^N c_i X_i) \right]^2 \, p(X_1, \dots, X_2)
 \, \operatorname{d}X_1 \dots \operatorname{d}X_N .
 \end{equation}
 Da der Erwartungswert einer Summe von Zufallsgrößen gleich der Summe der 
@@ -812,59 +839,49 @@ $$
 $$
 so dass gilt
 \begin{equation}
-\operatorname {Var}\left(\sum _{{i=1}}^{N}X_{i}\right) \; = \;
+\operatorname {Var}\left(\sum _{{i=1}}^{N}c_i X_{i}\right) \; = \;
 \int\limits_{-\infty}^{\infty} \dots \int\limits_{-\infty}^{\infty}
-\, \left[ \sum_{i=1}^N \left(X_i \; - \; E(X_i)\right) \right]^2 \, p(X_1, \dots, X_2)
+\, \left[ \sum_{i=1}^N \left(c_i X_i \; - \; E(c_i X_i)\right) \right]^2 \, p(X_1, \dots, X_2)
+\, \operatorname{d}X_1 \dots \operatorname{d}X_N
+\end{equation}
+und mit $E(c_i X_i) = c_i E(X_i)$ also
+\begin{equation}
+\operatorname {Var}\left(\sum _{{i=1}}^{N}c_i X_{i}\right) \; = \;
+\int\limits_{-\infty}^{\infty} \dots \int\limits_{-\infty}^{\infty}
+\, \left[ \sum_{i=1}^N c_i \left( X_i \; - \; E(X_i)\right) \right]^2 \, p(X_1, \dots, X_2)
 \, \operatorname{d}X_1 \dots \operatorname{d}X_N .
 \end{equation}
+
 Mit Anwendung des Assoziativgesetzes
 $$
 \arraycolsep=3.5pt\def\arraystretch{1.8}
 \begin{array}{ll}
-\left[ \sum\limits_{i=1}^N \left(X_i \; - \; E(X_i)\right) \right]^2 & =
-\left[ \sum\limits_{i=1}^N \left(X_i \; - \; E(X_i)\right) \right] \;
-\left[ \sum\limits_{k=1}^N \left(X_k \; - \; E(X_k)\right) \right] \\
-& = \sum\limits_{i=1}^N \sum\limits_{k=1}^N  \left(X_i \; - \; E(X_i)\right) \;
+\left[ \sum\limits_{i=1}^N c_i \left(X_i \; - \; E(X_i)\right) \right]^2 & =
+\left[ \sum\limits_{i=1}^N c_i \left(X_i \; - \; E(X_i)\right) \right] \;
+\left[ \sum\limits_{k=1}^N c_k \left(X_k \; - \; E(X_k)\right) \right] \\
+& = \sum\limits_{i=1}^N \sum\limits_{k=1}^N c_i c_k  \left(X_i \; - \; E(X_i)\right) \;
 \left(X_k \; - \; E(X_k)\right) \\
 \end{array}
 $$
 gilt
 \begin{equation}
-\operatorname {Var}\left(\sum _{{i=1}}^{N}X_{i}\right) \; = \;
+\operatorname {Var}\left(\sum _{{i=1}}^{N}c_i X_{i}\right) \; = \;
 \int\limits_{-\infty}^{\infty} \dots \int\limits_{-\infty}^{\infty}
-\, \sum_{i=1}^N \sum_{k=1}^N  \left(X_i \; - \; E(X_i)\right) \;
+\, \sum_{i=1}^N \sum_{k=1}^N c_i c_k  \left(X_i \; - \; E(X_i)\right) \;
 \left(X_k \; - \; E(X_k)\right) \, p(X_1, \dots, X_2)
 \, \operatorname{d}X_1 \dots \operatorname{d}X_N .
 \end{equation}
 Durch Berechnung der Marginalverteilungen und weil $\int p(X_j) \, \operatorname{d}X_j = 1$
 für alle $j$, die weder $i$ noch $k$ sind, erhalten wir
 \begin{equation}
-\operatorname {Var}\left(\sum _{{i=1}}^{N}X_{i}\right) \; = \;
-\sum_{i=1}^N \sum_{k=1}^N  \;
+\operatorname {Var}\left(\sum _{{i=1}}^{N}c_i X_{i}\right) \; = \;
+\sum_{i=1}^N \sum_{k=1}^N  \; c_i c_k \, 
 \int\limits_{-\infty}^{\infty} \int\limits_{-\infty}^{\infty}
 \, \left(X_i \; - \; E(X_i)\right) \;
 \left(X_k \; - \; E(X_k)\right) \, p(X_i, X_k)
-\, \operatorname{d}X_i \operatorname{d}X_k .
+\, \operatorname{d}X_i \operatorname{d}X_k ,
 \end{equation}
-Der Term auf der rechten Seite ist genau die Kovarianz der beiden 
-Größen $X_i$ und $X_k$.
-
-Die Beziehung Gl.~(\ref{VarianzSummeISTSummeKovarianz}), dass die
-Varianz der Summe von Zufallsgrößen gleich der Summe der paarweisen Kovarianzen
-ist, werden wir im Laufe dieser Vorlesungsreihe häufig
-verwenden:
-\begin{equation}
-{\begin{aligned}\operatorname {Var}\left(\sum _{{i=1}}^{N}X_{i}\right) & 
-	= \sum _{i=1}^{N}\sum _{k=1}^{N}\operatorname {Cov}(X_{i},X_{k})\\
-	& = \sum _{{i=1}}^{N}\operatorname {Var}(X_{i})+
-	\sum _{{i,k=1,i\neq k}}^{N}\operatorname {Cov}(X_{i},X_{k})\\
-	& = \sum _{i=1}^{N}\operatorname {Var}(X_{i})+2\sum _{{i=1}}^{{N-1}}
-	\sum _{k=i+1}^{N}\operatorname {Cov}(X_{i},X_{k}) ,
-	\end{aligned}}
-\label{VarianzSummeX2Kovarianz}
-\end{equation}
-Dies lässt sich für den Fall erweitern, dass die summierten Zufallsgrößen mit jeweils einem reellen,
-konstanten Faktor multipliziert werden:
+so dass
 \begin{equation}
 {\begin{aligned}\operatorname {Var}\left(\sum _{{i=1}}^{N} \, c_i \, X_{i}\right) & 
 	= \sum _{i=1}^{N}\sum _{k=1}^{N}\operatorname {Cov}(c_i X_{i}, c_k X_{k})\\
@@ -873,28 +890,14 @@ konstanten Faktor multipliziert werden:
 	& = \sum _{{i=1}}^{N} \, c_i^2 \operatorname {Var}(X_{i})+2\sum _{{i=1}}^{{N-1}}
 	\sum _{{k=i+1}}^{N} \, c_i c_k \operatorname {Cov}(X_{i},X_{k}).
 	\end{aligned}}
-\label{KovarianzSumme}
+\label{univarLinearFortpflanzungKap1}
 \end{equation}
-Auf Gleichung (\ref{KovarianzSumme}) werden wir in den nächsten Vorlesungen zurück kommen,
-denn diese ist die Grundlage für das \textbf{Gesetz zur Fortpflanzung von Messunsicherheiten}.
+Die ist das \textbf{Gesetz der Fortpflanzung von Messunsicherheiten}, mit dem wir uns im Laufe
+dieser Vorlesungsreihe eingehend befassen werden.
 
-Für standardnormalverteilte Zufallsgrößen $Z_i$ mit $Z \sim \mathcal{N}(0,1)$ 
-und $i = 1,2$ in die sich
-die Größen $X_i$ wie folgt umrechnen lassen
-\begin{equation}
-Z_i \; = \; \frac{X_i \, - \, \operatorname{E}(X_i)}{\sqrt{\operatorname {Var}(X_{i})}}
-\end{equation}
-ist die Kovarianz gleich dem Korrelationskoeffizienten
-\begin{equation}
-\rho_{i,k} \; = \; \operatorname {Cov}(Z_{i},Z_{k})
-\end{equation}
-was äquivalent ist zu
-\begin{equation}
-\rho_{i,k} \; = \; \frac{\operatorname {Cov}(X_{i},X_{k})}{\sqrt{\operatorname {Var}(X_{i})} \, \sqrt{\operatorname {Var}(X_{k})}} .
-\end{equation}
+\newpage
 
-
-\section{Beispiel zum Selbststudium}
+\section{Beispiel zu Methode der kleinesten Quadrate zum Selbststudium}
 Zu Bestimmen ist ein Ohmscher Widerstand $R$ sowie eine Offsetspannung $U_0$ bei gegebenen Werten einer
 Präzisionsstromquelle und eines Voltmeters:
 
