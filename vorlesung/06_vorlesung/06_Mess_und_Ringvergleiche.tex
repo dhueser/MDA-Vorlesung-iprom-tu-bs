@@ -1,6 +1,8 @@
 
 \section{Auswertung von Messvergleichen mit Referenzlabor}
-In dieser Vorlesung wird die Anwendung des t-Tests und des Chi2-Tests auf eines der zentralen Themen der Metrologie gezeigt, welches die Durchführung von Ringvergleichen ist. Wesen der Metrologie ist, dass Messgrößen auf die SI-Einheiten zurückgeführt werden, damit sie weltweit vergleichbar sind. Um die Vergleichbarkeit von Ergebnissen unterschiedlicher gesetzlich geprüfter Laboratorien, seien dies Staatsinstitute verschiedener Länder oder Kalibrierlaboratorien innerhalb eines Landes, zu gewährleisten, werden Ringvergleiche durchgeführt.
+In dieser Vorlesung wird die Anwendung des t-Tests und des Chi2-Tests auf eines der zentralen Themen der Metrologie gezeigt, 
+welches die Durchführung von Ringvergleichen ist. Wesen der Metrologie ist, dass Messgrößen auf die SI-Einheiten zurückgeführt werden, 
+damit sie weltweit vergleichbar sind. Um die Vergleichbarkeit von Ergebnissen unterschiedlicher gesetzlich geprüfter Laboratorien, seien dies Staatsinstitute verschiedener Länder oder Kalibrierlaboratorien innerhalb eines Landes, zu gewährleisten, werden Ringvergleiche durchgeführt.
 Dazu wird beispielsweise ein Messobjekt (Prüfkörper) rumgeschickt und jedes beteiligte Labor misst an demselben Objekt eine genau spezifizierte Messgröße nach einem vorgegebenen Verfahren. Um die Ergebnisse miteinander zu vergleichen, werden die statistischen Verfahren der Hypothesentests auf Gleichheit der Mittelwerte und der Standardabweichungen eingesetzt.
 
 Es wird bei der Verwendung des t-Tests danach unterschieden, ob die Nullhypothese getestet wird, dass Mittelwerte der Laboratorien mit einem Erwartungswert (dem Referenzwert) übereinstimmen.
@@ -128,7 +130,7 @@ Da kein Referenzwert vorliegt, wird in diesem Fall ein gewichteter Mittelwert $\
 \begin{equation}
 \tilde x = \frac{x_1/u^2(x_1)+ \cdots + x_N/u^2(x_N)}{1/u^2(x_1)+ \cdots 1/u^2(x_N)} = \frac{\sum\limits_{i=1}^{N} x_i / u^2(x_i)}
 {\sum\limits_{i=1}^{N} u^{-2}(x_i)}
-\label{referenzgleichepartner}
+\label{eq:referenzgleichepartner}
 \end{equation}
 \item \textbf{Schritt 2:}  \newline
 Bestimme die Standardabweichung des gewichteten Mittelwertes $u(\tilde x)=\sigma(\tilde x)$:
@@ -175,10 +177,10 @@ mit
 \sum_{i=1}^{N} \tilde w_i = 1 .
 \label{eq:normierung}
 \end{equation}
-Der Referenzwert $x_\mathrm{ref} \equiv \tilde x$ aus Gl.~(\ref{referenzgleichepartner}) sie damit wie folgt aus: 
+Der Referenzwert $x_\mathrm{ref} \equiv \tilde x$ aus Gl.~(\ref{eq:referenzgleichepartner}) sie damit wie folgt aus: 
 \begin{equation}
 x_\mathrm{ref} = \sum_{i=1}^{N} \tilde w_i\; x_i
-\label{referenzgleichepartner2}
+\label{eq:referenzgleichepartner2}
 \end{equation}
 
 Für den Grad der Übereinstimmung erhalten wir: 
@@ -317,32 +319,33 @@ Es wird folgendes geprüft ($H_0$: Nullhypothese, $H_a$: Alternativhypothese):
  
 Das \textbf{Birge-Verhältnis} ist definiert als das Verhältnis der Streuungen der Unsicherheiten aller Partner 
 (bezeichnen wir mit $u_\mathrm{partner}$) zu der Unsicherheit des Referenzwertes $u_\mathrm{ref}$. Es wird
-analog der Testgröße des $chi^2$-Tests, $T = \nu \left(\frac{s}{\sigma_0}\right)^2$ Gl.~\ref{chi2testgroesse}, wie
+analog der Testgröße des $\chi^2$-Tests, $T = \nu \left(\frac{s}{\sigma_0}\right)^2$ Gl.~\ref{chi2testgroesse}, wie
 folgt definiert:
 \begin{equation}
-R_\mathrm{B}^2 = \frac{u^2_\mathrm{partner}}{u^2_\mathrm{ref}}
+R_\mathrm{B} := \frac{u_\mathrm{partner}}{u_\mathrm{ref}}
+\quad \text{mit} \quad 
+\frac{u^2_\mathrm{partner}}{u^2_\mathrm{ref}} \, \propto \, 
+\nu \left(\frac{s}{\sigma_0}\right)^2.
 \end{equation}
-mit $\nu$ für die Anzahl der Freiheitsgrade. Bei $N$ teilnehmenden Partner ist gilt dann
-$\nu = N-1$.
-Die Unsicherheit aller Partner ist wie folgt definiert:
+Die Varianz aller $N$ Partner ist wie folgt definiert:
 \begin{equation}
-u^2_\mathrm{partner} := \frac{\frac{1}{N-1}\sum\limits_{i=1}^{N} \left(\frac{x_i-x_\mathrm{ref}}{u(x_i)}\right)^2}
-{\sum\limits_{i=1}^{N} \left(\frac{1}{u(x_i)} \right)^2}
+u^2_\mathrm{partner} := \frac{\frac{1}{N-1} \sum\limits_{i=1}^{N} w_i \left(x_i-x_\mathrm{ref} \right)^2}
+{\sum\limits_{i=1}^{N} w_i} \quad \text{mit} \quad w_i = \frac{1}{u^2(x_i)} .
 \end{equation}
 Entsprechend Gl.(\ref{eq:Standardabweichung_Mittelwert}) ist die Unsicherheit des Referenzwertes wie folgt gegeben
 \begin{equation}
-\frac{1}{u_\mathrm{ref}^2} = \frac{1}{u^2(x_1)} +  \cdots + \frac{1}{u^2(x_N)},
+u_\mathrm{ref} = \left(\frac{1}{u^2(x_1)} +  \cdots + \frac{1}{u^2(x_N)} \right)^{-\frac{1}{2}},
 \end{equation}
 so dass für das Birge-Verhältnis gilt
 \begin{equation}
-R_\mathrm{B}^2 = \frac{1}{N-1} \; \sum_{i=1}^N \left( \frac{x_i-x_\mathrm{ref}}{u^2(x_i)} \right)^2 .
+R_\mathrm{B} = \sqrt{\frac{1}{N-1} \; \sum_{i=1}^N \left( \frac{x_i-x_\mathrm{ref}}{u(x_i)} \right)^2 }.
 		\label{eq:Birge-Verhaeltnis}
 \end{equation}
 
-Vergleicht man das Birge-Verhältnis mit der Testgröße $T$ in Gl.(\ref{eq:T_for_consistencecheck}) so ergibt sich der Zusammenhang:
-\begin{equation} 
-R_\mathrm{B}^2 = \frac{1}{N-1} \; T
-\end{equation}
+%Vergleicht man das Birge-Verhältnis mit der Testgröße $T$ in Gl.(\ref{eq:T_for_consistencecheck}) so ergibt sich der Zusammenhang:
+%\begin{equation} 
+%R_\mathrm{B}^2 = \frac{1}{N-1} \; T
+%\end{equation}
 Bei dem Konsistenzcheck mit dem Birge-Verhältnis wird untersucht, ob  
 \begin{itemize}
 	\item $R_\mathrm{B} \le 1$: Konsistenzcheck ok. 
@@ -366,16 +369,27 @@ Referenzwert (gewichteten Mittelwert) $x_{ref}=\sum_i w_i x_i / \sum_i w_i$.
 Der Birge Test kann auch bei korrelierten Messdaten $x_1,\ldots ,x_N$, wenn die 
 Kovarianzen $\sigma_{12},\ldots, \sigma_{(N-1)N}$ gegeben sind, durchgeführt werden, siehe \cite{Kac08}.
 
-\subsection{Anpassung der Gewichtsfaktoren für konsistente Werte}
+\subsection{Anpassung von Gewichtsfaktoren}
+
+Bei Ringvergleichen kommt es oftmals vor, dass jeder am Vergleich beteiligte Partner eine
+Unsicherheit $U$ angibt die kleiner ist als der Abstand des Messwertes zu anderen Partnern,
+so dass der En-Wert bzw.\ des Birge-Verhältnisses unter Verwendung der Gewichte gemäß Gl.~(\ref{eq:anteile})
+größer als Eins wird. Durch eine Anpassung der Gewichtsfaktoren durch Hinzufügen einer
+zusätzlichen Komponente, die sich aus der Streuung der Ergebnisse von Partner zu Partner ergibt,
+kann eine bessere Konsistenz erzielt werden.
+
 Der Leitfaden zum Erstellen eines \textsl{Key Comparison Reports}
-\cite{GuideKey} empfiehlt bei einem Birge-Verhältnis deutlich größer als Eins die Anwendung
-der \textbf{Mandel-Paule Methode}, welches zu angepasstem Referenzwert und angepasster Varianz führt,
-so dass dadurch dann ein Birge-Verhältnis kleiner Eins erreicht werden kann.
-Ein Beispiel dazu ist im Anhang B der Richtlinie für Ringevergleiche \cite{GuideKey} zu finden.
+\cite{GuideKey} empfiehlt als Anpassungsverfahren die \textbf{Mandel-Paule Methode},
+bei der die Varianzen durch Additions einer Streuung zwischen Laboratorien
+erhöht werden. Dadurch werden die Gewichtsfaktoren $w_i$ verkleinert und damit Referenzwert 
+$x_\mathrm{ref}$ so angepasst, so dass das Birge-Verhältnis kleiner als Eins werden kann.
+Ein Beispiel dazu ist im Anhang B der Richtlinie für Ringvergleiche \cite{GuideKey} zu finden.
+
 Im folgenden schauen wir uns das Prinzip von Mandel und Paule an, das 
 in der Publikation \cite{Pau82} zu finden. Es werden zwei eher künstliche Beispiele gewählt, um das Prinzip besser zu verstehen. 
-Im Beispiel I wird eine Messgröße mit zwei verschiedenen Methoden (bzw. zwei verschiedenen Partnern) A und B gemessen. Die gemessenen Werte sind in Tab. \ref*{tab:Beispiel_I}
-angegeben. 
+In Beispiel I wird eine Messgröße mit zwei verschiedenen Methoden (bzw.\ von zwei verschiedenen Partnern) A und B gemessen.
+Die gemessenen Einzelwerte von jedem der beiden Partner sind in Tab. \ref*{tab:Beispiel_I}
+angegeben.
 \begin{table}[!htb]
 	\caption{Messdaten des Beispiels I}
 	\begin{center}
@@ -387,18 +401,19 @@ angegeben.
 \end{center}
 \label{tab:Beispiel_I}
 \end{table}
-Der gleichgewichteten Mittelwert $\bar x_I$ über beide Methoden ist:
- Mittelwert $\bar x_I$: 
+
+Der gleichgewichtete Mittelwert $\bar x_I$ über alle Werte beider Partner gemeinsam ist:
  \begin{equation}
- \bar x_I = \frac{1}{N} \sum_{i=1}^N x_i \, = \, 8.1
+ \bar x_I = \frac{1}{N} \sum_{i=1}^N x_i \, = \frac{1}{6}\left( 1.1 + 1.9 + 1.5 + 16 + 25 + 3 \right) \, \approx \, 8.1
  \end{equation}
  Intuitiv würden wir jedoch sagen, dass wir den Messdaten mit der Methode A
  mehr vertrauen schenken würden, als den Messdaten mit der Methode B, da die 
  Messdaten der Methode A weniger streuen als die Messdaten mit der Methode B.
 
  Als zweites Beispiel betrachten wir, dass die Methoden (bzw. Partner) A und B ähnlich
- genau messen, jedoch werden mit der Methode A deutlich mehr Wiederholungen
- als mit Methode B durchgeführt. 
+ genau messen, jedoch werden von Partner A einen größeren Stichprobenumfang
+ als von Partner B:
+
  
  \begin{table}[!htb]
  	\caption{Messdaten des Beispiels II}
@@ -407,182 +422,268 @@ Der gleichgewichteten Mittelwert $\bar x_I$ über beide Methoden ist:
  			\hline 
  			Methode/Partner & \multicolumn{6}{c}{A} \vline & \multicolumn{2}{c}{B} \\ \hline
  			Gemessener Wert $x_i$ & 2.0 & 1.0 & 1.5 & 1.8 & 1.2 & 1.7 
- 			& 16.3 & 16.5\\ \hline
+ 			& 16.3 & 16.8\\ \hline
  		\end{tabular}
  	\end{center}
  	\label{tab:Beispiel_II}
  \end{table}
- Für den gleichgewichteten Mittelwert erhalten wir:
+Für den Mittelwert über alle Werte gemeinsam erhalten wir:
  \begin{equation}
- \bar x_{II} = \frac{1}{N} \sum_{i=1}^N x_i = 5.3
+ \bar x_{II} = \frac{1}{N} \sum_{i=1}^N x_i \, = \frac{1}{8}\left( 2.0 + 1.0 + 1.5 + 1.8 + 1.2 + 1.7 + 16.3 + 16.8 \right) \, = \, 5.2875
+\label{eq:einfachesMittelII}
  \end{equation}
- Alternativ könnte man hier jedoch auch den Mittelwert von A und B 
- ausrechnen und daraus dann den Mittelwert nehmen. Wir erhalten dann einen anderen Mittelwert $\bar x_{II,AB}$
+Es fällt auf, dass die beiden Werte von Partner B zueinander passen, sich aber deutlich von denen von Partner A unterscheiden.
+
+Die beiden Mittelwerte der jeweiligen Partner A und B sind
  \begin{equation}
- \bar x_{II,A} = 1.533, \quad \bar x_{II,B} = 16.550 \quad \rightarrow
- \bar x_{II,AB} = 9.0417
+ \bar x_{II,A} = \frac{1}{6}\left( 2.0 + 1.0 + 1.5 + 1.8 + 1.2 + 1.7 \right) = 1.533, 
+\quad \bar x_{II,B} = \frac{1}{2}\left( 16.3 + 16.8 \right) = 16.550
  \label{eq:Mittelwerte_x_II_A_B}
  \end{equation}
- Dadurch dass wir Mittelwerte mitteln erhalten wir eine andere Wichtung. Das
- Ziel ist, eine Gewichtung zu verwenden, die konsistente Resultate liefert.
- Um bei den beiden Beispielen I und II konsistente Referenzwerte zu erhalten, 
- müssen gewichtete Mittelwerte verwendet werden. Gemäß Gl.~(\ref{referenzgleichepartner})
- bzw.\ Gl.~(\ref{referenzgleichepartner2}) verwenden wir für den Referenzwert $x_\mathrm{ref}$:
+
+\textcolor{red}{\textbf{Dieses würde ich hier an dieser Stelle gar nicht bringen, auch wenn es in Pau82 
+so präsentiert wird, weil Du ja hier in diesem Skript schon mit den Gewichten als Kehrwert
+der Varianzen für den Referenzwert, der aus dem gewichteten Mittel der Resultate aller Partner
+gewonnen wurde, um En-Werte für gleiche Partner zu bestimmen.}}
+
+
+\textcolor{red}{zunächst hatte ich entlang am Pau82 die Sachen so nachgerechnet und verstanden, wie
+Paule und Mandel sie argumentiert hatte, dann wurde mir langsam klar, dass wir in unseren Vorlesungen
+aber längst an dem Punkt angekommen sind, dass man die Kehrwerte der Varianzen nimmt und nicht
+anfängt die Mittelwerte einfach zu mitteln $\Rightarrow$ alles Blaue hiernach hier wegnehmen}
+
+\textcolor{blue}{und der Mittelwert dieser beiden Mittelwerte ist
  \begin{equation}
- x_\mathrm{ref} = \frac{\sum\limits_{i=1}^N w_i x_i}{\sum\limits_{i=1}^N w_i} \quad \rightarrow 
- x_\mathrm{ref} =  5.6719
- \label{eq:Referenzwert_konsistent}
+  \bar x_{II,AB} = \frac{1}{2}\left( 1.533 + 16.550 \right) = 9.0417
+ \label{eq:Mittelwerte_x_IIAB}
  \end{equation}
-Die statistische Theorie zeigt, dass die Varianz des gewichteten Mittelwertes $x_\mathrm{ref}$ minimiert wird,
-wenn die Gewichte als Reziprokwert der Varianz berechnet werden, also: 
-\begin{equation}
-    w_i = \frac{1}{\operatorname{Var}(x_i)}
-\end{equation}  
+ Dadurch dass wir Mittelwerte mitteln erhalten wir eine andere Wichtung: $\frac{\sum w_i x_i}{\sum w_i}$:
+$$
+\frac{1}{2} \left( \frac{1}{6} \left(\sum\limits_{i=1}^6 x_i \right) \; + \;
+    \frac{1}{2} \left(\sum\limits_{i=7}^8 x_i \right)  \right) =
+ \frac{1}{12} \left(\sum\limits_{i=1}^6 x_i \right) \; + \;
+    \frac{1}{4} \left(\sum\limits_{i=7}^8 x_i \right)
+$$
+also 
+$$
+\frac{w_i}{\sum\limits_{i=1}^8 w_i} \, = \, 
+\left\{ \begin{array}{ccl}
+\frac{1}{12} & \text{f{\"u}r} & i = 1,\dots,6 \\
+\frac{1}{4} & \text{f{\"u}r} & i = 7, 8
+\end{array} \right.
+$$
+Diese Art der Wichtung, die Einzelwerte zu gewichten, führt dazu dass Stichprobe B
+sehr viel stärker gewichtet wird, in diesem Beispiel um einen Faktor $3$ mit $\frac{1}{4} = \frac{3}{12}$.
+Es macht jedoch mehr Sinn, die Gewichte danach zu richten, wie genau die Größen sind,
+im Sinne von der Frage wie breit oder schmal die Wahrscheinlichkeitsdichteverteilung ist.}
 
-Der Referenzwert kann jedoch auch aus den Mittelwerten berechnet
-werden, also: 
-\begin{equation}
- x_\mathrm{ref} = \frac{\sum\limits_{i=1}^M w_i \bar x_i}{\sum\limits_{i=1}^M w_i} 
- \quad \rightarrow  x_\mathrm{ref} = 9.0417
- \label{eq:Referenzwert_Mittelwerte}
-\end{equation}
- 
- Die Varianz eines Mittelwertes berechnet sich zu ($N_i$: Anzahl der Wiederholungen für den Mittelwert $\bar x_i$): 
- \begin{equation}
-\operatorname{Var}(\bar x_i) = \frac{\operatorname{Var}(x_i)}{N_i}
- \end{equation}
- Berechnen wir damit aus dem Beispiel II die Varianz der Methode A und
- die Varianz der Methode B, so erhalten wir: 
-\begin{equation}
- \operatorname{Var}(\bar x_{II,A}) = 0.0285 \; \text{mit} \; N_i = 6 \quad \text{und} \quad 
- \operatorname{Var}(\bar x_{II,B}) = 0.0625 \; \text{mit} \; N_i = 2
-\end{equation}
-Wir sehen, dass die Varianz der Methode B sehr klein ist. Jedoch liegen die 
-Mittelwerte der Methoden A und B sehr weit auseinander und somit sind 
-die beiden Varianzen der Mittelwerte nicht konsistent zueinander. Es ist durchaus üblich, dass man bei unterschiedlichen Messdatensätzen sehr 
-unterschiedliche Varianzen erhält. Die Frage ist, welche Varianz weist man 
-nun \glqq sinnvollerweise\grqq~den Mittelwerten zu $\bar x_{II,A}$ und $\bar x_{II,B}$ zu.
- 
-Die Varianz für Beispiel II wird dann z.B. für die beiden Mittelwerte 
-wie folgt aussehen (Den Index \glqq II \grqq lassen wir hier der 
-Einfachheit halber weg.). Wir führen dazu eine zunächst unbekannte Varianz $\operatorname{Var}(x_b)$ ein, deren Ermittlung iterativ bestimmt wird, siehe weiter unten. Der Index \glqq $bet$ \grqq steht für \glqq between \grqq.
-\begin{equation}
-\operatorname{Var}(\bar x_A) = \frac{\operatorname{Var}(x_A)}{6} +  
-\operatorname{Var}(x_{bet})
-\end{equation}
-und 
-\begin{equation}
-\operatorname{Var}(\bar x_B) = \frac{\operatorname{Var}(x_B)}{2} +  
-\operatorname{Var}(x_{bet})
-\end{equation}
-In dem Beispiel II sind die beiden Varianzen:
-\begin{equation}
- \operatorname{Var}(x_A)=\frac{\sum\limits_{i=1}^6 (x_{A,i} - \bar{x}_A)^2}{6-1} = 0.1427 \quad \text{und} \quad 
- \operatorname{Var}(x_B)=0.1250
-\end{equation}
-Für \glqq vernünftige\grqq~Varianzen der Mittelwerte fügt man eben noch 
-eine Varianz $\operatorname{Var}(x_{bet})$ hinzu. Wenn die Varianzen 
-der Methode A und B ähnlich sind, wie hier im Beispiel II, so kann eine
-gemeinsame (gepoolte) Varianz für den der beiden Methoden 
-berechnet werden (siehe auch 5. Vorlesung, Gl.(49)):
-\begin{equation}
- \operatorname{Var}(x) = \frac{\sum\limits_{i=1}^6 \left(x_{A,i}-\bar x_A\right )^2+\sum\limits_{i=1}^2 \left(x_{B,i}-\bar x_B\right )^2}{(6-1)+(2-1)} = 0.1397
-\end{equation} 
-so dass dann die Varianzen für die Mittelwerte wie folgt berechnet werden:
-\begin{equation}
-\operatorname{Var}(\bar x_A) = \frac{0.1397}{6} +  
-\operatorname{Var}(x_{bet})
-\end{equation}
-und 
-\begin{equation}
-\operatorname{Var}(\bar x_B) = \frac{0.1397}{2} +  
-\operatorname{Var}(x_{bet})
-\end{equation}
-Im folgenden wollen wir uns nun anschauen, wie man die Varianz 
-$\operatorname{Var}(x_{bet})$ iterativ bestimmt. Es wird als Mandel-Paule-Methode
-bezeichnet.
 
-Für eine \glqq vernünftige\grqq~Gewichtung des Mittelwertes $\bar x_i$ mit 
-$w_i = 1/\operatorname{Var}(\bar{x_i})$ wird folgende Größe berechnet: 
-\begin{equation}
-w_i = \left[ \frac{\operatorname{Var}(x_{i})}{N_i} + 
-\operatorname{Var}(x_{bet}) \right]^{-1} 
-\label{eq:Gewichte_bestimmen}
-\end{equation}
-Sie nimmt nicht einfach die Varianzen des Mittelwertes, sondern 
-modifiziert diese mit der noch unbekannten Varianz $\operatorname{Var}(x_{bet})$.
+Wir haben im Laufe dieser Vorlesungsreihe bereits gesehen, dass
+Messergebnisse mit größerer Unsicherheit sinnvollerweise mit geringerer
+Wichtung zu berücksichtigen sind, so dass Gewichte
+deshalb aus dem Kehrwert der Varianzen bestimmt werden. Der Grund dafür liegt darin,
+dass die Varianz des gewichteten Mittelwertes $x_\mathrm{ref}$ minimiert wird,
+wenn die Gewichte als Reziprokwert der Varianzen der Einzelwerte berechnet werden.
+In Gl.~(\ref{referenzgleichepartner}) bzw.\ Gl.~(\ref{eq:referenzgleichepartner2}) 
+haben wir deshalb zur Ermittlung des Referenzwertes $x_\mathrm{ref}$ beim
+Ringvergleich mit gleichwertigen Partnern gerechnet mit
+\begin{equation*}
+    w_i = \frac{1}{u_i}
+\end{equation*}
+und
+\begin{equation*}
+ x_\mathrm{ref} = \frac{\sum\limits_{i=1}^N w_i x_i}{\sum\limits_{i=1}^N w_i} .
+\end{equation*}
 
-Aus der Definition der Gewichten erhalten wir die Relation: 
-\begin{equation}
-	w_i \cdot \operatorname{Var}(\bar x_i) = 1 
-\end{equation}
-Für einen gegebenen Satz von Gewichten $w_i$ kann die Varianz der 
-Mittelwerte $\bar x_i$ in Bezug auf den Referenzwert $\bar x_{ref}$ berechnet werden:
-\begin{equation}
-w_i \cdot \operatorname{Var}(\bar x_i) = \frac{\sum\limits_{i=1}^M w_i 
-	(\bar x_i - x_{ref})^2}{M-1}
-\end{equation}
-(Hinweis: Der Referenzwert $x_{ref}$ wird entsprechend Gl.(\ref{eq:Referenzwert_Mittelwerte}) berechnet.) 
-Wir erhalten als Bedingung
-\begin{equation}
-\frac{\sum\limits_{i=1}^M w_i 
-	(\bar x_i - x_{ref})^2}{M-1} = 1
-\label{eq:Bedingung_Gewichte_gleich_Eins}
-\end{equation}
-Den Referenzwert können wir jedoch nur dann berechnen, wenn wir die 
-Gewichte kennen, die sich aus Gl.(\ref{eq:Gewichte_bestimmen}) bestimmen
-lassen. Hier kennen wir jedoch noch nicht die $\operatorname{Var}(x_{bet})$,
-die wir jedoch auf Grund der Bedingung in Gl.(\ref{eq:Bedingung_Gewichte_gleich_Eins}) iterativ bestimmen können.
+\textcolor{red}{wahrscheinlich macht es keinen Sinn mit der empirischen Varianz
+anzufangen, sondern direkt mit der empirischen Var des Mittelwertes, also nehme ich
+diesen Teil wieder zurück}
+\textcolor{blue}{Verwenden wir für die Unsicherheit $u_i$ die empirische Varianz
+$u_i = \operatorname{Var}(x_i)$ für Beispiel II folgende Werte
+$$
+\operatorname{Var}(x_{II,A}) = 
+\frac{1}{6-1} \sum\limits_{k=1}^{6} \left(x_{II,k} - \bar x_{II,A} \right)^2 = 0.14267
+$$
+und
+$$
+\operatorname{Var}(x_{II,B}) = \frac{1}{2-1} \sum\limits_{k=7}^{8} \left(x_{II,k} - \bar x_{II,B} \right)^2
+= 0.12500
+$$ 
+so erhalten wir für die beiden Gewichte $w_A = 7.0093$ und $w_B = 8.0000$, die beide fast gleich.
+Der gewichtete Mittelwert, der als Referenzwert für En-Tests und das Birge-Verhältnis genutzt wird ist damit
+$$
+x_\mathrm{ref} \; = \; \frac{7.0093 \cdot 1.533 \; + \; 8.0000 \cdot 16.550}{7.0093 + 8.0000}
+\; = \; 9.5372
+$$
+Nach Gl.~(\ref{eq:Birge-Verhaeltnis}) das Birge-Verhältnis hierfür
+$$
+R^2_\mathrm{B} \; = \; \frac{1}{N-1} \; \sum_{i=1}^N \left( \frac{x_i-x_\mathrm{ref}}{u^2(x_i)} \right)^2 \; = \;
+ \frac{1}{2-1} \, \left( \frac{\left(1.5333 - 9.5372\right)^2}{0.14267}
+ \, + \, \frac{ \left( 16.550 - 9.5372 \right)^2}{0.12500} \right) = 842.47 \gg 1
+$$
+--nix!}
 
-Für die iterative Lösung definieren die Funktion $F(\operatorname{Var}(x_{bet}))$: 
+Da es sich um den Vergleich der Mittelwerte der beiden Stichproben A und B handelt, verwenden wir
+für die Unsicherheit $u_i$ die Varianz des Mittelwertes, also
+$u_i = \operatorname{Var}(\bar x_i)$ verwenden. Für Beispiel II sind dies folgende Werte:
+$$
+\operatorname{Var}(\bar x_{II,A}) = \frac{1}{6(6-1)} \sum\limits_{k=1}^{6} \left(x_{II,k} - \bar x_{II,A} \right)^2 = 0.023778
+$$
+und
+$$
+\operatorname{Var}(\bar x_{II,B}) = \frac{1}{2(2-1)} \sum\limits_{k=7}^{8} \left(x_{II,k} - \bar x_{II,B} \right)^2 = 0.062500
+\label{eq:VarianzenMWII}
+$$
+so erhalten wir für die beiden Gewichte $w_A = 42.056$ und $w_B = 16.000$.
+Der gewichtete Mittelwert, der als Referenzwert für En-Tests und das Birge-Verhältnis genutzt wird, ist damit
+$$
+x_\mathrm{ref} \; = \; \frac{42.056 \cdot 1.533 \; + \; 16.000 \cdot 16.550}{42.056 + 16.000}
+\; = \; 5.6716
+$$
+Nach Gl.~(\ref{eq:Birge-Verhaeltnis}) das Birge-Verhältnis hierfür
+$$
+R^2_\mathrm{B} \; = \; \frac{1}{N-1} \; \sum_{i=1}^N \left( \frac{x_i-x_\mathrm{ref}}{u^2(x_i)} \right)^2 \; = \;
+ \frac{1}{2-1} \, \left( \frac{\left(1.5333 - 5.6716\right)^2}{0.023778}
+ \, + \, \frac{ \left( 16.550 - 5.6716 \right)^2}{0.0625} \right) = 2613.7
+$$
+also
+$$
+R^2_\mathrm{B} \; = \; \sqrt{2613.7} \, = \, 51.1  \gg 1
+$$
+
+% https://iopscience.iop.org/article/10.1088/0026-1394/51/5/516/meta
+
+Wir sehen, dass die Varianzen der Mittelwerte der beiden Partner A und B im Verhältnis zur
+Differenz zwischen den beiden Partnern sehr klein ist, oder umgekehrt gesagt liegen die 
+Mittelwerte der Methoden A und B sehr weit auseinander im Verhältnis zu den Varianzen.
+Die Varianzen $\operatorname{Var}(\bar x_A)$ und $\operatorname{Var}(\bar x_A)$ beschreiben
+nur die interne Streuung, also nur die Streuung der jeweiligen Stichproben A und B.
+Die Wahrscheinlichkeitsverteilungen werden durch die beiden Parameter Erwartungswert,
+also hier Mittelwert, und Varianz charakterisiert und wir hatten bei den Hypothesentests
+gelernt, auf beides zu prüfen. Wir haben gesehen, dass Stichproben einer gemeinsamen
+Grundgesamtheit angehören, wenn beides, Mittelwert und Varianz zueinander passen.
+
+Bei den Ringvergleichen, bei denen von verschiedenen Laboratorien oder Instituten mit
+unterschiedlichen Methoden oder jedenfalls unabhängigen experimentellen Aufbauten die
+Ergebnisse verglichen werden, kann beobachtet werden, dass entweder die
+Schätzer (empirischen Erwartungswerte) oder die empirischen Varianzen oder sogar
+beides nicht zusammen passen. In der Praxis kommt es vor, dass die jeweiligen
+Labore oder Institute ihre Methode immer weiter optimiert haben und ihre Genauigkeit
+erhöht haben, dass jedoch verbleibende, unerkannte systematische Effekte vorhanden sind.
+Dass es Unterschiede gibt, tritt erst bei dem Vergleich zutage und es lässt sich
+im Rahmen der gesetzten Zeit für das Projekt des Vergleichens nicht aufklären.
+In solchen Fällen lebt man dann damit, dass es auch zwischen den unterschiedlichen
+Methoden bzw.\ Laboren eine Streuung gibt.
+
+Statistisch wird dies damit ausgedrückt, dass die Stichproben auf den verschiedenen
+Laboren zu verschiedenen Grundgesamtheiten gehören.
+Konkret bedeutet das, dass für die Gewichte zusätzlich zur Varianz des Mittelwert
+zur jeweiligen Methode/ des jeweiligen Laboratoriums
+(Streuung innerhalb einer Gruppe, \textsl{within group variability})
+auch eine Varianz der Methoden/Laboratorien (Streuung zwischen Gruppen,
+\textsl{between group variability}) eingeführt.
+Die Streuung zwischen den Gruppen, die Varianz $s^2_\mathrm{b}$ wird
+iterativ geschätzt. Für die verschiedenen Partner oder Stichproben A und B
+verwenden wir jetzt die Notation $S_j$, hier also $S_1 = A$ und $S_2 = B$, um
+die Gleichungen allgemein aufschreiben zu können.
+\begin{equation*}
+\operatorname{Var}(\bar x_{S_j,\mathrm{c}}) \; = \;
+\operatorname{Var}(\bar x_{S_j}) \; + \; s^2_\mathrm{b} \; = \;
+\frac{1}{N_j (N_j - 1)} \sum\limits_{k \in S_j}
+\left( x_{k} - \bar x_{S_j} \right)^2 
+\; + \; s^2_\mathrm{b}
+\end{equation*}
+oder kürzer aufgeschrieben mit $j$ als Index für die Nummerierung der Partner
+und für die Varianzen der Mittelwerte bzw.\ Messergebnisse 
+der Partner
+$u^2_j = \bar s^2_j = \operatorname{Var}(\bar x_{S_j})$
+bzw.\ für die Konsensusvarianzen
+$\bar s^2_{j,\mathrm{c}} = \operatorname{Var}(\bar x_{S_j,\mathrm{c}})$
 \begin{equation}
-F(\operatorname{Var}(x_{bet})) := \sum\limits_{i=1}^M w_i 
-(\bar x_i - x_{ref})^2 - (M-1) \stackrel{!}{=} 0
+\bar s^2_{j,\mathrm{c}} \; = \; \bar s^2_j \; + \; s^2_\mathrm{b}
+\label{eq:consensusVariability}
+\end{equation}
+wobei der Index b für \textsl{between} und c für \textsl{consensus}
+stehen. Auch die Mittelwerte bzw.\ allgemein die Messergebnisse der
+jeweiligen Partner schreiben wir jetzt in der Form $\bar x_{S_j} = \bar x_j$.
+
+Die Gewichte für den \textsl{Consensus Value}, dem besser übereinstimmenden
+Wert für die Messgröße sind damit dann
+\begin{equation}
+w_{j,\mathrm{c}} \, = \; \frac{1}{\operatorname{Var}(\bar x_{S_j,\mathrm{c}})} \; = \;
+\left(\frac{1}{N_j (N_j - 1)} \sum\limits_{k \in S_j}
+\left( x_{k} - \bar x_{S_j} \right)^2 
+\; + \; s^2_\mathrm{b} \right)^{-1}
+\label{eq:consensusWeights}
+\end{equation}
+und der Konsenzreferenzwert aus den Werten aller $M$ Partner ist dann
+\begin{equation}
+x_\mathrm{ref, c} \, = \, 
+\frac{\sum\limits_{j=1}^M w_{j,\mathrm{c}} x_j}{\sum\limits_{j=1}^M w_{j,\mathrm{c}} }.
+\label{eq:consensusMean}
+\end{equation}
+Das Birge-Verhältnis für diese Konsensuswerte ist somit
+\begin{equation}
+R_\mathrm{B} \; = \; \frac{1}{M-1} \, \sum\limits_{j=1}^M
+\frac{1}{\bar s^2_j \; + \; s^2_\mathrm{b}} \, \left(\bar x_j - x_\mathrm{ref, c}\right)^2.
+\end{equation}
+
+\textbf{Schätzen der Zwischengruppenvarianz $s^2_\mathrm{b}$}
+\begin{quote}
+Geschätzt wird die Zwischengruppenvarianz $s^2_\mathrm{b}$ gemäß Paule und Mandel \cite{Pau82} als
+diejenige Varianz, für die die Ergebnisse der Partner konsistent sein sollen, also für die
+das Birge-Verhältnis gegen Eins streben soll: $R_\mathrm{B} \rightarrow 1$.
+\end{quote}
+Als Optimierungsaufgabe formuliert also
+\begin{equation*}
+\frac{1}{M-1} \, \sum\limits_{j=1}^M
+\frac{1}{\bar s^2_j \; + \; s^2_\mathrm{b}} \, \left(\bar x_j - x_\mathrm{ref, c}\right)^2 \rightarrow 1
+\end{equation*}
+oder genauer ausgedrückt
+\begin{equation}
+\min_{s_\mathrm{b}} \left\{\frac{1}{M-1} \, \sum\limits_{j=1}^M
+\frac{1}{\bar s^2_j \; + \; s^2_\mathrm{b}} \, \left(\bar x_j - x_\mathrm{ref, c}\right)^2 \, - \, 1\right\}.
 \label{eq:x_bet_Bedingung}
 \end{equation}
-Der Einfachheit halber definieren wir 
-$v:= \operatorname{Var}(x_{bet})$. Wir entwickeln die Gleichung in 
-eine Taylorreihe bis zum linearen Glied
-\begin{equation}
-F(v_0 + d v_0) \approx F_0 + \left.\left( \frac{\partial F}{\partial v}\right)\right| _{v=v_0} dv_0 
- \stackrel{!}{=} 0
-\end{equation}
-und damit
-\begin{equation}
-dv_0 = -\left . \left( \frac{F_0}{\frac{\partial F}{\partial v}}\right)\right| _{v=v_0} 
-\end{equation}
-Berechnen wir die partielle Ableitung, erhalten wir:
-\begin{equation}
-dv_0 = \frac{F_0}{\left[\sum\limits_{i=1}^M w_i^2 
-	(\bar x_i - x_{ref})^2\right]_{v=v_0}}
-\end{equation}
-Wir führen hier den Iterationsindex $k$ ein. 
-Den angepassten neuen Wert $v_{k+1}$ erhalten wir durch:
-\begin{equation}
-v_{k+1} = v_k + dv_k
-\end{equation}
-Falls während der Iteration ein negativer Wert $v_{k+1}$ auftritt wird dieser
-zu Null gesetzt.
 
-Exemplarisch zeigen wir das an dem Beispiel II. 
-Wir starten zunächst mit einen Anfangswert von $v_0 = \operatorname{Var}(x_{bet})=100$.
-Wir berechnen die Gewichte $w_i$ entsprechend Gl.(\ref{eq:Gewichte_bestimmen}).
-Wir erhalten dann:
+Diese Optimierungsaufgabe hat eine Kostenfunktion 
+$Q(s_\mathrm{b}) = \frac{1}{M-1} \, \sum\limits_{j=1}^M
+\frac{1}{\bar s^2_j \; + \; s^2_\mathrm{b}} \, \left(\bar x_j - x_\mathrm{ref, c}\right)^2 \, - \, 1$
+die von dem zu schätzenden Parameter
+$s_\mathrm{b}$ nicht-linear abhängt, so dass sie iterativ zu lösen ist, Kapitel~\ref{nonlinOpti}.
+
+Wir entwickeln die Kostenfunktion in 
+eine Taylorreihe bis zum linearen Term
 \begin{equation}
-w_A = 0.0099976 \quad \text{und} \quad w_B = 0.0099938.
+Q(s_{\mathrm{b},0} + \operatorname{d} s_0) \approx 
+Q_0 + \left.\left( \frac{\partial Q}{\partial s_\mathrm{b}}\right)
+\right|_{s_\mathrm{b}=s_{\mathrm{b},0}} \operatorname{d} s_0 
 \end{equation}
-Die Mittelwerte für Methode A und B haben wir bereits in Gl.(\ref{eq:Mittelwerte_x_II_A_B}) bestimmt mit: 
+Mit $Q(s_{\mathrm{b},0} + \operatorname{d} s_0) \rightarrow 0$ setzten wir für den ersten
+Iterationsschritt
 \begin{equation}
-\bar x_A = 1.533 \quad \text{und} \quad \bar x_B = 16.550.
+Q_0 + \left.\left( \frac{\partial Q}{\partial s_\mathrm{b}}\right)
+\right|_{s_\mathrm{b}=s_{\mathrm{b},0}} \operatorname{d} s_0 = 0
 \end{equation}
-Wir erhalten dann folgende Werte ($F_k$ wird mit Gl.(\ref*{eq:x_bet_Bedingung}) berechnet):
+und lösen dies nach $\operatorname{d} s_0$ auf zu
+\begin{equation}
+\operatorname{d} s_0 = -\left . \left( \frac{Q_0}{\frac{\partial Q}{\partial s_\mathrm{b}}}\right)\right| _{s_\mathrm{b}=s_{\mathrm{b},0}} 
+\end{equation}
+Wir beginnen mit einem heuristisch geschätzten Startwert für $s_{\mathrm{b},0}$, beispielsweise mit $s_{\mathrm{b},0} = 0$
+und setzten im nächsten Schritt $s_{\mathrm{b},1} = s_{\mathrm{b},0} + \operatorname{d} s_0$.
+und setzten dies fort mit
+\begin{equation}
+s_{\mathrm{b},k+1} = s_{\mathrm{b},k} + \operatorname{d} s_k
+\end{equation}
+bis $Q$ zu einem Minimum möglichst nahe bei Null konvergiert.
+
 
 \begin{table}[!htb]
 	\caption{Ergebnis für 3 Iterationen}
 	\begin{center}
 		\begin{tabular}{p{2cm}| p{3.5cm} | p{3cm} |p{3cm}|p{2cm}}
 			\hline 
-			Iterations-Nr. $k$ & Referenzwert $x_{ref,k+1}$ & $F_{k}$ & $dv_k$ & $v$\\ \hline
+			Iterations-Nr. $k$ & Referenzwert $x_{ref,k+1}$ & $Q_{k}$ & $\operatorname{d} s_k$ & $s_{\mathrm{b},k}$\\ \hline
 			0 & 9.0402 & 0.12702 & 11.275 &  111.27\\ \hline
 			1 & 9.0404 & 1.2865e-002 & 1.4139 & 112.69\\ \hline
 			2 & 9.0404 & 1.6135e-004 & 1.8187e-002 & 112.71 \\ \hline
@@ -597,8 +698,8 @@ kleiner als $10^{-5}$ ist.
 
 Als konsistenter Referenzwert ergibt sich:
 \begin{equation}
-x_{ref} = 9.0404 \quad \text{mit einer gepoolten Varianz von} 
-\operatorname{Var}(x_{ref}) = 0.1397
+x_\mathrm{ref} = 9.0404 \quad \text{mit einer gepoolten Varianz von} 
+\operatorname{Var}(x_\mathrm{ref}) = 0.1397
 \end{equation}
 \newpage
 Der dazu gehörige Quellcode für Octave/Matlab sieht wie folgt aus: 
