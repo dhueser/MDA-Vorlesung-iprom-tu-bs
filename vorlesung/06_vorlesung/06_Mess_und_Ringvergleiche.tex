@@ -369,7 +369,7 @@ Referenzwert (gewichteten Mittelwert) $x_{ref}=\sum_i w_i x_i / \sum_i w_i$.
 Der Birge Test kann auch bei korrelierten Messdaten $x_1,\ldots ,x_N$, wenn die 
 Kovarianzen $\sigma_{12},\ldots, \sigma_{(N-1)N}$ gegeben sind, durchgeführt werden, siehe \cite{Kac08}.
 
-\subsection{Anpassung von Gewichtsfaktoren}
+\subsection{Paule-Mandel Metjode zur Anpassung von Gewichtsfaktoren}
 
 Bei Ringvergleichen kommt es oftmals vor, dass jeder am Vergleich beteiligte Partner eine
 Unsicherheit $U$ angibt die kleiner ist als der Abstand des Messwertes zu anderen Partnern,
@@ -379,7 +379,7 @@ zusätzlichen Komponente, die sich aus der Streuung der Ergebnisse von Partner z
 kann eine bessere Konsistenz erzielt werden.
 
 Der Leitfaden zum Erstellen eines \textsl{Key Comparison Reports}
-\cite{GuideKey} empfiehlt als Anpassungsverfahren die \textbf{Mandel-Paule Methode},
+\cite{GuideKey} empfiehlt als Anpassungsverfahren die \textbf{Paule-Mandel Methode},
 bei der die Varianzen durch Additions einer Streuung zwischen Laboratorien
 erhöht werden. Dadurch werden die Gewichtsfaktoren $w_i$ verkleinert und damit Referenzwert 
 $x_\mathrm{ref}$ so angepasst, so dass das Birge-Verhältnis kleiner als Eins werden kann.
@@ -488,7 +488,7 @@ In Gl.~(\ref{referenzgleichepartner}) bzw.\ Gl.~(\ref{eq:referenzgleichepartner2
 haben wir deshalb zur Ermittlung des Referenzwertes $x_\mathrm{ref}$ beim
 Ringvergleich mit gleichwertigen Partnern gerechnet mit
 \begin{equation*}
-    w_i = \frac{1}{u_i}
+    w_i = \frac{1}{u^2_i}
 \end{equation*}
 und
 \begin{equation*}
@@ -542,13 +542,13 @@ x_\mathrm{ref} \; = \; \frac{42.056 \cdot 1.533 \; + \; 16.000 \cdot 16.550}{42.
 $$
 Nach Gl.~(\ref{eq:Birge-Verhaeltnis}) das Birge-Verhältnis hierfür
 $$
-R^2_\mathrm{B} \; = \; \frac{1}{N-1} \; \sum_{i=1}^N \left( \frac{x_i-x_\mathrm{ref}}{u^2(x_i)} \right)^2 \; = \;
+R^2_\mathrm{B} \; = \; \frac{1}{N-1} \; \sum_{i=1}^N \left( \frac{x_i-x_\mathrm{ref}}{u(x_i)} \right)^2 \; = \;
  \frac{1}{2-1} \, \left( \frac{\left(1.5333 - 5.6716\right)^2}{0.023778}
  \, + \, \frac{ \left( 16.550 - 5.6716 \right)^2}{0.0625} \right) = 2613.7
 $$
 also
 $$
-R^2_\mathrm{B} \; = \; \sqrt{2613.7} \, = \, 51.1  \gg 1
+R_\mathrm{B} \; = \; \sqrt{2613.7} \, = \, 51.1  \gg 1
 $$
 
 % https://iopscience.iop.org/article/10.1088/0026-1394/51/5/516/meta
@@ -583,49 +583,55 @@ zur jeweiligen Methode/ des jeweiligen Laboratoriums
 auch eine Varianz der Methoden/Laboratorien (Streuung zwischen Gruppen,
 \textsl{between group variability}) eingeführt.
 Die Streuung zwischen den Gruppen, die Varianz $s^2_\mathrm{b}$ wird
-iterativ geschätzt. Für die verschiedenen Partner oder Stichproben A und B
-verwenden wir jetzt die Notation $S_j$, hier also $S_1 = A$ und $S_2 = B$, um
+iterativ geschätzt. Für die verschiedenen Partner oder Stichproben $A$ und $B$
+verwenden wir jetzt die Notation $S_i$, hier also $S_1 = A$ und $S_2 = B$, um
 die Gleichungen allgemein aufschreiben zu können.
 \begin{equation*}
-\operatorname{Var}(\bar x_{S_j,\mathrm{c}}) \; = \;
-\operatorname{Var}(\bar x_{S_j}) \; + \; s^2_\mathrm{b} \; = \;
-\frac{1}{N_j (N_j - 1)} \sum\limits_{k \in S_j}
-\left( x_{k} - \bar x_{S_j} \right)^2 
+\operatorname{Var}(\bar x_{S_i,\mathrm{c}}) \; = \;
+\operatorname{Var}(\bar x_{S_i}) \; + \; s^2_\mathrm{b} \; = \;
+\frac{1}{M_i (M_i - 1)} \sum\limits_{k \in S_i}
+\left( x_{k} - \bar x_{S_i} \right)^2 
 \; + \; s^2_\mathrm{b}
 \end{equation*}
-oder kürzer aufgeschrieben mit $j$ als Index für die Nummerierung der Partner
+mit $M_i$ für den Stichprobenumfang zu $S_i$ -
+oder kürzer aufgeschrieben mit $i$ als Index für die Nummerierung der Partner
 und für die Varianzen der Mittelwerte bzw.\ Messergebnisse 
 der Partner
-$u^2_j = \bar s^2_j = \operatorname{Var}(\bar x_{S_j})$
+$u^2_i = \bar s^2_i = \operatorname{Var}(\bar x_{S_i})$
 bzw.\ für die Konsensusvarianzen
-$\bar s^2_{j,\mathrm{c}} = \operatorname{Var}(\bar x_{S_j,\mathrm{c}})$
+$\bar s^2_{i,\mathrm{c}} = \operatorname{Var}(\bar x_{S_i,\mathrm{c}})$
 \begin{equation}
-\bar s^2_{j,\mathrm{c}} \; = \; \bar s^2_j \; + \; s^2_\mathrm{b}
+\bar s^2_{i,\mathrm{c}} \; = \; \bar s^2_j \; + \; s^2_\mathrm{b}
 \label{eq:consensusVariability}
 \end{equation}
 wobei der Index b für \textsl{between} und c für \textsl{consensus}
 stehen. Auch die Mittelwerte bzw.\ allgemein die Messergebnisse der
-jeweiligen Partner schreiben wir jetzt in der Form $\bar x_{S_j} = \bar x_j$.
+jeweiligen Partner schreiben wir jetzt in der Form $\bar x_{S_i} = \bar x_i$.
 
 Die Gewichte für den \textsl{Consensus Value}, dem besser übereinstimmenden
-Wert für die Messgröße sind damit dann
-\begin{equation}
-w_{j,\mathrm{c}} \, = \; \frac{1}{\operatorname{Var}(\bar x_{S_j,\mathrm{c}})} \; = \;
-\left(\frac{1}{N_j (N_j - 1)} \sum\limits_{k \in S_j}
-\left( x_{k} - \bar x_{S_j} \right)^2 
+Wert für die Messgröße, sind damit dann
+\begin{equation*}
+w_{i,\mathrm{c}} \, = \; \frac{1}{\operatorname{Var}(\bar x_{S_i,\mathrm{c}})} \; = \;
+\left(\frac{1}{M_i (M_i - 1)} \sum\limits_{k \in S_i}
+\left( x_{k} - \bar x_{S_i} \right)^2 
 \; + \; s^2_\mathrm{b} \right)^{-1}
+\end{equation*}
+mit $M_i$ für den Stichprobenumfang zu $S_i$ 
+und dasselbe in der kürzeren Notation geschrieben
+\begin{equation}
+w_{i,\mathrm{c}} \, = \, \frac{1}{\bar s^2_{i,\mathrm{c}}} \, = \, \frac{1}{\bar s^2_j \; + \; s^2_\mathrm{b}} .
 \label{eq:consensusWeights}
 \end{equation}
-und der Konsenzreferenzwert aus den Werten aller $M$ Partner ist dann
+Der Konsenzreferenzwert aus den Werten aller $N$ Partner ist dann
 \begin{equation}
 x_\mathrm{ref, c} \, = \, 
-\frac{\sum\limits_{j=1}^M w_{j,\mathrm{c}} x_j}{\sum\limits_{j=1}^M w_{j,\mathrm{c}} }.
+\frac{\sum\limits_{i=1}^N w_{i,\mathrm{c}} x_i}{\sum\limits_{i=1}^N w_{i,\mathrm{c}} }.
 \label{eq:consensusMean}
 \end{equation}
 Das Birge-Verhältnis für diese Konsensuswerte ist somit
 \begin{equation}
-R_\mathrm{B} \; = \; \frac{1}{M-1} \, \sum\limits_{j=1}^M
-\frac{1}{\bar s^2_j \; + \; s^2_\mathrm{b}} \, \left(\bar x_j - x_\mathrm{ref, c}\right)^2.
+R_\mathrm{B} \; = \; \sqrt{ \frac{1}{N-1} \, \sum\limits_{i=1}^N
+\frac{1}{\bar s^2_i \; + \; s^2_\mathrm{b}} \, \left(\bar x_i - x_\mathrm{ref, c}\right)^2}.
 \end{equation}
 
 \textbf{Schätzen der Zwischengruppenvarianz $s^2_\mathrm{b}$}
@@ -634,23 +640,26 @@ Geschätzt wird die Zwischengruppenvarianz $s^2_\mathrm{b}$ gemäß Paule und Ma
 diejenige Varianz, für die die Ergebnisse der Partner konsistent sein sollen, also für die
 das Birge-Verhältnis gegen Eins streben soll: $R_\mathrm{B} \rightarrow 1$.
 \end{quote}
-Als Optimierungsaufgabe formuliert also
+Die Optimierungsaufgabe formulieren wir für das Quadrat des Birge-Verhältnisses,
+um eine Kostenfunktion zu haben, die sich einfacher linearisieren lässt. Dies
+geht ganz gut, weil $1^2 = 1$ ist, also $R^2_\mathrm{B} \rightarrow 1$, d.h.
 \begin{equation*}
-\frac{1}{M-1} \, \sum\limits_{j=1}^M
-\frac{1}{\bar s^2_j \; + \; s^2_\mathrm{b}} \, \left(\bar x_j - x_\mathrm{ref, c}\right)^2 \rightarrow 1
+\frac{1}{N-1} \, \sum\limits_{i=1}^N
+\frac{1}{\bar s^2_i \; + \; s^2_\mathrm{b}} \, \left(\bar x_i - x_\mathrm{ref, c}\right)^2 \rightarrow 1
 \end{equation*}
 oder genauer ausgedrückt
 \begin{equation}
-\min_{s^2_\mathrm{b}} \left\{\frac{1}{M-1} \, \left( \sum\limits_{j=1}^M
-\frac{1}{\bar s^2_j \; + \; s^2_\mathrm{b}} \, \left(\bar x_j - x_\mathrm{ref, c}\right)^2  \right) \, - \, 1\right\}.
+\min_{s^2_\mathrm{b}} \left\{\frac{1}{N-1} \, \left( \sum\limits_{i=1}^N
+\frac{1}{\bar s^2_i \; + \; s^2_\mathrm{b}} \, \left(\bar x_i - x_\mathrm{ref, c}\right)^2  \right) \, - \, 1\right\}.
 \label{eq:x_bet_Bedingung}
 \end{equation}
 
 Diese Optimierungsaufgabe hat eine Kostenfunktion 
-$Q(s^2_\mathrm{b}) = \frac{1}{M-1} \, \left( \sum\limits_{j=1}^M  
-\frac{1}{\bar s^2_j \; + \; s^2_\mathrm{b}} \, \left(\bar x_j - x_\mathrm{ref, c}\right)^2  \right) \, - \, 1$
+$Q(s^2_\mathrm{b}) = \frac{1}{N-1} \, \left( \sum\limits_{i=1}^N 
+\frac{1}{\bar s^2_i \; + \; s^2_\mathrm{b}} \, \left(\bar x_i - x_\mathrm{ref, c}\right)^2  \right) \, - \, 1$
 die von dem zu schätzenden Parameter, der Zwischengruppenvarianz
-$v := s^2_\mathrm{b}$ nicht-linear abhängt, so dass sie iterativ zu lösen ist, Kapitel~\ref{nonlinOpti}.
+$v := s^2_\mathrm{b}$ nicht-linear abhängt, so dass sie iterativ zu lösen ist, es handelt sich also
+nichtlineare Optimierung wie wir es in Kapitel~\ref{nonlinOpti} besprochen haben.
 
 Wir entwickeln die Kostenfunktion in 
 eine Taylorreihe bis zum linearen Term
@@ -671,7 +680,7 @@ und lösen dies nach $\operatorname{d} v_0$ auf zu
 \end{equation}
 Wir beginnen mit einem heuristisch geschätzten Startwert für $v_0$, beispielsweise mit $v_0 = 0$
 und setzten im nächsten Schritt $v_1 = v_0 + \operatorname{d} v_0$.
-und setzten dies fort mit
+Dies setzten wir fort mit
 \begin{equation}
 v_{k+1} =v_k + \operatorname{d} v_k
 \end{equation}
@@ -679,18 +688,18 @@ bis $Q$ zu einem Minimum möglichst nahe bei Null konvergiert.
 
 Die Ableitung der Kostenfunktion $Q$ nach der Zwischengruppenvarianz ist
 \begin{equation*}
-\frac{\partial Q}{\partial v} = \frac{1}{M-1} \, \left( \sum\limits_{j=1}^M  
-\frac{\partial }{\partial v} \frac{1}{\bar s^2_j \; + \; v} \, \left(\bar x_j - x_\mathrm{ref, c}\right)^2  \right) \, - \, 0
+\frac{\partial Q}{\partial v} = \frac{1}{N-1} \, \left( \sum\limits_{i=1}^N 
+\frac{\partial }{\partial v} \frac{1}{\bar s^2_i \; + \; v} \, \left(\bar x_i - x_\mathrm{ref, c}\right)^2  \right) \, - \, 0
 \end{equation*}
 d.h.
 \begin{equation*}
-\frac{\partial Q}{\partial v} = \frac{1}{M-1} \, \sum\limits_{j=1}^M  \left(\bar x_j - x_\mathrm{ref, c}\right)^2 
-\frac{\partial }{\partial v} \frac{1}{\bar s^2_j \; + \; v} 
+\frac{\partial Q}{\partial v} = \frac{1}{N-1} \, \sum\limits_{j=1}^N  \left(\bar x_j - x_\mathrm{ref, c}\right)^2 
+\frac{\partial }{\partial v} \frac{1}{\bar s^2_i \; + \; v} 
 \end{equation*}
 d.h.
 \begin{equation}
-\frac{\partial Q}{\partial v} = \frac{1}{M-1} \, \sum\limits_{j=1}^M  \left(\bar x_j - x_\mathrm{ref, c}\right)^2 
-\frac{-1}{\left(\bar s^2_j \; + \; v\right)^2} 
+\frac{\partial Q}{\partial v} = \frac{1}{N-1} \, \sum\limits_{i=1}^N  \left(\bar x_i - x_\mathrm{ref, c}\right)^2 
+\frac{-1}{\left(\bar s^2_i \; + \; v\right)^2} 
 \end{equation}
 
 \begin{table}[!htb]
@@ -698,7 +707,7 @@ d.h.
 	\begin{center}
 		\begin{tabular}{p{2cm}| p{3.5cm} | p{3cm} |p{3cm}|p{2cm}}
 			\hline 
-			Iterations-Nr. $k$ & Referenzwert $x_{ref,k+1}$ & $Q_{k}$ & $\operatorname{d} s_k$ & $s_{\mathrm{b},k}$\\ \hline
+			Iterations-Nr. $k$ & Referenzwert $x_{ref,k+1}$ & $Q_{k}$ & $\operatorname{d} v_k$ & $v_k = s^2_{\mathrm{b},k}$\\ \hline
 			0 & 9.0402 & 0.12702 & 11.275 &  111.27\\ \hline
 			1 & 9.0404 & 1.2865e-002 & 1.4139 & 112.69\\ \hline
 			2 & 9.0404 & 1.6135e-004 & 1.8187e-002 & 112.71 \\ \hline
@@ -708,14 +717,22 @@ d.h.
 	\label{tab:Iteration_von_Beispiel II}
 \end{table}
 
-Die Iteration kann hier schon bei k= 3 abgebrochen werden, da $dv_k$ bereits 
+Die Iteration kann hier schon bei k= 3 abgebrochen werden, da $\mathrm{d} v_k$ bereits 
 kleiner als $10^{-5}$ ist. 
 
 Als konsistenter Referenzwert ergibt sich:
 \begin{equation}
-x_\mathrm{ref} = 9.0404 \quad \text{mit einer gepoolten Varianz von} 
+x_\mathrm{ref} = 9.0404 \quad \text{mit gepoolten Varianz von} 
 \operatorname{Var}(x_\mathrm{ref}) = 0.1397
 \end{equation}
+
+\textcolor{red}{wie hast Du die gepoolte Varianz definiert? Ich finde sie nicht in Deinem Matlabskript auch nicht in
+dem Text des Vorl-Skripts ist das
+$$
+\operatorname{Var}(x_\mathrm{ref}) = \left(\sum\limits_{i=1}^N \frac{1}{\bar s^2_i \; + \; s^2_\mathrm{b}}\right)^{-1}
+$$
+ich muss das Octave-Skript ausprobieren, und auch die gepoolte Var}
+
 \newpage
 Der dazu gehörige Quellcode für Octave/Matlab sieht wie folgt aus: 
 \begin{verbatim}
