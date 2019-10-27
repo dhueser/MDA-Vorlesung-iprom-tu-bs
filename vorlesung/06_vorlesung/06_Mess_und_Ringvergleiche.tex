@@ -641,42 +641,57 @@ Als Optimierungsaufgabe formuliert also
 \end{equation*}
 oder genauer ausgedrückt
 \begin{equation}
-\min_{s_\mathrm{b}} \left\{\frac{1}{M-1} \, \sum\limits_{j=1}^M
-\frac{1}{\bar s^2_j \; + \; s^2_\mathrm{b}} \, \left(\bar x_j - x_\mathrm{ref, c}\right)^2 \, - \, 1\right\}.
+\min_{s^2_\mathrm{b}} \left\{\frac{1}{M-1} \, \left( \sum\limits_{j=1}^M
+\frac{1}{\bar s^2_j \; + \; s^2_\mathrm{b}} \, \left(\bar x_j - x_\mathrm{ref, c}\right)^2  \right) \, - \, 1\right\}.
 \label{eq:x_bet_Bedingung}
 \end{equation}
 
 Diese Optimierungsaufgabe hat eine Kostenfunktion 
-$Q(s_\mathrm{b}) = \frac{1}{M-1} \, \sum\limits_{j=1}^M
-\frac{1}{\bar s^2_j \; + \; s^2_\mathrm{b}} \, \left(\bar x_j - x_\mathrm{ref, c}\right)^2 \, - \, 1$
-die von dem zu schätzenden Parameter
-$s_\mathrm{b}$ nicht-linear abhängt, so dass sie iterativ zu lösen ist, Kapitel~\ref{nonlinOpti}.
+$Q(s^2_\mathrm{b}) = \frac{1}{M-1} \, \left( \sum\limits_{j=1}^M  
+\frac{1}{\bar s^2_j \; + \; s^2_\mathrm{b}} \, \left(\bar x_j - x_\mathrm{ref, c}\right)^2  \right) \, - \, 1$
+die von dem zu schätzenden Parameter, der Zwischengruppenvarianz
+$v := s^2_\mathrm{b}$ nicht-linear abhängt, so dass sie iterativ zu lösen ist, Kapitel~\ref{nonlinOpti}.
 
 Wir entwickeln die Kostenfunktion in 
 eine Taylorreihe bis zum linearen Term
 \begin{equation}
-Q(s_{\mathrm{b},0} + \operatorname{d} s_0) \approx 
-Q_0 + \left.\left( \frac{\partial Q}{\partial s_\mathrm{b}}\right)
-\right|_{s_\mathrm{b}=s_{\mathrm{b},0}} \operatorname{d} s_0 
+Q(v_0 + \operatorname{d} v_0) \approx 
+Q_0 + \left.\left( \frac{\partial Q}{\partial v}\right)
+\right|_{v=v_0} \operatorname{d} v_0 
 \end{equation}
-Mit $Q(s_{\mathrm{b},0} + \operatorname{d} s_0) \rightarrow 0$ setzten wir für den ersten
+Mit $Q(v) \rightarrow 0$ setzten wir für den ersten
 Iterationsschritt
 \begin{equation}
-Q_0 + \left.\left( \frac{\partial Q}{\partial s_\mathrm{b}}\right)
-\right|_{s_\mathrm{b}=s_{\mathrm{b},0}} \operatorname{d} s_0 = 0
+Q_0 + \left.\left( \frac{\partial Q}{\partial v}\right)
+\right|_{v=v_0} \operatorname{d} v_0 = 0
 \end{equation}
-und lösen dies nach $\operatorname{d} s_0$ auf zu
+und lösen dies nach $\operatorname{d} v_0$ auf zu
 \begin{equation}
-\operatorname{d} s_0 = -\left . \left( \frac{Q_0}{\frac{\partial Q}{\partial s_\mathrm{b}}}\right)\right| _{s_\mathrm{b}=s_{\mathrm{b},0}} 
+\operatorname{d} v_0 = -\left. \left( \frac{Q_0}{\frac{\partial Q}{\partial v}}\right) \right| _{v=v_0} 
 \end{equation}
-Wir beginnen mit einem heuristisch geschätzten Startwert für $s_{\mathrm{b},0}$, beispielsweise mit $s_{\mathrm{b},0} = 0$
-und setzten im nächsten Schritt $s_{\mathrm{b},1} = s_{\mathrm{b},0} + \operatorname{d} s_0$.
+Wir beginnen mit einem heuristisch geschätzten Startwert für $v_0$, beispielsweise mit $v_0 = 0$
+und setzten im nächsten Schritt $v_1 = v_0 + \operatorname{d} v_0$.
 und setzten dies fort mit
 \begin{equation}
-s_{\mathrm{b},k+1} = s_{\mathrm{b},k} + \operatorname{d} s_k
+v_{k+1} =v_k + \operatorname{d} v_k
 \end{equation}
 bis $Q$ zu einem Minimum möglichst nahe bei Null konvergiert.
 
+Die Ableitung der Kostenfunktion $Q$ nach der Zwischengruppenvarianz ist
+\begin{equation*}
+\frac{\partial Q}{\partial v} = \frac{1}{M-1} \, \left( \sum\limits_{j=1}^M  
+\frac{\partial }{\partial v} \frac{1}{\bar s^2_j \; + \; v} \, \left(\bar x_j - x_\mathrm{ref, c}\right)^2  \right) \, - \, 0
+\end{equation*}
+d.h.
+\begin{equation*}
+\frac{\partial Q}{\partial v} = \frac{1}{M-1} \, \sum\limits_{j=1}^M  \left(\bar x_j - x_\mathrm{ref, c}\right)^2 
+\frac{\partial }{\partial v} \frac{1}{\bar s^2_j \; + \; v} 
+\end{equation*}
+d.h.
+\begin{equation}
+\frac{\partial Q}{\partial v} = \frac{1}{M-1} \, \sum\limits_{j=1}^M  \left(\bar x_j - x_\mathrm{ref, c}\right)^2 
+\frac{-1}{\left(\bar s^2_j \; + \; v\right)^2} 
+\end{equation}
 
 \begin{table}[!htb]
 	\caption{Ergebnis für 3 Iterationen}
