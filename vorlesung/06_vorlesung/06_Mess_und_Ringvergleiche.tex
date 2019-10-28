@@ -678,8 +678,10 @@ und lösen dies nach $\operatorname{d} v_0$ auf zu
 \begin{equation}
 \operatorname{d} v_0 = -\left. \left( \frac{Q_0}{\frac{\partial Q}{\partial v}}\right) \right| _{v=v_0} 
 \end{equation}
-Wir beginnen mit einem heuristisch geschätzten Startwert für $v_0$, beispielsweise mit $v_0 = 0$
-und setzten im nächsten Schritt $v_1 = v_0 + \operatorname{d} v_0$.
+Wir beginnen mit dem Startwert für $v_0$, indem wir ihn auf $v_0 = 0$ setzten, so dass wir
+mit dem sehr großen Birge-Verhältnis beginnen und iterativ die Zwischengruppenvarianz
+erhöhen, um das Birge-Verhältnis solange zu reduzieren bis es Eins wird.
+Im nächsten Schritt setzen wir $v_1 = v_0 + \operatorname{d} v_0$.
 Dies setzten wir fort mit
 \begin{equation}
 v_{k+1} =v_k + \operatorname{d} v_k
@@ -701,28 +703,22 @@ d.h.
 \frac{\partial Q}{\partial v} = \frac{1}{N-1} \, \sum\limits_{i=1}^N  \left(\bar x_i - x_\mathrm{ref, c}\right)^2 
 \frac{-1}{\left(\bar s^2_i \; + \; v\right)^2} 
 \end{equation}
-
-\begin{table}[!htb]
-	\caption{Ergebnis für 3 Iterationen}
-	\begin{center}
-		\begin{tabular}{p{2cm}| p{3.5cm} | p{3cm} |p{3cm}|p{2cm}}
-			\hline 
-			Iterations-Nr. $k$ & Referenzwert $x_{ref,k+1}$ & $Q_{k}$ & $\operatorname{d} v_k$ & $v_k = s^2_{\mathrm{b},k}$\\ \hline
-			0 & 9.0402 & 0.12702 & 11.275 &  111.27\\ \hline
-			1 & 9.0404 & 1.2865e-002 & 1.4139 & 112.69\\ \hline
-			2 & 9.0404 & 1.6135e-004 & 1.8187e-002 & 112.71 \\ \hline
-			3 & 9.0404 & 2.6026e-008 & 2.9344e-006 & 112.71 \\ \hline
-		\end{tabular}
-	\end{center}
-	\label{tab:Iteration_von_Beispiel II}
-\end{table}
-
-Die Iteration kann hier schon bei k= 3 abgebrochen werden, da $\mathrm{d} v_k$ bereits 
-kleiner als $10^{-5}$ ist. 
+Die Iterationen laufen, solange $R_\mathrm{B}$ größer als Eins ist und eine maximale Anzahl Iterationsschritte
+einen Wert von $50$ nicht überschreitet.
+In dem hier behandelten Beispiel werden $17$ Iterationsschritte gebraucht, bis die
+Optmierung konvergiert und folgendes Ergbnis für die Zwischengruppenvarianz $v = s^2_\mathrm{b}$
+liefert:
+$$
+v = 112.707 \quad \text{d.h.} \quad s_\mathrm{b} = 10.6
+$$
+\textcolor{red}{ich werde hier noch einen Plot erzeugen, der die Gaußverteilungen der
+beiden Einzelstichproben zeigt (vielleicht außerdem noch die t-Verteilungen) sowie die
+Gaußverteilung ${\cal N}(x_\mathrm{ref} = 9.040, s_\mathrm{b} = 10.6)$ für die
+Zwischengruppenverteilung.}
 
 Als konsistenter Referenzwert ergibt sich:
 \begin{equation}
-x_\mathrm{ref} = 9.0404 \quad \text{mit gepoolten Varianz von} 
+x_\mathrm{ref} = 9.040 \quad \text{mit einer gepoolten Varianz von} 
 \operatorname{Var}(x_\mathrm{ref}) = 0.1397
 \end{equation}
 
@@ -730,65 +726,95 @@ x_\mathrm{ref} = 9.0404 \quad \text{mit gepoolten Varianz von}
 dem Text des Vorl-Skripts ist das
 $$
 \operatorname{Var}(x_\mathrm{ref}) = \left(\sum\limits_{i=1}^N \frac{1}{\bar s^2_i \; + \; s^2_\mathrm{b}}\right)^{-1}
+= 56.375  \quad \sqrt{\operatorname{Var}(x_\mathrm{ref})} = 7.5
 $$
 ich muss das Octave-Skript ausprobieren, und auch die gepoolte Var}
 
-\newpage
-Der dazu gehörige Quellcode für Octave/Matlab sieht wie folgt aus: 
+Der dazu gehörige Quellcode für Gnu-Octave/Matlab sieht wie folgt aus: 
 \begin{verbatim}
-% Beispiel II: Iteration nach Mandel und Paule
-clear all
-x= [2.0,1.0,1.5,1.8,1.2,1.7,16.3,16.8]
-x_A = [2.0,1.0,1.5,1.8,1.2,1.7]
-N_A = length(x_A)
-x_B = [16.3,16.8]
-N_B = length(x_B)
+function consensus_fit()
+  x_A = [2.0,1.0,1.5,1.8,1.2,1.7];
+  x_B = [16.3,16.8];
 
-bar_x = mean(x)
+% jeweiliger Stichprobenumfang
+  N_A = length(x_A);
+  N_B = length(x_B);
 
-bar_x_A = mean(x_A)
-bar_x_B = mean(x_B)
-bar_x_AB = mean([bar_x_A,bar_x_B] )
+% Mittelwerte
+  bar_x_A = mean(x_A);
+  bar_x_B = mean(x_B);
+  fprintf(stdout,'Mittelwerte: %1.2f und %1.2f\n', ...
+    bar_x_A, bar_x_B);
 
-% Varianzen
-Var_A_mittel = std(x_A).^2/5
-Var_B_mittel = std(x_B).^2/2
-Var_A = std(x_A).^2
-Var_B = std(x_B).^2
-Var_x = (Var_A * 5 + Var_B * 1)/(6-1+2-1)
+% Varianzen der Mittelwerte
+  Var_A_mittel = var(x_A)/N_A;
+  Var_B_mittel = var(x_B)/N_B;
+  fprintf(stdout, ...
+   'Varianzen der Mittelwerte innherhalb jeder Stichprobe:\n %1.3f und %1.3f\n', ...
+   Var_A_mittel, Var_B_mittel);
 
-% Anzahl der Methoden/ Partner M
-M = 2
-% Startwert für Var_x_bet
-Var_x_bet(1) = 100;
-v_0 = Var_x_bet(1);
-
-% Berechnung der Gewichte
-w_A(1) = (Var_A/N_A + v_0)^-1
-w_B(1) = (Var_B/N_B + v_0)^-1
-
-k =1
-x_ref(k) = (w_A(k) * bar_x_A + w_B(k) * bar_x_B ) / (w_A(k) + w_B(k))
-F_0 = w_A(k)*(bar_x_A - x_ref(k)).^2 +  w_B(k)*(bar_x_B - x_ref(k)).^2 -(2-1)
-dv(k) = F_0 /(w_A(k).^2*(bar_x_A - x_ref(k)).^2 +  ...
-w_B(k).^2*(bar_x_B - x_ref(k)).^2)
-v(k) = v_0 + dv(k)
-
-% Anzahl der Iterationen wird hier auf 3 gesetzt
-number_iterations = 3;
-for k=1:number_iterations
-w_A(k+1) = (Var_A/N_A + v(k))^-1
-w_B(k+1) = (Var_B/N_B + v(k))^-1
-
-x_ref(k+1) = (w_A(k+1) * bar_x_A + w_B(k+1) * bar_x_B ) / (w_A(k+1) + w_B(k+1))
-F(k) = w_A(k+1).*(bar_x_A - x_ref(k+1)).^2 +  w_B(k+1).* ...
-(bar_x_B - x_ref(k+1)).^2 -(2-1)
-dv(k) = F(k) ./(w_A(k+1).^2.*(bar_x_A - x_ref(k+1)).^2 +  ...
-w_B(k+1).^2*(bar_x_B - x_ref(k+1)).^2)
-v(k+1) = v(k) + dv(k)
+% Berechnung des Birge ratio fuer den Startwert v = 0.0
+  v = 0.0;
+  [RB, x_ref, dv] = eval_Birge_dv([Var_A_mittel, Var_B_mittel], ...
+       [bar_x_A, bar_x_B], v);
+% 
+  max_num_iterations = 50;
+  k = 0;
+  while (RB > 1) && (k < max_num_iterations)
+    fprintf(stdout,'x_ref: %1.3f, RB: %1.2f - dv: %e ==> v = %1.3f\n', ...
+       x_ref, RB, dv, v);
+    v = v + dv;
+    [RB, x_ref, dv] = eval_Birge_dv([Var_A_mittel, Var_B_mittel], ...
+       [bar_x_A, bar_x_B], v);
+    k = k + 1;
+  end
+  fprintf(stdout,'x_ref: %1.3f, RB: %1.2f - dv: %e ==> v = %1.3f\n', ...
+       x_ref, RB, dv, v);
+  fprintf(stdout,'Standardabweichung zwischen den Partnern:\n');
+  fprintf(stdout,'s_b = %1.1f nach %d Iterationen\n', ...
+    sqrt(v), k);
+end
+%
+%
+function [RB, x_ref, dv] = eval_Birge_dv(var_barx, bar_x, var_b)
+  n = length(bar_x);
+  weight = 1./(var_barx + var_b);
+  x_ref = (1/(n-1)) * sum(weight.*bar_x) / sum(weight);
+  RBsq = (1/(n-1)) * sum(weight .* (bar_x-x_ref).^2);
+  RB = sqrt(RBsq);
+%
+  Q = RBsq - 1;
+  dQ_dv = (-1/(n-1)) * sum(weight.^2 .* (bar_x-x_ref).^2);
+  dv = -Q / dQ_dv;
 end
 \end{verbatim}
-
+mit dem Output:
+\begin{verbatim}
+>> consensus_fit()
+Mittelwerte: 1.53 und 16.55
+Varianzen der Mittelwerte innherhalb jeder Stichprobe:
+ 0.024 und 0.062
+x_ref: 5.672, RB: 51.12 - dv: 4.312238e-02 ==> v = 0.000
+x_ref: 7.356, RB: 36.15 - dv: 8.619528e-02 ==> v = 0.043
+x_ref: 8.199, RB: 25.57 - dv: 1.721928e-01 ==> v = 0.129
+x_ref: 8.620, RB: 18.09 - dv: 3.435958e-01 ==> v = 0.302
+x_ref: 8.830, RB: 12.80 - dv: 6.840440e-01 ==> v = 0.645
+x_ref: 8.936, RB: 9.06 - dv: 1.355587e+00 ==> v = 1.329
+x_ref: 8.988, RB: 6.43 - dv: 2.661878e+00 ==> v = 2.685
+x_ref: 9.015, RB: 4.57 - dv: 5.132109e+00 ==> v = 5.347
+x_ref: 9.028, RB: 3.27 - dv: 9.539961e+00 ==> v = 10.479
+x_ref: 9.034, RB: 2.37 - dv: 1.649219e+01 ==> v = 20.019
+x_ref: 9.038, RB: 1.76 - dv: 2.470307e+01 ==> v = 36.511
+x_ref: 9.039, RB: 1.36 - dv: 2.797615e+01 ==> v = 61.214
+x_ref: 9.040, RB: 1.12 - dv: 1.861186e+01 ==> v = 89.190
+x_ref: 9.040, RB: 1.02 - dv: 4.691663e+00 ==> v = 107.802
+x_ref: 9.040, RB: 1.00 - dv: 2.129841e-01 ==> v = 112.494
+x_ref: 9.040, RB: 1.00 - dv: 4.038510e-04 ==> v = 112.707
+x_ref: 9.040, RB: 1.00 - dv: 1.446530e-09 ==> v = 112.707
+x_ref: 9.040, RB: 1.00 - dv: 0.000000e+00 ==> v = 112.707
+Standardabweichung zwischen den Partnern:
+s_b = 10.6 nach 17 Iterationen
+\end{verbatim}
 
 \begin{comment}
 \newpage
