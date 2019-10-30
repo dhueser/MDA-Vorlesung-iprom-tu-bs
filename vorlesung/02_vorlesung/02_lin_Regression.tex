@@ -1,7 +1,6 @@
 
 \section{Die Idee der linearen Regression}
 \label{RegressionsIdee}
-
 Ziel der Regression ist es, den funktionalen Zusammenhang $Y =
 f(X_{1} ,X_{2} ,...,X_{N} )$ zwischen den
 Eingangs-Messgrößen $X_{i}$ (Regressor) und der Ausgangsgröße $Y$
@@ -18,7 +17,6 @@ Y_j = f(X_{1,j},\dots, X_{i,j},\dots, X_{N,j}) + \varepsilon_j \quad \mathrm{mit
 wobei $Y_j$ eine Beobachtung zur Zufallsgröße, dem Regressanden $Y$, darstellt bei Vorgabe (Einstellung an einem
 Gerät wie im Beispiel von Kapitel 1 der Präzisionsstromquelle) $X_{i,j}$ des Regressors $X_i$.
 Wenn es mehrere abhängige Größen, also mehrere Regressanden gibt, spricht man von \textbf{multivariater Regression}. Die Regressoren müssen voneinander \textbf{linear unabhängig} sein.
-
 Sie können aber auch eine Potenzbeziehung zueinander haben, also quadratisch, kubisch etc.
 Wir werden für die Methode der Regressionsrechnung zur Schätzung von Polynomkoeffizienten
 eine Eingangsgröße $X$ und eine Ausgangsgröße $Y$ betrachten, die über ein Potenzgesetz
@@ -96,7 +94,6 @@ Abb.~\ref{regressionNormalResi} veranschaulicht, dass die Residuen normalverteil
 Farben und Symbole sollen unterschiedliche Durchläufe gleicher Messvorgänge darstellen.
 
 \section{Lineare Regression als Beispiel zur Methode der kleinsten Abweichungsquadrate}
-
 Man bestimmt die Parameter der Regressionsfunktion $Y =
 f(X)$ nun so, dass die Summe der Quadrate der
 Abweichungen der Datenpunkte vom Modell (\textbf{Residuen}) $\varepsilon_j $ möglichst klein wird
@@ -140,7 +137,7 @@ Die Schätzwerte der Koeffizienten $\hat{\theta}_k$, für die die Kostenfunktion
 die beste Schätzung oder das Optimum der Parameter $\theta _k $, weshalb im englischen Sprachgebrauch auch der Begriff
 \textsl{best fit} Verwendung findet. Die optimalen Schätzwerte zu den
 Polynomkoeffizienten $\hat{\theta}_k$ ergeben sich durch Lösen des linearen Gleichungssystems,
-das sich durch Null setzten der partiellen Ableitungen von $Q$ nach den Modellparametern ergibt:
+das sich durch Null setzen der partiellen Ableitungen von $Q$ nach den Modellparametern ergibt:
 \begin{equation}
 \left. {\frac{\partial Q}{\partial \theta _k }} \right|_{\theta_k
 	=  \hat\theta_k } = 0,\,\,k = 0,1,\ldots ,m
@@ -160,8 +157,6 @@ $\mathrm{Var}(\varepsilon)$, ergibt sich durch die empirische Varianz:
 	,\ldots ,\hat{\theta}_1 ,\hat{\theta_0} )}{J - 1 - m}
 \label{eq:s_quadrat_Regresssion}
 \end{equation}
-
-
 Wir betrachten zunächst den einfacheren Fall der \textbf{linearen Regression},
 bei dem eine empirische Regressionsgerade  gesucht wird, d.~h. 
 es gibt nur zwei Modellparameter $\theta_0$ und $\theta_1$:
@@ -177,7 +172,6 @@ d.~h.
 Q(\theta _0 ,\theta _1 ) = \sum\limits_{j = 1}^J {(Y_j
 	- (\theta _0 + \theta _1 \cdot X_j))^2 \to } \,\,\min
 \end{equation}
-
 Für jedes vorgegebene Messwertpaar-Ensemble $(X_j ,Y_j )$, $j
 = 1,2,\ldots J$ existiert eine eindeutige Lösung der Gl.
 (\ref{eq:linRegrMinimierung}).
@@ -211,7 +205,6 @@ Daraus folgt:
 \[
 \sum\limits_{j = 1}^J {Y_j X_j - \theta_0 \sum\limits_{j = 1}^J {X_j - \theta_1 \sum\limits_{j = 1}^J {X_j ^2 = 0} } }
 \]
-
 Mit $\sum\limits_{j = 1}^J {X_j } = J \, \bar {X}$ und 
 $\sum\limits_{j= 1}^J {Y_j } = J \, \bar {Y}$ folgt:
 \[
@@ -222,7 +215,6 @@ J \, \bar {Y} - J \, \hat{\theta}_0 - J \cdot \hat{\theta}_1 \, \bar {X} = 0 \qu
 \[
 \sum\limits_{j = 1}^J {X_j \, Y_j \; - \; J \hat{\theta}_0 \, \bar {X}} - \hat{\theta}_1 \sum\limits_{j = 1}^J {X_j ^2 = 0}
 \]
-
 Diese beiden Gleichungen ineinander eingesetzt liefert:
 \[
 \left(\sum\limits_{j = 1}^J X_j \, Y_j\right) \; - 
@@ -242,7 +234,6 @@ und mit $(\sum X_j^2) - J \bar X^2 = (\sum X_j^2) - 2 \, J \bar X^2  + J \bar X^
 {\sum\limits_{j = 1}^J {(X_j
 		- \bar {X})^2} }
 \]
-
 Durch Verwendung der empirischen Varianz
 \[
 s_X^2 = \frac{1}{J - 1}\sum\limits_{j = 1}^J {(X_j - \bar {X})^2}
@@ -269,23 +260,15 @@ ist. In solch einem Fall kann man zusätzlich die Regression
 von $X$ auf $Y$ durchführen. Trägt man beide
 Regressionsgeraden in das gleiche Koordinatensystem ein, so
 schneiden sich diese im Schwerpunkt $(\bar {X},\bar {Y})$.
-
-Für den Schätzwert der Varianz der
-Residuen ergibt sich, siehe Gl.(\ref{eq:s_quadrat_Regresssion})
-
+Für den Schätzwert der Varianz der Residuen ergibt sich, siehe Gl.(\ref{eq:s_quadrat_Regresssion})
 \begin{equation}
 s^2(\hat{\theta}_0 ,\hat{\theta}_1 ) = \frac{Q(\hat{\theta}_0 ,
 	\hat{\theta}_1 )}{J - 1 - m } 
 = \frac{Q(\hat{\theta}_0 ,
 	\hat{\theta}_1 )}{J - 2}
 \end{equation}
- 
-%\begin{figure}[!htbp]
-%	\centering
-%	\includegraphics[width=12cm]{./Bilder/WertePaare_fuer_Regression.png}
-%	\caption{Gegebene Wertepaare $X_j, Y_j$} \label{fig:Messwertpaare}
-%\end{figure}
 
+\newpage
 \section{Beispiele zur linearen Regression}
 \label{subsection:lineare-Regression}
 \textbf{Beispiel:} Vergleich der Modellierung mit Gerade und mit Polynom 6.~Grades \\
@@ -303,7 +286,8 @@ Bevor man mit der Regressionsrechnung anfängt, muss man sich im vorhinein sehr 
 überlegen, in welchem physikalischen Zusammenhang die Größen stehen, also welcher
 Ansatz für das Messsystem als Modellgleichung sinnvoll ist.
 In einigen Fällen ist dies auch eine Frage, welche Näherung für welchen Messbereich
-ausreicht. Abb.~\ref{fig:LineareRegression} illustriert die Abweichung der Wertepaare von den unterschiedlichen Modellen und damit wie gut verschiedene Modelle die Daten approximieren.
+ausreicht. 
+% Abb.~\ref{fig:LineareRegression} illustriert die Abweichung der Wertepaare von den unterschiedlichen Modellen und damit wie gut verschiedene Modelle die Daten approximieren.
 
 \textbf{Beispiel:} Bestimmung des Widerstandes $R$ durch lineare Regression \\
 Wir erinnern uns wieder an das Beispiel aus der 1. Vorlesung (siehe z.~B. dort Abb.~1) und bestimmen den Ohmschen Widerstand $R$ sowie eine Offsetspannung $U_0$ bei gegebenen Werten einer
@@ -377,7 +361,6 @@ U = 6.2356  \, \mathrm{mV} + (11.9017 \, \mathrm{\Omega}) \cdot I
 
 \section{Varianz der Regressionsparameter}
 \label{subsec:vertrauensbereiche}
-
 Es können aus den Messreihen die Varianzen der
 geschätzten Regressionsparameter ermittelt werden. Das Verfahren zeigen wir
 hier anhand der Regressionsgeraden mit den geschätzten Parametern
@@ -390,16 +373,12 @@ gilt:
 \begin{equation}
 \sigma^2_{\hat{\theta}_1} = \frac{ \hat \sigma^2_{\varepsilon}}{s^2_X \cdot (J- 1) }
 \end{equation}
-
 Für die Varianz des Regressionsparameters Achsenabschnitt $\hat{\theta}_0 $
 gilt:
 \begin{equation}
 \sigma^2_{\hat{\theta}_0} = \hat \sigma^2_{\varepsilon} \cdot \left(\frac{1}{J}
 	+ \frac{\bar {X}^2}{(J - 1) s_X^2 }\right)^2
 \end{equation}
-\begin{center}
-\end{center}
-
 Die Varianz des Achsenabschnittes wird weiter unten in der Gl.(\ref{eq:Varianz des Achsenabschnitts}) hergeleitet. Dort ergibt sich \begin{equation}
 \hat \sigma^2_{\theta_0}  = \hat \sigma^2_{\varepsilon}  \sum(X_j^2)  / (J \sum(X_j^2) - (\sum(X_j))^2) 
 \end{equation}
@@ -459,9 +438,7 @@ s^2_{\varepsilon}  \left[ \frac{1}{J} +\frac{\bar {X}^2}{(J - 1) s_X^2 } \right]
 \end{equation}
 
 \section{Matrixformalismus zur allgemeinen Lösung der linearen Regression}
-
 \subsection{Matrixformalismus anhand der Regressionsgeraden}
-
 Als Regressormatrix verwenden wir jetzt
 \begin{equation}
 \mathbf{X} \; = \;
@@ -837,9 +814,7 @@ die Wurzel aus den Varianzen, die auf der Hauptdiagonalen der Kovarianzmatrix
 $\left( \mathbf{X}^\mathsf{T}  \, \mathbf{X} \right)^{-1} \, \hat \sigma_{\varepsilon}^2$
 stehen. In der üblichen englischsprachigen Literatur zur Regressionrechnung wird
 die Standardabweichung der Regressionsparameter \textsl{Standard Error} genannt.
-
 \subsection{Matrixansatz als allgemeiner Ansatz für linearen Regression}
-
 Die behandelten allgemeinen Formen von Problemstellungen zur Schätzung von Modellparametern
 werden wir in dieser Vorlesungsreihe nicht weiter vertiefen. Sie sollen lediglich einen Einblick
 und Überblick über die vielfältigen Möglichkeiten in diesem Bereich liefern.
@@ -968,6 +943,7 @@ die Parameter gewonnen wurden, wird durch das Dach auf dem Symbol $\boldsymbol{\
 \begin{equation}
  \boldsymbol{\hat \theta} \; = \;
 \left( \mathbf{X}^\mathsf{T}  \, \mathbf{X} \right)^{-1} \mathbf{X}^\mathsf{T} \, \mathbf{Y}
+\label{eq:schaetzwerte_fuer_theta}
 \end{equation}
 wobei hoch minus Eins soviel bedeutet wie die Inverse der Matrix.
 Für Varianzen und Kovarianzen der $M$ Regressionsparameter $\theta_1, \dots, \theta_M$
@@ -1026,11 +1002,13 @@ gewonnen
 \hat \sigma_l \; = \; \sqrt{\hat \sigma_l^2} .
 \end{equation}
 Im fünften Kapitel werden wir dann sehen, wie man mit Hilfe der Varianzen bzw. Standardabweichungen Vertrauensintervalle für die geschätzten Modellparameter bestimmt.
+Die Herleitung ist im Anhang aufgeschrieben.
 
+\newpage
 \section{Das Bestimmtheitsmaß, empirischer Korrelationskoeffizient}
 Die G\"{u}te des gew\"{a}hlten linearen Ansatzes kann mit dem
 \textbf{Bestimmtheitsmaß} $\rho_{XY}^2 $ bzw. dem \textbf{empirischen
-Korrelationskoeffizienten} $\rho_{XY}$ beurteilt werden, aber nur dann
+	Korrelationskoeffizienten} $\rho_{XY}$ beurteilt werden, aber nur dann
 wenn ein solcher Zusammenhang auch existiert. Der empirische
 Korrelationskoeffizienten gibt den Grad der linearen
 Abh\"{a}ngigkeit zwischen den Messwerten $(X_1 ,\ldots ,X_J )$ und
@@ -1057,7 +1035,7 @@ bzw. Varianzanalyse durch. Man kann bei der linearen Regression 3
 Arten von Streuungen unterscheiden:
 \begin{itemize}
 	\item[] $s_{\mathrm{T}}^2:$~die \textbf{totale empirische Varianz}
-    \item[] $s_{\mathrm{M}}^2:$~die \textbf{empirische Varianz auf Grund des Modells}
+	\item[] $s_{\mathrm{M}}^2:$~die \textbf{empirische Varianz auf Grund des Modells}
 	\item[] $s_{\mathrm{R}}^2:$~die \textbf{restliche empirische Varianz}
 \end{itemize}
 Die totale Streuung ist bei unabhängigen direkten Messgrößen $X_j$ gegeben
@@ -1096,20 +1074,217 @@ Mit dem Schwerpunkt $\bar {Y} = \hat{\theta}_0 + \hat{\theta}_1 \bar {X}$ ergibt
 Mit den Regressionsparametern $\hat{\theta}_1 = \frac{\sum\limits_{j =
 		1}^J {(X_j - \bar {X})(Y_j - \bar {Y})} }{\sum\limits_{j = 1}^J {(X_j
 		- \bar {X})^2} }$ (siehe Gl.(\ref{eq:Lineare_Regressionskonstanten})) erhält man für das 
-	    Bestimmtheitsmaß:
+Bestimmtheitsmaß:
 \begin{align}
 \rho_{XY}^2 &= \frac{\left[ {\sum\limits_{j = 1}^J {(X_j - \bar {X})(Y_j - \bar{Y})} } \right]^2}{\sum\limits_{j = 1}^J {(X_j - \bar {X})^2}
 	\cdot
 	\sum\limits_{j = 1}^J {(Y_j - \bar {Y})^2} } \nonumber \\[2ex]
-  &= \frac{s_{XY} ^2}{s_X ^2 \cdot s_Y ^2} \quad \textrm{mit}\; 
-     0 \le \rho_{XY}^2 \le 1 
+&= \frac{s_{XY} ^2}{s_X ^2 \cdot s_Y ^2} \quad \textrm{mit}\; 
+0 \le \rho_{XY}^2 \le 1 
 \end{align} 
 Den empirischen Korrelationskoeffizienten kann man somit wie folgt
 berechnen:
 \begin{equation}
 \rho_{XY} = \frac{ s_{XY} }{ s_X \cdot s_Y } \quad \mathrm{~mit~}  - 1 \le \rho_{XY} \le 1
 \end{equation}
+\newpage
+\section{Beispiele zur Linearen Regression}
+\label{Vorl2Regressionsaufg2}
+\subsection{Fit einer Geraden}
+Gegeben sind 5 Messpunkte
+\begin{table}[htb!]
+	\centering
+	\begin{tabular}{l|c c c c c c}
+		$X_i$ & 1 & 2 & 3 & 4 & 5 \\ \hline
+		$Y_i$ & 0.4 & 0.55 & 0.70 & 0.75 & 0.8
+	\end{tabular}
+\end{table}
+\begin{itemize}
+	\item [(a)] Führen Sie eine lineare Regression durch, indem
+	Sie den y-Abschnitt $\hat\theta_0$ und die Steigung $\hat\theta_1$ bestimmen. Geben Sie das Bestimmtheitsmaß $\rho_{XY}^2$ an.
+	\item[(b)] Bestimmen Sie die Residuen $\varepsilon_j$ und das 
+	Qualitätsmaß $Q(\hat\theta _0,\hat\theta _1)$ der Regression. Geben Sie die Varianz der Residuen 
+	$s^2(\hat\theta_0,\hat{\theta_1})$ an?
+	\item[(c)] Geben Sie den Standardabweichung (standard error) der beiden 
+	Regressionsparameter $\hat\theta_0$ und $\hat\theta_1$ an?
+	
+	% Geben Sie das 95\%ige Vertrauensintervall
+	% von	$\hat\theta_0$ und $\hat\theta_1$ an.
+	% 	Es wird dazu das t-Quantil für 3 Freiheitsgrade (5 Messpunkte minus
+	%	2 Parameter = 3 Freiheitsgrade) benötigt.
+	%	Das t-Quantil für den beidseitigen Vertrauensbereich von 95\%
+	%	für 3 Freiheitsgrade ist gegeben durch $t_3=3.1824$. 
+	%		\newline
+	%	Man erhält das t-Quantil durch den Matlab/Octave-Befehl: \texttt{tinv(0.975,3) = 3.31824} (\texttt{tinv} berechnet den einseitigen Vertrauensbereich)
+	%	oder man schlägt in einem Tabellenwerk nach;
+	%	siehe z.~B. https://de.wikipedia.org/wiki/Studentsche\_t-Verteilung
+\end{itemize}
 
+Mit der Gl.(\ref{eq:schaetzwerte_fuer_theta}) können wir 
+das Beispiel lösen. Der Matlab/Octave-Code lautet: 
+\begin{verbatim}
+close all; clear all;
+% Eingabe der Messwertepaare
+input = [...                 
+1, 0.4;...                
+2, 0.55;...
+3, 0.7;...
+4, 0.75; ...
+5, 0.8];
+m = length(input);             % Anzahl der Messpunkte
+X = [ones(m,1), input(:,1)];   % Aufstellen der X-Matrix
+Y = input(:,2);                % Aufstellen der Y-Matrix
+% degree of freedom 
+df = 5-2;
+% Berechung der Schätzwerte \thetaHat; 
+% y-Abschnitt = \thetaHat(1); Steigung = \thetaHat(2)
+thetaHat = (X' * X) \ (X' * Y);    
+% Anzeige der Schätzwerte
+disp(thetaHat);
+% Plotten der Regressionsgeraden
+xx = linspace(0,6,100);
+yy = thetaHat(1) + thetaHat(2)*xx;
+figure(10)
+plot(xx, yy,'linewidth',1.5)
+% Plotten der Datenwerte 
+hold on
+plot(input(:,1), input(:,2), 'or','linewidth',2, 'MarkerSize',6)
+hold off
+grid on; 
+xlabel('Werte X_j','fontsize',14)
+ylabel('Werte Y_j','fontsize',14)
+set(gcf, 'PaperUnits', 'centimeters');
+x_width=15 ;y_width= 9;
+set(gcf, 'PaperPosition', [0 0 x_width y_width]);
+print '-dpng' LinRegression.png
+\end{verbatim}
+
+Als Lösung erhalten wir den Plot in Abb.\ref{fig:LineareRegression}.
+Der y-Achsenabschnitt liegt bei 0.34 und die Steigung ist 0.1.
+\begin{figure}[!htp]
+	\begin{center}
+		%		\includegraphics[width=100mm]{Bilder/Kalibrierfaktor.eps}
+		\includegraphics[width=140mm]{02_vorlesung/media/LinRegression.png}
+		\caption{Lineare Regression. 
+			Als Schätzparameter erhält man $\hat{\boldsymbol\theta} = [ 0.3400 ,0.1000 ]^T$}
+		\label{fig:LineareRegression}
+	\end{center}
+\end{figure}
+Die Varianz der Residuen ist wie folgt gegeben:
+\begin{equation}
+\operatorname{Var}(\epsilon) = \frac{1}{J-M} \cdot \left(\mathbf Y - \mathbf X \hat{\boldsymbol\theta}\right)^T 
+\left(\mathbf Y - \mathbf X \hat{\boldsymbol\theta}\right)
+\end{equation}
+Die Kovarianzen der Schätzerparameter ${\boldsymbol\theta}$ 
+sind gegeben durch:
+\begin{equation}
+\operatorname{Cov}(\boldsymbol\theta) = \left(\mathbf{X}^T \mathbf X \right)^{-1}
+\operatorname{Var}(\epsilon)
+\end{equation}
+Matlab-Code zur Bestimmung des Qualitätsmaßes und der Varianz
+\begin{verbatim}
+% Qualitätsmaß Q
+Q = (Y-X*thetaHat)' * (Y-X*thetaHat)
+% Varianz der Residuen
+Var_epsilon = 1/df *(Y-X*thetaHat)' * (Y-X*thetaHat)
+% Wuzel aus Var_epsilon
+RMSE = sqrt(Var_epsilon)
+% Kovarianzen
+Cov = Var_epsilon * inv(X'*X)
+\end{verbatim}
+Als Ergebnis für unser Beispiel erhalten wir:\\
+Q = 0.0070 \\
+Var\_epsilon = 0.0023\\
+RMSE = 0.0483 \\
+Cov = \\
+0.0026   -0.0007 \\
+-0.0007    0.0002 \\
+
+\subsection{Fit einer kubischen Funktion (Polynom 3. Ordnung)}
+Wir nehmen wieder die gleichen Messwertpaare wie eben. Jedoch fitten wir 
+nun eine kubische Funktion durch die Messdaten, d.h. 
+\begin{equation}
+Y = \hat{\theta_3} X^3 + \hat{\theta_2} X^2 + \hat{\theta_1} X^1 +
+\hat{\theta_0} 
+\end{equation}
+Für die Schätzparameter erhalten wir: 
+\[\hat{\boldsymbol\theta} = 
+(0.1900, \;\; 0.2286,\;\; -0.0214, \;\; -0.0000) \]
+Für das Qualitätsmaß ergibt sich: 
+\[\mathrm{Q} = 5.7143e-04 \]
+Für die Streuung der Residuen ergibt sich: 
+\[\mathrm{Var\_epsilon} = 5.7143e-04 \]
+Standardabweichung der Residuen: 
+\[
+\mathrm{RMSE} = 0.0239 \]
+Die Kovarianzamtrix ergibt sich zu: 
+\[
+\operatorname{Cov} =
+\begin{bmatrix}
+0.0138  & -0.0176  &  0.0063  & -0.0007 \\
+-0.0176 &   0.0236 &  -0.0087 &  0.0009 \\
+0.0063  &  -0.0087 &   0.0033 &  -0.0004 \\
+-0.0007 &   0.0009 &  -0.0004  &  0.0000
+\end{bmatrix}
+\]
+Der Matlab/Octave-Code lautet: 
+\begin{verbatim}
+close all; clear all;
+% Eingabe der Messwertepaare
+input = [...                 
+1, 0.4;...                
+2, 0.55;...
+3, 0.7;...
+4, 0.75; ...
+5, 0.8];
+m = length(input);     % Anzahl der Messpunkte
+x_Werte = input(:,1);
+X = [ones(m,1), x_Werte, x_Werte.^2,x_Werte.^3];   % Aufstellen der X-Matrix
+Y = input(:,2);                % Aufstellen der Y-Matrix
+% degree of freedom 
+df = 5-4;
+% Berechung der Schätzwerte \thetaHat; 
+% y-Abschnitt = \thetaHat(1); Steigung = \thetaHat(2)
+thetaHat = (X' * X) \ (X' * Y);    
+% Anzeige der Schätzwerte
+disp(thetaHat);
+% Plotten der Fitfunktion
+xx = linspace(0,6,100);
+yy = thetaHat(1) + thetaHat(2)*xx+ thetaHat(3)*xx.^2+thetaHat(4)*xx.^3;
+figure(10)
+plot(xx, yy,'linewidth',1.5)
+% Plotten der Datenwerte 
+hold on
+plot(input(:,1), input(:,2), 'or','linewidth',2, 'MarkerSize',6)
+hold off
+grid on; 
+xlabel('Werte X_j','fontsize',14)
+ylabel('Werte Y_j','fontsize',14)
+set(gcf, 'PaperUnits', 'centimeters');
+x_width=15 ;y_width= 9;
+set(gcf, 'PaperPosition', [0 0 x_width y_width]);
+print '-dpng' kubischerFit.png
+% Qualitätsmaß Q
+Q = (Y-X*thetaHat)' * (Y-X*thetaHat)
+% Varianzen der Residuen
+Var_epsilon = 1/df *(Y-X*thetaHat)' * (Y-X*thetaHat)
+% Wuzel aus Var_epsilon
+RMSE = sqrt(Var_epsilon)
+% Kovarianzen
+Cov = Var_epsilon * inv(X'*X)
+\end{verbatim}
+Wir können auch die Curve Fitting Toolbox von Matlab 
+verwenden, die uns das gleiche Ergebnis anzeigt:
+\begin{figure}[!htp]
+	\begin{center}
+		\includegraphics[width=150mm]{02_vorlesung/media/Matlab_CFTool_Kubischer_Fit.png}
+		\caption{Kubischer Fit mit der Curve Fitting Toolbox von Matlab. 
+			Zum jedem geschätzten Parameter wird der 95\%ige Vertrauensbereich 
+			angegeben. Zu sehen sind u.a. das Qualitätsmaß Q (engl. SSE: Sum squared error), das Bestimmtheitsmaß $\rho^2_{XY}$ (engl. R-square), Standardabweichung der Residuen (engl. RMSE: root mean square error) und die Anzahl der Freiheitsgrade (engl. DFE, degree of freedom)}
+		\label{fig:CFTool_kubischerFit}
+	\end{center}
+\end{figure}
+\newpage
 
 %Das vollständige Messergebnis für jeden der Regressionparameter ist damit
 %\begin{equation}
@@ -1123,12 +1298,9 @@ berechnen:
 %\rho_{l,m} \; = \; \frac{\hat \sigma_{\varepsilon}^2}{\hat \sigma_l \, \hat \sigma_m} \; %\boldsymbol{e}_l^\mathsf{T} \, \left( \mathbf{X}^\mathsf{T}  \, \mathbf{X} \right)^{-1} %\, \boldsymbol{e}_m  .
 %\end{equation}
 
-
 \section{Aufgaben zum Selbststudium}
-
-\subsection{1. Aufg zur Linearen Regression}
+\subsection{1. Aufgabe zur Linearen Regression}
 \label{Vorl2Regressionsaufg1}
-
 Es wurde eine Stufe vermessen, die nominal eine Höhe von $100 \; \mathrm{\mu m}$ haben soll.
 Die laterale Achse $x$ wird eingestellt (mit Präzisionstisch positioniert) 
 und als Regressor betrachtet, also nicht als Zufallszahl.
@@ -1203,38 +1375,6 @@ Die Stufenhöhe $d$ ist der senkrechte Abstand zwischen den beiden parallelen Ge
 Anmerkung: Die inverse Matrix brauchen Sie nicht analytisch zu berechnen, sondern
 	lediglich $(...)^{-1}$ zu notieren
 
-
-\subsection{2. Aufg zur Linearen Regression}
-\label{Vorl2Regressionsaufg2}
-
-Gegeben sind 5 Messpunkte
-\begin{table}[htb!]
-	\centering
-	\begin{tabular}{l|c c c c c c}
-		$X_i$ & 1 & 2 & 3 & 4 & 5 \\ \hline
-		$Y_i$ & 0.4 & 0.55 & 0.70 & 0.75 & 0.8
-	\end{tabular}
-\end{table}
-\begin{itemize}
-	\item [(a)] Führen Sie eine lineare Regression durch, indem
-	Sie den y-Abschnitt $\hat\theta_0$ und die Steigung $\hat\theta_1$ bestimmen. Geben Sie das Bestimmtheitsmaß $\rho_{XY}^2$ an.
-	\item[(b)] Bestimmen Sie die Residuen $\varepsilon_j$ und das 
-	Qualitätsmaß $Q(\hat\theta _0,\hat\theta _1)$ der Regression. Geben Sie die Varianz der Residuen 
-	$s^2(\hat\theta_0,\hat{\theta_1})$ an?
-	\item[(c)] Geben Sie den Standardabweichung (standard error) der beiden 
-	Regressionsparameter $\hat\theta_0$ und $\hat\theta_1$ an?
-	
-	% Geben Sie das 95\%ige Vertrauensintervall
-	% von	$\hat\theta_0$ und $\hat\theta_1$ an.
-% 	Es wird dazu das t-Quantil für 3 Freiheitsgrade (5 Messpunkte minus
-%	2 Parameter = 3 Freiheitsgrade) benötigt.
-%	Das t-Quantil für den beidseitigen Vertrauensbereich von 95\%
-%	für 3 Freiheitsgrade ist gegeben durch $t_3=3.1824$. 
-%		\newline
-%	Man erhält das t-Quantil durch den Matlab/Octave-Befehl: \texttt{tinv(0.975,3) = 3.31824} (\texttt{tinv} berechnet den einseitigen Vertrauensbereich)
-%	oder man schlägt in einem Tabellenwerk nach;
-%	siehe z.~B. https://de.wikipedia.org/wiki/Studentsche\_t-Verteilung
-\end{itemize}
 
 
 
