@@ -37,7 +37,7 @@
 \fancyhead[LO]{\leftmark}
 \fancyhead[LE,RO]{\thepage}
 %
-\fancyfoot[LE,RO]{MDA, WS 2019/20}
+\fancyfoot[LE,RO]{MDA, WS 2019/20, Version: \the\day .\the\month .\the\year}
 \fancyfoot[RE,LO]{iprom, TU-BS und PTB}
 %
 \renewcommand{\headrulewidth}{2pt}
@@ -68,7 +68,7 @@ iprom, TU Braunschweig}
 \mainmatter                             % only in book class (arabic page #s)
 
 \chapter{Einführung: Messtechnik und Statistik}
-\include{01_vorlesung/01_mda_vorlesung}
+% \include{01_vorlesung/01_mda_vorlesung}
 %
 \chapter{Lineare Regression (Ausgleichsrechnung)}
 \label{KapitellinReg}
@@ -77,7 +77,7 @@ iprom, TU Braunschweig}
 \chapter{Optimierung nichtlinearer Modelle}
 \label{nonlinOpti}
 \include{03_vorlesung/03_Optim_nichtlin_Modelle}
-%
+
 \chapter{Konzepte der Statistik für die Messdatenanalyse}
 \include{04_vorlesung/04_Konzepte_Statistik_fuer_DA}
 %
@@ -94,7 +94,7 @@ iprom, TU Braunschweig}
 \chapter{Numerische Werkzeuge für Messunsicherheitsberechnungen}
 \include{07_vorlesung/07_Numerik_fuer_MU}
 %
-\chapter{Lösungen zu den Aufgaben\\ zum Selbststudium}
+\chapter{Lösungen zu den Aufgaben}
 \include{02_vorlesung/Loesung_LinRegression}
 \include{05_vorlesung/05_Loesungen}
 \include{07_vorlesung/07_Aufg_MU_Loesung}
@@ -115,7 +115,11 @@ iprom, TU Braunschweig}
     and its numerical calculation by a Monte Carlo method
     {\em Meas. Sci. Technol.}, 19 (084009), 4pp, 2008.
     doi:10.1088/0957-0233/19/8/084009
-    \bibitem[Sat41]{Sat41} F.E. Satterthwaite: Synthesis of variance.
+    \bibitem[Rao09]{Rao09} S.S. Rao: Egineering optimization: theory and practice,
+    John Wiley \& Sons, 2009
+    \bibitem[Wiki01]{Wiki01} https://en.wikipedia.org/wiki/Non-linear\_least\_squares
+    \bibitem[Wiki02]{Wiki02} https://en.wikipedia.org/wiki/Gauss-Newton\_algorithm
+        \bibitem[Sat41]{Sat41} F.E. Satterthwaite: Synthesis of variance.
     {\em Psychometrika}, 6(5), 1941.
 	\bibitem[Cox02]{Cox02} M. G. Cox: The evaluation of key comparison data, Metrologia 39, 589-595 (2002)
 	\bibitem[ISO13528]{ISO13528} ISO: Statistical methods for use in proficency testing by interlaboratory comparison, Second edition 2015-08-01, corrected version 2016-10-15
