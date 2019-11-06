@@ -281,7 +281,8 @@ genannt wird:
 \left. \frac{\partial \varepsilon_1}{\partial P_1} \right|_{\mathbf{p}_\kappa} & \dots & \left. \frac{\partial \varepsilon_1}{\partial P_M} \right|_{\mathbf{p}_\kappa} \\
  & \ddots & \\
 \left. \frac{\partial \varepsilon_J}{\partial P_1}\right|_{\mathbf{p}_\kappa} & \dots & \left. \frac{\partial \varepsilon_J}{\partial P_M}\right|_{\mathbf{p}_\kappa}
-\end{array}\right) .
+\end{array}\right) ,\; \textrm{bzw.} \; J_{jm}^{(\kappa)}= \left. \frac{\partial \epsilon_j}{\partial p_m}\right|_{\mathbf{p}_\kappa}
+\;\textrm{mit} \; j=1\ldots J; \;\; m=1\ldots M.
 \end{equation}
 Der hochgestellte und in Klammern gesetzte Index $\kappa$ 
 an dem Symbol für die \textsl{Jacobimatrix}, soll bedeuten,
@@ -422,8 +423,30 @@ Hier sehen wir, dass sowohl die Maxima als auch die Minima die Nullstellen bilde
 
 Der \textsl{Levenberg-Marquardt}-Algorithmus ist ein Gradientenverfahren, bei dem das lineare
 Gleichungssystems (\ref{GradientQlinGl3}) 
-durch Einführen eines Dämpfungsterms erweitert wird. Der Dämpfungsterm stellt einen
-Schrittweitenfaktor dar, der den Inkrementvektor
+durch Einführen eines Dämpfungsterms erweitert wird. 
+
+Mit der Gauss-Newton-Methode kann also passieren, dass die Summe der Residuen $Q$, siehe  nicht bei jedem Iterationsschritt kleiner
+wird. Wenn jedoch der Richtungsvektor $\Delta \mathbf{p}_{\kappa}$ in die abfallende Richtung
+zeigt, so kann auch nur ein Bruchteil $\alpha$ des Richtungsvektors gegangen 
+werden, solange gilt:
+\begin{equation}
+Q(\mathbf{p}_{\kappa} + \alpha \cdot \Delta \mathbf{p}_{\kappa}) < Q(\mathbf{p}_{\kappa})
+\end{equation}
+D.~h., wenn bei der Gauß-Newton Methode Divergenz auftritt, so ist eine 
+mögliche Verbesserung des Verfahrens, einen Bruchteil $\alpha$ des Richtungsvektors $\Delta\mathbf{p}_{\kappa}$ zu nehmen: 
+\begin{equation}
+\mathbf{p}_{\kappa+1}= \mathbf{p}_{\kappa} + \alpha \cdot \Delta\mathbf{p}_{\kappa}
+\end{equation}
+In anderen Worten, wenn der Inkrement-Vektor zu lang ist, dann muss man diesen
+eben kürzen. Das geht natürlich nur unter der Voraussetzung, dass die Richtung 
+des Vektors auch die Summe der Residuen weiter verkleinert. Der Bruchteil $\alpha$
+liegt zwischen 
+\[
+0 < \alpha < 1
+\] 
+Wenn der optimale Bruchanteil $\alpha$ annähernd Null ist, wird eine alternative Methode zur Behandlung der Divergenz verwendet, der sog. \textbf{Levenberg-Marquardt}
+Algorithmus. 
+Die Normalengleichung wird modifiziert, indem der Inkrementvektor $\mathbf{p}_{\kappa}$ in Richtung des steilsten Abfalls gedreht wird. Der Dämpfungsterm stellt einen Schrittweitenfaktor dar, der den Inkrementvektor
 so modifiziert, dass das Optimierungsverfahren besser konvergiert. Dieser
 Algorithmus wurde unabhängig voneinander von Levenberg (1944), Girard (1958), Wynne (1959), 
 Morrison (1960) und Marquardt (1963) vorgeschlagen. In der Literatur wird heutzutage meist vom 
@@ -538,134 +561,153 @@ $\rho_{\mu} \ge \beta_1$: & $\Delta \mathbf{p}_\kappa$ wird akzeptiert \textsl{E
 \hline\hline
 \end{tabular}
 
+\newpage
+\textbf{Ein möglicher Algorithmus des Levenberg-Marquardt-Verfahrens} \\
+Input: Startwert $\mathbf{p}_0$, Zielfunktion $\epsilon(\mathbf{p}_{\kappa})$, Partielle Ableitungen $J=\epsilon'(\mathbf{p}_{\kappa})$, Marquardt-Parameter $\mu$, weitere Parameter $0 < \beta_0 < \beta_1 < 1$  \\
+\hspace*{1em} \textit{for} $k = 0,1, \ldots$
+\begin{itemize}
+	\item[i)] Berechne $\epsilon(\mathbf{p}_{\kappa})$, $F'(\mathbf{p}_{\kappa})$ 
+	\item[ii)] Bestimme den Korrekturvekor $\Delta \mathbf{p}_\kappa$ 
+	\item[iii)] Test, ob die Korrektur $\Delta \mathbf{p}_\kappa$  akzeptabel ist: \\
+	$\bullet$ $\rho_{\mu} \le \beta_0: \;$ Setze $\mu = 2 \mu $ und berechne $ \Delta \mathbf{p}_\kappa$ gemäß ii) neu \\
+	$\bullet$  $\rho_{\mu} \ge \beta_1: \;$ Setze $\mu = \mu / 2 $ und behalte 
+	$\Delta \mathbf{p}_\kappa$
+	\item[iv)] Setze $\mathbf{p}_{\kappa +1} = \mathbf{p}_\kappa +  \Delta \mathbf{p}_\kappa $
+\end{itemize}
+\hspace*{1em} \textit{end} \\
+
 Diese Methode wurde hier auf das zuvor beschriebene Beispiel des in Abb.~\ref{LSoptiExampleSinus}
 dargestellten sinusförmigen Signals mit folgendem Gnu-Octave/Matlab-Skript ausprobiert:
 \begin{verbatim}
 function fit_sin_LMAC(gen_new)
-  if gen_new
-    t = [0:99]'; % Sekunden
-    N = length(t);
+% Stand: 191105
+% Läuft unter Matlab und Octave
+t = [0:99]'; % Sekunden
+N = length(t);
+a = 5; % Volt
+lam = 30; % Sekunden
+sigma = 0.13*a;
+phi = 0.2*pi;
 %
-    a = 5; % Volt
-    lam = 30; % Sekunden
-    sigma = 0.13*a;
-    phi = 0.2*pi;
+am = 0.3*a;
+phim = 0.7*pi;
+lamm = 0.3*lam;
 %
-    am = 0.3*a;
-    phim = 0.7*pi;
-    lamm = 0.3*lam;
-%
-    st = a*sin(2*pi*t/lam + phi);
-    smod = st + am*sin(2*pi*t/lamm + phim);
-    s = smod + sigma*randn(1,N);
-    save('pltSS_nonlin_leastsquare_sin_zB2.dat','t','s','sigma','a');
-  else
-    load('pltSS_nonlin_leastsquare_sin_zB1.dat');
-  end
+st = a*sin(2*pi*t/lam + phi);
+if gen_new
+smod = st + am*sin(2*pi*t/lamm + phim);
+s = smod + sigma*0.5*randn(1,N)';
+save('pltSS_nonlin_leastsquare_sin_zB2.mat','t','s','sigma','a');
+else
+load('pltSS_nonlin_leastsquare_sin_zB2.mat');
+end
 %
 % Startwerte geraten
 %
-  p0 = [34; 0.23*pi];
-  x = [t(:) s(:)];
+p0 = [33; 0.23*pi];
+x = [t(:) s(:)];
 %
 % Residuen, muessen als Spaltenvektor vorliegen
 %
-  epsi = @(x, p) (x(:,2) - a*sin(2*pi*x(:,1)/p(1) + p(2)));
+epsi = @(x, p) (x(:,2) - a*sin(2*pi*x(:,1)/p(1) + p(2)));
 %
 % partielle Ableitungen der Residuen epsi
 % muss M Spalten und J Zeilen haben, wobei M die Anzahl der Fitparameter
 % und J die Anzahl der Messpunkte ist
 %
-  Jac  = @(x, p) [(4*a*pi/p(1)^2)*x(:,1).*cos(2*pi*x(:,1)/p(1)+p(2)).* ...
-      (x(:,2)-a*sin(2*pi*x(:,1)/p(1)+p(2))) , ...
-      -2*a*cos(2*pi*x(:,1)/p(1)+p(2)).* ...
-      (x(:,2)-a*sin(2*pi*x(:,1)/p(1)+p(2))) ];
+Jac = @(x, p) [(4*a*pi/p(1)^2)*x(:,1).*cos(2*pi*x(:,1)/p(1)+p(2)),...
+-a*cos(2*pi*x(:,1)/p(1)+p(2))];
 %
-  maxit = 1000; % Anzahl der Iterationen
-  tol = 1E-15; % Abbruchbedingung
-  beta0 = 0.2;
-  beta1 = 0.8;
+maxit = 5000; % Anzahl der Iterationen
+tol = 1E-15; % Abbruchbedingung
+beta0 = 0.2;
+beta1 = 0.8;
 %
 % Startwert des Marquardtparameters
 %
-  mu0 = 100;
+mu0 = 10;
 %
 % Optimierungsrechnung
 %
-  p1 = levenberg_marquardt(epsi,Jac,x,p0,mu0,beta0,beta1,maxit,tol);
+p1=levenberg_marquardt(epsi,Jac,x,p0,mu0,beta0,beta1,maxit,tol);
 %
 % Ergebnisausgabe
 %
-  fprintf(stdout,'gefittete Werte: lambda = %1.2f  phi/pi = %1.2f\n', ...
-  p1(1), p1(2)/pi );
-  sf = @(x, p) a*sin(2*pi*x/p(1) + p(2));
-  figure(1);
-  plot( t, s, 'kd', ...
-    t, st, 'g-;soll;', 'linewidth', 3, ...
-    t, sf(t,p0), 'b-.;Startwerte;', 'linewidth', 2,...
-    t, sf(t,p1), 'r--;gefittet;', 'linewidth', 2);
-  xlabel('t / s','fontsize', 14);
-  ylabel('s / V','fontsize', 14);
-  set(gca,'fontsize',12);
-  grid on;
-  print(1,'pltSS_nonlin_leastsquare_sin_zB1.svg','-dsvg');
+disp(['gefittete Werte: lambda = ', ...
+num2str(p1(1)),'; phi/pi =   ',num2str(p1(2)/pi)]);
+
+sf = @(x, p) a*sin(2*pi*x/p(1) + p(2));
+figure(1);
+plot( t, s,'MarkerFaceColor',[0 0 1],'MarkerSize',8, ...
+'Marker','diamond','LineStyle','none')
+hold on;
+plot(t, st, 'g-', 'linewidth', 3)
+plot(t, sf(t,p0), 'b-', 'linewidth', 2);
+plot(t, sf(t,p1), 'r--', 'linewidth', 2);
+legend('Messwerte','Sollfunktion','Startwerte','Fit' )
+
+xlabel('t / s','fontsize', 14);
+ylabel('s / V','fontsize', 14);
+set(gca,'fontsize',12);
+grid on;
+print('-dpng','pltSS_nonlin_leastsquare_sin_zB2.png');
 end
 %
-function p = levenberg_marquardt(F,DF,x,p0,mu0,beta0,beta1,maxit,tol)
-  k = 0;
-  mu= mu0;
-  p = p0;
-  gradQabs = abbruchkrit(F,DF,x,p);
-  sflag = 1;
-  while (gradQabs>tol) && (k<maxit) && (mu>tol) && (sflag<2)
-    [s,mu,sflag] = korrektur(F,DF,x,p,mu,beta0,beta1,tol);
-    if sflag==1
-      p=p+s;
-    end
-    gradQabs = abbruchkrit(F,DF,x,p);
-    k=k+1;
-  end
-  fprintf(stdout,'Anzahl Interationen: %d\n', k);
+function p=levenberg_marquardt(F,DF,x,p0,mu0,beta0,beta1,maxit,tol)
+k = 0;
+mu= mu0;
+p = p0;
+gradQabs = abbruchkrit(F,DF,x,p);
+sflag = 1;
+
+while (gradQabs>tol) && (k<maxit) && (mu>tol) && (sflag<2)
+[s,mu,sflag] = korrektur(F,DF,x,p,mu,beta0,beta1,tol);
+if sflag==1
+p=p+s;
+end
+gradQabs = abbruchkrit(F,DF,x,p);
+k=k+1;
+end
+disp(['Anzahl Interationen: ', num2str(k)]);
 end
 %
 function [s,mu,sflag] = korrektur(F,DF,x,p,mu,beta0,beta1,tol)
-  s = Delta_p(F,DF,x,p,mu);
-  Q = F(x,p)'*F(x,p);
-  DR = Q - F(x,p+s)'*F(x,p+s);
-  DRtilde = Q - (F(x,p)+DF(x,p)*s)'*(F(x,p)+DF(x,p)*s);
-   sflag = 1;
-  if DRtilde > tol
-    if DR <= beta0*DRtilde
-      sflag = 0;
-      mu    = 2*mu;
-    elseif DR >= beta1*DRtilde
-      mu    = mu/2;
-    end
-  else
-    sflag = 2;
-  end
+s = Delta_p(F,DF,x,p,mu);
+Q = F(x,p)'*F(x,p);
+DR = Q - F(x,p+s)'*F(x,p+s);
+DRtilde = Q - (F(x,p)+DF(x,p)*s)'*(F(x,p)+DF(x,p)*s);
+sflag = 1;
+if DRtilde > tol
+if DR <= beta0*DRtilde
+sflag = 0;
+mu = 2*mu;
+elseif DR >= beta1*DRtilde
+mu = mu/2;
+end
+else
+sflag = 2;
+end
 end
 %
 function s = Delta_p(F,DF,x,p,mu)
-  JTJ = DF(x,p)'*DF(x,p);
-  s = -( JTJ + mu*diag(JTJ) )\(DF(x,p)'*F(x,p));
+JTJ = DF(x,p)'*DF(x,p);
+s = -(JTJ + mu*diag(diag(JTJ)))\(DF(x,p)'*F(x,p));
 end
 %
 function gradQabs = abbruchkrit(F,DF,x,p)
-  gradQabs = ( F(x,p)'*DF(x,p) * DF(x,p)'*F(x,p) );
+gradQabs = ( F(x,p)'*DF(x,p) * DF(x,p)'*F(x,p) );
 end
 \end{verbatim}
 
-Dieses Gnu-Octave-Skript hat dazu das in Abb.~\ref{LSoptiExampleSinusFitted}
-dargestellte Ergebnis mit den Werten
+Dieses Gnu-Octave-/Matlab-Skript hat dazu das in Abb.~\ref{LSoptiExampleSinusFitted} dargestellte Ergebnis mit den Werten
 \begin{verbatim}
-Anzahl Interationen: 62
-gefittete Werte: lambda = 30.20  phi/pi = 0.22
+Anzahl Interationen: 1878
+gefittete Werte: lambda = 30.0505; phi/pi = 0.2051
 \end{verbatim}
 geliefert.
 \begin{figure}
 \begin{center}
-\includegraphics[width=0.6\textwidth, angle = 0]{03_vorlesung/media/pltSS_nonlin_leastsquare_sin_zB1.pdf}
+\includegraphics[width=0.8\textwidth, angle = 0]{03_vorlesung/media/pltSS_nonlin_leastsquare_sin_zB2.png}
 \end{center}
 \caption{Beispiel eines sinusförmigen Signals mit Levenberg-Marquadt-Fit gemäß
 Gln.~(\ref{ZielfunktionalGradTaylorResiDaempf}) und (\ref{DaempfTuning}) zusammen mit
@@ -688,7 +730,7 @@ vorliegen haben. Die Kostenfunktion sieht damit wie folgt aus
 \begin{equation}
 Q \; = \; \sum\limits_{j=1}^J \left(Y_j \; - \; f(X_j, \boldsymbol{\theta})\right)^2.
 \end{equation}
-Für die nichtlineare Regression gibt es in Gnu-Octave und Matlab beispielsweise folgende
+Für die nichtlineare Regression gibt es in Gnu-Octave  beispielsweise folgende
 Funktion:
 \begin{verbatim}
 [f, p, cvg, iter] =leasqr (x, y, init, F);
@@ -697,32 +739,134 @@ Angewendet auf unser Beispiel vom sinusförmigen Signal kann sie in folgender We
 verwendet werden
 \begin{verbatim}
 function fit_sin(gen_new)
-  load('pltSS_nonlin_leastsquare_sin_zB1.dat');
+ % Stand: 191105
+ % Läuft nur unter Octave, da leasqr nur unter Octave
+ % frei zur Verfügung steht. Bei Matlab gibt es
+ % einen ähnlichen Befehl, der heisst nlinfit
+  load('pltSS_nonlin_leastsquare_sin_zB2.mat');
   p0 = [34; 0.23*pi];
   sf = @(x, p) a*sin(2*pi*x/p(1) + p(2));
   [f1, p1, kvg1, iter1, corp1, covp1, covr1, stdresid1, Z1, r21] = ...
-    leasqr (t(:), s(:), p0, sf);
-  fprintf(stdout,'gefittete Werte: lambda = %1.2f  phi/pi = %1.2f\n', ...
-    p1(1), p1(2)/pi );
+  leasqr (t(:), s(:), p0, sf);
+  fprintf(stdout,'gefittete Werte: lambda = %1.2f;  phi/pi = %1.2f\n', ...
+  p1(1), p1(2)/pi );
+  t = [0:99]'; % Sekunden
+  N = length(t);
+  %
+  a = 5; % Volt
+  lam = 30; % Sekunden
+  sigma = 0.13*a;
+  phi = 0.2*pi;
+ %
+  am = 0.3*a;
+  phim = 0.7*pi;
+  lamm = 0.3*lam;
+ %
+  st = a*sin(2*pi*t/lam + phi);
   figure(1);
   plot( t, s, 'kd', ...
-    t, st, 'g-.;soll;', ...
-    t, sf(t,p0), 'b--;Startwerte;', ...
-    t, sf(t,p1), 'r-;gefittet;');
+  t, st, 'g-.;soll;', ...
+  t, sf(t,p0), 'b--;Startwerte;', ...
+  t, sf(t,p1), 'r-;gefittet;');
   xlabel('t / s','fontsize', 14);
   ylabel('s / V','fontsize', 14);
   set(gca,'fontsize',12);
   grid on;
-end
+  end
 \end{verbatim}
 und wir erhalten folgendes Ergebnis
 \begin{verbatim}
-gefittete Werte: lambda = 29.91  phi/pi = 0.18
+gefittete Werte: lambda = 30.0505;  phi/pi = 0.2051
 \end{verbatim}
 
+\newpage
+\section{Matlabfunktionen zur Berechnung nichtlinearer Fits}
+Es gibt eine Vielzahl an Bibliotheksfunktionen, die nichtlineare Optimierungsverfahren implementiert haben. So gibt es z.B. 
+z.~B. die Matlab-/Octavefunktion \newline \textsf{X = fminbnd(FUN,x1,x2,OPTIONS)}.
+\textsf{fminbnd} versucht das lokale Minmimum einer Funktion \textsf{FUN} mit einer
+Variablen im Intervall \textrm{x1 $<$ X $<$ x2} zu finden.  
+Als \glq OPTIONS\grq~können u.a. gewählt werden TolX (Toleranz, wann abgebrochen
+werden soll) oder MaxIter (Maximale Anzahl an Iterationen, die durchgeführt
+werden sollen).
+Da bei unserem Beispiel mit dem Sinusfit zwei Parameter zu schätzen sind, 
+verwenden wir die Funktion \textsf{fminsearch}. Hier wird nur ein Schätzwert (Startwert) 
+\textrm{x0} angegeben. Die zu minimierende Kostenfunktion $Q$ ist gegeben durch: 
+\begin{equation}
+Q(\boldsymbol{p}) = \sum_j (a \cdot \sin(2\cdot \pi \cdot t(j) /p(1) + p(2))-s(j))^2
+\;\rightarrow \;\textrm{Min.}
+\end{equation}
+Der dazugehörige Matlab-Code lautet: 
+\begin{verbatim}
+load('pltSS_nonlin_leastsquare_sin_zB2.mat');
+a = 5; % Volt
+p0 = [34; 0.23*pi];
+% Ziel-/ Kostenfunktion:
+Q = @(p) sum((a*sin(2*pi*t/p(1) + p(2))-s).^2) ;
+tol = 1E-15;
+maxit =1000;
+p1= fminsearch(Q, p0, optimset('TolX',tol, 'MaxIter', maxit));
+disp(['gefittete Werte: lambda =', num2str(p1(1)),';  ', ...
+num2str(p1(2)/pi)])
+\end{verbatim}
+Als Ergebnis erhält man: 
+\begin{verbatim}
+gefittete Werte: lambda =30.0505; phi/pi=0.2051
+\end{verbatim}
+\begin{figure}[htb]
+	\begin{center}
+		\includegraphics[width=0.9\textwidth, angle = 0]{03_vorlesung/media/OptimToolMatlab.png}
+	\end{center}
+	\caption{Optimtool von Matlab: Ergebnis $p(1)=30,05$ und $p(2)=0,644$} \label{fig:Optimtool_von_Matlab}
+\end{figure}
+
+\newpage
+Tabelle \ref*{tab:Optimierungsverfahren} gibt einen Überblick über 
+Matlabfunktionen bei Optimierungsproblemen, siehe dazu auch 
+S.~S.~Rao \cite{Rao09}. $\mathbf{lb}$ steht für \glq lower bound\grq~ und $\mathbf{ub}$ steht für \glq upper bound\grq~
+
+\begin{table}[!ht]
+	\caption{Optimierungsverfahren mit Matlab}
+	\centering
+	\begin{tabular}{p{5cm} | >{\centering\arraybackslash} p{6cm} | p{4cm}}  \hline 
+		Typ des Optimierungs- \newline problem &  Standardform für die Lösung unter Matlab/Octave &  Matlab/Octave Funktion um das Problem zu lösen \\[1ex]
+		\hline \hline 
+		Funktion von einer  \newline Variablen  & Finde $x$, indem $f(x)$ minimiert wird mit
+		$x_1 < x < x_2$ & \textsf{fminbnd} \\[1ex] \hline 
+		Minimierung ohne Randbedingung von einer Funktion oder mehreren Variablen &
+		Finde $\mathbf x$, so dass $f(\mathbf x)$ minimiert wird.  & 
+		\textsf{fminunc} oder \newline \textsf{fminsearch} \\[1ex] \hline 
+		Lineares Problem & Finde $\mathbf x $ durch Minimierung von $\mathbf{f^T x}$ mit $A \mathbf x \le b$, $A_{eq} \mathbf x = \mathbf b_{eq}$, \newline
+		$\mathbf{lb} \le \mathbf{x} \le \mathbf{ub}$ & \textsf{linprog} \\[1ex] \hline
+		Quadratisches Problem & Finde $\mathbf x $ durch Minimierung von $\frac{1}{2} \mathbf{x^T}\mathbf{f^T x}$ mit $A \mathbf x \le \mathbf b$, 
+		\newline $A_{eq}$ $\mathbf x = \mathbf b_{eq}$, \newline
+		$\mathbf{lb} \le \mathbf{x} \le \mathbf{ub}$ & \textsf{quadprog} \\[1ex] \hline
+		Minimierung von Funktionen von mehreren Variablen mit Nebenbedingungen &
+		Finde $\mathbf x $ durch Minimierung von $\frac{1}{2} \mathbf{x^T}\mathbf{f^T x}$ mit $\mathbf{c(x) \le 0}$, 
+		$\mathbf{c_{eq} = 0}$ \newline
+		$A \mathbf x \le \mathbf b$, 
+		$A_{eq}$ $\mathbf x = \mathbf b_{eq}$, \newline
+		$\mathbf{lb} \le \mathbf x \le \mathbf{ub}$ & \textsf{fmincon} \\[1ex] \hline
+		Minimax Problem & Finde das  $\mathbf x $ welches die Maxima
+		von mehreren gegeben Funktionen $F_i(\mathbf x)$ minimiert, 
+		so dass  $\mathbf{c(x) \le 0}$, 
+		$\mathbf{c_{eq} = 0}$ \newline
+		$A \mathbf x \le \mathbf b$, 
+		$A_{eq}$ $\mathbf x = \mathbf b_{eq}$, \newline
+		$\mathbf{lb} \le \mathbf x \le \mathbf{ub}$ & \textsf{fminimax} \\[1ex] \hline
+	\end{tabular}
+	\label{tab:Optimierungsverfahren}
+\end{table}
+
+Bei Matlab gibt es die in Abb. \ref{fig:Optimtool_von_Matlab} gezeigte graphische Oberfläche, das sog.
+\glq Optimization tool\grq~(Funktionsaufruf: \glq optimtool\grq),
+die die in Tab. \ref*{tab:Optimierungsverfahren} aufgeführten
+Optimierungsverfahren und noch einige mehr zur Verfügung stellt.
+Dieses Tool eignet sich ganz gut, wenn man sich einen ersten Überblick
+über die in Matlab implementierten Optimierungsverfahren verschaffen will. \\
+
+\newpage
 \section{Gradientenverfahren mit unterschiedlichen Varianzen}
 \label{unterschiedVar}
-
 Die Varianzen (und Kovarianzen) der Residuen sind immer auch Funktion der Modellparameter. Als wir die
 Maximum-Likelihood-Methode eingeführt haben, hatten wir sie ausgeklammert und bei der Bestimmung
 des Minimums über die Summer der kleinsten Residuenquadrate weggekürzt. Sie
@@ -853,18 +997,15 @@ Q(\mathbf{p}) \; = \;
 In diesem Zusammenhang erfolgt die nichtlineare Optimierung, indem nicht
 die Residuen in Taylorreihe entwickelt, sondern die Gradientenfunktion $\nabla Q$ direkt.
 
-
 \section{Robuste Schätzverfahren}
 \label{robustEstimation}
-
 Wir haben nun eine Kostenfunktion $Q$ mit Gewichtsfaktoren kennengelernt, Gl.~(\ref{ZielfunktionalJmitW2}),
-bei der die Gewichte die Kehrwerte der Varianzen sind $w_j = \frac{1}{\sigma_j^2}$, sich eigentlich
+bei der die Gewichte die Kehrwerte der Varianzen sind $w_j = \frac{1}{\sigma_j^2}$, die sich eigentlich
 aus der Abweichung der Beobachtungen vom Modell ergeben. Wenn kein {\`a} priori Wissen über
 diese Varianzen vorliegt, aber bekannt ist, dass die Verteilung der
 Residuen aller Beobachtungen nicht gauß\-ver\-teilt ist, soll das Problem dennoch mit der
 Maximum-Likelihood-Methode gelöst werden. Es kommt vor, dass einzelne Beobachtungen
-sehr weit von der Erwartung entfernt sind. Man sagt, dass sie signifikant abweichen. Die Gaußverteilung
-erlaubt dieses auch, denn sie hat einen Definitionsbereich für die Residuen $\varepsilon$,
+sehr weit von der Erwartung entfernt sind. Man sagt, dass sie signifikant abweichen. Die Gaußverteilung erlaubt dieses auch, denn sie hat einen Definitionsbereich für die Residuen $\varepsilon$,
 der von minus Unendlich bis plus Unendlich geht, ihre Ausläufer auch \textsl{Tails} genannt,
 sind unbegrenzt. Die Wahrscheinlichkeit ist aber sehr gering, kleiner als $5~\%$, dass der Betrag der
 Residuen $\varepsilon$ einen Wert annimmt, der größer als
@@ -990,4 +1131,3 @@ Abb.~\ref{RobustIter} stellt die ursprüngliche Häufigkeitsverteilung aus Abb.~
 durchgezogene, schwarze Linie dar. Nach dem ersten Iterationsschritt der Umgewichtung, hat sich die Verteilung so verändert,
 wie es durch die blaue gestrichpunktete Linie gezeigt wird, zu der ein Mittelwert von $24.20$ gehört. Nach mehr als acht Iterationen
 wurde ein Mittelwert von $23.23$ erzielt und die mit rot gestrichelter Verteilungskurve eingezeichnet sind.
-
