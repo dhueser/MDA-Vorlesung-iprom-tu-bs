@@ -262,25 +262,25 @@ Regressionsgeraden in das gleiche Koordinatensystem ein, so
 schneiden sich diese im Schwerpunkt $(\bar {X},\bar {Y})$.
 Für den Schätzwert der Varianz der Residuen ergibt sich, siehe Gl.(\ref{eq:s_quadrat_Regresssion})
 \begin{equation}
-s^2(\hat{\theta}_0 ,\hat{\theta}_1 ) = \frac{Q(\hat{\theta}_0 ,
+\hat\sigma_\epsilon^2 = s^2(\hat{\theta}_0 ,\hat{\theta}_1 ) = \frac{Q(\hat{\theta}_0 ,
 	\hat{\theta}_1 )}{J - 1 - m } 
 = \frac{Q(\hat{\theta}_0 ,
 	\hat{\theta}_1 )}{J - 2}
 \end{equation}
 
 \newpage
-\section{Beispiele zur linearen Regression}
+\section{Beispiel zur linearen Regression}
 \label{subsection:lineare-Regression}
 \textbf{Beispiel:} Vergleich der Modellierung mit Gerade und mit Polynom 6.~Grades \\
 Gegeben sei ein Ensemble von Werten
 $(X_j,Y_j )$, $j = 1,2,\ldots ,J$ einer Eingangsgröße (Regressor) $X$ und einer Zufallsgrößen,
 der abhängigen Ausgangsgröße (Regressand) $Y$.
-Beispielhaft ist in Abb.~\ref{fig:LineareRegression} eine
+Beispielhaft ist in Abb.~\ref{fig:LineareRegressionMoeglFits} eine
 entsprechende Punktwolke dargestellt:
 \begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=11cm]{02_vorlesung/media/Regression_der_WertePaare.png}
-    \caption{Beispiel für mögliche Fits, linearer Fit und Polynomfit vom Grade 6} \label{fig:LineareRegression}
+    \caption{Beispiel für mögliche Fits, linearer Fit und Polynomfit vom Grade 6} \label{fig:LineareRegressionMoeglFits}
 \end{figure}
 Bevor man mit der Regressionsrechnung anfängt, muss man sich im vorhinein sehr sorgfältig
 überlegen, in welchem physikalischen Zusammenhang die Größen stehen, also welcher
@@ -662,8 +662,54 @@ die Schätzer (als solche kenntlich durch das Dach) wie folgt
 \begin{equation}
 \boldsymbol{\hat \theta} \; = \;
 \left( \mathbf{X}^\mathsf{T}  \, \mathbf{X} \right)^{-1} \mathbf{X}^\mathsf{T} \, \mathbf{Y}
+\label{eq:schaetzwerte_fuer_theta}
 \end{equation}
 wobei hoch minus Eins soviel bedeutet wie die Inverse der Matrix.
+
+\textbf{Alternative Herleitung der Schätzparameter für den Linearen Least Square Gl.(\ref{eq:schaetzwerte_fuer_theta}) in der Schreibweise mit Indizes}
+
+Das j-te Residuum ist gegeben durch: 
+\begin{equation}
+\epsilon_j= Y_j - \sum_{k=1}^{M}\theta_k X_{jk} \quad \mathrm{mit} 
+\quad j=1,\ldots,J 
+\label{eq:A1_Residuen}
+\end{equation}
+Das Qualitätsmaß $Q$ oder häufig auch als Zielfunktion $S$ bzeichnet 
+ist gegeben durch: 
+\begin{equation} 
+Q = \sum_{j=1}^J \epsilon_j^2. 
+\end{equation}
+Die besten Schätzparameter $\hat{\boldsymbol{\theta}}$ 
+erhält durch Aufsuchen des Minimums des Qualitätsmaßes $Q$.
+D.~h. wir bilden die 1. Ableitung und setzen diese gleich Null: 
+\begin{equation}
+\frac{\partial Q}{\partial \theta_k} =2\sum_{j = 1}^J \epsilon_j\frac{\partial \epsilon_j}{\partial \theta_k} \quad \mathrm{mit} \quad (k=1,2,\ldots, M)
+\end{equation}
+Die partiellen Ableitungen lassen sich aus Gl.(\ref{eq:A1_Residuen}) bestimmen: 
+\begin{equation}
+\frac{\partial \epsilon_j}{\partial \theta_k}=-X_{jk}
+\end{equation}
+Somit erhalten wir:
+\begin{equation}
+\frac{\partial Q}{\partial \theta_k} = 2\sum_{j=1}^{J} \left( Y_j-\sum_{l=1}^{M} \theta_l X_{jl} \right) (-X_{jk}) 
+\quad \mathrm{mit} \quad (k=1,2,\dots, M).
+\end{equation}
+Diese erste Ableitung muss gleich Null sein, d.h.
+\begin{equation}
+2\sum_{j=1}^{J} \left( Y_j-\sum_{l=1}^{M} \hat\theta_l X_{jl} \right) (-X_{jk}) 
+= 0 \quad \mathrm{mit} \quad (k=1,2,\dots, M).
+\end{equation}
+Durch Umformen erhalten wir die \glqq Normalgleichung\grqq:
+\begin{equation}
+\sum_{j=1}^{J} \sum_{l=1}^{M} X_{jk} X_{jl} \hat\theta_l 
+= \sum_{j=1}^{J} X_{jk} Y_j \quad \mathrm{mit} \quad (k=1,2,\dots, M).
+\end{equation}
+Die Normalgleichung kann dann in Matrixform geschrieben werden: 
+\begin{equation}
+(\mathbf X^\mathrm{T} \mathbf X) \hat{\boldsymbol{\theta}} = \mathbf X^\mathrm{T} \mathbf Y
+\end{equation}
+Wir erhalten auch über diese Herleitung die Gl.(\ref{eq:schaetzwerte_fuer_theta}),
+deren Lösung uns die optimalen Fitparameter $\hat{\boldsymbol{\theta}}$ liefert.
 
 Als nächstes ermitteln wir, um das \textbf{vollständige
 	Messergebnis} zu erhalten, auch die Schätz\-werte der Kovarianzen. Die
@@ -814,18 +860,18 @@ die Wurzel aus den Varianzen, die auf der Hauptdiagonalen der Kovarianzmatrix
 $\left( \mathbf{X}^\mathsf{T}  \, \mathbf{X} \right)^{-1} \, \hat \sigma_{\varepsilon}^2$
 stehen. In der üblichen englischsprachigen Literatur zur Regressionrechnung wird
 die Standardabweichung der Regressionsparameter \textsl{Standard Error} genannt.
+
+
+
+
 \subsection{Matrixansatz als allgemeiner Ansatz für linearen Regression}
 Die behandelten allgemeinen Formen von Problemstellungen zur Schätzung von Modellparametern
-werden wir in dieser Vorlesungsreihe nicht weiter vertiefen. Sie sollen lediglich einen Einblick
-und Überblick über die vielfältigen Möglichkeiten in diesem Bereich liefern.
-In den Übungen und der Klausur werden
-wir uns auf das Schätzverfahren mittels linearer Regression fokussieren.
-
+werden wir in dieser Vorlesungsreihe nicht weiter vertiefen. Sie sollen lediglich einen Einblick und Überblick über die vielfältigen Möglichkeiten in diesem Bereich liefern.
 
 Um die lineare Regression universeller einsetzen zu können, ob nun Polynome oder
 Ebenen oder Paraboloide zu fitten sind, ist es erforderlich den allgemeinen Ansatz zu verstehen
-und die unterschiedlichen Anwendungen so formulieren zu können, dass sie darüber lösbar werden.
-
+und die unterschiedlichen Anwendungen so formulieren zu können, dass sie darüber lösbar werden. Im folgenden wollen wir den Übergang auf $M$ Modellparameter 
+$\boldsymbol{\theta} = (\theta_1, \theta_2, \ldots \theta_M)$ vollziehen.
 Wir wollen also den Übergang von Gl.~(\ref{linearRegressionGeradeTheta}) mit
 \begin{equation*}
 \left(
@@ -943,7 +989,6 @@ die Parameter gewonnen wurden, wird durch das Dach auf dem Symbol $\boldsymbol{\
 \begin{equation}
  \boldsymbol{\hat \theta} \; = \;
 \left( \mathbf{X}^\mathsf{T}  \, \mathbf{X} \right)^{-1} \mathbf{X}^\mathsf{T} \, \mathbf{Y}
-\label{eq:schaetzwerte_fuer_theta}
 \end{equation}
 wobei hoch minus Eins soviel bedeutet wie die Inverse der Matrix.
 Für Varianzen und Kovarianzen der $M$ Regressionsparameter $\theta_1, \dots, \theta_M$
@@ -965,7 +1010,8 @@ werden die Residuen gebraucht
 \right) \, = \, 
 \mathbf{Y} \, -  \, \mathbf{X} \, \boldsymbol{\hat \theta}
 \end{equation}
-um deren empirische Varianz zu berechnen
+um deren empirische Varianz zu berechnen ($M$: Anzahl der Modellparameter; $J$: Anzahl der 
+Messwertepaare)
 \begin{equation}
 \hat \sigma_{\varepsilon}^2 \; = \;
 \frac{1}{J-M} \, \boldsymbol{\hat \varepsilon}^\mathsf{T} \boldsymbol{\hat \varepsilon}
@@ -1088,7 +1134,7 @@ berechnen:
 \rho_{XY} = \frac{ s_{XY} }{ s_X \cdot s_Y } \quad \mathrm{~mit~}  - 1 \le \rho_{XY} \le 1
 \end{equation}
 \newpage
-\section{Beispiele zur Linearen Regression}
+\section{Beispiele}
 \label{Vorl2Regressionsaufg2}
 \subsection{Fit einer Geraden}
 Gegeben sind 5 Messpunkte
@@ -1120,8 +1166,31 @@ Gegeben sind 5 Messpunkte
 	%	siehe z.~B. https://de.wikipedia.org/wiki/Studentsche\_t-Verteilung
 \end{itemize}
 
+\textbf{Lösung zu Teil (a):}
+
+Gesucht: 
+\[
+Y = \hat\theta_1 \cdot X + \hat \theta_0 
+\]
+Mittelwert von $X$: $\bar{X} = 3$; Mittelwert von $Y$: $\bar{Y} = 0.64$; \\
+Empirische Standardabeichung von $X$: $s_X = 1.5811$; \\
+Empirische Standardabeichung von $Y$: $s_Y = 0.1636$; \\
+Empirische Kovarianz: $s_{XY} = 0.25$ \\
+Schätzwerte $\hat{\theta}_1$ und $\hat{\theta}_0$:
+\[
+\hat{\theta}_1 = \frac{s_{XY} }{s_X^2 } = 0.100
+\]
+\[
+\hat{\theta}_0 = \bar {Y} - \hat{\theta}_1 \bar {X} = 0.340
+\]
+Bestimmtheitsmaß:
+\[
+\rho_{XY}^2 = \frac{s_{XY}^2 }{s_X^2 \cdot s_Y^2 } = 0.9346
+\]
+
 Mit der Gl.(\ref{eq:schaetzwerte_fuer_theta}) können wir 
-das Beispiel lösen. Der Matlab/Octave-Code lautet: 
+das Beispiel mit dem Matrixformalismus auch lösen. 
+Der Matlab/Octave-Code lautet: 
 \begin{verbatim}
 close all; clear all;
 % Eingabe der Messwertepaare
@@ -1170,6 +1239,25 @@ Der y-Achsenabschnitt liegt bei 0.34 und die Steigung ist 0.1.
 		\label{fig:LineareRegression}
 	\end{center}
 \end{figure}
+
+\textbf{Lösung zu Teil (b)} \\
+Residuen: $\varepsilon_j = Y_j -(\hat\theta _0 + \hat\theta _1 \cdot X_j)$
+mit $j=1,\ldots ,5$
+\[\varepsilon_1 = -0.0400; \;\; \varepsilon_2 =  0.0100;\;\;
+\varepsilon_3= 0.0600;\;\; \varepsilon_4 =0.0100;\;\;
+\varepsilon_5 = -0.0400
+\]
+Qualitätsmaß:
+\[
+Q(\hat\theta _0,\hat\theta _1) = \sum\limits_{j = 1}^J {\varepsilon_j ^2 } 
+= 0.0070
+\]
+Varianz der Residuen:
+\[
+s^2(\hat{\theta}_0 ,\hat{\theta}_1 ) = \frac{Q(\hat{\theta}_0 ,
+	\hat{\theta}_1 )}{J - 2} = 0.0023 \quad \text{bzw.} \quad
+s(\hat{\theta}_0 ,\hat{\theta}_1 ) = 0.048 
+\]
 Die Varianz der Residuen ist wie folgt gegeben:
 \begin{equation}
 \operatorname{Var}(\epsilon) = \frac{1}{J-M} \cdot \left(\mathbf Y - \mathbf X \hat{\boldsymbol\theta}\right)^T 
@@ -1200,6 +1288,101 @@ Cov = \\
 0.0026   -0.0007 \\
 -0.0007    0.0002 \\
 
+\textbf{Lösung zu Teil (c)} \\
+Die Standardabweichung für $X$ berechnet sich zu $s_X = 1.5811$.
+
+Für die Varianz des y-Abschnitt $\hat\theta_0$ ergibt sich: 
+\begin{eqnarray}
+\hat\sigma_{\theta_0}^2 &=& s^2(\hat{\theta}_0 ,\hat{\theta}_1 )
+\left[\frac{1}{J} + \frac{\bar{X}^2}{(J-1)s_x^2 } \right]
+\nonumber \\ 
+&=& 
+0.0023
+\left[\frac{1}{5} + \frac{3^2}{(5-1)\cdot 1.5811^2 } \right]
+\nonumber\\ 
+&=& 0.00253 \nonumber
+\end{eqnarray}
+Damit ergibt sich die Standardabweichung für $\hat\theta_0$:
+\[
+s_{\hat\theta_0} = \sqrt{\hat\sigma_{\theta_0}^2} = 0.0503
+\]
+Für die Varianz der Steigung $\hat\theta_1$ ergibt sich: 
+
+\begin{eqnarray}
+\hat\sigma^2_{\theta_1} &=& \frac{ \hat s^2(\hat{\theta}_0 ,\hat{\theta}_1 )}
+{s^2_X \cdot (J- 1) }
+\nonumber \\
+&=& \frac{ 0.0023}
+{1.5811^2 \cdot (5- 1) } \nonumber \\
+&=& 0.00023
+\end{eqnarray}
+
+Damit ergibt sich die Standardabweichung für $\hat\theta_1$
+\[
+s_{\hat\theta_1} = \sqrt{\hat\sigma_{\theta_1}^2} = 0.01517
+\]
+
+\newpage
+\textbf{Anmerkung: Lösung mit Matlab/Octave} 
+Bei Matlab gibt es den Befehl \glqq polyfit\grqq ~mit dem Polynomfits durchgeführt werden können. Matlab liefert hier dasselbe Ergebnis, auch für die Vertrauensbereiche, das Qualitätsmaß $Q$ (engl. SSE: Sum squared error) oder das Bestimmheitsmaß $\rho^2_{XY}$ (R-square), siehe Abb.\ref{fig:MatlabPolyfit}:
+\begin{figure}[!htp]
+	\begin{center}
+		\includegraphics[width=160mm]{02_vorlesung/media/Matlab_CFTool.png}
+		\caption{Lösung der Aufgabe mit dem polyfit Befehl von Matlab/Octave. 
+			Es wird hier u.~a. der 95\%ige Vertrauensbereich berechnet und
+			angezeigt (siehe Mitte links in der Abbildung).}
+		\label{fig:MatlabPolyfit}
+	\end{center}
+\end{figure}
+
+\textbf{Hinweis: Vertrauensbereich} \\
+In einer der nächsten Vorlesungen werden wir sehen, wie man Vertrauensbereiche 
+mit Hilfe der Varianzen bzw. Standardabweichungen berechnet. Dazu benötigt man 
+noch die t-Verteilung. Da man hier 5 Messpunkte und 2 Modellparameter hat,
+wird die t-Verteilung mit dem Freiheitsgrad 5-2 = 3 benötigt. 
+95\%iger Vertrauensbereich für $\hat\theta_1$ mit $t_3 = 3.182$: 
+\[
+\varepsilon _{\hat{\theta}_1} = t_3 \cdot \hat\sigma_{\theta_1} = \frac{t_3 \cdot s(\hat{\theta}_0 ,
+	\hat{\theta}_1 )}{s_X \cdot \sqrt {J
+		- 1} } = 0.0486
+\]
+95\%iger Vertrauensbereich für $\hat\theta_0$ errechnet sich durch:
+\[
+\varepsilon _{\hat{\theta}_0} = t_3 \cdot \hat\sigma_{\theta_0} = t_3 \cdot s(\hat{\theta}_0 ,\hat{\theta}_1 ) \cdot \sqrt {\frac{1}{J} + \frac{\bar {X}^2}{(J - 1) s_X^2 }} = 0.1612
+\]
+\textbf{Ergebnis:} \\ 
+Der 95\% Vertrauensbereich des Schätzwertes $\hat\theta_1$ ist somit gegeben durch:
+\begin{equation}
+\hat\theta_1 = 0.1000 \pm 0.0486 \quad \text{bzw.} \quad [0.0514;0.1486]
+\end{equation}
+Der 95\% Vertrauensbereich des Schätzwertes $\hat\theta_0$ ist somit gegeben durch: 
+\begin{equation}
+\hat\theta_1 = 0.3400 \pm 0.1612 \quad \text{bzw.} \quad [0.1788;0.5012]
+\end{equation}
+
+
+\begin{comment}
+95\%iger Vertrauensbereich für $\hat\theta_1$ mit $t_3 = 3.182$ und 
+Standardabweichung von $s_X = 1.5811$
+\[
+\varepsilon _{\hat{\theta}_1} = \frac{t_3 \cdot s(\hat{\theta}_0 ,
+\hat{\theta}_1 )}{s_X \cdot \sqrt {J
+- 1} } = 0.0486
+\]
+95\%iger Vertrauensbereich für $\hat\theta_0$ errechnet sich durch:
+\[
+\varepsilon _{\hat{\theta}_0} = t_3 \cdot s(\hat{\theta}_0 ,\hat{\theta}_1 ) \cdot \sqrt {\frac{1}{J} + \frac{\bar {X}^2}{(J - 1) s_X^2 }} = 0.1612
+\]
+\textbf{Ergebnis:} \\ 
+Der 95\% Vertrauensbereich des Schätzwertes $\hat\theta_1$ ist somit gegeben durch:
+\begin{equation}
+\hat\theta_1 = 0.1000 \pm 0.0486 \quad \text{bzw.} \quad [0.0514;0.1486]
+\end{equation}
+Der 95\% Vertrauensbereich des Schätzwertes $\hat\theta_0$ ist somit gegeben durch: 
+\begin{equation}
+\hat\theta_1 = 0.3400 \pm 0.1612 \quad \text{bzw.} \quad [0.1788;0.5012]
+\end{equation}
+\end{comment}
 \subsection{Fit einer kubischen Funktion (Polynom 3. Ordnung)}
 Wir nehmen wieder die gleichen Messwertpaare wie eben. Jedoch fitten wir 
 nun eine kubische Funktion durch die Messdaten, d.h. 
@@ -1373,8 +1556,4 @@ Die Stufenhöhe $d$ ist der senkrechte Abstand zwischen den beiden parallelen Ge
 	sowie deren Kovarianzmatrix.
 \end{itemize}
 Anmerkung: Die inverse Matrix brauchen Sie nicht analytisch zu berechnen, sondern
-	lediglich $(...)^{-1}$ zu notieren
-
-
-
-
+	lediglich $(...)^{-1}$ zu notieren.
