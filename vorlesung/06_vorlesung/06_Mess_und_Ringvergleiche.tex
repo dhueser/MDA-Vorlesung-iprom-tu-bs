@@ -369,7 +369,7 @@ Referenzwert (gewichteten Mittelwert) $x_{ref}=\sum_i w_i x_i / \sum_i w_i$.
 Der Birge Test kann auch bei korrelierten Messdaten $x_1,\ldots ,x_N$, wenn die 
 Kovarianzen $\sigma_{12},\ldots, \sigma_{(N-1)N}$ gegeben sind, durchgeführt werden, siehe \cite{Kac08}.
 
-\subsection{Paule-Mandel Metjode zur Anpassung von Gewichtsfaktoren}
+\subsection{Paule-Mandel Methode zur Anpassung von Gewichtsfaktoren}
 
 Bei Ringvergleichen kommt es oftmals vor, dass jeder am Vergleich beteiligte Partner eine
 Unsicherheit $U$ angibt die kleiner ist als der Abstand des Messwertes zu anderen Partnern,
@@ -441,6 +441,8 @@ Die beiden Mittelwerte der jeweiligen Partner A und B sind
  \label{eq:Mittelwerte_x_II_A_B}
  \end{equation}
 
+\begin{comment}
+
 \textcolor{red}{\textbf{Dieses würde ich hier an dieser Stelle gar nicht bringen, auch wenn es in Pau82 
 so präsentiert wird, weil Du ja hier in diesem Skript schon mit den Gewichten als Kehrwert
 der Varianzen für den Referenzwert, der aus dem gewichteten Mittel der Resultate aller Partner
@@ -476,7 +478,7 @@ Diese Art der Wichtung, die Einzelwerte zu gewichten, führt dazu dass Stichprob
 sehr viel stärker gewichtet wird, in diesem Beispiel um einen Faktor $3$ mit $\frac{1}{4} = \frac{3}{12}$.
 Es macht jedoch mehr Sinn, die Gewichte danach zu richten, wie genau die Größen sind,
 im Sinne von der Frage wie breit oder schmal die Wahrscheinlichkeitsdichteverteilung ist.}
-
+\end{comment}
 
 Wir haben im Laufe dieser Vorlesungsreihe bereits gesehen, dass
 Messergebnisse mit größerer Unsicherheit sinnvollerweise mit geringerer
@@ -484,7 +486,7 @@ Wichtung zu berücksichtigen sind, so dass Gewichte
 deshalb aus dem Kehrwert der Varianzen bestimmt werden. Der Grund dafür liegt darin,
 dass die Varianz des gewichteten Mittelwertes $x_\mathrm{ref}$ minimiert wird,
 wenn die Gewichte als Reziprokwert der Varianzen der Einzelwerte berechnet werden.
-In Gl.~(\ref{referenzgleichepartner}) bzw.\ Gl.~(\ref{eq:referenzgleichepartner2}) 
+In Gl.~(\ref{eq:referenzgleichepartner2}) 
 haben wir deshalb zur Ermittlung des Referenzwertes $x_\mathrm{ref}$ beim
 Ringvergleich mit gleichwertigen Partnern gerechnet mit
 \begin{equation*}
@@ -495,6 +497,7 @@ und
  x_\mathrm{ref} = \frac{\sum\limits_{i=1}^N w_i x_i}{\sum\limits_{i=1}^N w_i} .
 \end{equation*}
 
+\begin{comment}
 \textcolor{red}{wahrscheinlich macht es keinen Sinn mit der empirischen Varianz
 anzufangen, sondern direkt mit der empirischen Var des Mittelwertes, also nehme ich
 diesen Teil wieder zurück}
@@ -522,17 +525,19 @@ R^2_\mathrm{B} \; = \; \frac{1}{N-1} \; \sum_{i=1}^N \left( \frac{x_i-x_\mathrm{
  \, + \, \frac{ \left( 16.550 - 9.5372 \right)^2}{0.12500} \right) = 842.47 \gg 1
 $$
 --nix!}
+\end{comment}
 
 Da es sich um den Vergleich der Mittelwerte der beiden Stichproben A und B handelt, verwenden wir
 für die Unsicherheit $u_i$ die Varianz des Mittelwertes, also
 $u_i = \operatorname{Var}(\bar x_i)$ verwenden. Für Beispiel II sind dies folgende Werte:
 $$
 \operatorname{Var}(\bar x_{II,A}) = \frac{1}{6(6-1)} \sum\limits_{k=1}^{6} \left(x_{II,k} - \bar x_{II,A} \right)^2 = 0.023778
+\quad \text{d.h.} \quad \bar s_A = \sqrt{\operatorname{Var}(\bar x_{II,A})} = 0.154
 $$
 und
 $$
 \operatorname{Var}(\bar x_{II,B}) = \frac{1}{2(2-1)} \sum\limits_{k=7}^{8} \left(x_{II,k} - \bar x_{II,B} \right)^2 = 0.062500
-\label{eq:VarianzenMWII}
+\quad \text{d.h.} \quad \bar s_B = \sqrt{\operatorname{Var}(\bar x_{II,B})} = 0.250
 $$
 so erhalten wir für die beiden Gewichte $w_A = 42.056$ und $w_B = 16.000$.
 Der gewichtete Mittelwert, der als Referenzwert für En-Tests und das Birge-Verhältnis genutzt wird, ist damit
@@ -711,16 +716,21 @@ liefert:
 $$
 v = 112.707 \quad \text{d.h.} \quad s_\mathrm{b} = 10.6
 $$
+
+\begin{comment}
 \textcolor{red}{ich werde hier noch einen Plot erzeugen, der die Gaußverteilungen der
 beiden Einzelstichproben zeigt (vielleicht außerdem noch die t-Verteilungen) sowie die
 Gaußverteilung ${\cal N}(x_\mathrm{ref} = 9.040, s_\mathrm{b} = 10.6)$ für die
 Zwischengruppenverteilung.}
+\end{comment}
 
 Als konsistenter Referenzwert ergibt sich:
 \begin{equation}
 x_\mathrm{ref} = 9.040 \quad \text{mit einer gepoolten Varianz von} 
 \operatorname{Var}(x_\mathrm{ref}) = 0.1397
 \end{equation}
+
+\begin{comment}
 
 \textcolor{red}{wie hast Du die gepoolte Varianz definiert? Ich finde sie nicht in Deinem Matlabskript auch nicht in
 dem Text des Vorl-Skripts ist das
@@ -729,6 +739,20 @@ $$
 = 56.375  \quad \sqrt{\operatorname{Var}(x_\mathrm{ref})} = 7.5
 $$
 ich muss das Octave-Skript ausprobieren, und auch die gepoolte Var}
+\end{comment}
+
+\begin{figure}[!htp]
+	\begin{center}
+		\includegraphics[width=120mm]{06_vorlesung/media/PauleMandel.pdf}
+		\caption{Wahrscheinlichkeitsdichteverteilungen als Normalverteilungen
+  zu Beispiel II mit blauer Kurve für die Einzelstichprobe A mit $\bar x_{II,A} = 1.533$
+  und $\bar s_A = 0.1542$, schwarzer Kurve für die Einzelstichprobe B mit $\bar x_{II,B} = 16.550$
+  und $\bar s_B = 0.2500$, sowie die gemeinsame Verteilung nach Hinzufügen der Zwischengruppenvarianz mit
+  $x_\mathrm{ref} = 9.040$ und $\sqrt{\operatorname{Var}(x_\mathrm{ref})} = 7.5$ als sehr viel breitere und
+  flachere Gaußverteilung dargestellt als rote Kurve.}
+		\label{fig:Pau82BeispielII}
+	\end{center}
+\end{figure}
 
 Der dazu gehörige Quellcode für Gnu-Octave/Matlab sieht wie folgt aus: 
 \begin{verbatim}
