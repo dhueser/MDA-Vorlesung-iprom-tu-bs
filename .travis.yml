@@ -2,7 +2,7 @@ sudo: required
 dist: trusty
 before_install:
 - sudo apt-get -qq update && sudo apt-get install -y --no-install-recommends texlive-fonts-recommended
-  texlive-latex-extra texlive-fonts-extra dvipng texlive-latex-recommended texlive-lang-german latexmk
+  texlive-latex-extra texlive-fonts-extra dvipng texlive-latex-recommended texlive-lang-german texlive-science latexmk
 script:
 - cd vorlesung/
 - latexmk -pdf MDA_iprom_TUbraunschweig.tex
