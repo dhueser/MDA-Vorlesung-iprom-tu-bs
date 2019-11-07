@@ -54,7 +54,7 @@ Die interaktiven Code-Beispiele sind in folgender Tabelle zusammengefasst. Diese
 
 | Kapitel | Titel         | Beschreibung                                                 | Link                                                         |
 | ------- | ------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| 2       | Kubischer Fit | Matlab/Octave-Code, um einen kubischen Fit zu bestimmen mit anschließender Visualisierung in einem Plot. | [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/JulianWgs/MDA-Vorlesung-iprom-tu-bs/master?urlpath=/lab/tree/vorlesung/01_vorlesung/code/cubic_fit.ipynb) |
+| 2       | Kubischer Fit | Matlab/Octave-Code, um einen kubischen Fit zu bestimmen mit anschließender Visualisierung in einem Plot. | [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/dhueser/MDA-Vorlesung-iprom-tu-bs/master?urlpath=/lab/tree/vorlesung/02_vorlesung/code/cubic_fit.ipynb) |
 
 
 

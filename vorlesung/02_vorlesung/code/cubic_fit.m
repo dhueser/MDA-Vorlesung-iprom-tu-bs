@@ -13,10 +13,10 @@ Y = input(:,2);
 % Aufstellen der X-Matrix % Aufstellen der Y-Matrix
 % degree of freedom
 df = 5-4;
-% Berechung der Schätzwerte \thetaHat;
+% Berechung der Schaetzwerte \thetaHat;
 % y-Abschnitt = \thetaHat(1); Steigung = \thetaHat(2)
 thetaHat = (X' * X) \ (X' * Y);
-% Anzeige der Schätzwerte
+% Anzeige der Schaetzwerte
 disp(thetaHat);
 % Plotten der Fitfunktion
 xx = linspace(0,6,100);
@@ -34,7 +34,7 @@ set(gcf, 'PaperUnits', 'centimeters');
 x_width=15 ;y_width= 9;
 set(gcf, 'PaperPosition', [0 0 x_width y_width]);
 print '-dpng' kubischerFit.png
-% Qualitätsmaß Q
+% Qualitaetsmass Q
 Q = (Y-X*thetaHat)' * (Y-X*thetaHat)
 % Varianzen der Residuen
 Var_epsilon = 1/df *(Y-X*thetaHat)' * (Y-X*thetaHat)

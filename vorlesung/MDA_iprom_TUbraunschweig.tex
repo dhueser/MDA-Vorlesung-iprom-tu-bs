@@ -1,6 +1,8 @@
 \documentclass[a4paper,11pt]{book}
 %\usepackage[total={6in, 9.5in}]{geometry}
 \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry} %Seitenaufbau
+\usepackage{fix-cm}
+\usepackage[T1]{fontenc}
 \usepackage[ngerman]{babel}
 \usepackage[utf8]{inputenc}
 %\usepackage{lmodern} 
@@ -23,6 +25,14 @@
 %\usepackage{scrpage2}
 %\pagestyle{scrheadings}
 %\ofoot{MDA-Vorlesung, WS 2019/20 ~~-~~ iprom, TU-BS und PTB}
+\usepackage{listings}
+\usepackage[numbered,framed]{matlab-prettifier}
+\lstset{
+  style              = Matlab-editor,
+  basicstyle         = \mlttfamily,
+  escapechar         = ",
+  mlshowsectionrules = true
+}
 %-----------------Kopf/Fuß-------------------------
 \usepackage{fancyhdr}
  
