@@ -48,5 +48,15 @@ Wer Vorschläge zur Verbesserung hat, ist herzlich eingeladen, die LaTeXquellen 
 | 12   | 2020-01-27 | Dr.-Ing. Gerd Ehret/Dr. Wolfgang Schmid | Infrastrukturen der Metrologie                      |
 | 13   | 2020-02-03 | Dr. Rolf Kumme                          | Normen und Richtlinien                              | 14   | nach Vereinb.| Dr. Rolf Kumme | Exkursion |
 
+# Interaktive Code-Beispiele
+
+Die interaktiven Code-Beispiele sind in folgender Tabelle zusammengefasst. Diese können mit einem Klick auf den Link geöffnet werden. Der Code wird auf einem Server ausgeführt und die Anzeige findet im Browser statt. Es ist also nicht notwendig zusätzliche Programme zu installieren. Es kann mitunter ein paar Minuten dauern bis die passende Programmierumgebung erstellt wird.
+
+| Kapitel | Titel         | Beschreibung                                                 | Link                                                         |
+| ------- | ------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| 2       | Kubischer Fit | Matlab/Octave-Code, um einen kubischen Fit zu bestimmen mit anschließender Visualisierung in einem Plot. | [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/JulianWgs/MDA-Vorlesung-iprom-tu-bs/master?urlpath=/lab/tree/vorlesung/01_vorlesung/code/cubic_fit.ipynb) |
+
+
+
 
 
