@@ -8,3 +8,5 @@
 vorlesung/MDA_iprom_TUbraunschweig.pdf
 # vim backup
 *.swp
+# original drawings
+*.svg
