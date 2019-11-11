@@ -10,3 +10,5 @@ vorlesung/MDA_iprom_TUbraunschweig.pdf
 *.swp
 # original drawings
 *.svg
+# von lokalen jupyter notebooks
+.ipynb_checkpoints
