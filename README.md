@@ -7,6 +7,11 @@ Der Modulverantwortliche ist Prof. Dr.-Ing Rainer Tutsch, Leiter des Instituts f
 - Dr.-Ing. Gerd Ehret
 - Dr. rer. nat. Wolfgang Schmid
 
+## [Skript](https://github.com/dhueser/MDA-Vorlesung-iprom-tu-bs/releases/latest/download/MDA_iprom_TUbraunschweig.pdf)
+- Das pdf-File des jeweils aktuellen Vorlesungsskriptes steht zum Download [hier](https://github.com/dhueser/MDA-Vorlesung-iprom-tu-bs/releases/latest/download/MDA_iprom_TUbraunschweig.pdf) zur Verfügung.
+- Das Skript wird laufend überarbeitet.
+- Wer Vorschläge zur Verbesserung hat, ist herzlich eingeladen, die LaTeXquellen des gesamten Skripts zu clonen und Änderungen in einem separaten Branch in das github-Repository zu laden und einen pull Request zu setzen.
+
 ## Inhalt
 Das Modul gibt einen umfangreichen Überblick über die Grundlagen der Messdatenauswertung und der rechnerischen Ermittlung der zugeordneten Unsicherheiten.
 
@@ -21,14 +26,6 @@ Das Modul gibt einen umfangreichen Überblick über die Grundlagen der Messdaten
 ### Monte-Carlo-Methoden
 ### Infrastrukturen der Metrologie
 ### Normen und Richtlinien                             
-
-## Skript
-Das pdf-File des Vorlesungsskriptes in der Version vom 28. Okt 2019 steht zum download
-hier zur Verfügung
-[v20191028](https://github.com/dhueser/MDA-Vorlesung-iprom-tu-bs/releases/download/v20191028/MDA_iprom_TUbraunschweig.pdf)
-Dies ist Release v20191028 bis Messunsicherheitsfortpflanzung linearer und linearisierbarer Modelle.
-Das Skript wird laufend überarbeitet.
-Wer Vorschläge zur Verbesserung hat, ist herzlich eingeladen, die LaTeXquellen des gesamten Skripts zu clonen und Änderungen in einem separaten Branch in das github-Repository zu laden und einen pull Request zu setzen.
 
 ## WS 2019/20
 
