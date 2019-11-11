@@ -7,7 +7,7 @@ Der Modulverantwortliche ist Prof. Dr.-Ing Rainer Tutsch, Leiter des Instituts f
 - Dr.-Ing. Gerd Ehret
 - Dr. rer. nat. Wolfgang Schmid
 
-## [Skript](https://github.com/dhueser/MDA-Vorlesung-iprom-tu-bs/releases/latest/download/MDA_iprom_TUbraunschweig.pdf)
+## [Vorlesungsskript](https://github.com/dhueser/MDA-Vorlesung-iprom-tu-bs/releases/latest/download/MDA_iprom_TUbraunschweig.pdf)
 - Das pdf-File des jeweils aktuellen Vorlesungsskriptes steht zum Download [hier](https://github.com/dhueser/MDA-Vorlesung-iprom-tu-bs/releases/latest/download/MDA_iprom_TUbraunschweig.pdf) zur Verfügung.
 - Das Skript wird laufend überarbeitet.
 - Wer Vorschläge zur Verbesserung hat, ist herzlich eingeladen, die LaTeXquellen des gesamten Skripts zu clonen und Änderungen in einem separaten Branch in das github-Repository zu laden und einen pull Request zu setzen.
