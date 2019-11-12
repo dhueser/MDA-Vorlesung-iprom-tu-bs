@@ -1,4 +1,4 @@
-# Vorlesung _Messdatenauswertung und Messunsicherheit_ am iprom der TU Braunschweig
+# Vorlesung _Messdatenauswertung und Messunsicherheit am iprom der TU Braunschweig
 ## Einleitung
 Diese Vorlesung ist ein Modul des Studiengangs _Messtechnik und Analytik_ im Fachbereich Maschinenbau der TU Braunschweig. 
 
