@@ -6,7 +6,6 @@ before_install:
 script:
 - cd vorlesung/
 - latexmk -pdf MDA_iprom_TUbraunschweig.tex
-- latexmk -pdf MDA_iprom_TUbraunschweig.tex
 deploy:
   provider: releases
   api_key:
