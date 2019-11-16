@@ -5,7 +5,7 @@ before_install:
   texlive-latex-extra texlive-fonts-extra dvipng texlive-latex-recommended texlive-lang-german texlive-science latexmk
 script:
 - cd vorlesung/
-- latexmk MDA_iprom_TUbraunschweig.tex
+- latexmk -pdf MDA_iprom_TUbraunschweig.tex
 - latexmk -pdf MDA_iprom_TUbraunschweig.tex
 deploy:
   provider: releases
