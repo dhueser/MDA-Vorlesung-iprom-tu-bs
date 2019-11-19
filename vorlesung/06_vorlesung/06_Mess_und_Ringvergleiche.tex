@@ -371,12 +371,12 @@ Kovarianzen $\sigma_{12},\ldots, \sigma_{(N-1)N}$ gegeben sind, durchgeführt we
 
 \subsection{Paule-Mandel Methode zur Anpassung von Gewichtsfaktoren}
 
-Bei Ringvergleichen kommt es oftmals vor, dass jeder am Vergleich beteiligte Partner eine
+Bei Ringvergleichen kommt es auch mal vor, dass die Messmethoden nicht immer genau die gleichen sind und der Einfluss der verschiedenen Methoden des Vergleichs unterschätzt wird. Wenn sich herausstellt, dass sich Gruppen von Ergebnissen ausbilden, so kann eine Zwischengruppenvarianz ermittelt werden. Dies kann beispielsweise mit der Paule-Mandel Methode erfolgen.
+
+Es kann bei Ringvergleichen vorkommen, dass jeder am Vergleich beteiligte Partner eine
 Unsicherheit $U$ angibt die kleiner ist als der Abstand des Messwertes zu anderen Partnern,
-so dass der En-Wert bzw.\ des Birge-Verhältnisses unter Verwendung der Gewichte gemäß Gl.~(\ref{eq:anteile})
-größer als Eins wird. Durch eine Anpassung der Gewichtsfaktoren durch Hinzufügen einer
-zusätzlichen Komponente, die sich aus der Streuung der Ergebnisse von Partner zu Partner ergibt,
-kann eine bessere Konsistenz erzielt werden.
+so dass sich ein En-Wert bzw.\ des Birge-Verhältnisses unter Verwendung der Gewichte gemäß Gl.~(\ref{eq:anteile}) größer als Eins ergibt. Durch eine Anpassung der Gewichtsfaktoren durch Hinzufügen einer
+zusätzlichen Komponente, die sich aus der Streuung der Ergebnisse von Partner zu Partner ergibt, kann eine bessere Konsistenz erzielt werden.
 
 Der Leitfaden zum Erstellen eines \textsl{Key Comparison Reports}
 \cite{GuideKey} empfiehlt als Anpassungsverfahren die \textbf{Paule-Mandel Methode},
@@ -402,7 +402,7 @@ angegeben.
 \label{tab:Beispiel_I}
 \end{table}
 
-Der gleichgewichtete Mittelwert $\bar x_I$ über alle Werte beider Partner gemeinsam ist:
+Der gleichgewichtete Mittelwert $\bar x_I$ über alle Werte beider Partner ist:
  \begin{equation}
  \bar x_I = \frac{1}{N} \sum_{i=1}^N x_i \, = \frac{1}{6}\left( 1.1 + 1.9 + 1.5 + 16 + 25 + 3 \right) \, \approx \, 8.1
  \end{equation}
@@ -427,7 +427,7 @@ Der gleichgewichtete Mittelwert $\bar x_I$ über alle Werte beider Partner gemei
  	\end{center}
  	\label{tab:Beispiel_II}
  \end{table}
-Für den Mittelwert über alle Werte gemeinsam erhalten wir:
+Für den gleichgewichteten Mittelwert über alle Werte erhalten wir:
  \begin{equation}
  \bar x_{II} = \frac{1}{N} \sum_{i=1}^N x_i \, = \frac{1}{8}\left( 2.0 + 1.0 + 1.5 + 1.8 + 1.2 + 1.7 + 16.3 + 16.8 \right) \, = \, 5.2875
 \label{eq:einfachesMittelII}
@@ -527,9 +527,21 @@ $$
 --nix!}
 \end{comment}
 
+Wenn die Varianzen 
+der Methode A und B ähnlich sind, so kann eine gemeinsame (gepoolte) Varianz der beiden Methoden berechnet werden (siehe 5. Vorlesung):
+\begin{equation}
+\operatorname{Var}(x_{ref}) = \frac{\sum\limits_{i=1}^6 \left(x_{A,i}-\bar x_A\right )^2+\sum\limits_{i=1}^2 \left(x_{B,i}-\bar x_B\right )^2}{(6-1)+(2-1)} = 0.1397
+\end{equation} 
+
 Da es sich um den Vergleich der Mittelwerte der beiden Stichproben A und B handelt, verwenden wir
 für die Unsicherheit $u_i$ die Varianz des Mittelwertes, also
-$u_i = \operatorname{Var}(\bar x_i)$ verwenden. Für Beispiel II sind dies folgende Werte:
+$u_i = \operatorname{Var}(\bar x_i)$. Sie ist definiert als
+$$
+\operatorname{Var}(\bar x_i) = \frac{\operatorname{Var}(x_i)}{N_i}
+$$
+mit $N_i$ den Anzahl der Wiederholungen für den Mittelwert $\bar x_i$.
+
+Für Beispiel II erhalten wir dann folgende Werte:
 $$
 \operatorname{Var}(\bar x_{II,A}) = \frac{1}{6(6-1)} \sum\limits_{k=1}^{6} \left(x_{II,k} - \bar x_{II,A} \right)^2 = 0.023778
 \quad \text{d.h.} \quad \bar s_A = \sqrt{\operatorname{Var}(\bar x_{II,A})} = 0.154
@@ -726,20 +738,10 @@ Zwischengruppenverteilung.}
 
 Als konsistenter Referenzwert ergibt sich:
 \begin{equation}
-x_\mathrm{ref} = 9.040 \quad \text{mit einer gepoolten Varianz von} 
-\operatorname{Var}(x_\mathrm{ref}) = 0.1397
+x_\mathrm{ref} = 9.040 \quad \text{mit einer Zwischengruppenvarianz von} 
+\operatorname{Var}(x_\mathrm{ref}) = 112.707
 \end{equation}
 
-\begin{comment}
-
-\textcolor{red}{wie hast Du die gepoolte Varianz definiert? Ich finde sie nicht in Deinem Matlabskript auch nicht in
-dem Text des Vorl-Skripts ist das
-$$
-\operatorname{Var}(x_\mathrm{ref}) = \left(\sum\limits_{i=1}^N \frac{1}{\bar s^2_i \; + \; s^2_\mathrm{b}}\right)^{-1}
-= 56.375  \quad \sqrt{\operatorname{Var}(x_\mathrm{ref})} = 7.5
-$$
-ich muss das Octave-Skript ausprobieren, und auch die gepoolte Var}
-\end{comment}
 
 \begin{figure}[!htp]
 	\begin{center}
