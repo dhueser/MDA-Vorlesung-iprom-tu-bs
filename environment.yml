@@ -1,2 +1,5 @@
 dependencies:
-- octave_kernel
+  - octave_kernel
+  - numpy
+  - scipy
+  - matplotlib
