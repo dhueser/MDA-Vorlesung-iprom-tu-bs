@@ -23,11 +23,6 @@ gewissen Intervalls liegen müsste, oder sagen, dass es plausibel oder \textsl{g
 Statt zu sagen, dass wir \textsl{eine Vorstellung haben}, können wir auch sagen,
 dass wir \textsl{eine Hypothese aufstellen}. 
 
-
-Code-Beispiel in Python (\href{https://mybinder.org/v2/gh/dhueser/MDA-Vorlesung-iprom-tu-bs/master?urlpath=/lab/tree/vorlesung/05_vorlesung/code/example_tTest.ipynb}{Klicke hier für interaktive Session}): 
-\lstinputlisting[style=Python]{05_vorlesung/code/example_tTest.py}
-
-
 Die Normalverteilung (Gaußverteilung) ist die grundlegende Verteilungsdichtefunktion
 zur Beschreibung zufälliger Prozesse, beispielsweise Zerfallsprozesse und Diffusionsprozesse.
 Bei rein stochastischen Prozessen wird von Zufallsgrößen ausgegangen, deren
@@ -214,6 +209,10 @@ für $J \geq 35$ folgende Näherung verwendet wird:
 K_{\alpha, J} \; = \; \sqrt{-\frac{1}{2 \, J} \, \ln(\frac{\alpha}{2})}
 \label{KSpruefgroesse}
 \end{equation}
+
+
+Hypothesentests in Python (\href{https://mybinder.org/v2/gh/dhueser/MDA-Vorlesung-iprom-tu-bs/master?urlpath=/lab/tree/vorlesung/05_vorlesung/code/example_KSTest.ipynb}{Klicke hier für interaktive Session}): 
+\lstinputlisting[style=Python]{05_vorlesung/code/example_KSTest.py}
 
 
 \section{Wahrscheinlichkeitsdichtefunktionen und ihre Parameter}
@@ -507,38 +506,9 @@ Grundgesamtheit ansehen.
 Abb.~\ref{kumulWahrsch} illustriert wie unterschiedlich die Verteilungsfunktionen von
 Stichproben mit relativ kleinem Umfang ($J \, = \ 50$) aussehen können, obwohl sie zu derselben
 Grundgesamtheit gehören. Dieses Beispiel wurde wie folgt mit Gnu-octave generiert:
-\begin{verbatim}
-function example_t()
-  J1 = 50;
-  mu1 = 42;
-  sigma1 = 5;
-  samples = [];
-  for kappa = 1:5
-    samples = [samples  (mu1 + sigma1*randn(J1,1))];
-  end
-  figure(3000); hold on;
-  [J1, nS] = size(samples);
-  for kappa = 1:5
-    [P, H, xsort, xbar, s] = cumulatives(samples(:,kappa));
-    plot( xsort, H, 'k.-');
-    plot( xsort, P, 'r-');
-  end
-  xlabel('X', 'fontsize', 14);
-  ylabel('Wahrscheinlichkeit', 'fontsize', 12);
-  title(['Umfang jeweilige Stichproben: ' num2str(J1)], 'fontsize', 14);
-  grid on;
-  set(gca, 'fontsize', 14, 'linewidth', 2);
-  hold off;
-end
-function [P, H, xsort, xbar, s] = cumulatives(x)
-  xbar = mean(x);
-  s = std(x);
-  J1 = length(x);
-  [xsort, isort] = sort(x, 'ascend');
-  H = [1:J1]'/J1;
-  P = normcdf( xsort, xbar, s);
-end
-\end{verbatim}
+
+\lstinputlisting{05_vorlesung/code/example_t.m}
+
 Zur Bewertung der Flachheit bzw.\ Ausgeprägtheit der Ausläufer einer Verteilung berechnen wir
 ihre \textsl{Kurtosis}. Die \textsl{Kurtosis} der Normalverteilung hat den Wert $3$. 
 
@@ -1045,7 +1015,7 @@ für $J = 9$  (\textsl{links}) und $J = 20$ (\textsl{rechts}).}
 
 Abb.~\ref{ch2beispiele} zeigt zwei Beispiele für die Verteilungsdichte der Varianzen, zum einen
 für $J = 9$ und zum anderen für $J = 20$. Mit
-\begin{verbatim}
+\begin{lstlisting}
 function understandchi2()
   Jz = 9;
   nbin = 100;
@@ -1065,7 +1035,8 @@ function understandchi2()
   grid on;
   set(gca, 'fontsize', 14, 'linewidth', 2);
   print(1000,['understandchi2_df' num2str(Jz) '_solid.svg'],'-dsvg');
-\end{verbatim}
+end
+\end{lstlisting}
 wurden die Diagramme erzeugt. Die Verteilung der Grundgesamtheit ist die
 Standardnormalverteilung mit $\mu = 0$ und $\sigma = 1$.
 Eine Stichprobenentnahme wird mit \texttt{x = randn(Jz,1);} simuliert.
@@ -1101,13 +1072,13 @@ s_{\mu,i}^2 \; = \; \frac{1}{J_i} \, \sum_{j=1}^{J_i} \, (X_{i,j} \, - \, \mu)^2
 \; = \; s_i^2
 \end{equation}
 approximiert.
-\begin{verbatim}
+\begin{lstlisting}
   for k=1:n
     x = randn(Jz,1);
     y = mean(x);
     d(k) = sum((x-y).^2);
   end
-\end{verbatim}
+\end{lstlisting}
 Dann ist die Anzahl der Freiheitsgrade $\nu = J-1$ um einen vermindert,
 weil der Mittelwert $y_i$ von den Werten $X_{i,j}$ abhängt. Die $\chi^2$-Verteilung
 ist mit der Anzahl der Freiheitsgrade und nicht mit dem Stichprobenumfang zu verwenden
@@ -1118,12 +1089,12 @@ Q \; = \; \nu \, \left( \frac{s}{\sigma} \right)^2 ,
 \end{equation}
 so dass die $\chi^2$-Verteilungsdichte, hier mit dem Funktionsaufruf
 \texttt{chi2pdf} für $\nu = J-1$ zu verwenden ist:
-\begin{verbatim}
+\begin{lstlisting}
   [haeuf, bin] = hist(d,nbin);
   Deltabin = bin(2)-bin(1);
   plot(bin,haeuf/(n*Deltabin),'bd-',bin,chi2pdf(bin,Jz-1),'r-');
   xlabel('(J-1) * (s / \sigma)^2', 'fontsize', 14);
-\end{verbatim}
+\end{lstlisting}
 
 Für den Fall, den wir weiter oben betrachtet hatten, nämlich dass für den Erwartungswert
 $\mu$ nicht sein Schätzer (der Mittelwert) verwendet wird, ist die Anzahl der
@@ -1217,7 +1188,7 @@ $\mu_\mathrm{a} = 3.5$ gehören, per Hypothesentest einer Grundgesamtheit mit $\
 zugeordnet werden. Die Wahrscheinlichkeit für das Auftreten solcher Beobachtungen ist
 dann $\beta$. Das Diagramm wurde mit folgendem Octaveskript erzeugt
 
-\begin{verbatim}
+\begin{lstlisting}
 function plot_entscheidungsfehler()
   dz = 0.02;
   lim = 7;
@@ -1245,7 +1216,7 @@ function plot_entscheidungsfehler()
   hold off;
   print(200, 'entscheidungsfehler.svg', '-dsvg');
 end
-\end{verbatim}
+\end{lstlisting}
 
 \subsection{Konformitätswahrscheinlichkeiten}
 Nachdem wir gesehen haben wie wir zwei Hypothesen über die Lage zweier Wahrscheinlichkeitsdichteverteilungen
@@ -1326,20 +1297,20 @@ Probieren Sie anhand von Beobachtungen, die Sie mit Hilfe eines Generators, der
 normalverteilte Zufallszahlen liefert, den Kolmogorow-Smirnow-Test, kurz KS-Test, aus.
 
 In Matlab/Gnu-Octave könnten Sie dies beispielsweise wie folgt realisieren:
-\begin{verbatim}
+\begin{lstlisting}
   J1 = 2000; % Stichprobenumfang
   mu1 = 23; % Erwartungswert der Zufallsgroesse
   s1 = 3;   % Wurzel aus dem Erwartungswert fuer die Varianz
   Xarray = s1*randn(J1,1) + mu1;
-\end{verbatim}
+\end{lstlisting}
 Das Sortieren mit Matlab/Gnu-Octave können Sie mit
-\begin{verbatim}
+\begin{lstlisting}
   [xsort, isort] = sort(Xarray, 'ascend');
-\end{verbatim}
+\end{lstlisting}
 und die Wahrscheinlichkeiten mit
-\begin{verbatim}
+\begin{lstlisting}
   h = [1:J1]'/J1;
-\end{verbatim}
+\end{lstlisting}
 berechnen.
 
 \begin{enumerate}
