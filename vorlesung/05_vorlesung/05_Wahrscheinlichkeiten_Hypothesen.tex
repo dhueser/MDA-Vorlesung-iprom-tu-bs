@@ -1218,11 +1218,11 @@ function plot_entscheidungsfehler()
 end
 \end{lstlisting}
 
-\subsection{Konformitätswahrscheinlichkeiten}
+\subsection{Konformitätsprüfung}
 Nachdem wir gesehen haben wie wir zwei Hypothesen über die Lage zweier Wahrscheinlichkeitsdichteverteilungen
-verglichen haben, befassen wir uns jetzt mit dem Vergleich eines Intervalls, einem Toleranzintervall, mit einer
+verglichen haben, befassen wir uns jetzt mit dem Vergleich von Grenzen, den Toleranzgrenzen, mit einer
 Wahrscheinlichkeitsdichteverteilung. Für die Fertigung werden in den Konstruktionszeichnungen zu den Merkmalen
-von Bauteilen die Toleranzen eingetragen, innerhalb derer die Merkmale des Werkstücks liegen müssen. Wie nun
+von Bauteilen die Toleranzgrenzen eingetragen, innerhalb derer die Merkmale des Werkstücks liegen müssen. Wie nun
 bewertet man nach Fertigstellung des Werkstücks, ob ein Merkmal innerhalb einer Toleranzvorgabe liegt? Ein Merkmal
 wird durch einen Messvorgang geprüft. Der Messvorgang liefert ein Ergebnis: Einen Zahlenwert für das Merkmal und
 ein Überdeckungsintervall zusammen mit einem Vertrauensniveau. Anstelle von Überdeckungsintervall und Vertrauensniveau
@@ -1230,7 +1230,7 @@ kann auch direkt eine Wahrscheinlichkeitsdichteverteilung angegeben werden, ist 
 Praxis. Für die Bewertung, ob das gefertigte Werkstück mit der Vorgabe der Konstruktion übereinstimmt, konform ist,
 werden Messergebnis und Toleranzvorgabe verglichen.
 
-Als Ergänzung zum \glqq Guide of Uncertainty\grqq gibt es das Dokument
+Als Ergänzung (\textsl{Supplement}) zum \glqq Guide of Uncertainty\grqq ~gibt es das Dokument
 \textsl{Evaluation of measurement data - The role of measurement uncertainty in conformity assessment},
 das darlegt, wie Konformitätsbewertungen vorzunehem sind.
 \begin{verbatim}
@@ -1238,7 +1238,8 @@ https://www.bipm.org/utils/common/documents/jcgm/JCGM_106_2012_E.pdf
 \end{verbatim}
 Dort heißt es in Paragraph 7.1.1
 \begin{quote}
-An item conforms to a specified requirement if the true value of its associated property $Y$ lies in the tolerance
+An item conforms to a specified requirement,
+if the true value of its associated property $Y$ lies in the tolerance
 interval. Knowledge of $Y$ is conveyed by a probability density function $p(y|{X_1,\dots,X_J})$
 so that a statement of conformity is always an inference,
 with some probability of being true. Denoting the set of permissible (conforming) values
@@ -1253,13 +1254,17 @@ zu Kapitel \ref{KonzepteinverseProbleme}, passt.
 Für die Toleranz wird in der Richtlinie zur Konformitätsbewertung zur Wahrung der Allgemeingültigkeit
 eine Menge $C$ angegeben. Falls die Größe $Y$ eine skalarwertige Größe wie bei dem Beispiel, anhand dessen
 wir in Kapitel \ref{KonzepteinverseProbleme} das Prinzip der bayesischen Statistik illustriert haben,
-so steht $C$ für ein Intervall $C = [y_\mathrm{L}, y_\mathrm{U}]$. Dabei sollen der Index L für \glqq lower
-limit\grqq ~und der Index U für \glqq upper limit\grqq ~stehen.
+so steht $C$ für ein Intervall $C = [T_\mathrm{L}, T_\mathrm{U}]$ im Falle der zweiseitigen
+Grenzen, $C = [-\infty, T_\mathrm{U}]$ für den Fall, dass es eine Obergrenze gibt,
+$C = [T_\mathrm{L}, \infty]$, dass es eine Untergrenze gibt. Dabei sollen der Index L für \glqq lower
+limit\grqq ~und der Index U für \glqq upper limit\grqq ~stehen. Der Bezeichner $T$ ist in der 
+Normung das üblicherweise für Toleranzgrenzen verwendete Symbol und bedeutet an dieser
+Stelle nicht Testgröße! Er unterscheidet sich von den Testgrößen durch seine Indizes.
 
 Die Wahrscheinlichkeit $p_\mathrm{c}$, dass die Beobachtungen ${X_1,\dots,X_J}$ innerhalb des Toleranzintervalls
-$C = [y_\mathrm{L}, y_\mathrm{U}]$ liegen, ist
+$C = [T_\mathrm{L}, T_\mathrm{U}]$ liegen, ist
 \begin{equation}
-	p_\mathrm{c} =  \int\limits_{y_\mathrm{L}}^{y_\mathrm{U}} p(y|{X_1,\dots,X_J}) \mathrm{d}y.
+	p_\mathrm{c} =  \int\limits_{T_\mathrm{L}}^{T_\mathrm{U}} p(y|{X_1,\dots,X_J}) \mathrm{d}y.
 \end{equation}
 Für den Fall, dass von einer normalverteilten Stichprobe ausgegangen werden kann und dass eine Einzelgröße
 vorliegt, wird auch der Stichprobe ${X_1,\dots,X_J}$ der Schätzer $\bar y$ aus einfacher Mittelwertbildung
@@ -1280,7 +1285,7 @@ p_\mathrm{c} = \frac{1}{\sqrt{2 \pi}} \int\limits_{-\infty}^{z_\mathrm{U}}
 \end{equation}
 d.h.
 \begin{equation}
-	p_\mathrm{c} = \mathrm{erf}(z_\mathrm{U}) - \mathrm{erf}(z_\mathrm{L}).
+	p_\mathrm{c} = \Phi(z_\mathrm{U}) - \Phi(z_\mathrm{L}).
 \end{equation}
 
 
