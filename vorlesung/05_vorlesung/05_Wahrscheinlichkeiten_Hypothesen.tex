@@ -601,7 +601,7 @@ Arbeiten von R. A. Fisher belegt, der die Verteilung \textsl{Student}-Verteilung
 
 Die $t$-Verteilung bezieht sich auf eine standardnormalverteilte Zufallsgröße $Z$ und sieht wie folgt aus
 \begin{equation}
-p_{\nu}(Z) \; = \; 
+p_\mathrm{t}(Z,\nu) \; = \; 
 {\frac {\Gamma \left({\frac {\nu+1}{2}}\right)}{{\sqrt {\nu \pi }} \;
 \Gamma \left({\frac {\nu}{2}}\right)}} \, \left(1+{\frac {Z^2}{\nu}}\right)^{-{\frac {\nu+1}{2}}} ,
 \end{equation}
@@ -626,7 +626,7 @@ längeren Ausläufern, \textsl{Tails}, siehe
 Abb.~\ref{studentt}.
 \begin{figure}
 \begin{center}
-\includegraphics[width=100mm]{05_vorlesung/media/learn_Student_tpdf.pdf}
+\includegraphics[width=90mm]{05_vorlesung/media/learn_Student_tpdf.pdf}
 \caption{\label{studentt} Student-t Verteilungen für unterschiedliche Stichprobenumfänge.}
 \end{center}
 \end{figure}
@@ -673,7 +673,7 @@ $t_{0.975, 50} \; = \; 2.01$ und für $\nu = 5$ Freiheitsgrade $t_{0.975, 5} \; 
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=100mm]{05_vorlesung/media/vertrauensintervall_nu_11.pdf}
+\includegraphics[width=80mm]{05_vorlesung/media/vertrauensintervall_nu_11.pdf}
 \caption{\label{Vertrauensintervalle} Vertrauensintervalle in Vergleich für die 
 Standardnormalverteilung (rote Kurve)
 und die Student-t-Verteilung für $\nu = 11$ Freiheitsgrade (schwarze gestrichelte Kurve).}
@@ -854,9 +854,10 @@ was soviel bedeutet wie $\mu_1 \neq \mu_2$.
 
 \begin{center}
 \begin{tabular}{c|cl}
-$H_0$ & $\mu_1 = \mu_2$ & beide Stichproben gehören derselben Grundgesamtheit an\\
+$H_0$ & $\mu_1 = \mu_2$ & beide Stichproben den gleichen Erwartungswert\\
 \hline
-$H_\mathrm{a}$ & $\mu_1 \neq \mu_2$ & beide Stichproben gehören unterschiedlichen Grundgesamtheiten an
+$H_\mathrm{a}$ & $\mu_1 \neq \mu_2$ & beide Stichproben haben unterschiedliche Erwartungswerte und\\
+ & & gehören somit unterschiedlichen Grundgesamtheiten an
 \end{tabular}
 \end{center}
 
@@ -929,7 +930,7 @@ $|T| \; = \; 2.21 \; < \; 2.37$ liegt.
 http://www.itl.nist.gov/div898/handbook/eda/section3/eda353.htm
 \end{verbatim}
 
-\section{Chi2-Verteilung und Varianztest}
+\section{Chi2-Verteilung und Test einer Varianz}
 
 
 Eine Verteilungsdichtefunktion, die die Verteilung der Quadrate einer
@@ -968,12 +969,12 @@ Q \; = \; \sum_{j=1}^J \, Z_j^2
 \end{equation}
 gemäß folgender Wahrscheinlichkeitsdichtefunktion verteilt
 \begin{equation}
-p(Q, J) \; = \; \frac{Q^{\frac{J}{2} - 1} \,
- e^{-\frac{Q}{2}}}{2^{\frac{J}{2}} \, \Gamma(\frac{J}{2})} \qquad Q > 0
+p_\mathrm{\chi^2}(Q, \nu) \; = \; \frac{Q^{\frac{\nu}{2} - 1} \,
+ e^{-\frac{Q}{2}}}{2^{\frac{\nu}{2}} \, \Gamma(\frac{\nu}{2})} \qquad Q > 0
 \label{Chi2pdf}
 \end{equation}
-mit der Gammafunktion für natürliche Zahlen $\nu = J$, deren Definition im Abschnitt zuvor
-als Gl.~(\ref{GammaHalfInt}) angegeben wurde.
+mit $\nu$ für die Anzahl der Freiheitsgrade und $\Gamma$ für die
+im Abschnitt zuvor als Gl.~(\ref{GammaHalfInt}) angegebenen Gammafunktion.
 
 Eine Schreibweise für die Aussage
 \begin{quote}
@@ -981,7 +982,7 @@ $Q$ ist Chi2-verteilt
 \end{quote}
 ist
 \begin{equation}
-Q \; \sim \; \chi^2 .
+Q \; \sim \; \chi^2(\nu).
 \label{Chi2verteilt}
 \end{equation}
 Die Definition der $\chi^2$-Verteilungsdichtefunktion braucht nicht auswendig gelernt zu 
@@ -1118,13 +1119,95 @@ Die Nullhypothese wird mit einem Signifikanzniveau von $\alpha$
 verworfen, falls die Testgröße außerhalb des Intervalls liegt,
 das durch die in Gl.~(\ref{chiQuadratQuantil}) definierten Quantile begrenzt wird, d.h.
 \begin{equation}
-T \; < \; \chi^2_{\alpha, \nu}  \qquad \mathrm{oder} \qquad
-T \; > \; \chi^2_{1-\alpha, \nu} .
+T \; < \; \chi^2_{\alpha/2, \nu}  \qquad \mathrm{oder} \qquad
+T \; > \; \chi^2_{1-\alpha/2, \nu} .
 \end{equation}
+Es ist zu beachten, dass beim zweiseitigen Test für jede Seite die
+Hälfte des Signifikanzniveaus verwendet wird, also $\alpha/2$.
 
 \begin{verbatim}
 http://www.itl.nist.gov/div898/handbook/eda/section3/eda358.htm
 \end{verbatim} 
+
+
+\section{Fisherverteilung und Vergleich zweier empirischer Varianzen}
+
+Der Fall, bei dem zu überprüfen ist, ob die Varianzen zweier Stichproben zur gleichen
+Grundgesamtheit gehören müssten, bzw.\ ob diese im wesentlichen übereinstimmen, wird
+als Hypothesentest wie folgt formuliert:
+\begin{center}
+\begin{tabular}{c|cl}
+$H_0$ & $\sigma_1^2 = \sigma_2^2$ & die beiden Stichproben haben die gleichen Varianzen\\
+\hline
+$H_\mathrm{a}$ & $\sigma_1^2 \neq \sigma_2^2$ & die Stichproben haben unterschiedliche Varianzen
+und \\
+ &  & gehören somit zu unterschiedlichen Grundgesamtheiten
+\end{tabular}
+\end{center}
+Die Testgröße ist
+\begin{equation}
+T \; = \; \left( \frac{s_1}{s_2} \right)^2.
+\label{Ftestgroesse}
+\end{equation}
+Sie wird verglichen mit den beiden Quantilen, dem linksseitigen und dem rechtsseitigen, der Fisherverteilung.
+Der Test wird in der Literatur Fisher-Test oder kurz F-Test genannt.
+
+Die Fisherverteilung ist die Marginalverteilung des Produkts der Wahrscheinlichkeitsdichtefunktionen zweier 
+$\chi^2$-verteilter Zufallsgrößen $Q_1$ und $Q_2$
+\begin{equation}
+p_\mathrm{F}(R, \nu_1, \nu_2) \; = \; \int\limits_0^{\infty}
+p_\mathrm{\chi^2}(R, \nu_1) \, p_\mathrm{\chi^2}(Q_2, \nu_2) \; \frac{\nu_1}{\nu_2} Q_2 \;
+\mathrm{d} Q_2
+\label{FisherverteilungAnsatz}
+\end{equation}
+mit 
+$$
+R  \; = \; \frac{\frac{1}{\nu_1} Q_1}{\frac{1}{\nu_2} Q_2} .
+$$
+Dabei ist der Faktor $\frac{\nu_1}{\nu_2} Q_2$
+die Funktionaldeterminante aus der Transformation $(Q_1, Q_2) \rightarrow (R, Q_2)$,
+um aus der Wahrscheinlichkeitsdichtefunktion der beiden $\chi^2$-verteilten Zufallszahlen
+$$
+p_\mathrm{\chi^2}(Q_1, \nu_1) \, p_\mathrm{\chi^2}(Q_2, \nu_2) 
+$$
+die Fisherverteilung zu berechnen. Nach Einsetzen der Gleichung für
+die $\chi^2$-Verteilung, Gl.~\ref{Chi2pdf}, und Ausführen der Integration 
+in Gl.~\ref{FisherverteilungAnsatz}, sieht die Fisherverteilung wie folgt aus
+\begin{equation}
+p_\mathrm{F}(R, \nu_1, \nu_2) \; = \; 
+\nu_1^{\frac{\nu_1}{2}} \nu_2^{\frac{\nu_2}{2}} \, 
+\frac{\Gamma\left(\frac{\nu_1+\nu_1}{2}\right)}
+{\Gamma\left(\frac{\nu_1}{2}\right)\Gamma\left(\frac{\nu_2}{2}\right)}
+\frac{R^{\frac{\nu_1}{2}-1}}{\left(\nu_1 R + \nu_2 \right)^\frac{\nu_1+\nu_1}{2}} .
+\label{Fisherpdf}
+\end{equation}
+Abb.~\ref{Fverteilbeispiel} zeigt beispielhaft zwei Fisherverteilungen, die mit
+blau gestrichelter Kurve dargestellte für $\nu_1 = 8$ und $\nu_2 = 19$ und die mit
+schwarz durchgezogener Kurve für $\nu_1 = \nu_2 = 8$ Freiheitsgrade.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=75mm]{05_vorlesung/media/BeispielFverteilung.pdf} 
+\caption{\label{Fverteilbeispiel}Fisherverteilung des Quotienten $R$
+zweier $\chi^2$-verteilter Zufallsgrößen $Q_1$ und $Q_2$, also 
+$R \; = \; \frac{\frac{1}{\nu_1} Q_1}{\frac{1}{\nu_2} Q_2} \;
+= \; \frac{s_1^2}{s_2^2}$ mit jeweils der Anzahl der Freiheitsgrade
+$\nu_1$ und $\nu_2$. Die beiden Kurven zeigen zwei Beispiele, die
+blau gestrichelte für $\nu_1 = 8$ und $\nu_2 = 19$ und die schwarze durchgezogene
+für $\nu_1 = \nu_2 = 8$ Freiheitsgrade.}
+\end{center}
+\end{figure}
+
+
+
+Die Nullhypothese wird mit einem Signifikanzniveau von $\alpha$
+verworfen, falls die Testgröße außerhalb des Intervalls liegt,
+das durch die Quantile der Fisherverteilung begrenzt wird, d.h.
+\begin{equation}
+T \; < \; F_{\alpha/2, \nu}  \qquad \mathrm{oder} \qquad
+T \; > \; F_{1-\alpha/2, \nu} .
+\end{equation}
+
 
 \section{Anwendung von Hypothesentests}
 
