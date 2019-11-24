@@ -88,7 +88,7 @@ Daten, die wir in Abschnitt~\ref{robustEstimation} bereits zur Veranschaulichung
 robuster Schätzverfahren behandelt hatten. Den robusten Schätzverfahren liegt die
 im folgenden erläuterte statistische Betrachtung zugrunde: Es liegt eine Annahme
 (Hypothese) darüber vor, welcher Gestalt die Wahrscheinlichkeitsverteilung der
-Beobachtungen ist und ob ein Reihe von Beobachtung zu einer gemeinsamen Verteilung
+Beobachtungen ist und ob eine Reihe von Beobachtungen zu einer gemeinsamen Verteilung
 gehören oder zu unterschiedlichen Verteilungen. Technisch gesehen stellen sich die
 Fragen, die statistisch formuliert lauten \glqq gehören Beobachtungen zu einer 
 Verteilung\grqq ~oder \glqq gehören Beobachtungen zu mehreren verschiedenen Verteilungen\grqq,
@@ -129,12 +129,37 @@ ist. Die kumulierte Normalverteilung, mit der wir die kumulierte Verteilung der 
 vergleichen, ist
 \begin{equation}
 P(X) \; = \;  \frac{1}{\sqrt{2\pi} s} 
-\int\limits_{-\infty}^X \, e^{-\frac{1}{2}\left(\frac{X^\prime \, - \, y}{s}\right)^2} \, \mathrm{d} X^\prime 
-\; =: \; \Phi(X).
+\int\limits_{-\infty}^X \, e^{-\frac{1}{2}\left(\frac{X^\prime \, - \, y}{s}\right)^2} \, \mathrm{d} X^\prime.
 \label{cdfKS}
 \end{equation}
-Die kumulierte Gaußverteilung wird auch Fehlerfunktion genannt und der Bezeichner $\Phi$
-verwendet.
+Für die kumulierte Gaußverteilung entspricht im wesentlichen der
+Fehlerfunktion $\mathrm{erf}$, englisch \textsl{Error Function}.
+\begin{equation}
+\mathrm{erf}(X) \; := \; \frac{2}{\sqrt{\pi}} \; \int\limits_0^X \, e^{-X^{\prime 2}} \, \mathrm{d} X^\prime.
+\label{erf}
+\end{equation}
+Die unterschiedlichen Definitionen für die kumulierte Gaußverteilung 
+und die Fehlerfuntion führen zu unterschiedlichen Wertebereichen.
+Während die kumulierte Gaußverteilung einen Wertebereich von $0$ bis $1$ hat, ist die Fehlerfunktion so
+definiert, dass sie einen Wertebereich von $-1$ bis $1$ hat. Sie lassen sich wie folgt in einander
+überführen
+\begin{equation}
+P(X) \; = \; \frac{1}{2} \left(1 \, + \, \mathrm{erf}(\frac{X - y}{\sqrt{2} \, s})\right).
+\end{equation}
+Für standardnormalverteilte Zufallszahlen $Z = \frac{X-\mu}{\sigma}$ oder $Z = \frac{X-y}{s}$
+wird für die kumulierte Gaußverteilung der Bezeichner $\Phi$ verwendet
+\begin{equation}
+ \Phi(Z) := \frac{1}{\sqrt{2\pi}} 
+\int\limits_{-\infty}^Z \, e^{-\frac{1}{2} Z^{\prime 2} } \, \mathrm{d} Z^\prime
+\quad \Rightarrow \quad
+\Phi(Z) \; = \; \frac{1}{2} \left(1 \, + \, \mathrm{erf}(\frac{Z}{\sqrt{2}})\right).
+\label{cdfPhi}
+\end{equation}
+
+Die Kenntnis dieser unterschiedlichen Definitionen und wie sie ineinander umzurechnen sind ist
+wichtig, weil die statistischen Bibliotheksfunktionen von Matlab, Gnu-Octave, Python, etc.\
+nicht die kumulierte Gaußverteilung bzw.\ die kumulierte Standardnormalverteilung, sondern die Fehlerfunktion
+zur Verfügungs stellen.
 
 Die kumulierte Verteilung der relativen Häufigkeiten gewinnen wir darüber, dass wir die Werte der
 Stichprobe in aufsteigender Reihenfolge sortieren
@@ -144,10 +169,10 @@ X_{1,k_1} \, \leq \, X_{1,k_2} \, \leq \,  \dots \, \leq \,  X_{1,k_J}
 Die Teilstichprobe mit der Beobachtung mit dem kleinsten Wert $(X_{1,k_1})$ hat die
 relative kumulierte Häufigkeit $\frac{1}{J}$, die Teilstichprobe mit den zwei
 kleinsten Beobachtungen $(X_{1,k_1}, X_{1,k_2})$ hat die relative kumulierte Häufigkeit $\frac{2}{J}$.
-Die Teilstichprobe
+Die Teilstichprobe mit den $j$ kleinsten Beobachtungen
 \begin{equation}
 (X_{1,k_1}, X_{1,k_2}, \dots, X_{1,k_j})
-\qquad \mathrm{die~rel.~kum.~Haeufigk.} 
+\qquad \text{die~rel.~kum.~Häufigk.} 
 \qquad H(X_{1,k_j}) \; = \; \frac{j}{J}
 \label{cdfH}
 \end{equation}
@@ -179,13 +204,16 @@ Die Prüfgröße des \textsl{Kolmogorow-Smirnow}-Tests ist
 \end{array}
 \end{equation}
 Dabei steht sup für Supremum, was \textsl{kleinste, obere Schranke} heißt.
-Zu jeder Ausprägung der Stichprobe wird der Betrag der beiden Wahrscheinlichkeitsverteilungen
+Zu jeder Ausprägung der Stich\-probe wird der Betrag der beiden Wahrscheinlichkeitsverteilungen
 gebildet. Die Berechnung des Grenzwertes
 $\lim\limits_{X \rightarrow X_{1,k_j}} \mid H(X) \, - \, P(X_{1,k_j} - 1) \mid$
 für das Supremum ist erforderlich, wenn die kumulierte relative Häufigkeit
 (Summenhäufigkeit) durch Kumulieren eines Histogramms, also einer in Klassen
 quantisierten Stichprobe, berechnet wurde. Dabei soll die Schreibweise mit
-dem Grenzwert $\lim\limits_{X \rightarrow X_{1,k_j}} \mid H(X) \, - \, P(X_{1,k_j} - 1) \mid$
+dem Grenzwert 
+$$
+\lim\limits_{X \rightarrow X_{1,k_j}} \mid H(X) \, - \, P(X_{1,k_j} - 1) \mid
+$$
 zum Ausdruck bringen, dass man infinitesimal dicht aber doch prinzipiell rechts 
 von $X_{1,k_j}$ an der Stufe ist, praktisch wird aber direkt
 $\mid H(X_{1,k_j}) \, - \, P(X_{1,k_j} - 1) \mid$
@@ -197,7 +225,7 @@ berechnet. Für die nichtklassierte, sortierte Stichprobe berechnen wir einfach 
 Die Wahrscheinlichkeit, dass die Beobachtungen nicht zur in der Hypothese angenommenen
 Verteilung passt, ist die Wahrscheinlichkeit, dass die Beobachtung
 in den Ausläufern (\textsl{Tails}) der Dichteverteilung liegt, weshalb wir
-die durch die Fläche in den Tails repräsentierte Wahrscheinlichkeit mit
+die durch die Fläche in den \textsl{Tails} repräsentierte Wahrscheinlichkeit mit
 \textsl{Signifikanzniveau} $\alpha$ bezeichnen.
 
 Beim Kolmogorow-Smirnow-Test wird die Nullhypothese verworfen, wenn
@@ -276,7 +304,7 @@ das vierte statistische Moment
 \begin{equation}
 \int\limits_{-\infty}^{\infty} \, X^4 \, p(X) \, \mathrm{d} X \; =: \; \mu^{(4)}(X)
 \end{equation}
-gewonnen wird, bei dem die Zufallsgröße um ihren Erwartungswert verschoben und auf die Wurzel ihrer
+gewonnen, bei dem die Zufallsgröße um ihren Erwartungswert verschoben und auf die Wurzel ihrer
 Varianz normiert
 \begin{equation}
 \operatorname{Kurt}(X) \; = \;  \int\limits_{-\infty}^{\infty} \, \left(\frac{X - \operatorname{E}(X)}{\sigma}
@@ -466,7 +494,7 @@ $$
 z_{\frac{1}{2}\alpha} = -z_{1-\frac{1}{2}\alpha} .
 $$
 Da sich die Quantile zum jeweiligen Vertrauensniveau $1-\alpha$ auf die normierte Zufallsgröße
-beziehen, muss für die Berechnung des Vertrauensintervall zurückgerechnet werden
+beziehen, muss für die Berechnung des Vertrauensintervalls zurückgerechnet werden
 \begin{equation}
 Z \; = \; \frac{X - \mu}{\sigma} \qquad \Leftrightarrow \qquad X \; = \; \mu + Z \sigma
 \end{equation}
@@ -491,7 +519,7 @@ s^2 \; = \; \frac{1}{J-1} \sum_{j=1}^J (X_{1,j} - y)^2 .
 
 Nachdem wir gesehen haben, wie wir für eine normalverteilte Zufallsgröße
 das Vertrauensintervall ermitteln können, wenden wir uns jetzt der Thematik zu,
-wenn wir zu einer Zufallsgröße nur relativ wenige Beobachtungen haben.
+was passiert, wenn wir zu einer Zufallsgröße nur relativ wenige Beobachtungen haben.
 
 %------------------- kleine Stichprobenumfaenge -> Motivation t-Verteilung
 \begin{figure}
@@ -770,7 +798,7 @@ $$
  & = \left( \sum\limits_{j=1}^J  (Y - y)^2\right) + 
  \left( \sum\limits_{j=1}^J  (X_{1,j} - y)^2\right) - 2 \sum\limits_{j=1}^J (X_{1,j} - y) (Y - y)\\
  & = J (Y - y)^2 + 
- \left( \sum\limits_{j=1}^J  (X_{1,j} - y)^2\right)
+ \left( \sum\limits_{j=1}^J  (X_{1,j} - y)^2\right) = J (Y - y)^2 
 \end{array}
 $$
 und $\sum\limits_{j=1}^J (X_{1,j} - y) (Y - y) = 0$ wegen $J y = \sum\limits_{j=1}^J X_{1,j}$
@@ -851,11 +879,18 @@ allgemein, wird der t-Test eingesetzt, um zu testen, ob
 Sei $\mu_1$ der Erwartungswert der Grundgesamtheit zu Stichprobe 1 mit
 Beobachtungen $(X_{1,1},\dots,$ $X_{1,J_1})$ und sei $\mu_2$ der Erwartungswert der 
 zu Stichprobe 2 mit Beobachtungen $(X_{2,1}, \dots, X_{2,J_2})$.
-Die Nullhypothese $H_0$ lautet, dass beide zu derselben Grundgesamtheit gehören,
+Die Nullhypothese $H_0$ lautet, dass beide denselben Erwartungswert haben,
 was soviel bedeutet wie $\mu_1 = \mu_2$. Die Alternativhypothese $H_\mathrm{a}$
-lautet, dass sie zu unterschiedlichen Grundgesamtheiten gehören,
-was soviel bedeutet wie $\mu_1 \neq \mu_2$.
+lautet, dass sie unterschiedliche Erwartungswerte haben,was soviel bedeutet wie $\mu_1 \neq \mu_2$,
+und damit zu unterschiedlichen Grundgesamtheiten gehören.
 
+Umgekehrt, bedeutet aber nicht, dass wenn sie denselben Erwartungswert haben,
+sie zwingend zu derselben Grundgesamtheit gehören. Das zu prüfen erfordert die
+in den nachfolgenden Abschnitten behandelten Tests der Varianzen, den $\chi^2$-Test bei 
+Test der empirischen Varianz einer Stichprobe mit einer bekannten Varianz, den
+F-Test bei Test der Varianzen zweier Stichproben.
+
+Der Test auf Erwartungswerte, der t-Test wird wie folgt formuliert:
 \begin{center}
 \begin{tabular}{c|cl}
 $H_0$ & $\mu_1 = \mu_2$ & beide Stichproben den gleichen Erwartungswert\\
@@ -891,7 +926,7 @@ der Betrag der Prüfgröße größer als das entsprechende Quantil der t-Verteil
 \end{equation}
 
 
-Für den $t$-Test mit zwei Stichproben wird unterschieden nach \textsl{gepoolten} und nicht \textsl{gepoolten}
+Für den $t$-Test mit zwei Stichproben wird unterschieden nach \textsl{gepoolten} und \textsl{nicht gepoolten}
 Stichproben. Unter \textsl{gepoolten} Stichproben (\textsl{Samples}) versteht man diejenigen, deren Varianzen
 im wesentlichen als gleich zu betrachten sind.
 Die gemeinsame Anzahl der Freiheitsgrade für \textsl{gepoolte} Samples, die für die Wahl des $t$-Quantils gebraucht wird, ist
@@ -911,7 +946,7 @@ wird in Kapitel \ref{unsicherheitsfortpfLin} dran kommen. Gl.~(\ref{dofnonpooled
 Satterthwaite'sche Gleichung genannt.
 
 Bei $\nu = J_1 + J_2 - 2$ Freiheitsgraden, bei dem hier betrachteten Beispiel ist dies
-$\nu = 98$ ist $t_{1-\frac{1}{2} \alpha, \, \nu} = t_{0.975, 98} = 1.985$.
+$\nu = 98$ und $t_{1-\frac{1}{2} \alpha, \, \nu} = t_{0.975, 98} = 1.985$.
 Der Vergleich der ersten mit der zweiten Stichprobe aus Tabelle 1 liefert
 $$
 |T| \; = \; \frac{|40.79 \; - \; 43.08|}{\sqrt{\frac{1}{50} (4.83)^2 \; + \; \frac{1}{50} (5.52)^2}}
@@ -1069,14 +1104,13 @@ p(Q^\prime, \nu) \; \operatorname{d} Q^\prime \; = \;
 1 \, - \, \alpha
 \label{chiQuadratQuantil}
 \end{equation}
-Für den $\chi^2$-Test wird, weil der Erwartungswert der Grundgesamtheit nicht bekannt ist,
-die Varianz durch die empirische Varianz 
+Bei dem $\chi^2$-Test wird die empirische Varianz einer Stichprobe
 \begin{equation}
 s_{\mu,i}^2 \; = \; \frac{1}{J_i} \, \sum_{j=1}^{J_i} \, (X_{i,j} \, - \, \mu)^2
 \; \approx \; \frac{1}{J_i-1} \, \sum_{j=1}^{J_i} \, (X_{i,j} \, - \, y_i)^2
 \; = \; s_i^2
 \end{equation}
-approximiert.
+mit der bekannten Varianz einer Grundgesamtheit verglichen.
 \begin{lstlisting}
   for k=1:n
     x = randn(Jz,1);
@@ -1092,7 +1126,7 @@ s^2 \; = \; \frac{1}{\nu} Q \, \sigma^2  \qquad \Leftrightarrow \qquad
 Q \; = \; \nu \, \left( \frac{s}{\sigma} \right)^2 ,
 \label{s2Qempir}
 \end{equation}
-so dass die $\chi^2$-Verteilungsdichte, hier mit dem Funktionsaufruf
+so dass die $\chi^2$-Verteilungsdichte, in Gnu-Octave mit dem Funktionsaufruf
 \texttt{chi2pdf} für $\nu = J-1$ zu verwenden ist:
 \begin{lstlisting}
   [haeuf, bin] = hist(d,nbin);
@@ -1100,10 +1134,6 @@ so dass die $\chi^2$-Verteilungsdichte, hier mit dem Funktionsaufruf
   plot(bin,haeuf/(n*Deltabin),'bd-',bin,chi2pdf(bin,Jz-1),'r-');
   xlabel('(J-1) * (s / \sigma)^2', 'fontsize', 14);
 \end{lstlisting}
-
-Für den Fall, den wir weiter oben betrachtet hatten, nämlich dass für den Erwartungswert
-$\mu$ nicht sein Schätzer (der Mittelwert) verwendet wird, ist die Anzahl der
-Freiheitsgrade gleich dem Stichprobenumfang.
 
 Beim Chi-Quadrat-Test wird geprüft, ob die Varianz einer Stichprobe gleich einer
 spezifizierten Varianz $\sigma_0^2$ ist. Wir formulieren die Hypothesen
@@ -1116,7 +1146,7 @@ $H_\mathrm{a}$ & $\sigma^2 \neq \sigma_0^2$ & die Stichprobe gehört nicht zu ei
 \end{center}
 Die Testgröße ist
 \begin{equation}
-T \; = \; \nu \, \left( \frac{s}{\sigma_0} \right)^2
+T \; = \; \nu \, \left( \frac{s}{\sigma_0} \right)^2 .
 \label{chi2testgroesse}
 \end{equation}
 Die Nullhypothese wird mit einem Signifikanzniveau von $\alpha$
@@ -1220,8 +1250,7 @@ zur Prüfung des Stout in der Guinessbrauerei schon vor 100 Jahren), oder im Ber
 (Biologie, Chemie, Pharmazie, Medizien) zum Nachweis von Substanzen. Es geht darum, dass zu bewerten ist,
 mit welcher Wahrscheinlichkeit Beobachtungen zu welcher Verteilung gehören.
 Einer Entscheidung liegen Regeln zugrunde. Mit dem t-Test haben wir die Regeln kennengelernt, über
-die wir entscheiden, ob zwei Datensätze zu der gleichen gaußverteilten Grundgesamtheit - der gleichen
-Normalverteilung mit demselben Erwartungswert gehören. 
+die wir entscheiden, ob zwei Datensätze den gleichen Erwartungswert haben. 
 
 Als nächstes wollen wir untersuchen, welche Fehler mit welcher Wahrscheinlichkeit dabei entstehen können.
 Anschließend wollen wir uns ansehen, wie eine Stichprobe mit einer Toleranzvorgabe verglichen wird.
@@ -1355,15 +1384,17 @@ $C = [T_\mathrm{L}, T_\mathrm{U}]$ liegen, ist
 \end{equation}
 Für den Fall, dass von einer normalverteilten Stichprobe ausgegangen werden kann und dass eine Einzelgröße
 vorliegt, wird auch der Stichprobe ${X_1,\dots,X_J}$ der Schätzer $\bar y$ aus einfacher Mittelwertbildung
-gewonnen ($\bar y = \sum_{j=1}^J X_j$) und die Varianz als empirische Varianz $s$ aus
-$s = \frac{1}{J-1}\sum (X_j - \bar y)^2$ und für die Wahrscheinlichkeitsdichte $p$ die Gaußverteilung:
+gewonnen ($\bar y = \frac{1}{J} \sum\limits_{j=1}^J X_j$) und die Varianz als empirische Varianz $s$ aus
+$s = \frac{1}{J-1}\sum\limits_{j=1}^J (X_j - \bar y)^2$ berechnet
+und für die Wahrscheinlichkeitsdichte $p$ die Gaußverteilung verwendet
 \begin{equation}
 	p_\mathrm{c} = \frac{1}{\sqrt{2 \pi} s} \int\limits_{T_\mathrm{L}}^{T_\mathrm{U}} 
-	e^{-\frac{1}{2}\left(\frac{y - \bar y}{s}\right)^2} \mathrm{d}y
+	e^{-\frac{1}{2}\left(\frac{y - \bar y}{s}\right)^2} \mathrm{d}y .
 \end{equation}
 Die Größe $\frac{y - \bar y}{s}$ ist eine normierte Zufallsgröße. Die Integrationsgrenzen können gleichfalls
 normiert werden: $z = \frac{y - \bar y}{s}$, $z_\mathrm{L} = \frac{y_\mathrm{L} - \bar y}{s}$ und
-$z_\mathrm{U} = \frac{y_\mathrm{U} - \bar y}{s}$, so dass die Tabellenwerke oder Bibliotheksfunktion
+$z_\mathrm{U} = \frac{y_\mathrm{U} - \bar y}{s}$, so dass die Tabellenwerke für die kumulative
+standardnormalverteilte Gaußfunktion oder die Bibliotheksfunktion
 für die gauß'sche Fehlerfunktion (\textsl{error function}) wie folgt verwendet werden kann:
 \begin{equation}
 p_\mathrm{c} = \frac{1}{\sqrt{2 \pi}} \int\limits_{-\infty}^{z_\mathrm{U}} 
@@ -1372,9 +1403,9 @@ p_\mathrm{c} = \frac{1}{\sqrt{2 \pi}} \int\limits_{-\infty}^{z_\mathrm{U}}
 \end{equation}
 d.h.
 \begin{equation}
-	p_\mathrm{c} = \Phi(z_\mathrm{U}) - \Phi(z_\mathrm{L}).
+	p_\mathrm{c} = \Phi(z_\mathrm{U}) - \Phi(z_\mathrm{L})
 \end{equation}
-
+mit $\Phi(Z) = \frac{1}{2} \left(1 + \mathrm{erf}\left(\frac{Z}{\sqrt{2}}\right) \right)$.
 
 %\bibliography{$BIBLIO/math}
 %\bibliographystyle{unsrt}
