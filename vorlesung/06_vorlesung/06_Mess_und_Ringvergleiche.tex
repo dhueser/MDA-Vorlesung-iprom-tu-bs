@@ -3,11 +3,11 @@
 In dieser Vorlesung wird die Anwendung des t-Tests und des Chi2-Tests auf eines der zentralen Themen der Metrologie gezeigt, 
 welches die Durchführung von Ringvergleichen ist. Wesen der Metrologie ist, dass Messgrößen auf die SI-Einheiten zurückgeführt werden, 
 damit sie weltweit vergleichbar sind. Um die Vergleichbarkeit von Ergebnissen unterschiedlicher gesetzlich geprüfter Laboratorien, seien dies Staatsinstitute verschiedener Länder oder Kalibrierlaboratorien innerhalb eines Landes, zu gewährleisten, werden Ringvergleiche durchgeführt.
-Dazu wird beispielsweise ein Messobjekt (Prüfkörper) rumgeschickt und jedes beteiligte Labor misst an demselben Objekt eine genau spezifizierte Messgröße nach einem vorgegebenen Verfahren. Um die Ergebnisse miteinander zu vergleichen, werden die statistischen Verfahren der Hypothesentests auf Gleichheit der Mittelwerte und der Standardabweichungen eingesetzt.
+Dazu wird beispielsweise ein Messobjekt (Prüfkörper) rumgeschickt und jedes beteiligte Labor misst an demselben Objekt eine genau spezifizierte Messgröße nach einem vorgegebenen Verfahren. Um die Ergebnisse miteinander zu vergleichen, werden die statistischen Verfahren der Hypothesentests auf Gleichheit der Mittelwerte und der Standard\-ab\-weichungen eingesetzt.
 
 Es wird bei der Verwendung des t-Tests danach unterschieden, ob die Nullhypothese getestet wird, dass Mittelwerte der Laboratorien mit einem Erwartungswert (dem Referenzwert) übereinstimmen.
 Der Referenzwert wird beispielsweise von einem Referenzlabor zur Verfügung gestellt, das die Möglichkeit hatte, mit deutlich mehr Aufwand und genaueren Geräten, messen zu können.
-Für den Vergleich wird die zu vergleichende Messgröße normiert, wie wir es in der letzen Vorlesung schon kennengelernt hatten.
+Für den Vergleich wird die zu vergleichende Messgröße normiert, wie wir es in der letzten Vorlesung schon kennengelernt hatten.
 
 Wir betrachten die Messergebnisse mit Größenwerten $x_i$ für $i = 1,\dots,N$ und Unsicherheiten $u_i$ von $N$ Laboratorien (Partner des Ringvergleichs).
 
@@ -46,7 +46,7 @@ Z-Scores (Z-Werten) dargestellt.
 Z-Scores können nur berechnet werden, wenn die zugrunde liegende Verteilung bekannt ist.
 Im Falle von t-Tests haben wir hingegen auch die Möglichkeit auf die aus der Stichproben
 geschätzten Parameter für den Erwartungswert und die Varianz zurückzugreifen.
-In Abb.\ref*{fig:StandardScore} ist zusätzlich zu der Größe Z-Score ein weitere weitere
+In Abb.\ref*{fig:StandardScore} ist zusätzlich zu der Größe Z-Score ein  weitere
 Größe aufgetragen: T-Score. Diese ist direkt proportional zu den Z-Scores nur mit einer
 anderen Normierung, derart skaliert, dass ihr Erwartungswert $50$ ist und die
 Standardabweichung den Wert $10$ annimmt. 
@@ -65,8 +65,8 @@ Nach \cite{ISO13528} gibt es die folgende übliche Interpretation für die Bewer
 	\item Ein Ergebnis mit $|z_i| \ge 3.0 $ wird als nicht akzeptierbar bewertet. 
 \end{itemize}
 Sind die erweiterten Unsicherheiten sowohl des Referenzlabors $U_\mathrm{ref}$ als auch 
-des Teilnehmerlabors des $i$-ten Partners $U_{i}$ für das % 95,45\% 
-Überdeckungsintervall $[-1,\!96 u; 1,\!96 u]$ zum 97,5\% Vertrauensniveau bekannt,
+des Teilnehmerlabors des $i$-ten Partners $U_{i}$ für das 
+Überdeckungsintervall $[2 u; 2 u]$ zum 95,45\% Vertrauensniveau bekannt,
 so kann der sogenannte \textbf{En-Wert} berechnet werden. 
 
 In der vorigen Vorlesung hatten wir die Prüfgröße 
@@ -115,7 +115,7 @@ folgende 3 Voraussetzungen erfüllt sein:
 	Prüfling muss eine gute Stabilität - auch während des Transportes -
 	aufweisen. 
 	\item Jeder Partner stellt Messdaten zur Verfügung, die 
-	unabhängig von den anderen Partnern sind. D.h. es darf keine 
+	statistisch unabhängig von den anderen Partnern sind. D.h. es darf keine 
 	Messung eines Partners $i$ von einem anderen Partner $j$ mit $i \ne j$ abhängen. 
 	\item Die Messdaten jedes Partners (Instituts) sind normalverteilt.
 \end{itemize}
@@ -177,7 +177,7 @@ mit
 \sum_{i=1}^{N} \tilde w_i = 1 .
 \label{eq:normierung}
 \end{equation}
-Der Referenzwert $x_\mathrm{ref} \equiv \tilde x$ aus Gl.~(\ref{eq:referenzgleichepartner}) sie damit wie folgt aus: 
+Der Referenzwert $x_\mathrm{ref} \equiv \tilde x$ aus Gl.~(\ref{eq:referenzgleichepartner}) ergibt sich wie folgt: 
 \begin{equation}
 x_\mathrm{ref} = \sum_{i=1}^{N} \tilde w_i\; x_i
 \label{eq:referenzgleichepartner2}
@@ -257,8 +257,11 @@ Das heisst der Partner 5 ist in bester Übereinstimmung mit dem Referenzwert. \\
 Der Octave-/Matlab-Code dazu lautet (Hinweis zu Octave: Evtl. ist die Funktion
 \texttt{chi2pdf} in Octave noch nicht vorhanden. Dann zuerst das Paket statistics
 installieren, \texttt{pkg install -forge package\_name} mit 
-\texttt{package\_name = statistics}): 
+\texttt{package\_name = statistics} und evtl. den Pfad hinzufügen): \\
+% z.~B. \texttt{addpath('C:\textbackslash Octave\textbackslash
+% Octave-4.2.1\textbackslash share\textbackslash octave\textbackslash packages')}
 \begin{verbatim}
+% addpath('C:\Octave\Octave-4.2.1\share\octave\packages');
 % clear all;
 x = [99.82, 99.05, 99.17 , 99.20 ,99.38];
 u_x = [0.80 0.63, 0.86, 0.82, 0.98];
@@ -342,10 +345,10 @@ R_\mathrm{B} = \sqrt{\frac{1}{N-1} \; \sum_{i=1}^N \left( \frac{x_i-x_\mathrm{re
 		\label{eq:Birge-Verhaeltnis}
 \end{equation}
 
-%Vergleicht man das Birge-Verhältnis mit der Testgröße $T$ in Gl.(\ref{eq:T_for_consistencecheck}) so ergibt sich der Zusammenhang:
-%\begin{equation} 
-%R_\mathrm{B}^2 = \frac{1}{N-1} \; T
-%\end{equation}
+Vergleicht man das Birge-Verhältnis mit der Testgröße $T = \nu \left(\frac{s}{\sigma_0}\right)^2$ in Gl.(\ref{eq:T_for_consistencecheck}) so ergibt sich der Zusammenhang:
+\begin{equation} 
+R_\mathrm{B}^2 = \frac{1}{N-1} \; T
+\end{equation}
 Bei dem Konsistenzcheck mit dem Birge-Verhältnis wird untersucht, ob  
 \begin{itemize}
 	\item $R_\mathrm{B} \le 1$: Konsistenzcheck ok. 
@@ -374,7 +377,7 @@ Kovarianzen $\sigma_{12},\ldots, \sigma_{(N-1)N}$ gegeben sind, durchgeführt we
 Bei Ringvergleichen kommt es auch mal vor, dass die Messmethoden nicht immer genau die gleichen sind und der Einfluss der verschiedenen Methoden des Vergleichs unterschätzt wird. Wenn sich herausstellt, dass sich Gruppen von Ergebnissen ausbilden, so kann eine Zwischengruppenvarianz ermittelt werden. Dies kann beispielsweise mit der Paule-Mandel Methode erfolgen.
 
 Es kann bei Ringvergleichen vorkommen, dass jeder am Vergleich beteiligte Partner eine
-Unsicherheit $U$ angibt die kleiner ist als der Abstand des Messwertes zu anderen Partnern,
+Unsicherheit $U$ angibt, die kleiner ist als der Abstand des Messwertes zu anderen Partnern,
 so dass sich ein En-Wert bzw.\ des Birge-Verhältnisses unter Verwendung der Gewichte gemäß Gl.~(\ref{eq:anteile}) größer als Eins ergibt. Durch eine Anpassung der Gewichtsfaktoren durch Hinzufügen einer
 zusätzlichen Komponente, die sich aus der Streuung der Ergebnisse von Partner zu Partner ergibt, kann eine bessere Konsistenz erzielt werden.
 
@@ -385,7 +388,7 @@ erhöht werden. Dadurch werden die Gewichtsfaktoren $w_i$ verkleinert und damit 
 $x_\mathrm{ref}$ so angepasst, so dass das Birge-Verhältnis kleiner als Eins werden kann.
 Ein Beispiel dazu ist im Anhang B der Richtlinie für Ringvergleiche \cite{GuideKey} zu finden.
 
-Im folgenden schauen wir uns das Prinzip von Mandel und Paule an, das 
+Im Folgenden schauen wir uns das Prinzip von Mandel und Paule an, das 
 in der Publikation \cite{Pau82} zu finden. Es werden zwei eher künstliche Beispiele gewählt, um das Prinzip besser zu verstehen. 
 In Beispiel I wird eine Messgröße mit zwei verschiedenen Methoden (bzw.\ von zwei verschiedenen Partnern) A und B gemessen.
 Die gemessenen Einzelwerte von jedem der beiden Partner sind in Tab. \ref*{tab:Beispiel_I}
@@ -576,7 +579,7 @@ Mittelwerte der Methoden A und B sehr weit auseinander im Verhältnis zu den Var
 Die Varianzen $\operatorname{Var}(\bar x_A)$ und $\operatorname{Var}(\bar x_A)$ beschreiben
 nur die interne Streuung, also nur die Streuung der jeweiligen Stichproben A und B.
 Die Wahrscheinlichkeitsverteilungen werden durch die beiden Parameter Erwartungswert,
-also hier Mittelwert, und Varianz charakterisiert und wir hatten bei den Hypothesentests
+also hier Mittelwert und Varianz charakterisiert und wir hatten bei den Hypothesentests
 gelernt, auf beides zu prüfen. Wir haben gesehen, dass Stichproben einer gemeinsamen
 Grundgesamtheit angehören, wenn beides, Mittelwert und Varianz zueinander passen.
 
@@ -685,7 +688,7 @@ Q(v_0 + \operatorname{d} v_0) \approx
 Q_0 + \left.\left( \frac{\partial Q}{\partial v}\right)
 \right|_{v=v_0} \operatorname{d} v_0 
 \end{equation}
-Mit $Q(v) \rightarrow 0$ setzten wir für den ersten
+Mit $Q(v) \rightarrow 0$ setzen wir für den ersten
 Iterationsschritt
 \begin{equation}
 Q_0 + \left.\left( \frac{\partial Q}{\partial v}\right)
