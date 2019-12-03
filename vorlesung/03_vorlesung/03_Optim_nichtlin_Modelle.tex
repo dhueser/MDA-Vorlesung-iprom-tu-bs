@@ -1,4 +1,3 @@
-
 \section{Konzepte von Optimierungsverfahren für nichtlineare Modelle}
 Während dieser Vorlesungsreihe beleuchten wir die Thematik physikalische Größen zu ermitteln, die
 indirekt zugänglich sind. Sie werden über eine Modellbildung als Modellparameter approximiert.
@@ -68,8 +67,8 @@ mehreren Vor\-gänger\-tupeln mit den dazugehörigen Werten der Kostenfunktion $
 werden.
 \end{itemize}
 Ein möglicher, vielfach genutzer Ansatz für das Verwenden mehrerer Vorgängertupel mit den dazugehörigen Werten der RQS
-ist die Simplexmethode nach Nelder und Mead aus dem Jahr 1965. Er wird als Bibliotheksfunktion \texttt{fmins}
-in Matlab und Gnu-Octave zur Verfügung gestellt. Mit Simplex ist ein Vieleck gemeint, das $M+1$ Ecken hat für $M$
+ist die Simplexmethode nach Nelder und Mead aus dem Jahr 1965. Er wird als Bibliotheksfunktion \texttt{fminsearch} in Gnu-Octave oder 
+in Matlab zur Verfügung gestellt. Mit Simplex ist ein Vieleck gemeint, das $M+1$ Ecken hat für $M$
 Parameter, in unserem Beispiel also drei Ecken für zwei Parameter, was in Abb.~\ref{LSoptiExample1NM} durch
 schwarz umrandete weiße Punkte, die mit schwarzen, durchgezogenen Linien verbunden sind, skizziert ist. Zum Aufbau eines
 Startsimplex wird ein Startwerttupel $\mathbf{p}_{0,0}$ des Modellparametervektors gewählt und zu jedem Parameter ein
@@ -781,18 +780,15 @@ gefittete Werte: lambda = 30.0505;  phi/pi = 0.2051
 
 \newpage
 \section{Matlabfunktionen zur Berechnung nichtlinearer Fits}
-Es gibt eine Vielzahl an Bibliotheksfunktionen, die nichtlineare Optimierungsverfahren implementiert haben. So gibt es z.B. 
-z.~B. die Matlab-/Octavefunktion \newline \textsf{X = fminbnd(FUN,x1,x2,OPTIONS)}.
-\textsf{fminbnd} versucht das lokale Minmimum einer Funktion \textsf{FUN} mit einer
-Variablen im Intervall \textrm{x1 $<$ X $<$ x2} zu finden.  
-Als \glq OPTIONS\grq~können u.a. gewählt werden TolX (Toleranz, wann abgebrochen
-werden soll) oder MaxIter (Maximale Anzahl an Iterationen, die durchgeführt
-werden sollen).
-Da bei unserem Beispiel mit dem Sinusfit zwei Parameter zu schätzen sind, 
-verwenden wir die Funktion \textsf{fminsearch}. Hier wird nur ein Schätzwert (Startwert) 
-\textrm{x0} angegeben. Die zu minimierende Kostenfunktion $Q$ ist gegeben durch: 
+Es gibt eine Vielzahl an Matlab-Bibliotheksfunktionen, die nichtlineare Optimierungsverfahren implementiert haben. Der Levenberg-Marquardt-Algorithmus ist in Matlab in der Funktion \textsf{lsqnonlin(fun,x0,lb,ub, options)} mit 
+\textsf{options.Algorithm = 'levenberg-marquardt'} implementiert.
+% siee evtl auch mal das Beispiel: 
+% https://octave.sourceforge.io/optim/function/lsqnonlin.html
+Für unser Beispiel mit dem Sinusfit verwenden wir beispielhaft die Funktion \textsf{fminsearch(fun,x0,options)}, in der die Simplexmethode nach Nelder und Mead implementiert ist. Es muss ein Schätzwert 
+für den Startwert \textrm{x0} angegeben werden. Als \glq OPTIONS\grq~können u.a. gewählt werden TolX (Toleranz, wann abgebrochen werden soll) oder MaxIter (Maximale Anzahl an Iterationen, die durchgeführt werden sollen).
+Die zu minimierende Kostenfunktion $Q$ ist für unser Beispiel mit dem Sinusfit gegeben durch: 
 \begin{equation}
-Q(\boldsymbol{p}) = \sum_j (a \cdot \sin(2\cdot \pi \cdot t(j) /p(1) + p(2))-s(j))^2
+Q(\boldsymbol{p}) = \sum_{j=1}^{J} (a \cdot \sin(2\cdot \pi \cdot t(j) /p(1) + p(2))-s(j))^2
 \;\rightarrow \;\textrm{Min.}
 \end{equation}
 Der dazugehörige Matlab-Code lautet: 
