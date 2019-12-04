@@ -1016,12 +1016,13 @@ Messwertepaare)
 \hat \sigma_{\varepsilon}^2 \; = \;
 \frac{1}{J-M} \, \boldsymbol{\hat \varepsilon}^\mathsf{T} \boldsymbol{\hat \varepsilon}
 \end{equation}
-so dass wir die empirische Kovarianzmatrix der Parameter gmäß Gl.~(\ref{UnsicherheitRegressparams}) erhalten:
-\begin{equation*}
+so dass wir die empirische Kovarianzmatrix der Parameter gemäß Gl.~(\ref{UnsicherheitRegressparams}) erhalten:
+\begin{equation}
 \boldsymbol{\hat \Sigma}_{\boldsymbol{\theta}} \; = \; 
 \left( \mathbf{X}^\mathsf{T}  \, \mathbf{X} \right)^{-1} \;
 \hat \sigma_{\varepsilon}^2
-\end{equation*}
+\label{eq:CovRegressparamsMatrix}
+\end{equation}
 Um die Unsicherheit der einzelnen Regressionsparameter zu erhalten, führen wir Einheitsvektoren ein, die $M$-dimensional sind.
 Bei dem $l$-ten Einheitsvektor sind die ersten $l-1$ Vektorkomponenten Nullen, an der $l$-ten Stelle steht eine Eins
 und die $l+1$-te Komponente bis zur $M$-ten sind wieder Nullen.
@@ -1041,6 +1042,7 @@ Dann lässt sich durch folgende Multiplikation die $l$-te Varianz, d.h. das $l$-
 der Hautpdiagonalen aus der Kovarianzmatrix herausholen
 \begin{equation}
 \hat \sigma_l^2 \; = \; \boldsymbol{e}_l^\mathsf{T} \, \left( \mathbf{X}^\mathsf{T}  \, \mathbf{X} \right)^{-1} \, \boldsymbol{e}_l  \; \hat \sigma_{\varepsilon}^2 .
+\label{eq:URegressparamsMatrix}
 \end{equation}
 Die Standardabweichung (\textsl{Standard Error}) wird daraus durch Ziehen der Wurzel
 gewonnen
