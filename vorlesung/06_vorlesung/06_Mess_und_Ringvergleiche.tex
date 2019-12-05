@@ -260,7 +260,7 @@ installieren, \texttt{pkg install -forge package\_name} mit
 \texttt{package\_name = statistics} und evtl. den Pfad hinzufügen): \\
 % z.~B. \texttt{addpath('C:\textbackslash Octave\textbackslash
 % Octave-4.2.1\textbackslash share\textbackslash octave\textbackslash packages')}
-\begin{verbatim}
+\begin{lstlisting}[style=Matlab]
 % addpath('C:\Octave\Octave-4.2.1\share\octave\packages');
 % clear all;
 x = [99.82, 99.05, 99.17 , 99.20 ,99.38];
@@ -279,14 +279,14 @@ u_ref = sqrt(1./sum(1./(u_x).^2))
 % Schritt 3: 
 T = sum((x-x_ref).^2./(u_x.^2))
 
-% Bestimme die Wahrscheinlichkeit Pr der Chi^2-Verteilung für Chi^2(\nu) > T:
+% Bestimme die Wahrscheinlichkeit Pr der Chi^2-Verteilung fuer Chi^2(\nu) > T:
 Pr = 1 - chi2pdf(T,nu)
 
-% Schritt 4: Grad der Übereinstimmung
+% Schritt 4: Grad der Uebereinstimmung
 d = x-x_ref;
 u_d = sqrt(u_x.^2 - u_ref.^2)
 En = d./(2*sqrt(u_d.^2))
-\end{verbatim}
+\end{lstlisting}
 
 \subsection{Identifikation von Ausreißern und Konsistenzcheck}
 Wir wollen uns hier noch etwas genauer anschauen, wie man feststellt, 
@@ -762,9 +762,9 @@ s_\mathrm{ref} = 7.5
 \end{figure}
 
 Der dazu gehörige Quellcode für Gnu-Octave/Matlab sieht wie folgt aus: 
-\begin{verbatim}
+\begin{lstlisting}[style=Matlab]
 function consensus_fit()
-% Programm läuft unter Matlab und Gnu-Octave
+% Programm laeuft unter Matlab und Gnu-Octave
 x_A = [2.0,1.0,1.5,1.8,1.2,1.7];
 N_A = length(x_A);
 x_B = [16.3,16.8];
@@ -791,7 +791,7 @@ w_B = 1/Var_B_mittel;
 x_ref = (w_A*bar_x_A + w_B*bar_x_B ) / (w_A + w_B);
 RB = sqrt( (1/(M-1))*(w_A * (bar_x_A - x_ref)^2 + ...
 w_B * (bar_x_B - x_ref)^2));
-fprintf('Birge-Verhältnis für den Startwert %f\n\n',RB)
+fprintf('Birge-Verhaeltnis fuer den Startwert %f\n\n',RB)
 % 
 max_num_iterations = 50;
 v = v_0;
@@ -815,14 +815,14 @@ end
 fprintf('\n s_b = %f bei Anzahl Iterationen %d\n', ...
 sqrt(v-dv), k);
 end
-\end{verbatim}
+\end{lstlisting}
 mit dem Output:
-\begin{verbatim}
+\begin{lstlisting}[style=Matlab]
 >> consensus_fit
 Mittelwerte: 1.533333 und 16.550000 
 Varianzen der Mittelwerte innerhalb jeder Stichprobe: 
 0.023778 und 0.062500 
-Birge-Verhältnis für den Startwert 51.123910
+Birge-Verhaeltnis fuer den Startwert 51.123910
 
 x_ref: 5.671861, RB: 51.124, dv: 4.312238e-02 --> v: 0.043
 x_ref: 7.356441, RB: 36.154, dv: 8.619528e-02 --> v: 0.129
@@ -844,7 +844,7 @@ x_ref: 9.040377, RB: 1.000, dv: 1.446530e-09 --> v: 112.707
 x_ref: 9.040377, RB: 1.000, dv: 0.000000e+00 --> v: 112.707
 
 s_b = 10.616355 bei Anzahl Iterationen 18
-\end{verbatim}
+\end{lstlisting}
 \nopagebreak 
 \begin{thebibliography}{-----------}
 	\item[] \hspace*{5em}{\Large\bf zu Kapitel 6:}

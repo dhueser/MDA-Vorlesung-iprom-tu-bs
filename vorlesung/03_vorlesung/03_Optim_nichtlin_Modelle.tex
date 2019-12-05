@@ -577,10 +577,10 @@ Input: Startwert $\mathbf{p}_0$, Zielfunktion $\epsilon(\mathbf{p}_{\kappa})$, P
 
 Diese Methode wurde hier auf das zuvor beschriebene Beispiel des in Abb.~\ref{LSoptiExampleSinus}
 dargestellten sinusförmigen Signals mit folgendem Gnu-Octave/Matlab-Skript ausprobiert:
-\begin{verbatim}
+\begin{lstlisting}[style=Matlab]
 function fit_sin_LMAC(gen_new)
-% Stand: 191105
-% Läuft unter Matlab und Octave
+% Stand: 2019-11-05
+% Laeuft unter Matlab und Octave
 t = [0:99]'; % Sekunden
 N = length(t);
 a = 5; % Volt
@@ -696,13 +696,13 @@ end
 function gradQabs = abbruchkrit(F,DF,x,p)
 gradQabs = ( F(x,p)'*DF(x,p) * DF(x,p)'*F(x,p) );
 end
-\end{verbatim}
+\end{lstlisting}
 
 Dieses Gnu-Octave-/Matlab-Skript hat dazu das in Abb.~\ref{LSoptiExampleSinusFitted} dargestellte Ergebnis mit den Werten
-\begin{verbatim}
+\begin{lstlisting}[style=Matlab]
 Anzahl Interationen: 1878
 gefittete Werte: lambda = 30.0505; phi/pi = 0.2051
-\end{verbatim}
+\end{lstlisting}
 geliefert.
 \begin{figure}
 \begin{center}
@@ -731,17 +731,17 @@ Q \; = \; \sum\limits_{j=1}^J \left(Y_j \; - \; f(X_j, \boldsymbol{\theta})\righ
 \end{equation}
 Für die nichtlineare Regression gibt es in Gnu-Octave  beispielsweise folgende
 Funktion:
-\begin{verbatim}
+\begin{lstlisting}[style=Matlab]
 [f, p, cvg, iter] =leasqr (x, y, init, F);
-\end{verbatim}
+\end{lstlisting}
 Angewendet auf unser Beispiel vom sinusförmigen Signal kann sie in folgender Weise
 verwendet werden
-\begin{verbatim}
+\begin{lstlisting}[style=Matlab]
 function fit_sin(gen_new)
- % Stand: 191105
- % Läuft nur unter Octave, da leasqr nur unter Octave
- % frei zur Verfügung steht. Bei Matlab gibt es
- % einen ähnlichen Befehl, der heisst nlinfit
+ % Stand: 2019-11-05
+ % Laeuft nur unter Octave, da leasqr nur unter Octave
+ % frei zur Verfuegung steht. Bei Matlab gibt es
+ % einen aehnlichen Befehl, der heisst nlinfit
   load('pltSS_nonlin_leastsquare_sin_zB2.mat');
   p0 = [34; 0.23*pi];
   sf = @(x, p) a*sin(2*pi*x/p(1) + p(2));
@@ -772,11 +772,11 @@ function fit_sin(gen_new)
   set(gca,'fontsize',12);
   grid on;
   end
-\end{verbatim}
+\end{lstlisting}
 und wir erhalten folgendes Ergebnis
-\begin{verbatim}
+\begin{lstlisting}[style=Matlab]
 gefittete Werte: lambda = 30.0505;  phi/pi = 0.2051
-\end{verbatim}
+\end{lstlisting}
 
 \newpage
 \section{Matlabfunktionen zur Berechnung nichtlinearer Fits}
@@ -792,7 +792,7 @@ Q(\boldsymbol{p}) = \sum_{j=1}^{J} (a \cdot \sin(2\cdot \pi \cdot t(j) /p(1) + p
 \;\rightarrow \;\textrm{Min.}
 \end{equation}
 Der dazugehörige Matlab-Code lautet: 
-\begin{verbatim}
+\begin{lstlisting}[style=Matlab]
 load('pltSS_nonlin_leastsquare_sin_zB2.mat');
 a = 5; % Volt
 p0 = [34; 0.23*pi];
@@ -803,11 +803,11 @@ maxit =1000;
 p1= fminsearch(Q, p0, optimset('TolX',tol, 'MaxIter', maxit));
 disp(['gefittete Werte: lambda =', num2str(p1(1)),';  ', ...
 num2str(p1(2)/pi)])
-\end{verbatim}
+\end{lstlisting}
 Als Ergebnis erhält man: 
-\begin{verbatim}
+\begin{lstlisting}[style=Matlab]
 gefittete Werte: lambda =30.0505; phi/pi=0.2051
-\end{verbatim}
+\end{lstlisting}
 \begin{figure}[htb]
 	\begin{center}
 		\includegraphics[width=0.9\textwidth, angle = 0]{03_vorlesung/media/OptimToolMatlab.png}

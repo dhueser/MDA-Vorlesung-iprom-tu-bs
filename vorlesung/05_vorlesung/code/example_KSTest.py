@@ -23,7 +23,8 @@ stichprobe = np.random.normal(mu_1, sigma_1, stichprobenumfang)
 # 
 # Aufgabenstellung Hypothesentest
 alpha = 0.05
-print('pruefe auf einem Signifikanzniveau von alpha = ', alpha*100, '% die Hypothese')
+print('pruefe auf einem Signifikanzniveau von alpha = ',\
+  alpha*100, '% die Hypothese')
 print('H0: Die Stichprobe ist normalverteilt')
 #
 # Durchfuehrung des Kolmogorow-Smirnow-Tests:
@@ -40,9 +41,11 @@ K_alphaJ = np.sqrt(-np.log(alpha/2)/(2*stichprobenumfang))
 #
 # Antwortsatz
 if (Testgroesse > K_alphaJ):
-    print("{:1.2f}".format(Testgroesse), ' > ', "{:1.2f}".format(K_alphaJ), ' ==> Die Nullhypothese H0 wird verworfen')
+    print("{:1.2f}".format(Testgroesse), ' > ', "{:1.2f}".format(K_alphaJ),\
+    ' ==> Die Nullhypothese H0 wird verworfen')
 else:
-    print("{:1.2f}".format(Testgroesse), ' < oder = ', "{:1.2f}".format(K_alphaJ), ' ==> Die Nullhypothese H0 wird akzeptiert')
+    print("{:1.2f}".format(Testgroesse), ' < oder = ', "{:1.2f}".format(K_alphaJ),\
+    ' ==> Die Nullhypothese H0 wird akzeptiert')
 #
 # graphische Darstellung
 plt.figure(1)

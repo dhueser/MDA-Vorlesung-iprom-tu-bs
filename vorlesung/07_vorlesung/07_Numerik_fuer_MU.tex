@@ -158,10 +158,10 @@ Ein nach diesem Verfahren gebildetes Sample heißt \textsl{geschichtete Zufallss
 oder \textsl{stratifizierte Zufallsstichprobe} (engl.\ \textsl{stratified Sample}).
 
 \section{Zufallszahlen und Wahrscheinlichkeitsverteilungen}
-Die Thematik des Samplings nach Methoden unter Verwendung von Zufallszahlen ist ein
-weites Feld in der Statistik. Große Bedeutung haben zufallszahlenbasierte Integrationsmethoden
+Die Thematik des Samplings nach Methoden, bei denen Zufallszahlen verwendet werden, ist ein
+weites Feld in der Statistik. Große Bedeutung haben zufallszahlenbasierte Integrationsmethoden,
 die auf Erkenntnissen aus der Thermodynamik, d.h.\ der statistischen Physik beruhen.
-Sie wurden aus Beobachtung der Brown'schen Molekularbewegung abgeleitet, also aus der
+Sie wurden aus Beobachtung der brown'schen Molekularbewegung abgeleitet, also aus der
 Zufälligkeit und Art und Weise der Bewegung von Molekülen eines Fluids.
 Der zurückgelegte Pfad eines Moleküls, \textsl{Random Walk},
 ändert zufällig die Richtung.
@@ -179,8 +179,12 @@ Markow-Ketten beschreiben und es gilt:
 Der zukünftige Zustand des Prozesses ist nur durch den
 aktuellen Zustand bedingt und wird nicht durch vergangene Zustände beeinflusst.
 \end{quote}
-Mit dem Begriff Pseudozufallszahlen ist hier gemeint, dass
-mittels eines deterministischen Algorithmus eine Zahlenfolge berechnet wird, die den
+
+Um rechentechnisch mit Zufallszahlen zu arbeiten, müssen diese synthetisch generiert werden.
+Synthetisch gerechnete Zufallszahlen beruhen auf definierten Algorithmen und
+sind deshalb nicht wirklich zufällig, sondern deterministisch. Sie werden deshalb
+\textsl{Pseudozufallszahlen} genannt.
+Ein deterministischer Algorithmus berechnet eine Zahlenfolge, die nur den
 Anschein hat, dass die Zahlenwerte zufällig verteilt sind und nicht deterministisch.
 
 Prinzipiell ist ein solcher Algorithmus, oftmals Zufallszahlengenerator genannt, wie
@@ -211,7 +215,17 @@ fertige, schnelle, effektive Algorithmen zur Verfügung, die die Transformation 
 Verteilungsdichtefunktionen $p$ zur Verfügung stellen. So ist \texttt{randn} der Name der Funktion
 in Matlab und Gnu-Octave zur Erzeugung von normalverteilten Zufallszahlen. \texttt{rande}
 liefert exponentiell verteilte Zufallszahlen, \texttt{randg} Zufallszahlen, die nach
-der Gammafunktion verteilt sind und \texttt{randp} poissonverteilte Zufallszahlen.
+der Gammafunktion verteilt sind und \texttt{randp} poissonverteilte Zufallszahlen. In Python sind
+diese in der zu \texttt{numpy} gehörenden Biblothek \texttt{random} zu finden. Mit
+\texttt{randn} werden standardnormalverteilte Zufallszahlen erzeugt: 
+%\lstset{language=Python}
+\begin{lstlisting}[style=Python]
+import numpy as np
+nrow = 5
+ncol = 20
+a = np.random.randn(nrow, ncol)
+\end{lstlisting}
+Mit \texttt{rand} werden gleichverteilte Zufallszahlen $R \in [0, 1)$ erzeugt.
 
 Wir können aber auch selber gleichverteilte Zufallszahlen abbilden auf eine andere Verteilung $p$,
 wenn wir die Umkehrfunktion der kumulierten Verteilung $P^{-1}$ dazu zur Verfügung haben.
@@ -220,19 +234,24 @@ $R \in [0,1)$, so ist die Menge der mit $P^{-1}$ transformierten Zufallszahlen
 $$
 Z \; = \; P^{-1}(R)
 $$
-gemäß $p$ verteilt, siehe Abb.~\ref{pverteilteZufallszahlen}.
-Als Beispiel wollen wir in Matlab/Gnu-octave 1000 Zufalls\-zahlen generieren,
+gemäß $p$ verteilt, siehe Abb.~\ref{ZufallszahlenAbbilden}.
+
+Als Beispiel wollen wir in Python 1000 Zufalls\-zahlen generieren,
 die verteilt sind gemäß einer $t$-Verteilung für 45 Freiheitsgrade:
-\begin{verbatim}
-  Jz = 1000;
-  nu = 45;
-  R = rand( Jz, 1);
-  Z = tinv( R, nu);
-\end{verbatim}
+%\lstset{language=Python}
+\begin{lstlisting}[style=Python]
+import numpy as np
+import scipy
+from scipy import stats
+Jz = 1000
+nu = 45
+R = np.random.rand(1, Jz)
+Z = scipy.stats.t.ppf(R[0], nu)
+\end{lstlisting}
 
 \section{Monte-Carlo-Verfahren gemäß GUM-supplement~1 JCGM 101}
 
-In der zehnten Vorlesung werden wir das Monte-Carlo-Verfahren gemäß GUM-supplement~1 JCGM 101
+In Kapitel~\ref{montecarloMU} werden wir das Monte-Carlo-Verfahren gemäß GUM-supplement~1 JCGM 101
 erläutern, bei dem wie oben bereits erwähnt,
 gemäß den jeweiligen Ver\-teil\-ungen der unterschiedlichen direkten Messgrößen
 eine große Stichprobe (ein großes \textsl{Sample}) 
@@ -253,7 +272,7 @@ $$
 berechnet.
 
 Dieses Verfahren entspricht gemäß \cite{Wue08} in etwa den Berechnungen wie
-in Gl.~(\ref{PosteriorFall3}), nämlich wenn wir für die Standardabweichung $\sigma_\mathrm{winzig}$
+in Gl.~(\ref{PosteriorSensor}), nämlich wenn wir für die Standardabweichung $\sigma_\mathrm{winzig}$
 den Grenzübergang $\sigma_\mathrm{winzig} \rightarrow 0$ machen, sodass die zu integrierende
 Verteilung in die folgende übergeht:
 \begin{equation}
@@ -274,10 +293,10 @@ Im folgenden werden wir den Grenzübergang der Wahrscheinlichkeitsdichte für da
 \lim_{\sigma \rightarrow 0} \left\{ e^{-\frac{1}{2} \left(\frac{Y-f(\mathbf{X})}{\sigma}\right)^2} \right\}
 = \delta\left(Y \; - \;f(\mathbf{X})\right)
 \end{equation}
-in eine Dirac'sche Distribution als \textsl{scharfen Modellprior} bezeichnen.
+in eine dirac'sche Distribution als \textsl{scharfen Modellprior} bezeichnen.
 
 Für univariate, explizite Modellfunktionen und für normalverteilte Größen $X_i$ sieht die
-Posterior mit \textsl{scharfen Modellprior} dann wie folgt aus
+Posterior mit \textsl{scharfem Modellprior} dann wie folgt aus
 \begin{equation}
 \arraycolsep=2.0pt\def\arraystretch{2.0}
 \begin{array}{l}
@@ -292,7 +311,7 @@ e^{-\frac{1}{2} \left(\frac{ X_i - X_{i,j} }{s_i} \right)^2} \right)
 \end{equation}
 
 
-In der vorigen Vorlesung hatten wir bereits angesprochen, dass die Monte-Carlo-Verfahren auch insbesondere
+Wir hatten bereits angesprochen, dass die Monte-Carlo-Verfahren auch insbesondere
 für Messaufgaben eingesetzt werden, bei denen mindestens ein Teil der direkten Messgrößen nicht normalverteilt ist.
 Dies kann vielfach sein, dass $t$-Verteilungen zu betrachten sind. Es kommen auch immer wieder Messaufbauten
 vor, bei denen die U-Verteilung eine Rolle spielt, also keine Glocke, sondern
@@ -322,7 +341,7 @@ wie beipielsweise $\theta_{i,1} = \bar x_i$ und $\theta_{i,2} = s_i$.
 \includegraphics[width=90mm]{07_vorlesung/media/Zufallszahlen_abbilden_Verteilung.pdf}
 \caption{\label{ZufallszahlenAbbilden} Ein Sample gleichverteilter Zufallszahlen
 $\boldsymbol R = \{R_1, \dots, R_L\}$ wird über die inverse Funktion $P^{-1}$ der
-kummulierten Wahrscheinlichkeitsverteilung $P$ abgebildet auf ein
+kumulierten Wahrscheinlichkeitsverteilung $P$ abgebildet auf ein
 Sample $\boldsymbol X = \{X_1, \dots, X_L\}$, deren Werte dann $p$-verteilt sind.}
 \end{center}
 \end{figure}

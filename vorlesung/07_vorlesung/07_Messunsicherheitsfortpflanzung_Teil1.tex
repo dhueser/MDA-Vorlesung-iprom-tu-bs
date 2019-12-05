@@ -1035,12 +1035,12 @@ NOTE 1 If the value of $\nu_\mathrm{eff}$ obtained from Equation (G.2b) is not a
 which will usually be the case in practice, the corresponding value of $t_\mathrm{p}$ may be found
 from Table G.2 by interpolation or by truncating $\nu_\mathrm{eff}$ to the next lower integer.
 \end{quote}
-\begin{verbatim}
+\begin{lstlisting}[style=Matlab]
 >> tinv(0.975,52)
 ans =  2.0066
 >> tinv(0.975,52.58)
 ans =  2.0061
-\end{verbatim}
+\end{lstlisting}
 Wir verwenden für das t-Quantil (den Erweiterungsfaktor) den Wert $k = 2.006$, in der Praxis
 nimmt man dann auch einfach $k = 2$.
 Gemäß GUM kann die Formel für die effektive Anzahl von Freiheitsgraden also auch wie folgt
@@ -1369,7 +1369,8 @@ d.h.
 \label{AnhangBayesBeispiel}
 Gnu-Octave Code zu dem Beispiel aus Abschnitt~\ref{MUFklassischvsbayes}
 
-\lstinputlisting{07_vorlesung/code/bayes_indirect_quantity_product.m}
+%\lstset{language=Matlab}
+\lstinputlisting[style=Matlab]{07_vorlesung/code/bayes_indirect_quantity_product.m}
 
 
 

@@ -24,25 +24,35 @@
 \definecolor{airforceblue}{rgb}{0.36, 0.54, 0.66}
 \definecolor{darkairforceblue}{rgb}{0.28, 0.4, 0.5}
 \definecolor{darkblue}{rgb}{0.10, 0.15, 0.4}
+
+\definecolor{pykeywords}{RGB}{10,130,10}
+\definecolor{pyred}{RGB}{190,60,60}
+\definecolor{darkgreen}{RGB}{0,110,0}
+
 \usepackage{setspace}
 %\usepackage{scrpage2}
 %\pagestyle{scrheadings}
 %\ofoot{MDA-Vorlesung, WS 2019/20 ~~-~~ iprom, TU-BS und PTB}
 \usepackage{listings}
 \usepackage[numbered,framed]{matlab-prettifier}
-\lstset{
+\lstdefinestyle{Matlab}{
   style              = Matlab-editor,
   basicstyle         = \mlttfamily,
+  stringstyle=\color{pyred},
+  commentstyle=\color{darkgreen}\slshape,
   escapechar         = ",
   mlshowsectionrules = true
 }
 \lstdefinestyle{Python}{
-    language        = Python,
-    basicstyle      = \ttfamily,
-    keywordstyle    = \color{blue},
-    keywordstyle    = [2] \color{teal}, % just to check that it works
-    stringstyle     = \color{green},
-    commentstyle    = \color{red}\ttfamily
+  language=Python,
+  numbers=left,
+  frame=single,
+  basicstyle         = \mlttfamily,
+  keywordstyle=\color{pykeywords}\bfseries,
+  commentstyle=\color{airforceblue}\slshape,
+  stringstyle=\color{pyred},
+  showstringspaces=false,
+  identifierstyle=\color{black}
 }
 
 %-----------------Kopf/Fuß-------------------------
@@ -129,6 +139,13 @@ iprom, TU Braunschweig}
 \chapter{Infrastrukturen der Metrologie}
 \include{12_vorlesung/12_Infrastrukturen_der_Metrologie}
 
+\chapter{Anhang: Quantiltabellen}
+\label{quantiltabellen}
+\section{Quantile der Normalverteilung}
+\begin{center}
+ \includegraphics[width=150mm]{08_vorlesung/media/NV_Quantile.jpg}
+\end{center}
+\input{05_vorlesung/05_Quantiltabellen}
 
 \chapter{Lösungen zu den Aufgaben}
 \include{02_vorlesung/Loesung_LinRegression}
