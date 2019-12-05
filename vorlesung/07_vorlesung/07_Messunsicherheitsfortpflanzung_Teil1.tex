@@ -537,39 +537,153 @@ wie stark sich die indirekte Größe $Y$ gemäß der Steigung (Gradienten) des K
 empfindlich die indirekte Größe auf Änderungen der direkten Größen reagiert, d.h.\ wie sensistiv
 das Modell an der Position $\bar{\mathbf{x}}$ ist.
 
+Gegeben sei ein univariates, expliziten Modell $Y = f(\mathrm{X})$, das linearisierbar ist also
+in Taylorreihe entwickelbar bis zum linearen Term mit dem Erwartungswertevektor
+$\bar{\mathbf{x}}$ als Entwicklungspunkt
+\begin{equation}
+Y = f(\mathbf{X}) \approx \left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}} +
+\sum_{i=1}^N \left. 
+\frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i 
+\quad \text{und} \quad \mathrm{X} = \bar{\mathbf{x}} + \Delta \mathrm{X}
+\label{linearisiertesModellY}
+\end{equation}
+Die direkten Messgrößen $X_i$ sind Zufallsgrößen.
+Bei der Linearisierung nehmen die Abweichungen $\Delta X_i$ der direkten Größen von ihren Erwartungswerten
+$\mathrm{E}(X_i) = \bar x_i$ oder als Vektor mit den Erwartungswerten aller direkten Größen
+$\bar{\mathbf{x}}$ die Rolle der Zufallsgrößen ein. Ihr Erwartungswert ist dann
+Null $\mathrm{E}(\Delta X_i) = 0$.
+
+Der Erwartungswert der indirekten Messgröße $Y$ wird durch Einsetzten der Erwartungswerte der
+direkten Messgrößen in die Modellgleichung $Y = f(\mathrm{X})$ gewonnen
+\begin{equation}
+\mathrm{E}(Y) = \left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}}
+\end{equation}
+
+Zu der indirekten Messgröße soll die Varianz ermittelt werden
+\begin{equation}
+\operatorname{Var}(Y) =
+\int \left(Y - E(Y) \right)^2 p(Y) \mathrm{d}Y = 
+\int \left(Y^2 - 2 Y \mathrm{E}(Y) + \mathrm{E}(Y)^2\right)  p(Y) \mathrm{d}Y
+\end{equation}
+mit $\int Y \mathrm{E}(Y) p(Y) \mathrm{d}Y = E(Y) \int Y p(Y) \mathrm{d}Y = 
+\mathrm{E}(Y) \mathrm{E}(Y)$ wird dies zu
+\begin{equation*}
+\operatorname{Var}(Y) 
+= \int \left(Y^2 - \mathrm{E}(Y)^2\right)  p(Y) \mathrm{d}Y
+= \left(\int Y^2 p(Y) \mathrm{d}Y \right) - \mathrm{E}(Y)^2,
+\end{equation*}
+so dass gilt
+\begin{equation}
+\operatorname{Var}(Y) 
+= \int \left(Y^2 - \mathrm{E}(Y)^2\right)  p(Y) \mathrm{d}Y
+= \int Y^2 p(Y) \mathrm{d}Y - \int \mathrm{E}(Y)^2  p(Y) \mathrm{d}Y .
+\end{equation}
+Hier wird der Ansatz Gl.~(\ref{linearisiertesModellY}) eingesetzt und mit
+$p(Y)$ aus $p(X_1,\dots,X_N) = p(\mathbf{X})$ und mit
+$\mathrm{d} \mathbf{X} = \mathrm{d} X_1\dots \mathrm{d} X_N$,
+sowie mit $\int \mathrm{E}(Y)^2  p(Y) \mathrm{d}Y = \mathrm{E}(Y)^2$
+\begin{equation}
+\operatorname{Var}(Y) 
+= \int \left( \left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}} +
+\sum_{i=1}^N \left. 
+\frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i
+ \right)^2
+p(\mathbf{X}) \mathrm{d} \mathbf{X} 
+ \; - \; \mathrm{E}(Y)^2 
+\end{equation}
+%\begin{small}
+\begin{equation*}
+= \int \left[ \left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}}^2 +
+2   \left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}} 
+\sum_{i=1}^N \left. 
+\frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i
++ \left(
+\sum_{i=1}^N \left. 
+\frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i
+ \right)^2 \right]  p(\mathbf{X}) \mathrm{d} \mathbf{X}
+\; - \mathrm{E}(Y)^2 
+\end{equation*}
+%\end{small}
+\begin{equation*}
+= \int \left[ 
+2   \left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}} 
+\sum_{i=1}^N \left. 
+\frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i
++ \left(
+\sum_{i=1}^N \left. 
+\frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i
+ \right)^2 
+\right]  p(\mathbf{X}) \mathrm{d} \mathbf{X}
+\end{equation*}
+
+\begin{equation*}
+\operatorname{Var}(Y) 
+= \int \left[ 
+2   \left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}} 
+\sum_{i=1}^N \left. 
+\frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i
++ \left(
+\sum_{i=1}^N \left. 
+\frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i
+ \right)^2 
+\right]  p(\mathbf{X}) \mathrm{d} \mathbf{X}
+\end{equation*}
+\begin{equation*}
+= 2 \int   \left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}} 
+\sum_{i=1}^N \left. 
+\frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i
+\,  p(\mathbf{X}) \mathrm{d} \mathbf{X}
++ \int \left(
+\sum_{i=1}^N \left. 
+\frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i
+ \right)^2 
+ p(\mathbf{X}) \mathrm{d} \mathbf{X}
+\end{equation*}
+\begin{equation*}
+= 2 \left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}}  \sum_{i=1}^N \left. 
+\frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} 
+\underbrace{\int  \Delta X_i \, p(\mathbf{X}) \mathrm{d} \mathbf{X}}_{= 0}
++ \int \left(
+\sum_{i=1}^N \left. 
+\frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i
+ \right)^2 
+ p(\mathbf{X}) \mathrm{d} \mathbf{X}
+\end{equation*}
+
+\begin{equation}
+\operatorname{Var}(Y) 
+= 
+\int \left(
+\sum_{i=1}^N \left. 
+\frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i
+ \right)^2 
+ p(\mathbf{X}) \mathrm{d} \mathbf{X} 
+= 
+\operatorname{Var}\left(\sum_{i=1}^N \left. \frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i\right)
+\end{equation}
+
 Als nächstes wollen wir wieder das Fortpflanzungsgesetz für die Messunsicherheit
 in der Gestalt von Gl.~(\ref{univarLinearFortpflanzungKap7}) erhalten, wobei jetzt die Koeffizienten
 $c_i$ die Steigungen der Tangenten $\frac{\partial f}{\partial X_i}$ an der Stelle
-der geschätzten Erwartungswerte sind.
+der geschätzten Erwartungswerte sind, d.h.\ 
+$c_i = \left. \frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}}$
 
-Die Varianz der gewichteten Summe der Zufallsgrößen $\Delta X_i$ ist
 \begin{equation}
 \operatorname{Var}(Y) 
-= \operatorname{Var}\left(\left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}}\right) + 
-\operatorname{Var}\left(\sum_{i=1}^N \left. \frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i\right).
+= \operatorname{Var}\left(\sum_{i=1}^N c_i \Delta X_i\right)
 \end{equation}
-Dabei sind $\left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}}$ und $c_i = \left. \frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}}$ Konstanten, so dass gilt
-$\operatorname{Var}\left(\left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}}\right) = 0$ und
-\begin{equation}
-\operatorname{Var}(Y) 
-= \operatorname{Var}\left(\sum_{i=1}^N c_i \Delta X_i\right).
-\end{equation}
-Das nimmt also die Form der letzten Zeile von Gl.~(\ref{univarLinearFortpflanzungKap7}) an, so dass gilt
 \begin{equation}
 \operatorname {Var}\left(Y\right)
 = \sum _{{i=1}}^{N} \, c_i^2 \operatorname {Var}(\Delta X_{i})+2\sum _{{i=1}}^{{N-1}}
   \sum _{{k=i+1}}^{N} \, c_i c_k \operatorname {Cov}(\Delta X_{i},\Delta X_{k})
 \label{UnsicherFortpflLinearisiert}
 \end{equation}
-mit $\operatorname {Var}(\Delta X_{i}) = s_i^2$ für die Varianz in der Umgebung vom
-Erwartungswert $\bar x_i$ und $\operatorname {Cov}(\Delta X_{i},\Delta X_{k}) = s_{i,k}$
-für die Kovarianz in der Umgebung von den Erwartungswerten $\bar x_i$ und $\bar x_k$.
-
 
 Zu Kapitel 5.2 im JCGM 100-Dokument des \textsl{Guide} für Messunsicherheit GUM
 sei angemerkt, dass für die Sensitivitäten eine verkürzte, unmathematische Schreibweise
 für die Sensitivitäten gewählt wurde, indem dort geschrieben steht $\frac{\partial f}{\partial x_i}$
-anstelle von $\left. \frac{\partial f}{\partial X_i} \right|_{\bar x_1, \dots, \bar x_N}$.
+anstelle von $\left. \frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}}$ oder
+$\left. \frac{\partial f}{\partial X_i} \right|_{\bar x_1, \dots, \bar x_N}$.
 Im GUM wird angemerkt, dass die saloppe Notation $\frac{\partial f}{\partial x_i}$ für 
 $\frac{\partial f}{\partial X_i}$
 unter Verwendung der Schätzwerte $x_i$ zu den $X_i$ gewählt wird.
