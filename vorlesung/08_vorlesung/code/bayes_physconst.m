@@ -1,4 +1,4 @@
-% by Ehret, date: 17-11-06
+% by Ehret, date: 2019-12-10
 clear all; close all;
 % Beispiel: Bayes for a physical constants
 
@@ -25,7 +25,7 @@ plot(X,p_A,'r-','linewidth',2)
 hold on;
 plot(X,p_B,'b--','linewidth',2)
 grid on;
-legend('p_A(\theta) \sim N(900,20^2)','p_B(\theta) \sim N(800,80^2)', ...
+legend('p_A(\theta) ~ N(900,20^2)','p_B(\theta) ~ N(800,80^2)', ...
 'Location','NorthWest')
 xlabel('\theta','fontsize',14)
 ylabel('p','fontsize',14)
@@ -97,14 +97,9 @@ likelihood_100 = normpdf(X,mu_likeli_100, sigma_likeli_100);
 figure(4)
 plot(X,likelihood_100,'k-','linewidth',2)
 grid on;
-legend('l(\theta|X) \sim N(870,4^2)')
+legend('l(\theta|X) ~ N(870,4^2)')
 xlabel('\theta','fontsize',14)
 ylabel('p','fontsize',14)
-
-set(gcf, 'PaperUnits', 'centimeters');
-x_width=15 ;y_width= 8;
-set(gcf, 'PaperPosition', [0 0 x_width y_width]);
-print '-dpng' likelihood_100_Beobachtung.png
 
 % Berechnung der Posterior fuer 100 Beobachtungen fuer A und B
 p_post_A_100 = p_A .* likelihood_100;
@@ -129,7 +124,3 @@ legend('p_A(\theta|X)','p_B(\theta|X) ', ...
 xlabel('\theta','fontsize',14)
 ylabel('p','fontsize',14)
 
-set(gcf, 'PaperUnits', 'centimeters');
-x_width=15 ;y_width= 8;
-set(gcf, 'PaperPosition', [0 0 x_width y_width]);
-print '-dpng' posterior_A_posterior_B_100_Beobachtungen.png
