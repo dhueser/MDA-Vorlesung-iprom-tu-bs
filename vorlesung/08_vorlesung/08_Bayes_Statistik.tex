@@ -1,11 +1,10 @@
-
 \section{Bayes-Theorem}
 \subsection{Einleitung: Klassische und Bayessche Statistik}
 Grob gesagt verwendet die klassische Statistik zum Schätzen von Parametern
 und zum Testen von Hypothesen nur die Stichprobe; die bayessche stellt zusätzlich in Rechnung, was man sonst noch über das Problem weiß oder 
 annimmt. Dies hängt mit den unterschiedlichen Meinungen darüber zusammen,
 was Wahrscheinlichkeit bedeutet: relative Häufigkeit in Zufallsexperimenten
-(die klassiches Sicht) oder einen Ausdruck des Wissens (die bayessche Sicht). Siehe hierzu auch die 7. Vorlesung.
+(die klassiches Sicht) oder einen Ausdruck des Wissens (die bayessche Sicht). Siehe hierzu auch die 4. Vorlesung (Konzepte der Statistik).
 
 \subsection{Das Bayes-Theorem} 
 (Hinweis: Unter einer \textit{bedingten Wahrscheinlichkeit} $P(A|B)$ versteht man die Wahrscheinlichkeit, dass ein Ereignis $A$ unter der Bedingung eintritt, dass das Eintreten eines Ereignisses $B$ bereits bekannt ist, d.h. Ereignis $B$ bereits eingetreten ist.
@@ -100,8 +99,8 @@ p(\theta|X_2,X_1) &\propto& p(\theta) \cdot l(\theta|X_1) \cdot l(\theta | X_2) 
 &\propto& p(\theta|X_1) \cdot l(\theta|X_2)
 \end{array}
 \]
-D.h. die Posterior $p(\theta|X_1)$ der 1.Beobachtung wird zum Prior für die 
-2. Beobachtung. Dieser Prozess kann beliebig of wiederholt werden, d.h. wir
+D.h. die Posterior $p(\theta|X_1)$ der 1.~Beobachtung wird zum Prior für die 
+2.~Beobachtung. Dieser Prozess kann beliebig of wiederholt werden, d.h. wir
 erhalten: 
 \begin{equation}
 p(\theta |X_1,\hdots,X_J) \propto p(\theta | X_1\hdots, X_{J-1}) \cdot l(\theta | X_J) 
@@ -182,7 +181,7 @@ Varianz des Priors $\sigma_0^2$ und den Messungen $\sigma_j^2$:
 \frac{1}{\bar{\sigma}^2} = \left( \sum_{j=1}^{J} 
 \frac{1}{\sigma_j^2}\right) + \frac{1}{\sigma_0^2} 
 \] 
-Der Posterior Mittelwert $\hat{\theta}$ ist das gewichtete Mittel des Prior-Mittelwertes
+Der Posterior Mittelwert $\bar{\theta}$ ist das gewichtete Mittel des Prior-Mittelwertes
 und des Mittelwertes $x$ der Beobachtung $X$. 
 
 Für den Beobachter A ergibt sich der Mittelwert des Posteriors zu:
@@ -248,14 +247,14 @@ Dies ist in Abb. \ref{fig:Beispiel_1_d} gezeigt.
 
 Mit der Formel in Gl.(\ref{eq:prior_Normal}) errechnen sich die Posterior-Verteilungen 
 von A und B zu $N(871.2,3.9^2)$ und $N(869.8,3.9995^2)$.
-Diese sind in Abb.\ref{fig:Beispiel_1_e} dargestellt. 
+Diese sind in Abb.\ref{fig:9_Beispiel_1_e} dargestellt. 
 
 \begin{figure}[!h]
 	\begin{center}
 		\includegraphics[width=130mm]{08_vorlesung/media/posterior_A_posterior_B_100_Beobachtungen}
 		\caption{Posterior-Verteilungen für A und B nach 100 Beobachtungen}
+		\label{fig:9_Beispiel_1_e} 
 	\end{center}
-    \label{fig:Beispiel_1_e} 
 \end{figure}
 
 Nach 100 Beobachtungen sind die Beobachter A und B fast in Übereinstimmung.
@@ -278,8 +277,8 @@ dargestellt.
 	\end{tabular}
 	\label{tab:Ergebnisse des Beispiels_bei_100_Stichproben}
 \end{table}
-
-\textbf{Anhang (a): Herleitung von Gl.(\ref{eq:prior_Normal})}
+\newpage
+\textbf{Anhang: Herleitung von Gl.(\ref{eq:prior_Normal})}
 
 Im Folgenden wollen wir noch die Gl.(\ref{eq:prior_Normal}) herleiten, mit der 
 wir die Posterior berechnen können, wenn die Prior-Verteilung und die Likelihood 
@@ -353,18 +352,128 @@ mit der Normalverteilung
 N\left[\bar{\theta}, \; (\sigma_0^{-2} + \sigma_1^{-2})^{-1} \right]
 \end{equation}
 
-\newpage
-\textbf{Anhang (b): Octave/Matlab-Skript zum Beispiel}
-%\lstset{language=Matlab}
-\lstinputlisting[style=Matlab]{08_vorlesung/code/bayes_physconst.m}
+\textbf{Anhang: Octave/Matlab-Skript zum Beispiel \glqq Physikalische Konstante\grqq}
 
+\begin{verbatim}
+% by Ehret, 2019-12-10
+clear all; close all;
+% Bayes for a physical constant
+
+% Definition der X-Werte
+X = linspace(600,1100,1000);
+
+% Beispiel 
+% Prior-Verteilung des Beobachters A
+% Normalverteilt mit mu_A = 900 und sigma_a = 20
+mu_A = 900;
+sigma_A = 20;
+DeltaX = X(2)-X(1);
+p_A = normpdf(X,mu_A, sigma_A);
+
+% Prior-Verteilung des Beobachters B
+% Normalverteilt mit mu_B = 800 und sigma_a = 80
+mu_B = 800;
+sigma_B = 80;
+p_B = normpdf(X,mu_B, sigma_B);
+
+% Plotten der Prior-Verteilungen von A und B
+figure(1)
+plot(X,p_A,'r-','linewidth',2)
+hold on;
+plot(X,p_B,'b--','linewidth',2)
+grid on;
+legend('p_A(theta) ~ N(900,20^2)','p_B(theta) ~ N(800,80^2)', ...
+'Location','NorthWest')
+xlabel('\theta','fontsize',14)
+ylabel('p','fontsize',14)
+
+% Annahme der Likelihood (Messung) als Normalverteilung mit l ~ N(850,40^2 ) 
+mu_likeli = 850;
+sigma_likeli = 40;
+likelihood = normpdf(X,mu_likeli, sigma_likeli);
+
+% Plotten der Likelihood
+figure(2)
+plot(X,likelihood,'k-','linewidth',2)
+grid on;
+legend('l(theta|X) ~ N(850,40^2)')
+xlabel('\theta','fontsize',14)
+ylabel('p','fontsize',14)
+
+% Berechnung der Posterior für eine Beobachtung für A und B
+% Posterior ~ Prior  x Likelihood
+p_post_A_1 = p_A .* likelihood;
+p_post_B_1 = p_B .* likelihood;
+
+% Normierung des posterior mit Normierungskonstante 
+% Nicht ganz korrekt, da eigentlich 
+% von -\inf bis +\inf integriert bzw. summiert werden müsste
+
+const_post_A1 = 1/sum(p_post_A_1*DeltaX);
+p_post_A_1 = const_post_A1 * p_post_A_1 ;
+
+const_post_B1 = 1/sum(p_post_B_1*DeltaX);
+p_post_B_1 = const_post_B1 * p_post_B_1 ;
+
+% Plotten der Posterior
+figure(3)
+plot(X,p_post_A_1,'r-','linewidth',2)
+hold on;
+plot(X,p_post_B_1,'b--','linewidth',2)
+grid on;
+legend('p_A(theta|X)','p_B(theta|X)', ...
+'Location','NorthWest')
+xlabel('\theta','fontsize',14)
+ylabel('p','fontsize',14)
+
+% Jezt besteht die Likelihood aus 100 Stichproben
+% Berechnung der Posterior für 
+% Bei hundert Stichproben kann die Verteilung schmaler werden
+% also z.B. Dann mit sigma_likeli_100 = sigma_likeli / root (N)
+N = 100;
+sigma_likeli_100 = sigma_likeli / sqrt(N);
+% Als Mittelwert wir angenommen:
+mu_likeli_100 = 870;
+
+% Likelihood Funktion für 100 Stichproben
+likelihood_100 = normpdf(X,mu_likeli_100, sigma_likeli_100);
+
+figure(4)
+plot(X,likelihood_100,'k-','linewidth',2)
+grid on;
+legend('l(theta|X) ~ N(870,4^2)')
+xlabel('\theta','fontsize',14)
+ylabel('p','fontsize',14)
+
+% Berechnung der Posterior für 100 Beobachtung für A und B
+p_post_A_100 = p_A .* likelihood_100;
+p_post_B_100 = p_B .* likelihood_100;
+
+% Normierungskonstante % Nicht ganz korrekt, da eigentlich 
+% von -\inf bis +\inf integriert bzw. summiert werden müsste
+const_post_A_100 = 1/sum(p_post_A_100*DeltaX);
+p_post_A_100 = const_post_A_100 * p_post_A_100 ;
+
+const_post_B_100 = 1/sum(p_post_B_100*DeltaX);
+p_post_B_100 = const_post_B_100 * p_post_B_100 ;
+
+figure(5)
+plot(X,p_post_A_100,'r-','linewidth',2)
+hold on;
+plot(X,p_post_B_100,'b--','linewidth',2)
+grid on;
+legend('p_A(theta|X)','p_B(theta|X)', ...
+'Location','NorthWest')
+xlabel('\theta','fontsize',14)
+ylabel('p','fontsize',14)
+\end{verbatim} 
 \newpage
 \subsection{Priorverteilungen}
 Das Bayes-Theorem verwendet eine Prior-Verteilung, also ein Vorwissen über die zu schätzenden Modellparameter.
 Für Situationen, in denen es im wesentlichen kein Vorwissen gibt, wird eine einfache Rechteckverteilung als Prior angesetzt, was bedeutet, dass die Wahrscheinlichkeit innerhalb eines vorgegebenen Intervalls $[\theta_\mathrm{li},\theta_\mathrm{re}]$ konstant ist:
 \[
 p(\theta) = \left\{\begin{array}{lll}
-const. & \textrm{falls} & \theta \in [\theta_\mathrm{li},\theta_\mathrm{re}]\\
+\textrm{const.} & \textrm{falls} & \theta \in [\theta_\mathrm{li},\theta_\mathrm{re}]\\
 0 & \textrm{sonst.} &
 \end{array}\right.
 \]
@@ -422,7 +531,7 @@ Unwissenheit kann also nicht grundsätzlich durch eine uniforme Verteilung
 dargestellt werden \cite{Tsc14}.
 
 Die Betaverteilung ist eine stetige Wahrscheinlichkeitsverteilung über dem Intervall $( 0 , 1 )$.
-Die Beta-Verteilungsdichte ist definiert durch (siehe z.B. Wikipedia): 
+Die Beta-Verteilungsdichte ist definiert durch (siehe z.~B. Wikipedia): 
 \[
 p(X) = \frac{1}{B(\alpha,\beta)} X^{\alpha-1}(1-X)^{\beta-1}.
 \]
@@ -437,7 +546,8 @@ steht für die Betafunktion, nach der die Verteilung benannt ist. Dabei bezeichn
 Einige nützliche Priors sind beispielhaft in Tab.\ref{tab:Einige_Priors} dargestellt.
 
 \begin{table}[!htbp]
-	\caption{Einige Priors.}
+	\caption{Häufig verwendete Priors.}
+	 \vspace*{1ex}
 	\centering
 	\begin{tabular}{m{3cm} |m{3cm} m{4.5cm}| m{3cm}}  \hline 
 		Vorhandenes Vorwissen & PDF \hspace{1em} und & Illustration & $x$ und $u(x)$\\ 
@@ -554,9 +664,9 @@ und der Standardabweichung
 	ist normalverteilt und die Varianz $\sigma^2$ der Messdaten $X$ ist unbekannt} \\
 Ist die Varianz der Messgröße unbekannt, so muss die Varianz noch geschätzt werden, z.~B. über die $\mathcal{X}^2$ -Verteilung.
 
-\section{MU-Bestimmung  mittels Posterior aus Bayesansatz}
+\section{MU-Bestimmung mittels Posterior aus Bayesansatz}
 \subsection{Bayessche Intervallschätzung}
-Wie eine klassische Punktschätzung z.B. mit MLE oder LS, so sagt auch eine bayessche nicht aus, wie nahe der Schätzwert dem wahren Wert kommt. Doch auch hier kann man ein Intervall angeben, die 
+Wie eine klassische Punktschätzung z.~B. mit MLE oder LS, so sagt auch eine bayessche nicht aus, wie nahe der Schätzwert dem wahren Wert kommt. Doch auch hier kann man ein Intervall angeben, die 
 den wahren Wert mit einer gewissen Wahrscheinlichkeit enthalten. Der üblichen Sprachregelung folgend bezeichnen wir die Intervalle der Bayes-Statistik nicht als \textit{Vertrauens-} bzw. \textit{Konfidenz-Intervalle} sondern als 
 \textit{Kredibilitätsintervalle}. (credibility: Glaubwürdigkeit, confidence: Vertrauen). 
 Nicht weil das Wort credibility treffender wäre als das Wort confidence. Beide enstammen der Umgangssprache. Wir wählen den anderen Ausdruck, damit jederzeit klar wird, ob wir ein klassiches oder ein bayessches Intervall meinen. 
@@ -565,7 +675,8 @@ Der ISO-Guide verwendet den Begriff
 das das Intervall angibt, das die Menge der wahren Werte einer Messgröße
 mit einer angegeben Wahrscheinlichkeit enthält, auf der Grundlage der
 verfügbaren Information \cite{VIM08}. 
-(siehe zu den Begrifflichkeiten: Vertrauens-, Credible- und Überdeckungintervall auch die Ausführungen der 4. Vorlesung)
+(siehe zu den Begrifflichkeiten: Vertrauens-, Credible- und Überdeckungintervall auch die Ausführungen im Kapitel \glqq Messunsicherheitsfortpflanzung bei linearen
+Modellen\grqq)
 Den Wahrscheinlichkeitswert, den ein credible interval einschließt, bezeichnen wir als Kredibilitätsniveau $\gamma.$
 
 Beispiel: Symmetrische/ nichtsymmetrische Verteilungen
@@ -574,7 +685,7 @@ Bei symmetrischen Posterior-Verteilungen wird in der Regel
 das symmetrische Intervall genommen. So ist in Abb. \ref{fig:Beispiel_Bestimmung_CredibleIntervall}  das 95\%ige Intervall 
 einer Normalverteilung $N(10,4^2)$ dargestellt. 
 Die untere und obere Grenze kann hier noch per Hand ausgerechnet werden. 
-Mit $Z=(\theta - \mu)/ \sigma$ (Standardisieren, siehe 3. Vorlesung).
+Mit $Z=(\theta - \mu)/ \sigma$ (Standardisieren, siehe 5. Vorlesung).
 In der 3. Vorlesung haben die kummulierten Wahrscheinlichkeitsfunktionen mit $P(X) = \int_{-\infty}^{X} p(X') dX'$ bezeichnet. Im Falle der 
 Standardnormalverteilung $\mathcal{N}(0,1)$ bezeichnen wir diese hier mit $\Phi$. Die Quantile der rechtsseitigen Verteilungsfunktion sind im Anhang in der Tabelle dargestellt. Die gesuchte obere Grenze $\theta_{oG}$ des Intervalls erhalten wir durch:
 \[
@@ -592,7 +703,7 @@ Standardnormalverteilung $\mathcal{N}(0,1)$ bezeichnen wir diese hier mit $\Phi$
 \end{figure}
 (Hinweis: beidseitiges Quantil: 95\%, einseitiges Quantil 97.5\%: )
 
-In einer Quantiltabelle der Normalverteilung (Anhang Kapitel~\ref{quantiltabellen}) kann der Wert 1.96 abgelesen werden.
+In einer Quantiltabelle der Normalverteilung (siehe z.B. im Anhang) kann der Wert 1.96 abgelesen werden.
 Wir erhalten damit: 
 \[
 \frac{\theta_{oG}-10}{4} = 1.96 \rightarrow \theta_{oG} = 17.84 
@@ -614,8 +725,8 @@ schematisch in dem Beispiel mit der $\mathcal{X}^2$-Verteilung mit $N=10$ Freihe
 	\end{center}
 \end{figure}
 \subsection{MU-Bestimmung mit der Bayesschen Statisktik}
-In der 7. und 8. Vorlesung haben wir den ISO-Guide 1995/2008 \cite{GUM95} kennengelernt, der im Wesentlichen auf der klassischen Statistik beruht und 
-folgende Einschränkungen hat: 
+In der 9.Vorlesung werden wir den ISO-Guide 1995/2008 \cite{GUM95} noch näher kennenlernen. Er basiert im Wesentlichen auf der klassischen Statistik und hat 
+folgende Einschränkungen: 
 \begin{itemize}\item Der ISO Guide verwendet keine Informationen über 
 	Wahrscheinlichkeitsverteilungen, die eventuell ja vorhanden
 	sind. Es werden nur die Unsicherheiten fortgepflanzt jedoch keine Wahrscheinlichkeitsverteilungen.
@@ -954,11 +1065,11 @@ Wir haben bisher den Erwartungswert einer Verteilung (1. statistisches Moment) u
 	\item die t-Verteilung, deren Ausläufer (\textit{Tails}) um so ausgeprägter sind je kleiner die Anzahl der Freiheitsgrade ist, 
 	\item die Laplace-Verteilungen, die sehr lange Ausläufer hat. Sie 
 	setzt sich aus zwei aneinandergefügten Exponentialverteilungen zusammen, siehe
-	4. Vorlesung Gl.(6).  
+	3. Vorlesung Gl.(3.6).  
 \end{itemize}
 
 Für die Schätzung eines Modellparameters $\theta$ haben wir in 
-der 2. Vorlesung die Methode der Maximum Likelihood kenengelernt 
+der 1. und 2. Vorlesung die Methode der Maximum Likelihood kenengelernt 
 (\glqq Finde den Parameter $\theta$, sodass die Likelihood maximal wird\grqq). Diese Methode führt bei normalverteilten Größen zum Least Square (Minimierung der Residuen) und wird als \textit{L2-Norm} bezeichnet. 
 
 Zuvor hatten wir gesehen wie die Maximierung der Likelihood
@@ -1015,9 +1126,9 @@ Der Erwartungswert $E(p(\theta|X))$ der Posterior-Verteilung $p(\theta|X)$ ist d
 $\hat{\theta}$, der die Residuen minimiert. 
 
 
-Zur Behandlung von Beobachtungen die nicht rein stochastischer Natur sind, sondern durch andere, nicht weiter
-modellierbare Einflüsse mit einer größeren Wahrscheinlichkeit als bei der Normalverteilung erwartet in den
-Ausläufern liegen können, wird beispielsweise auf die Laplaceverteilung zurückgegriffen werden. Die Maximum-Likelihood-Methode für die Laplace-Transformation führt auf die Minimierung der Absolutbeträge der Residuen (siehe 3. Vorlesung, Gl.(7)),
+Zur Behandlung von Beobachtungen, die nicht rein stochastischer Natur sind, sondern durch andere, nicht weiter
+modellierbare Einflüsse gegeben sind, wie z.B. mit einer größeren Wahrscheinlichkeit - als bei der Normalverteilung in den
+Ausläufern, wird beispielsweise auf die Laplaceverteilung zurückgegriffen werden. Die Maximum-Likelihood-Methode für die Laplace-Transformation führt auf die Minimierung der Absolutbeträge der Residuen (siehe 2. Vorlesung),
 d.h. $\sum \left|\epsilon \right| \rightarrow \min$. Man bezeichnet dies
 als die \textit{L1-Norm}. Sie liefert den \textit{Median}. Er ist 
 definiert als das 0.5-Quantil $Q_{0.5}$. Ein Quantil $Q_\alpha$ ist ein Lagemaß in der Statistik (siehe 5.~Vorlesung). So liegen beim 0.5-Quantil 50\% der Verteilung unterhalb und 50\% der Verteilung oberhalb des Quantils.
@@ -1076,7 +1187,8 @@ jede beliebige Posterior-Verteilung bestimmt werden.
 Wesentliche Unterschiede zwischen der L1-und der L2-Norm sind in 
 Tab. \ref{tab:L2_und_L1_Norm} aufgezählt.
 \begin{table}[!htbp]
-	\caption{Unterschiede zwischen L2- und L1-Norm}
+	\caption{Unterschiede zwischen L2- und L1-Norm} 
+	\vspace*{1ex}
 	\label{tab:L2_und_L1_Norm}
 	\centering
 	\begin{tabular}{|m{8cm} | m{8cm}| }  \hline
@@ -1110,6 +1222,18 @@ A Guide to Bayesian Inference for Regression Problems, Deliverable of EMRP proje
 www.ptb.de/emrp/fileadmin/documents/nmasatue/NEW04/Papers/BPGWP1.pdf
 \end{thebibliography}
 
+\begin{comment}
+\section*{Anhang}
+\begin{figure}[!h]
+	\begin{center}
+		\includegraphics[width=140mm]
+		{08_vorlesung/media/NV_Quantile.jpg}
+		\caption{
+			Quantile der Normalverteilung}
+			\label{fig:Quantile_der_Normalverteilung} 
+	\end{center}
+\end{figure}
+\end{comment}
 
 \newpage
 \section{Übungsaufgaben}
@@ -1234,8 +1358,8 @@ erhält man die obere Grenze $\theta_{oG}$ durch:
 \[
 \Phi\left(\frac{\theta_{oG}-\mu}{\sigma}\right) = 0.5 + 0.95/2 = 0.975   
 \]
-In einer Quantiltabelle der Normalverteilung (siehe Anhang Kapitel~\ref{quantiltabellen})
-kann der Wert 1.96 abgelesen werden. Wir erhalten damit: 
+In einer Quantiltabelle der Normalverteilung (siehe Anhang) kann der Wert 1.96 abgelesen werden.
+Wir erhalten damit: 
 \[
 \frac{\theta_{oG}-20.49}{0.25} = 1.96 \rightarrow \theta_{oG} = 20.98 
 \rightarrow \theta_{uG} = 20.98 - 2 \cdot (20.98-20.49) = 20
