@@ -19,7 +19,7 @@
 
 \section{Einbeziehen von a-Priori-Wissen, \glqq scharfer\grqq ~Model-Prior}
 \subsection{Kurze Wiederholung: Bayessche Statistik zur MU-Bestimmung}
-In der 6. Vorlesung haben wir das Bayes-Theorem kennengelernt. 
+In der 8. Vorlesung haben wir das Bayes-Theorem kennengelernt. 
 Mit diesem ist es möglich a-Priori-Wissen $p(Y)$ über die zu bestimmende indirekte Messgröße $Y$ zu berücksichtigen.
 Wir haben folgenden Zusammenhang kennengelernt: 
 \begin{equation}
@@ -33,10 +33,10 @@ p(Y|X_1,\ldots,X_N) \propto p(X_1,\ldots,X_N|Y) \cdot p(Y)
 mit $p(Y)$ dem Prior der indirekten Messgröße $Y$ (auch oft als Ausgangsgröße bezeichnet), $l(Y|X_1,\ldots,X_N)$ Likelihood der Messdaten 
 (Eingangsgrößen) $X_1,\ldots,X_N$. 
 
-Die Likelihood kann auch -- wie in der 9. Vorlesung dargestellt -- als bedingte Wahrscheinlichkeitsdichte $p(X_1,\ldots,X_N|Y)$ aufgefasst werden. 
+Die Likelihood kann auch -- wie in der 8. Vorlesung dargestellt -- als bedingte Wahrscheinlichkeitsdichte $p(X_1,\ldots,X_N|Y)$ aufgefasst werden. 
 
-Der \textsl{Erwartungswert} $y := E(Y)$ ist der \textsl{beste Schätzwert} für die Messgröße $Y$ und die \textsl{Varianz} ist ein 
-\textsl{Maß für die Unsicherheit} $u^2(y) := V(Y)$.
+Der \textsl{Erwartungswert} $y := \operatorname{E}(Y)$ ist der \textsl{beste Schätzwert} für die Messgröße $Y$ und die \textsl{Varianz} ist ein 
+\textsl{Maß für die Unsicherheit} $u^2(y) := \operatorname{Var}(Y)$.
 
 \textbf{Beispiel: Bestimmung einer physikalischen Größe}\\
 Wir betrachten ein Beispiel, bei dem irgendeine physikalische Größe zu messen ist.
@@ -44,7 +44,7 @@ Dabei werde ein Gerät bzw.\ Sensor verwendet, dessen Funktionsprinzip auf einem
 physikalischen Effekt beruht und dadurch die Größe so erfasst,
 dass als direkte Messgröße eine Spannung in Volt angezeigt wird. Dies kann beispielsweise
 die Messung einer Temperatur sein, in der das Phänomen, dass sich ein elektrischer
-Widerstand proportional zur Tempertur verändert und die Widerstandsänderung über die
+Widerstand proportional zur Temperatur verändert und die Widerstandsänderung über die
 Änderung der elektrischen Spannung, die über dem Widerstand abfällt, bestimmt wird.
 Dies kann beispielsweise eine Stufenhöhe sein, die mit Hilfe eines induktiven Wegaufnehmers
 gemessen wird, der auf dem Phänomen beruht, dass sich die Induktivität einer Spule in Abhängigkeit
@@ -85,8 +85,7 @@ direkten Messgrößen $X_\mathrm{K}$ und $X_\mathrm{M}$ herrührt, dass aber $Y$
 aus nicht streut, sondern dass es
 einen \textbf{\glqq scharfen\grqq ~\textsl{Model-Prior}} gibt.
 \end{itemize}
-Mit dem Begriff \glqq scharf\grqq ~ist hier gemeint, dass $Y \; = \; f(X_\mathrm{K}, X_\mathrm{M})$
-also $Y$ keine Streuung haben würde, wenn die beiden direkten Größen
+Mit dem Begriff \glqq scharf\grqq ~ist hier gemeint, dass $Y \; = \; f(X_\mathrm{K}, X_\mathrm{M})$ keine Streuung haben würde, wenn die beiden direkten Größen
 $X_\mathrm{K}$ und $X_\mathrm{M}$ keine Streuung hätten.
 
 Der Einfachheit halber nehmen wir an, dass die Streuung der beiden direkten Größen
@@ -510,7 +509,7 @@ Die Nenner in den beiden Gleichungen (\ref{eq:schaetzwert_y}) und
 
 Für den Fall, dass wir keine Vorkenntnisse über die Messgröße $Y$
 haben und als Prior-Verteilung eine 1 verwenden (siehe auch 
-die Hinweise der 6. Vorlesung zu non-informativen Priors), d.h.
+die Hinweise der 8. Vorlesung zu non-informativen Priors), d.h.
 $p_0(Y)~\propto~1$ ergibt sich für die Verteilungsdichte von $Y$ aus
 der Gl.(\ref{eq:pdf_Y_durch_Marginalisierung}) die sogenannte 
 \textbf{Markov-Formel} \cite{Cox06}: 
@@ -520,7 +519,7 @@ p(\boldsymbol{X}') \cdot \delta (Y-f(\boldsymbol{X}')) d \boldsymbol{X}'
 \label{eq:Markov_Formel}
 \end{equation}
 In der Regel benötigen die Formeln (\ref{eq:Markov_Formel}) und (\ref{eq:pdf_Y_durch_Marginalisierung}) numerische Lösungsverfahren. In 
-einer späteren Vorlesung Monte-Carlo-Methoden als Lösungsverfahrenb vorgestellt werden.
+einer späteren Vorlesung Monte-Carlo-Methoden als Lösungsverfahren vorgestellt werden.
 
 Hier zeigen wir für den Fall, dass wir eine lineares Modell und  Normalverteilungen haben, eine analytische Lösung. Dieser Ansatz 
 geht natürlich auch, wenn die Modellgleichung (\ref{eq:Modellgleichung}) linearisiert werden kann.
@@ -642,12 +641,490 @@ ist der gewichtete Mittelwert $y$ aus dem Schätzwert aus den
 der Messungen $\boldsymbol{c^T}\boldsymbol{x}$ gemäß Gl.~(\ref{eq:nurMessung}) und
 der Priorinformation $y_0$. Dabei sind die Gewichtsfaktoren, wie wir es
 für den Fall einer einzelnen Messgröße kennengelernt haben, die reziproken
-Varianzen bzw.\ reziproken Kovarianzmatrizen.
+Varianzen bzw.\ reziproken Kovarianzmatrizen. Als Beispiel siehe Übungsaufgabe 10-1.
 
 Für den Fall, dass keine Priorinformationen vorhanden sind, d.h. 
 $\sigma_0 \rightarrow \infty$ ist der Erwartungswert und die Unsicherheit durch die Messung gegeben.
 In der Gl. (\ref{eq:Erwartungswert_y_Normalverteilung}) und (\ref{eq:Unsicherheit_y_Normalverteilung}) verschwindet dann der 2. Term.
+\section{MU-Berechnung mit rechteck- und U-förmigen Messgrößen}
+\subsection{Messunsicherheitsfortpflanzung linearisierbarer Modelle}
+Kurze Wiederholung: 
+Das klassische Gesetz zur Fortpflanzung der Messunsicherheit mit der Gleichung
+\begin{equation}
+u^2(Y) \; = \; \sum\limits_{i=1}^n c_i^2 \, u(X_i)^2 \; + \;
+2 \sum\limits_{i = 1}^{n-1} \sum\limits_{j = i+1}^n c_i c_j \rho_{i, j} u(X_i) u(X_j)
+\end{equation}
+gilt für
+\begin{enumerate}
+	\item eine indirekte Messgröße $Y$ (univariat), die explizit abhängig ist von den direkten Messgrößen $X_i$
+	\begin{equation}
+	Y = f(X_1, \dots, X_n)
+	\end{equation}
+	\item für lineare Abhängigkeiten der indirekten von den direkten Messgrößen, oder wenigsten
+	für linearisierbare Abhängigkeiten, also
+	\begin{equation}
+	Y \; \approx \; \left. f(X_1, \dots, X_n) \right|_{\bar x_1,\dots, \bar x_n} \, + \,
+	\sum\limits_{i=1}^n \underbrace{\left. \frac{\partial f}{\partial X_i} \right|_{\bar x_1,\dots, \bar x_n}}_{c_i} \,
+	\Delta X_i
+	\end{equation}
+	\item für glockenförmige Streuung der direkten Messgrößen $X_i$: 
+	\begin{itemize}
+		\item Die Wahrscheinlichkeitsdichteverteilung
+		ist eine glockenförmige Kurve mit genau einem Maximum, d.h.\ sie ist unimodal.
+		Die Position des Maximums bildet im wesentlichen den Erwartungswert.
+		\item Die Wurzel der Varianz entspricht der Breite $\sigma$ des Kerns der Kurve. Im Kern liegt
+		der Großteil der Fläche unter der Kurve.
+	\end{itemize}
+\end{enumerate}
+\subsection{Wahrscheinlichkeitsdichteverteilungen für Messgrößen}
+Es gibt zwei Grenzfälle, die in der Metrologie vorkommen können und notbehelfsmäßig
+in das Fort\-pflanzungs\-gesetz eingebastelt werden: Die U-Verteilung und die Rechteckverteilung.
 
+Diese erfüllen nicht die oben genannte dritte Voraussetzung, 
+dass diese glockenförmig sind, d.h. ein Maximum relativ mittig besitzen und nach außen mit abnehmender Wahrscheinlichkeit verlaufend sind.
+
+Die Bestimmung von Vertrauensintervallen zu bestimmten Vertrauensniveaus anhand der Quantile
+von der Normalverteilung und der t-Verteilung setzt voraus, dass die folgenden beiden Kriterien für die Verteilungen gegeben sind: univariat und Streubreite sind gemäß zweitem statistischen Moment gegeben. Auch die Bestimmung von Vertrauensintervallen zu bestimmten Vertrauensniveaus, wenn man
+zu einer Größe genau ein Intervall wählt mit zwei Grenzen, setzt voraus, dass die Verteilung unimodal ist, einen Häufungspunkt, den Erwartungswert, hat.
+
+Je nachdem wie stark z.B. der Beitrag einer direkten Messgröße ist, deren Wahrscheinlichkeitsdichte
+einer U-Verteilung folgt, kann die Wahrscheinlichkeitsdichte der indirekten Größe
+eine bimodale Ver\-teilung werden. U-Verteilungen liegen vor, wenn die Streuung einer Größe
+durch Schwingungseinflüsse hervorgerufen wird.
+
+Die U-Verteilung hat 2 Peaks an ihren beiden äußersten Rändern.
+Wir betrachten folgende U-Verteilung
+\begin{equation}
+p(X) \; = \; \left\{\begin{array}{lll}
+\mathrm{arcsin}^2\left(\frac{X - \bar x}{s}\right) & \text{für} & \bar x - s  \leq X \leq \bar x + s\\
+0 & \text{für} & (X < \bar x - s) \vee (\bar x + s < X)
+\end{array}\right. 
+\label{uverteilung}
+\end{equation}
+für eine Schwingung mit der Amplitude $s$ als Störung, die die Streuung der Größe $X$
+um den Wert $\bar x$ verursacht.
+\begin{figure}
+	\begin{center}
+ 		\includegraphics[width=80mm]{10_vorlesung/media/pdf_Uverteilung_Vertrauensniveau.png}
+ 		\hspace{2mm}
+	\includegraphics[width=80mm]{10_vorlesung/media/Pkum_Uverteilung_Vertrauensniveau.png}
+		\caption{Für das Vertrauensniveau möchte man das häufigste Vorkommen angeben, bei
+			bimodaler Verteilung als von jedem der beiden Peaks ausgehen: Bei $95 \%$
+			Vertrauensniveau also jeweils $47,5 \%$ für ein Intervall ganz rechts und
+			$47,5 \%$ für ein Intervall ganz links, hier als gelbe Flächen markiert.}
+		\label{Uverteilungsquantile}
+	\end{center}
+\end{figure}
+In der Mitte, nämlich bei $\bar x$ ist die Wahrscheinlichkeit am geringsten.
+Das Signifikanzniveau $\alpha$ liegt folglich in der Mitte und nicht am Rand.
+Vom $95 \%$ Vertrauensniveau wird jeweils die Hälfte auf jeden der beiden
+Peaks am Rand aufgeteilt, also $47.5 \%$ der Fläche der 
+Wahrscheinlichkeitsdichtekurve auf den einen Peak und die anderen $47.5 \%$ der Fläche auf den anderen
+Peak. Dann müssen wir zwei Intervalle angeben und sagen: Mit $95 \%$ Wahrscheinlichkeit sind
+Werte entweder in dem einen oder dem anderen Intervall zu erwarten, siehe Abb.~\ref{Uverteilungsquantile}.
+
+Die Rechteckverteilung liefert für jeden Wert der Größe $X$ dieselbe Wahrscheinlichkeit für
+das liegen innerhalb einer Spanne und die Wahrscheinlichkeit Null außerhalb.
+Wenn $s$ die halbe Spanne ist, dann ist die rechteckverteilte Wahrscheinlichkeitsdichteverteilung
+\begin{equation}
+p(X) \; = \; \left\{\begin{array}{lll}
+\frac{1}{2 s} & \text{für} & \bar x - s  \leq X \leq \bar x + s\\
+0 & \text{für} &  (X < \bar x - s) \vee (\bar x + s < X)
+\end{array}\right. .
+\label{rechteckvert}
+\end{equation}
+Hier kann man nicht entscheiden, wo der Bereich des Signifkanzniveaus und wo der des
+Vertrauensniveaus hinzulegen ist.
+
+\subsection{Wahrscheinlichkeitsdichten im Fortpflanzungsgesetz}
+Wir betrachten ein einfaches Beispiel eines linearen Modells, bei dem eine
+indirekte Messgröße $Y$ von zwei direkten Messgrößen $X_1$ und $X_2$ linear abhängt, also
+\begin{equation}
+Y = a X_1 + b X_2
+\end{equation}
+wobei $a$ und $b$ Konstanten sind. Diese Konstanten sind für das Fortpflanzungsgesetz
+dann auch direkt die Sensitivitäten: $c_1 = a$ und $c_2 = b$.
+
+Bei diesem Beispiel soll $X_1$ eine Größe darstellen, die nicht der Voraussetzung genügt, gauß- oder
+t-verteilt zu sein. Wir untersuchen zwei Fälle, einerseits den Fall, dass sie U-verteilt mit
+der Amplitude $s_1$ sei, also $p(X_1)$ gemäß Gl.~(\ref{uverteilung}), andererseits den Fall, 
+dass sie rechteckverteilt sei, $p(X_1)$ gemäß Gl.~(\ref{rechteckvert}), mit der halben Spanne $s_1$.
+
+Die Größe $X_2$ sei gaußverteilt.
+
+Konkret verwenden wir hier beispielhaft folgende Zahlenwerte:
+\begin{center}
+	\begin{tabular}{c|c||c|c||c|c}
+		$c_1 = a$ & $c_2 = b$ & $\bar x_1$ & $s_1$ & $\bar x_2$ & $s_2$ \\
+		\hline
+		$1$ & $1$ & $3$ & $2$ & $3.5$ & $0.5$
+	\end{tabular}
+\end{center}
+
+Die Wahrscheinlichkeitsdichteverteilung als Funktion der beiden direkten Größen $X_1$
+und $X_2$ ist in Abb.~\ref{pdfx1x2} dargestellt, für die U-Verteilung von $X_1$ links
+und für die Rechteckverteilung von $X_1$ rechts:
+\begin{equation}
+p(X_1, X_2) \; = \; p(X_1) \; \underbrace{\frac{1}{\sqrt{2\pi} s_2} 
+	e^{-\frac{1}{2}\left(\frac{X_2 - \bar x_2}{s_2}\right)^2} }_{p(X_2)}.
+\end{equation}
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=80mm]{10_vorlesung/media/direkte_x1_x2.png}
+		\hspace{2mm}
+		\includegraphics[width=80mm]{10_vorlesung/media/direkte_x1_x2_box.png}
+		\caption{Die Wahrscheinlichkeitsdichteverteilung als Funktion der beiden direkten Größen $X_1$
+			und $X_2$: \textsl{Links:} U-verteilte Größe $X_1$,
+			\textsl{rechts:} rechteckverteilte Größe $X_1$.}
+		\label{pdfx1x2}
+	\end{center}
+\end{figure}
+
+Die Wahrscheinlichkeitsdichteverteilung als Funktion der indirekten Größe $Y$ ist
+die Marginalverteilung $p(Y)$ der Verteilung $p(Y,X_1,X_2)$, die sich aus folgendem Produkt ergibt:
+\begin{equation}
+p(Y,X_1,X_2) \; = \; C_\mathrm{norm} 
+\frac{1}{\sqrt{2\pi} \sigma} e^{-\frac{1}{2}\left(\frac{Y - f(X_1, X_2)}{\sigma}\right)^2}
+\, p(X_1,X_2) 
+\end{equation}
+mit $f(X_1, X_2) = a X_1 + b X_2$ und $\sigma$ für die Unsicherheit des Modells, sowie des
+Systems, das die Messvorgänge der direkten Größen verknüpft. Letzendlich steckt dahinter
+die Vorstellung, dass die indirekte Größe $Y$ ihrerseits auch eine Zufallsgröße ist, nicht nur
+die direkten. Die Konstante $C_\mathrm{norm}$ ist so definiert, dass 
+$\iiint p(Y,X_1,X_2) \mathrm{d}X_1 \mathrm{d}X_2 \mathrm{d}Y = 1$ (Normierungsbedingung) erfüllt wird, also
+\begin{equation}
+C_\mathrm{norm} \; = \; \frac{1}{\int\limits_{-\infty}^{\infty} \int\limits_{-\infty}^{\infty}
+	\int\limits_{-\infty}^{\infty} p(Y,X_1,X_2) \mathrm{d}X_1 \mathrm{d}X_2 \mathrm{d}Y } .
+\end{equation}
+
+\begin{figure}
+	\begin{center}
+	\includegraphics[width=80mm]{10_vorlesung/media/indirekte_y_modellGauss_sigma0p050.png}
+		\hspace{2mm}
+	\includegraphics[width=80mm]{10_vorlesung/media/indirekte_y_modellGauss_sigma0p050_box.png}
+		\caption{Die Wahrscheinlichkeitsdichteverteilung $p(Y)$ gemäß Gl.~(\ref{pYmarginal}) als Funktion der
+			indirekten Größe $Y$ mit Unsicherheit $\sigma = 0.05$ für die Größe $Y$:
+			\textsl{Links:} U-verteilte Größe $X_1$,
+			\textsl{rechts:} rechteckverteilte Größe $X_1$.}
+		\label{pdfYsigma}
+	\end{center}
+\end{figure}
+
+Für die Vorstellung von einer indirekten Messgröße, die einen exakten wahren Wert haben muss und
+die für sich genommen keine Zufallsgröße ist, deren Streuung einzig durch die Streuung der direkten
+Größen verursacht wird, wird in der Messtechnik (nirgends sonst in der Statistik) ein
+Modellprior verwendet, der durch einen unendlich scharfen Peak repräsentiert wird. 
+Wir bezeichnen den (siehe oben) als \textsl{scharfen Modellprior}.
+
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=80mm]{10_vorlesung/media/indirekte_ysorted_GUMS1.png}
+		\hspace{2mm}
+		\includegraphics[width=80mm]{10_vorlesung/media/indirekte_ysorted_GUMS1_box.png}
+		\caption{Die Wahrscheinlichkeitsdichteverteilung $p(Y)$ gemäß Gl.~(\ref{pYmarginal}) als Funktion der
+			indirekten Größe $Y$ mit scharfem Modellprior:
+			\textsl{Links:} U-verteilte Größe $X_1$,
+			\textsl{rechts:} rechteckverteilte Größe $X_1$.}
+		\label{pdfYscharf}
+	\end{center}
+\end{figure}
+
+Für den scharfen Modellprior für das Verfahren in GUM-Supplement 1 machen wir den Grenzübergang
+\begin{equation}
+\lim_{\sigma \rightarrow 0} \left\{
+\frac{1}{\sqrt{2\pi} \sigma} e^{-\frac{1}{2}\left(\frac{Y - f(X_1, X_2)}{\sigma}\right)^2}
+\right\} \; = \; \delta(Y - f(X_1, X_2))
+\end{equation}
+wobei $\delta$ die dirac'sche Deltadistribution ist.
+
+Die Marginalverteilung $p(Y)$, die die Wahrscheinlichkeitsdichte der indirekten Größe darstellt, ist
+\begin{equation}
+p(Y) \; = \;  \int\limits_{-\infty}^{\infty}
+\int\limits_{-\infty}^{\infty} p(Y,X_1,X_2) \mathrm{d}X_1 \mathrm{d}X_2 .
+\label{pYmarginal}
+\end{equation}
+Sie ist in Abb.~\ref{pdfYsigma} für einen gaußglockenförmigen Modellprior mit $\sigma = 0.05$ und in
+Abb.~\ref{pdfYscharf} für einen scharfen Modellprior dargestellt.
+
+In den beiden Abbn.~\ref{pdfYsigma} und \ref{pdfYscharf} auf der linken Seite gezeigten
+Diagrammen ist die Marginalverteilung für $Y$ für den Fall dargestellt, dass die direkte Größe 
+$X_1$ U-verteilt ist. Sie weist zwei Peaks auf, d.h.\ sie ist bimodal.
+Hier müsste man sich also genau anschauen, wo das Signifikanzniveau anzusiedeln ist, also, ob ein
+Teil davon in den mittleren Bereich gehört. Der Fall mit rechteckverteilter Größe $X_1$ ist
+in dieser Hinsicht gutmütig, so dass wir hier wie gewohnt von der Umkehrfunktion $P^{-1}$ der kumulativen
+Verteilung $P(Y)$ die entsprechenden Werte $P^{-1}(\alpha/2)$ und $P^{-1}(1-\alpha/2)$ für
+das Vertrauens- oder Überdeckungsintervall nehmen können,
+siehe Abb.~\ref{PkumY}.
+\begin{figure}
+	\begin{center}
+	\includegraphics[width=80mm]{10_vorlesung/media/Pkum_indirekte_y_Gauss_sigma0p050.png}
+		\hspace{2mm}
+	\includegraphics[width=80mm]{10_vorlesung/media/Pkum_indirekte_y_Gauss_sigma0p050_box.png}
+		\caption{Die zur kumulierten Verteilung $P(Y)$ der Wahrscheinlichkeitsdichteverteilung $p(Y)$ 
+			erworbene Umkehrfunktion liefert mit $P^{-1}(\alpha/2)$ und $P^{-1}(1-\alpha/2)$ zum
+			Signifikanzniveau $\alpha$ das entsprechende Vertrauensintervall:
+			\textsl{Links:} U-verteilte Größe $X_1$,
+			\textsl{rechts:} rechteckverteilte Größe $X_1$.}
+		\label{PkumY}
+	\end{center}
+\end{figure}
+Diese Vorgehensweise übernehmen wir hier einfach auch für das Beispiel mit der U-Verteilung. Die in den Diagrammen in Abb.~\ref{pdfYsigma} gestrichelt rot
+eingezeichneten Linien kennzeichnen die Vertrauensintervalle.
+
+Zum Vergleich sind in diesen Abb.~\ref{pdfYsigma} die Überdeckungsintervalle, die 
+man aus dem Fortpflanzungsgesetz des GUM von 1995/2008 erhalten würde mit blauer
+Strichpunktlinie eingezeichnet. Gemäß dem GUM soll für U-verteilte
+Größen der Ansatz für die Unsicherheit $u = \mathrm{Spanne}/\sqrt{8}$ und für 
+rechteckverteilte
+$u = \mathrm{Spanne}/\sqrt{12}$ verwendet werden. Mit $s_1$ als halbe Spanne ist dies
+also
+\begin{equation}
+u^2(X_1) \, = \, \frac{(2 s_1)^2}{8} \, = \, \frac{s_1^2}{2} \quad \text{bzw.}
+\quad u^2(X_1) \, = \, \frac{(2 s_1)^2}{12} \, = \, \frac{s_1^2}{3}
+\end{equation}
+so dass
+\begin{equation}
+\renewcommand{\arraystretch}{1.3}
+u^2(Y) \; = \; \left\{\begin{array}{ll}
+a^2 \, \frac{s_1^2}{2} \; + \; b^2 \, s_2^2 & \text{für U-verteilte~} X_1\\
+a^2 \, \frac{s_1^2}{3} \; + \; b^2 \, s_2^2 & \text{für rechteckverteilte~} X_1
+\end{array}\right. .
+\label{GUMMUFF}
+\end{equation}
+Das Vertrauensintervall, durch die blaue Strichpunktlinie gekennzeichnet, ergeben sich mit den Quantile der Gaußverteilung $z_{\alpha/2} = -1.96$ und $z_{1-\alpha/2} = 1.96$ zu: 
+\begin{equation}
+[\bar y \; - \; 1.96 \, u(Y), \; \bar y \; + \; 1.96 \, u(Y)]
+\; = \; \left\{\begin{array}{ll}
+[3.56, 9.44] & \text{für U-verteilte~} X_1\\
+\left[4.03, 8.97\right] & \text{für rechteckverteilte~} X_1\\
+\end{array}\right.
+\end{equation}
+mit $\bar y = a \bar x_1 + b \bar x_2$.
+
+Die Werte aus der Marginalverteilung $p(Y)$ im Vergleich dazu sind
+\begin{equation}
+[P^{-1}(\alpha/2), \; P^{-1}(1 - \alpha/2)]
+\; = \; \left\{\begin{array}{ll}
+[3.92, 9.07] & \text{für U-verteilte~} X_1\\
+\left[4.23, 8.76\right] & \text{für rechteckverteilte~} X_1\\
+\end{array}\right.
+\end{equation}
+für die Breite der Verteilung des Modellprior $\sigma = 0.05$. Sie bilden das
+Überdeckungsintervall, das mit roten gestrichelten Linien eingezeichnet ist. Es ist kleiner als das gemäß GUM, Gl~(\ref{GUMMUFF}), ermittelte und zeigt sehr schön, dass
+U-verteilte und rechteckverteilte Messgrößen bei der Behandlung mit dem klassischen
+Fehlerforpflanzungsgesetz zu falschen Vertrauensintervallen führen kann. 
+ 
+Der dazugehörige Octavecode lautet:
+\begin{verbatim}
+function non_belldistri_linmodel (sigma=0.05)
+% sigma = 0.05, d.h. der Modellparanmter y wird hier mit gaussfoermigem 
+% Modellprior, aber sehr schmal, fast dirac'sche delta-Distribution angenommen.
+
+close all
+
+% Falls das Statistikpaket noch nicht geladen ist, kann es wie folgt geladen werden:
+% Entsprechend die folgende Zeile ein- oder auskommentieren
+pkg load statistics
+
+boxflag = 0; % 0: U-Verteilung; 1: Rechteck-Verteilung;
+
+pltflag1 = 1;
+pltflag1a = 0;
+pltflag2 = 1;
+pltflag3 = 1;
+
+a = 1.0;
+b = 1.0;
+x1_quer = 3.0;
+% Spanne
+s1 = 2.0;
+%
+x2_quer = 3.5;
+% Standardabweichung
+s2 = 0.5;
+%
+% Modellgleichung y = a x1 + b x2
+%
+% Zeilenvektor
+x1 = [-s1:0.05:s1] + x1_quer;
+if boxflag
+p1 = ones(size(x1));
+else
+p1 = asin((x1 - x1_quer)/s1).^2;
+end
+p1 = p1/sum(p1);
+figure(1);
+plot(x1, p1, 'k-');
+grid on;
+xlabel('direkte Messgroesse x1', 'fontsize', 14);
+ylabel('Wahrscheinlichkeitsdichte p(x1)', 'fontsize', 14);
+set(gca, 'fontsize', 12);
+if pltflag1
+print(1,'direkte_x1_box.png', '-dpng');
+end
+%
+% Spaltenvektor
+x2 = [-3*s2:0.05:3*s2]' + x2_quer;
+p2 = normpdf(x2, x2_quer, s2);
+p2chk = exp(-0.5 * ((x2 - x2_quer)/s2).^2) / (sqrt(2*pi) * s2);
+figure(2);
+plot(x2, p2, 'k-', x2, p2chk, 'r--');
+grid on;
+xlabel('direkte Messgroesse x2', 'fontsize', 14);
+ylabel('Wahrscheinlichkeitsdichte p(x2)', 'fontsize', 14);
+set(gca, 'fontsize', 12);
+if pltflag2
+print(2,'direkte_x2.png', '-dpng');
+end
+%
+% Spalte mal Zeile liefert Matrix
+pgesamt = p2*p1;
+pgesamt = pgesamt / sum(pgesamt(:));
+%
+figure(3);
+imagesc(x1, x2, pgesamt);
+colorbar();
+xlabel('direkte Messgroesse x1', 'fontsize', 14);
+ylabel('direkte Messgroesse x2', 'fontsize', 14);
+title('Wahrscheinlichkeitsdichteverteilung p(x1, x2)', 'fontsize', 14);
+set(gca, 'fontsize', 12);
+if pltflag1
+print(3,'direkte_x1_x2_box.png', '-dpng');
+end
+%
+% ----
+%  x1 und x2 in Matrizen fuellen
+n2_r = length(x2)
+n1_c = length(x1)
+X_1 = ones(n2_r,1) * x1;
+X_2 = x2 * ones(1, n1_c);
+Y_matrix = a*X_1 + b*X_2;
+%
+% nun als 1D arrays
+y = Y_matrix(:);
+p_y = pgesamt(:);
+figure(4);
+plot(y, p_y);
+axis([2 11]);
+title('scharfer Modellprior - GUM S1', 'fontsize', 14);
+xlabel('indirekte Messgroesse y', 'fontsize', 14);
+ylabel('Wahrscheinlichkeitsdichte', 'fontsize', 14);
+set(gca, 'fontsize', 12);
+if pltflag1a
+print(4,'indirekte_y_GUMS1.png', '-dpng');
+end
+%
+% sortieren, so dass y monoton steigend ist
+[ys, isort] = sort(y);
+p_sort = p_y(isort);
+figure(5);
+plot(ys, p_sort, 'x-');
+axis([2 11]);
+grid on;
+title('scharfer Modellprior - GUM S1', 'fontsize', 14);
+xlabel('indirekte Messgroesse y', 'fontsize', 14);
+ylabel('Wahrscheinlichkeitsdichte', 'fontsize', 14);
+set(gca, 'fontsize', 12);
+if pltflag1
+print(5,'indirekte_ysorted_GUMS1_box.png', '-dpng');
+end
+
+%
+% mit gaussfoermigem Modellprior, aber sehr schmal, fast dirac'sche delta-Distribution
+%
+dy = 0.01;
+y_model = [2:dy:11];
+n_model = length(y_model);
+%  sigma = 0.5;
+p_mod = zeros(1, n_model);
+for k = 1:n_model
+%
+% Summationen entsprechen der Integration ueber x1 und x2
+% zum Berechnen der Marginalverteilung
+p_mod(k) = sum(sum(exp(-0.5 * ((y_model(k) - Y_matrix)/sigma).^2) .* pgesamt));
+end
+Pkum = cumsum(p_mod);
+psum = Pkum(n_model);
+Pkum = Pkum/psum;
+p_mod = p_mod/psum;
+
+%
+% Signifikanzniveau
+alpha = 0.05;
+%
+% Quantile
+[left, ileft] = min(abs(Pkum - alpha/2))
+[right, iright] = min(abs(Pkum - (1-alpha/2)))
+%
+erw_y = sum(y_model .* p_mod);
+std_y = sqrt(sum((y_model - erw_y).^2 .* p_mod));
+%
+% Vergleich mit Fortpflanzungsgesetz, das eigentlich nur fuer
+% glockenfoermige Verteilungen gilt, bei denen die Wurzel des zweiten statistischen
+% Moments, also die Varianz die Breite der Verteilung definiert, bzgl der sie
+% sich normieren laesst.
+y_quer = a*x1_quer + b*x2_quer;
+if boxflag
+u_y = sqrt((a * s1)^2/3 + (b * s2)^2);
+else
+u_y = sqrt((a * s1)^2/2 + (b * s2)^2);
+end
+%
+figure(6);
+sigma_str = num2str(sigma,'%1.3f');
+plot(y_model, p_mod, 'kx-', ...
+[y_quer-1.96*u_y, y_quer-1.96*u_y], [0, p_mod(iright)], 'b-.', 'linewidth', 2.5, ...
+[y_quer+1.96*u_y, y_quer+1.96*u_y], [0, p_mod(iright)], 'b-.', 'linewidth', 2.5, ...
+[y_model(ileft), y_model(ileft)], [0, p_mod(iright)], 'r--', 'linewidth', 3, ...
+[y_model(iright), y_model(iright)], [0, p_mod(iright)], 'r--', 'linewidth', 3);
+% plot(y_model, p_mod, 'kx-', ...
+%  [y_quer-1.96*u_y, y_quer-1.96*u_y], [0, p_mod(iright)], 'b-.', 'linewidth', 2.5, ...
+%  [y_quer+1.96*u_y, y_quer+1.96*u_y], [0, p_mod(iright)], 'b-.', 'linewidth', 2.5, ...
+%  [erw_y-1.96*std_y, erw_y-1.96*std_y], [0, p_mod(iright)], 'g-', 'linewidth', 2.5, ...
+%  [erw_y+1.96*std_y, erw_y+1.96*std_y], [0, p_mod(iright)], 'g-', 'linewidth', 2.5, ...
+%  [y_model(ileft), y_model(ileft)], [0, p_mod(iright)], 'r--', 'linewidth', 3, ...
+%  [y_model(iright), y_model(iright)], [0, p_mod(iright)], 'r--', 'linewidth', 3);
+grid on;
+axis([2 11]);
+title(['normalverteilter Modellprior mit \sigma = ', sigma_str], 'fontsize', 14);
+xlabel('indirekte Messgroesse y', 'fontsize', 14);
+ylabel('Wahrscheinlichkeitsdichte', 'fontsize', 14);
+set(gca, 'fontsize', 12);
+if pltflag3
+print(6,['indirekte_y_modellGauss_sigma', strrep(sigma_str,'.','p'),'_box.png'], '-dpng');
+end
+
+%
+figure(7);
+plot(y_model, Pkum, 'ko-', ...
+[y_model(ileft), y_model(ileft)], [0, Pkum(ileft)], 'r--', 'linewidth', 3, ...
+[y_model(iright), y_model(iright)], [0, Pkum(iright)], 'r--', 'linewidth', 3, ...
+[y_model(1), y_model(ileft)], [Pkum(ileft), Pkum(ileft)], 'r--', 'linewidth', 3, ...
+[y_model(1), y_model(iright)], [Pkum(iright), Pkum(iright)], 'r--', 'linewidth', 3);
+grid on;
+axis([2 11]);
+title(['normalverteilter Modellprior mit \sigma = ', sigma_str], 'fontsize', 14);
+xlabel('indirekte Messgroesse y', 'fontsize', 14);
+ylabel('kumulierte Wahrscheinlichkeit', 'fontsize', 14);
+set(gca, 'fontsize', 12);
+if pltflag3
+print(7,['Pkum_indirekte_y_Gauss_sigma', strrep(sigma_str,'.','p'),'_box.png'], '-dpng');
+end
+%
+printf('Modellprior mit sigma = %1.3f\n', sigma);
+printf('Erwartungswerte:\n');
+printf('aus Erw von x1 und x2:  %1.2f\n', y_quer);
+printf('aus Verteilung p_model: %1.2f\n', erw_y);
+printf('Standardabweichungen als Wurzel der Varianz:\n');
+printf('aus Fortpflanzung klassisch: %1.2f\n', u_y);
+printf('aus Verteilung p_model:      %1.2f\n', std_y);
+printf('Ueberdeckungsintervall fuer 95 Prozent\n');
+printf('aus Fortpflanzung klassisch mit Quantil aus Gaussvert 1.96:  [%1.2f, %1.2f]\n',
+y_quer - 1.96*u_y, y_quer + 1.96*u_y);
+printf('aus Verteilung p_model, ueber die Umkehrfkt der kumulativen: [%1.2f, %1.2f]\n',
+y_model(ileft), y_model(iright));
+end
+\end{verbatim}
 
 \begin{thebibliography}{------}
     \bibitem[Els07]{Els07} C. Elster: Calculation of unceratinty
@@ -667,13 +1144,165 @@ In der Gl. (\ref{eq:Erwartungswert_y_Normalverteilung}) und (\ref{eq:Unsicherhei
     \end{thebibliography}
 
 \newpage
-\section*{Anhang}
-\subsection*{Matlab-Skript mit a-priori Wissen und scharfen Modellprior}
-%\lstset{language=Matlab}
+\section{Anhang}
+\subsection{A1: Matlab-Skript zum Delta-Peaken mit Bayes}
 \lstinputlisting[style=Matlab]{10_vorlesung/code/bayes_indirect_quantity.m}
+\subsection{A2: Octave-Skript zur Fehlerfortpflanzung mit U- und Rechteck-Verteilungen}
+\lstinputlisting[style=Matlab]{10_vorlesung/code/non_belldistri_linmodel.m}
 
+\begin{comment}
+\begin{verbatim}
+function bayes_indirect_quantity()
+% Hueser, 17-11-25
+close all, clear all
+%	Kalibrierfaktor
+K_faktor_0 = 0.0925;
+sigma_K = 0.0090;
+%	Unsicherheit Messgeraet
+sigma_M = 0.3; % Volt
+%
+%
+JM = 11;
+sig = 12;
+mue = 500;
+data_M = mue + sig*randn( JM,1);
+%
+%
+xK = [-4*sigma_K:0.001:4*sigma_K] + K_faktor_0;
+nK = length(xK)
+xM = [-4*sig:0.1:4*sig] + mue;
+nM = length(xM)
+y = [20:0.2:80];
+nY = length(y)
+%
+std_M = std(data_M)*1.7;
+std_KM = K_faktor_0 * std_M;
+%
+% Messungen in Volt
+XM = data_M * ones(1,nM) - ones(JM,1) * xM;
+%
+% Das Modell: y = f(xK, xM)
+% für jedes xK und jedes xM kombiniert
+% y_{KM,i,j} = xK_i * xM_j für alle i=1,..,nK und j=1,..,nM
+y_KM_matrix = xK' * xM;
+%  in einen langen Spaltenvektor gebracht
+y_KM = y_KM_matrix(:);
+nKM = length(y_KM);
+delta_y = y_KM * ones(1,nY) - ones(nKM, 1)*y;
+
+% direkte Groessen
+% Kalibrierfaktor
+p_K = exp(-0.5 * ( (xK - K_faktor_0)/sigma_K ).^2 );
+p_K = p_K / sum(p_K);
+figure(110);
+plot( xK, p_K,'linewidth',2);
+xlabel('Kalibrierfaktor / (Einheit/Volt)', 'fontsize', 14);
+ylabel('pdf', 'fontsize', 14);
+set(gca, 'fontsize', 14);
+
+set(gcf, 'PaperUnits', 'centimeters');
+x_width=15 ;y_width= 8;
+set(gcf, 'PaperPosition', [0 0 x_width y_width]);
+print '-dpng' Kalibrierfaktor.png
+
+% Messungen mit der kleinen Streuung
+p_M_matrix = exp(-0.5 * ( XM/sigma_M ).^2 );
+%   Summe über alle Messungen
+p_M_1 = sum( p_M_matrix );
+p_M_1 = p_M_1 / sum(p_M_1);
+% mit der grossen Streuung
+p_M_matrix = exp(-0.5 * ( XM/std_M ).^2 );
+%   Summe über alle Messungen
+p_M_2 = sum( p_M_matrix );
+p_M_2 = p_M_2 / sum(p_M_2);
+figure(111);
+plot(xM, p_M_1,'k-', ...
+xM, p_M_2,'r--','linewidth',2);
+xlabel('Rohdaten / Volt', 'fontsize', 14);
+ylabel('pdf', 'fontsize', 14);
+legend('Geraet genau','Geraet ungenau','fontsize',14)
+set(gca, 'fontsize', 14);
+set(gcf, 'PaperUnits', 'centimeters');
+x_width=15 ;y_width= 8;
+set(gcf, 'PaperPosition', [0 0 x_width y_width]);
+print '-dpng' Rohdaten.png
+%
+% PWahrscheinlichkeit als Funktion der beiden
+% direkten Groessen xK und xM
+p_KM_matrix = p_K' * p_M_1;
+%  in einen langen Spaltenvektor gebracht
+p_KM_1 = p_KM_matrix(:);
+%
+p_KM_matrix = p_K' * p_M_2;
+%  in einen langen Spaltenvektor gebracht
+p_KM_2 = p_KM_matrix(:);
+
+
+%
+% Wahrscheinlichkeitsdichteverteilung des Modells
+% zur Vereinfachung nehme ich jetzt keine 
+% Verteilung um die std_m sondern nur den einen Schätzwert
+p_y = exp(-0.5 * ( delta_y/std_KM ).^2 );
+%
+%	posterior
+post_matrix = p_y .* (p_KM_1 * ones(1,nY));
+sumpost = sum(post_matrix(:));
+post_matrix = post_matrix/sumpost;
+%
+% Marginalverteilung durch Summation über xM, xK
+posterior1 = sum(post_matrix);
+%
+%
+%	posterior
+post_matrix = p_y .* (p_KM_2 * ones(1,nY));
+sumpost = sum(post_matrix(:));
+post_matrix = post_matrix/sumpost;
+%
+% Marginalverteilung durch Summation über xM, xK
+posterior2 = sum(post_matrix);
+%
+%
+p_y2 = exp(-0.5 * ( delta_y/(std_KM*0.003) ).^2 );
+%	posterior
+post_matrix = p_y2 .* (p_KM_2 * ones(1,nY));
+sumpost = sum(post_matrix(:));
+post_matrix = post_matrix/sumpost;
+%
+% Marginalverteilung durch Summation über xM, xK
+posterior3 = sum(post_matrix);
+
+[y_KMsort, km_sort] = sort(y_KM);
+p_2 = p_KM_2(km_sort);
+diff_y = diff(y_KMsort);
+mid_p_KM_2 = (p_2(2:nKM)+p_2(1:nKM-1))*0.5;
+iuse = find(diff_y>0);
+meandiff = mean(diff_y(iuse))
+diff_y = diff_y/meandiff;
+pdf = mid_p_KM_2(iuse)./diff_y(iuse);
+figure(120);
+plot(diff_y);
+figure(121);
+plot(y_KMsort(iuse),pdf);
+sumpdf = 5.2e6; max(pdf)
+figure(100);
+plot( y_KMsort(iuse), max(posterior1)*pdf/sumpdf, 'g.',...
+y, posterior1,'k-',...
+y, posterior2,'r--',...
+y, posterior3,'b-','linewidth',2);
+xlabel('indirekte Groesse / Einheit', 'fontsize', 14);
+ylabel('pdf', 'fontsize', 14);
+legend('Dirac: Weise/Wuebbler','Geraet genau, Messobj schlecht',...
+'beides ungenau','Geraet ungenau, Modell duenner Peak')
+% axis([10 100]);
+% set(gca, 'fontsize', 14);
+set(gcf, 'PaperUnits', 'centimeters');
+x_width=15 ;y_width= 8;
+set(gcf, 'PaperPosition', [0 0 x_width y_width]);
+print '-dpng' Posterior_all.png
+\end{verbatim}
+\end{comment}
 \newpage
-\section*{Übungsaufgaben}
+\section{Übungsaufgaben}
 \textbf{Aufgabe 10-1: Bestimmung des Schätzwertes und der Messunsicherheit bei
 einem linearen Modell und Normalverteilungen}\\
 Gegeben ist ein linearer Zusammenhang zwischen der Ausgangsgröße (indirekte
