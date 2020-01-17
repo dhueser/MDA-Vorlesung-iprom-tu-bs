@@ -1197,9 +1197,10 @@ p_\mathrm{\chi^2}(R, \nu_1) \, p_\mathrm{\chi^2}(Q_2, \nu_2) \; \frac{\nu_1}{\nu
 \label{FisherverteilungAnsatz}
 \end{equation}
 mit 
-$$
+\begin{equation}
 R  \; = \; \frac{\frac{1}{\nu_1} Q_1}{\frac{1}{\nu_2} Q_2} .
-$$
+\label{TrafoQ1Q2}
+\end{equation}
 Dabei ist der Faktor $\frac{\nu_1}{\nu_2} Q_2$
 die Funktionaldeterminante aus der Transformation $(Q_1, Q_2) \rightarrow (R, Q_2)$,
 um aus der Wahrscheinlichkeitsdichtefunktion der beiden $\chi^2$-verteilten Zufallszahlen
@@ -1240,10 +1241,61 @@ Die Nullhypothese wird mit einem Signifikanzniveau von $\alpha$
 verworfen, falls die Testgröße außerhalb des Intervalls liegt,
 das durch die Quantile der Fisherverteilung begrenzt wird, d.h.
 \begin{equation}
-T \; < \; F_{\alpha/2, \nu}  \qquad \mathrm{oder} \qquad
-T \; > \; F_{1-\alpha/2, \nu} .
+T \; < \; F_{\alpha/2, \nu_2, \nu_1}  \qquad \mathrm{oder} \qquad
+T \; > \; F_{1-\alpha/2, \nu_2, \nu_1} .
 \end{equation}
+Dabei ist $\nu_1$ die Anzahl der Freiheitsgrade zu $s_1$, die
+im Zähler stehende Standardabweichung
+aber in den Tabellen Nennerfreiheitsgrad genannt wird, und $\nu_2$ 
+die Anzahl der Freiheitsgrade zu $s_2$, die im Nenner stehende
+Standardabweichung deren Freiheitsgrad
+aber in den Tabellen Nennerfreiheitsgrad genannt wird. Das kommt
+daher, dass in Gl.~\ref{TrafoQ1Q2} die Freiheitsgrade $\nu_1$ zur
+Zufallsgröße $Q_1$ im Nenner stehen.
 
+Beispiel:
+Der \textsl{General Social Survey (GSS)} hatte in den USA im Jahr 2000 anhand einer 
+zufallsgenerierten Teilstichprobe mit $J = 652$ Erwachsenen Menschen untersucht,
+wie sich die Nutzungsdauer $t$ in Stunden/Woche der Internetnutzung nach Geschlecht unterscheidet.
+
+\begin{center}
+\begin{tabular}{l|ccc}
+Geschlecht & $J_i$ & $t_i$ & $s_i$\\
+\hline\hline
+männlich & $305$ & $5.48$ & $7.80$\\
+\hline
+weiblich & $347$ & $3.84$ & $5.86$
+\end{tabular}
+\end{center}
+
+mit $J_i$ für die Stichprobenumfänge und $s_i$ für die Standardabweichung mit $i = 1,2$.
+Die Standardabweichung zur Nutzungsdauer $t$ beträgt bei den Männern 
+$s_1 = 7.80$ Stunden/Woche und bei den Frauen $s_2 = 5.86$ Stunden/Woche.
+Der F-Test überprüft, ob der Unterschied der Varianzen $s_1^2$ und $s_2^2$ signifikant ist.
+Im vorliegenden Beispiel beträgt der Nennerfreiheitsgrad $\nu_1 = J_1 - 1 = 305-1 = 304$ und der
+Zählerfreiheitsgrad $\nu_2 = J_2 - 1 = 347-1 = 346$.
+
+\begin{lstlisting}[style=Python]
+import numpy as np
+import scipy.stats
+alpha = 0.05
+s1 = 7.80
+s2 = 5.86
+J1 = 305
+J2 = 347
+nu1 = J1-1
+nu2 = J2-1
+Tpruef = (s1/s2)**2
+nuZaehl = nu2
+nuNenn = nu1
+Flinks = scipy.stats.f.ppf(alpha/2, nuZaehl, nuNenn)
+Frechts = scipy.stats.f.ppf(1-alpha/2, nuZaehl, nuNenn)
+print(Flinks, Tpruef, Frechts)
+\end{lstlisting}
+$T = 1.772$ und $F_{\alpha/2, \nu_2, \nu_1} = 0.805$ und 
+$F_{1-\alpha/2, \nu_2, \nu_1} = 1.245$. Mit $T = 1.772 \; > \; F_{1-\alpha/2, \nu_2, \nu_1} = 1.245$
+liegt die Prüfgröße signifikant höher als das rechte Quantil.
+Es kann also davon ausgegangen werden, dass sich die Varianzen der beiden Geschlechter signifikant voneinander unterscheiden.
 
 \section{Anwendung von Hypothesentests}
 
