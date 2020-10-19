@@ -176,7 +176,7 @@ Im folgenden werden die Vokabeln der in Messtechnik und Statistik verwendeten Sp
 https://en.wikipedia.org/wiki/2019_redefinition_of_the_SI_base_units
 
 https://www.ptb.de/cms/fileadmin/internet/presse_aktuelles/broschueren/
-intern_einheitensystem/Die_gesetztlichen_Einheiten_2019_digital.pdf
+intern_einheitensystem/Die_gesetztlichen_Einheiten.pdf
 
 https://eur-lex.europa.eu/legal-content/DE/TXT/PDF/?uri=CELEX:32019L1258&from=EN
 	\end{verbatim}
@@ -441,7 +441,7 @@ Wir maximieren die Likelihood, wenn wir ihren Logarithmus minimieren:
 dazu suchen wir die Nullstelle der Ableitung nach dem Modellparameter.
 Auf die Suche des Minimums wird auch mit dem Terminus \textsl{Methode der kleinsten Abweichungsquadrate} oder
 \textsl{Least Mean Square Method} Bezug genommen.
-Hätten wir nicht nur $R$ sondern viele,
+Hätten wir nicht nur den einen Parameter $R$ sondern viele Modellparameter,
 dann würden wir den Gradienten bilden.
 \begin{equation}
 \frac{\partial}{\partial R} \; \sum_{i = 1}^J \, \left(\frac{\varepsilon_i}{\sigma_\varepsilon}\right)^2 \; = \; 0
@@ -458,8 +458,9 @@ und führen die Differentiation durch
 \begin{equation}
 \sum_{i = 1}^J \, 2 \left(U_i \, - \, R \, I_i\right) \, I_i \; = \; 0 .
 \end{equation}
-Für viele Modellparameter gäbe es entsprechend viele solche Gleichungen mit den jeweiligen Ableitungen, so dass
-dann hier ein lineares Gleichungssystem stünde, das zu lösen wäre.
+Für viele Modellparameter gäbe es entsprechend viele solche Gleichungen wie es Modellparameter gibt
+mit den jeweiligen Ableitungen, so dass
+dann hier ein lineares Gleichungssystem stünde, das zu lösen wäre. Dazu mehr im nächsten Kapitel.
 Ein numerisches Verfahren zur Lösung linearer Gleichungssysteme ist das Gauß-Jordan-Eliminationsverfahren.
 Nun wir nur diese eine Gleichung haben, können wir einfach nach $R$ auflösen.
 \begin{equation}
@@ -602,7 +603,7 @@ so dass die Korrelation groß ist.
 Bei dem Beispiel mit dem Ohm'schen Gesetz hatten wir uns mit der Modellgleichung $U = R I$ befasst.
 Dabei waren $U$ und $I$ die beiden physikalischen Größen, die proportional unterschiedliche Werte annehmen.
 Sie sind direkt über einen linearen Zusammenhang verknüpft. Der lineare Zusammenhang
-ist durch eine Gerade, ein Polynom vom Grad 1, darstellen.
+wird durch eine Gerade, ein Polynom vom Grad 1, dargestellt.
 
 Für die Charakterisierung \textsl{linearer} Zusammenhänge ist der
 \textbf{Korrelationskoeffizient} $\rho$ ein Maß, mit dem quantifiziert wird, wie
@@ -618,7 +619,8 @@ Größe große Werte zur zweiten Größe auftreten und umgekehrt, so liegt $\rho
 In beiden Fällen sagt man, dass die Größen \textbf{korreliert} seien.
 
 Gibt es überhaupt gar keinen Zusammenhang zwischen dem, was an Werten zu der einen Größe beobachtet
-wird mit dem, so ist $\rho = 0$ und man sagt: Die beiden Größen seien \textbf{unkorreliert}.
+wird mit dem, was an Werten zur anderen Größe beobachtet wird, so ist $\rho = 0$ und man sagt:
+Die beiden Größen seien \textbf{unkorreliert}.
 
 \begin{figure}
 	\begin{center}
@@ -642,7 +644,7 @@ Stichproben geschätzt
 \end{equation}
 Dann ist
 \begin{equation}
-\mathrm{\bar X} \; = \;
+\mathbf{\bar X} \; = \;
 \left(\begin{array}{c}
 \bar x_1 \\
 \bar x_2
@@ -651,10 +653,10 @@ Dann ist
 \end{equation}
 der Schwerpunkt der Beobachtungen der Größen.
 Sind die Entfernungen der Beobachtungs\-pärchen $(X_{1,j}, X_{2,j})$ vom Schwerpunkt so,
-dass die Richtungskomponente der Größe $X_1$ in die gleiche Richtung weist und auch in
-proportionale Entfernung wie die Richtungskomponente der Größe $X_2$, so liefern die
-Produkte $(X_{1,j} - \bar x_1)(X_{2,j} - \bar x_2)$ gleiche Vorzeichen. Streuen diese
-aber unzusammenhängend, so mitteln sich die unterschiedlichen Terme
+dass die Entfernung der Größe $X_1$ in die gleiche Richtung weist wie die
+Entfernung der Größe $X_2$, so liefern die
+Produkte $(X_{1,j} - \bar x_1)(X_{2,j} - \bar x_2)$ gleiche Vorzeichen.
+Streuen diese aber unzusammenhängend, so mitteln sich die unterschiedlichen Terme
 $(X_{1,j} - \bar x_1)(X_{2,j} - \bar x_2)$ bei Summation weg.
 
 Wir definieren die Größe

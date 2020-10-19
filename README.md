@@ -10,7 +10,7 @@ Der Modulverantwortliche ist Prof. Dr.-Ing Rainer Tutsch, Leiter des Instituts f
 ## [Vorlesungsskript](https://github.com/dhueser/MDA-Vorlesung-iprom-tu-bs/releases/latest/download/MDA_iprom_TUbraunschweig.pdf)
 - Das pdf-File des jeweils aktuellen Vorlesungsskriptes steht zum Download [hier](https://github.com/dhueser/MDA-Vorlesung-iprom-tu-bs/releases/latest/download/MDA_iprom_TUbraunschweig.pdf) zur Verfügung.
 - Das Skript wird laufend überarbeitet.
-- Wer Vorschläge zur Verbesserung hat, ist herzlich eingeladen, die LaTeXquellen des gesamten Skripts zu clonen und Änderungen in einem separaten Branch in das github-Repository zu laden und einen pull Request zu setzen.
+- Wer Vorschläge zur Verbesserung hat, ist herzlich eingeladen, die LaTeXquellen des gesamten Skripts zu clonen und Änderungen in einem separaten Branch in das github-Repository zu laden und einen pull Request zu setzen. Tutorial: (https://help.github.com/en/articles/setting-guidelines-for-repository-contributors)[Tutorial: https://help.github.com/en/articles/setting-guidelines-for-repository-contributors]; Beispiel: (https://github.com/tensorflow/tensorflow/blob/master/CONTRIBUTING.md)[https://github.com/tensorflow/tensorflow/blob/master/CONTRIBUTING.md]
 
 ## Inhalt
 Das Modul gibt einen umfangreichen Überblick über die Grundlagen der Messdatenauswertung und der rechnerischen Ermittlung der zugeordneten Unsicherheiten.
