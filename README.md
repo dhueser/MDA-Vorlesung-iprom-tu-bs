@@ -27,7 +27,7 @@ Das Modul gibt einen umfangreichen Überblick über die Grundlagen der Messdaten
 ### Infrastrukturen der Metrologie
 ### Normen und Richtlinien                             
 
-## WS 2019/20
+## WS 2020/21
 
 | Nr.  | Datum      | Dozent                                  | Thema                                               |
 | ---- | ---------- | --------------------------------------- | --------------------------------------------------- |
