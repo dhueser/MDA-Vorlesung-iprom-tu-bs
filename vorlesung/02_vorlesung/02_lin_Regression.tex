@@ -199,14 +199,15 @@ die Bedingungen
 erfüllt sein.
 
 Daraus folgt:
-\[
-\sum\limits_{j = 1}^J {Y_j - J} \, \hat{\theta}_0 - \hat{\theta}_1 \sum\limits_{j = 1}^J {X_j = 0}
+\[\left. \frac{\partial Q(\theta _0 ,\theta _1 )}{\partial \theta_0 } 
+\right|_{\theta _0 = \hat{\theta}_0 ,\,\theta _1 = \hat{\theta}_1} = \sum\limits_{j = 1}^J {Y_j - J} \, \hat{\theta}_0 - \hat{\theta}_1 \sum\limits_{j = 1}^J {X_j = 0}
 \]
 \[
-\sum\limits_{j = 1}^J {Y_j X_j - \theta_0 \sum\limits_{j = 1}^J {X_j - \theta_1 \sum\limits_{j = 1}^J {X_j ^2 = 0} } }
+\left. \frac{\partial Q(\theta _0 ,\theta _1 )}{\partial \theta_1 } 
+\right|_{\theta _0 = \hat{\theta}_0 ,\,\theta _1 = \hat{\theta}_1 }= \sum\limits_{j = 1}^J {Y_j X_j - \hat\theta_0 \sum\limits_{j = 1}^J {X_j - \hat\theta_1 \sum\limits_{j = 1}^J {X_j ^2 = 0} } }
 \]
-Mit $\sum\limits_{j = 1}^J {X_j } = J \, \bar {X}$ und 
-$\sum\limits_{j= 1}^J {Y_j } = J \, \bar {Y}$ folgt:
+Mit den Mittelwerten $\bar X$, der sich zu $\sum\limits_{j = 1}^J {X_j } = J \, \bar {X}$ ergibt und dem Mittelwert $\bar Y$, der sich zu 
+$\sum\limits_{j= 1}^J {Y_j } = J \, \bar {Y}$ ergibt, folgt:
 \[
 J \, \bar {Y} - J \, \hat{\theta}_0 - J \cdot \hat{\theta}_1 \, \bar {X} = 0 \quad
 \mathrm{bzw.}\quad \hat{\theta}_0 = \bar {Y} - \hat{\theta}_1 \, \bar {X}
@@ -262,7 +263,7 @@ Regressionsgeraden in das gleiche Koordinatensystem ein, so
 schneiden sich diese im Schwerpunkt $(\bar {X},\bar {Y})$.
 Für den Schätzwert der Varianz der Residuen ergibt sich, siehe Gl.(\ref{eq:s_quadrat_Regresssion})
 \begin{equation}
-\hat\sigma_\epsilon^2 = s^2(\hat{\theta}_0 ,\hat{\theta}_1 ) = \frac{Q(\hat{\theta}_0 ,
+\hat\sigma^2_\varepsilon = \hat\sigma_\varepsilon^2 = s^2(\hat{\theta}_0 ,\hat{\theta}_1 ) = \frac{Q(\hat{\theta}_0 ,
 	\hat{\theta}_1 )}{J - 1 - m } 
 = \frac{Q(\hat{\theta}_0 ,
 	\hat{\theta}_1 )}{J - 2}
@@ -333,7 +334,7 @@ Zunächst bestimmen wir die beiden Mittelwerte:
 Die empirische Kovarianz mit den $J = 9$ Stichproben ergibt sich zu: 
 \[
 s_{IU} = \frac{1}{J - 1}\sum\limits_{j = 1}^J 
-(I_j - \bar {R})(U_j - \bar {U}) = 357.0500  \, \mathrm{mA} \cdot \mathrm{mV}
+(I_j - \bar {I})(U_j - \bar {U}) = 357.0500  \, \mathrm{mA} \cdot \mathrm{mV}
 \]
 
 Die Varianz ergibt sich zu: 
@@ -670,24 +671,24 @@ wobei hoch minus Eins soviel bedeutet wie die Inverse der Matrix.
 
 Das j-te Residuum ist gegeben durch: 
 \begin{equation}
-\epsilon_j= Y_j - \sum_{k=1}^{M}\theta_k X_{jk} \quad \mathrm{mit} 
+\varepsilon_j= Y_j - \sum_{k=1}^{M}\theta_k X_{jk} \quad \mathrm{mit} 
 \quad j=1,\ldots,J 
 \label{eq:A1_Residuen}
 \end{equation}
 Das Qualitätsmaß $Q$ oder häufig auch als Zielfunktion $S$ bzeichnet 
 ist gegeben durch: 
 \begin{equation} 
-Q = \sum_{j=1}^J \epsilon_j^2. 
+Q = \sum_{j=1}^J \varepsilon_j^2. 
 \end{equation}
 Die besten Schätzparameter $\hat{\boldsymbol{\theta}}$ 
 erhält durch Aufsuchen des Minimums des Qualitätsmaßes $Q$.
 D.~h. wir bilden die 1. Ableitung und setzen diese gleich Null: 
 \begin{equation}
-\frac{\partial Q}{\partial \theta_k} =2\sum_{j = 1}^J \epsilon_j\frac{\partial \epsilon_j}{\partial \theta_k} \quad \mathrm{mit} \quad (k=1,2,\ldots, M)
+\frac{\partial Q}{\partial \theta_k} =2\sum_{j = 1}^J \varepsilon_j\frac{\partial \varepsilon_j}{\partial \theta_k} \quad \mathrm{mit} \quad (k=1,2,\ldots, M)
 \end{equation}
 Die partiellen Ableitungen lassen sich aus Gl.(\ref{eq:A1_Residuen}) bestimmen: 
 \begin{equation}
-\frac{\partial \epsilon_j}{\partial \theta_k}=-X_{jk}
+\frac{\partial \varepsilon_j}{\partial \theta_k}=-X_{jk}
 \end{equation}
 Somit erhalten wir:
 \begin{equation}
@@ -989,6 +990,7 @@ die Parameter gewonnen wurden, wird durch das Dach auf dem Symbol $\boldsymbol{\
 \begin{equation}
  \boldsymbol{\hat \theta} \; = \;
 \left( \mathbf{X}^\mathsf{T}  \, \mathbf{X} \right)^{-1} \mathbf{X}^\mathsf{T} \, \mathbf{Y}
+\label{eq_Bestimmung_von_hat_theta}
 \end{equation}
 wobei hoch minus Eins soviel bedeutet wie die Inverse der Matrix.
 Für Varianzen und Kovarianzen der $M$ Regressionsparameter $\theta_1, \dots, \theta_M$
@@ -1136,9 +1138,9 @@ berechnen:
 \rho_{XY} = \frac{ s_{XY} }{ s_X \cdot s_Y } \quad \mathrm{~mit~}  - 1 \le \rho_{XY} \le 1
 \end{equation}
 \newpage
-\section{Beispiele}
+\section{Beispiele zur linearer Regression}
 \label{Vorl2Regressionsaufg2}
-\subsection{Fit einer Geraden}
+\subsection{Fit einer Geraden mittels linearer Regression}
 Gegeben sind 5 Messpunkte
 \begin{table}[htb!]
 	\centering
@@ -1192,6 +1194,48 @@ Bestimmtheitsmaß:
 
 Mit der Gl.(\ref{eq:schaetzwerte_fuer_theta}) können wir 
 das Beispiel mit dem Matrixformalismus auch lösen. 
+Die Regressormatrix $\boldsymbol X$ lautet:
+\begin{equation}
+	\boldsymbol{X} \; = \;
+	\left(
+	\begin{array}{cc}
+		1 & X_1 \\
+	    1 & X_2 \\
+		1 & X_3 \\
+		1 & X_4 \\
+		1 & X_5 
+	\end{array}
+	\right)
+\end{equation}
+Die Regressandenmatrix $\boldsymbol Y$ lautet:
+\begin{equation}
+	\boldsymbol{Y} \; = \;
+	\left(
+	\begin{array}{cc}
+		 Y_1 \\
+		 Y_2 \\
+		 Y_3 \\
+		 Y_4 \\
+		 Y_5 
+	\end{array}
+	\right)
+\end{equation}
+Die gesuchten Modellparameter sind: 
+\[
+\boldsymbol\theta = \left( 
+\begin{array}{cc}
+	\theta_0 \\
+	\theta_1 \\
+\end{array}
+\right)
+\]
+Die optimalen Parameter $\boldsymbol{\hat \theta}$ ergeben sich durch Lösen
+des folgenden Gleichungssystems, siehe Gl.(\ref{eq_Bestimmung_von_hat_theta})
+\[
+	\boldsymbol{\hat \theta} \; = \;
+	\left( \mathbf{X}^\mathsf{T}  \, \mathbf{X} \right)^{-1} \mathbf{X}^\mathsf{T} \, \mathbf{Y}
+\]
+
 Der Matlab/Octave-Code lautet: 
 \lstinputlisting[style=Matlab]{02_vorlesung/code/schaetzwerte_fuer_theta.m}
 
@@ -1227,14 +1271,14 @@ s(\hat{\theta}_0 ,\hat{\theta}_1 ) = 0.048
 \]
 Die Varianz der Residuen ist wie folgt gegeben:
 \begin{equation}
-\operatorname{Var}(\epsilon) = \frac{1}{J-M} \cdot \left(\mathbf Y - \mathbf X \hat{\boldsymbol\theta}\right)^T 
+\operatorname{Var}(\varepsilon) = \frac{1}{J-M} \cdot \left(\mathbf Y - \mathbf X \hat{\boldsymbol\theta}\right)^T 
 \left(\mathbf Y - \mathbf X \hat{\boldsymbol\theta}\right)
 \end{equation}
 Die Kovarianzen der Schätzerparameter ${\boldsymbol\theta}$ 
 sind gegeben durch:
 \begin{equation}
 \operatorname{Cov}(\boldsymbol\theta) = \left(\mathbf{X}^T \mathbf X \right)^{-1}
-\operatorname{Var}(\epsilon)
+\operatorname{Var}(\varepsilon)
 \end{equation}
 Matlab-Code zur Bestimmung des Qualitätsmaßes und der Varianz
 \begin{lstlisting}[style=Matlab]
@@ -1350,14 +1394,58 @@ Der 95\% Vertrauensbereich des Schätzwertes $\hat\theta_0$ ist somit gegeben du
 \hat\theta_1 = 0.3400 \pm 0.1612 \quad \text{bzw.} \quad [0.1788;0.5012]
 \end{equation}
 \end{comment}
-\subsection{Fit einer kubischen Funktion (Polynom 3. Ordnung)}
+\subsection{Fit einer kubischen Funktion (Polynom 3. Ordnung) mittels linearer Regression}
 Wir nehmen wieder die gleichen Messwertpaare wie eben. Jedoch fitten wir 
 nun eine kubische Funktion durch die Messdaten, d.h. 
 \begin{equation}
 Y = \hat{\theta_3} X^3 + \hat{\theta_2} X^2 + \hat{\theta_1} X^1 +
 \hat{\theta_0} 
 \end{equation}
-Für die Schätzparameter erhalten wir: 
+Mit der Gl.(\ref{eq:schaetzwerte_fuer_theta}) können wir 
+das Beispiel mit dem Matrixformalismus auch lösen. 
+Die Regressormatrix $\boldsymbol X$ lautet:
+\begin{equation}
+	\boldsymbol{X} \; = \;
+	\left(
+	\begin{array}{cccc}
+		1 & X_1 & X_1^2 & X_1^3 \\
+		1 & X_2 & X_2^2 & X_2^3 \\
+		1 & X_3 & X_3^2 & X_3^3\\
+		1 & X_4 & X_4^2 & X_4^3\\
+		1 & X_5 & X_5^2 & X_5^3
+	\end{array}
+	\right)
+\end{equation}
+Die Regressandenmatrix $\boldsymbol Y$ lautet:
+\begin{equation}
+	\boldsymbol{Y} \; = \;
+	\left(
+	\begin{array}{cc}
+		Y_1 \\
+		Y_2 \\
+		Y_3 \\
+		Y_4 \\
+		Y_5 
+	\end{array}
+	\right)
+\end{equation}
+Die gesuchten Modellparameter sind: 
+\[
+\boldsymbol\theta = \left( 
+\begin{array}{cc}
+	\theta_0 \\
+	\theta_1 \\
+\end{array}
+\right)
+\]
+Die optimalen Parameter $\boldsymbol{\hat \theta}$ ergeben sich durch Lösen
+des folgenden Gleichungssystems, siehe Gl.(\ref{eq_Bestimmung_von_hat_theta})
+\[
+\boldsymbol{\hat \theta} \; = \;
+\left( \mathbf{X}^\mathsf{T}  \, \mathbf{X} \right)^{-1} \mathbf{X}^\mathsf{T} \, \mathbf{Y}
+\]
+
+Als Ergebnis für die Schätzparameter erhalten wir dann: 
 \[\hat{\boldsymbol\theta} = 
 (0.1900, \;\; 0.2286,\;\; -0.0214, \;\; -0.0000) \]
 Für das Qualitätsmaß ergibt sich: 

@@ -67,7 +67,7 @@ mehreren Vor\-gänger\-tupeln mit den dazugehörigen Werten der Kostenfunktion $
 werden.
 \end{itemize}
 Ein möglicher, vielfach genutzer Ansatz für das Verwenden mehrerer Vorgängertupel mit den dazugehörigen Werten der RQS
-ist die Simplexmethode nach Nelder und Mead aus dem Jahr 1965. Er wird als Bibliotheksfunktion \texttt{fminsearch} in Gnu-Octave oder 
+ist die \textbf{Simplexmethode nach Nelder und Mead} aus dem Jahr 1965. Er wird als Bibliotheksfunktion \texttt{fminsearch} in Gnu-Octave oder 
 in Matlab zur Verfügung gestellt. Mit Simplex ist ein Vieleck gemeint, das $M+1$ Ecken hat für $M$
 Parameter, in unserem Beispiel also drei Ecken für zwei Parameter, was in Abb.~\ref{LSoptiExample1NM} durch
 schwarz umrandete weiße Punkte, die mit schwarzen, durchgezogenen Linien verbunden sind, skizziert ist. Zum Aufbau eines
@@ -228,7 +228,9 @@ indem wir nach dem Nullstellenvektor der Gradientenfunktion
  2 \, \boldsymbol \varepsilon^\mathsf{T} \, \left( \nabla_{\mathbf{p}}^\mathsf{T} \boldsymbol \varepsilon \right)
 \label{ZielfunktionalGrad}
 \end{equation}
-suchen, für den $Q$ ein Minimum und nicht ein Maximum oder Sattelpunkt annimmt.
+suchen, für den $Q$ ein Minimum und nicht ein Maximum oder Sattelpunkt annimmt.\\
+(Hinweis zu Gl.~(\ref{ZielfunktionalGrad}): $\frac{\partial}{\partial p} \varepsilon^2(p) = 
+2 \varepsilon(p) \frac{\partial}{\partial p} \varepsilon(p)$ )\\
 Dabei ist $\nabla_{\mathbf{p}}$ Spaltenvektor und $\nabla_{\mathbf{p}}^\mathsf{T}$ Zeilenvektor
 mit den partiellen Ableitungsoperatoren $\frac{\partial}{\partial P_m}$.
 Wir suchen dasjenige $\mathbf{p}$ für das
@@ -360,11 +362,11 @@ d.h.
 Die Lösung dieses linearen Gleichungssystems liefert den Inkrementvektor $\Delta \mathbf{p}_\kappa$,
 mit dem wir den Schritt zur nächsten Position $\mathbf{p}_{\kappa+1} \; = \; \mathbf{p}_{\kappa} \, + \,
 \Delta \mathbf{p}_{\kappa}$ gehen. Die Iterationen enden, wenn der Betrag der Gradientenfunktion oder
-das Quadrat nahe Null, also kleiner als eine sehr kleine Zahl $\epsilon$ ist:
+das Quadrat nahe Null, also kleiner als eine sehr kleine Zahl $\varepsilon$ ist:
 \begin{equation}
  \boldsymbol{\varepsilon}(\mathbf{p}_\kappa)^\mathsf{T}
 \, \boldsymbol{J}^{(\kappa)} \, \boldsymbol{J}^{(\kappa) \textsf{T}} \, \boldsymbol{\varepsilon}(\mathbf{p}_\kappa) \;
-< \; \epsilon
+< \; \varepsilon
 \end{equation}
 
 Für Kostenfunktionen, die wie in Abb.~\ref{LSoptiExample1Grad}, ein sauber ausgeprägtes Minimum
@@ -372,23 +374,177 @@ haben, und für die ein Startwerttupel zu den Modellparametern, das nah genug an
 sehr weit weg von irgendwelchen Maxima und Sattelpunkten, lässt sich auf diese Weise das Minimum
 finden.
 
+\section{Beispiel zu Gradienten-Verfahren nach Gauß-Newton für den Fall gleicher Varianzen}
 
-Um eine sinnvolle Konvergenz zu erzielen, ist eine gute Vorkenntnis, also ein geeignetes 
-Modellparametertupel $\mathbf{p}_0$ erforderlich, das in einigen Problemstellungen
-nur schwerlich, oder gar nicht verfügbar ist. Das bedeutet, dass nicht klar ist, ob
-der Gradient dazu führt, dass der Parametervektor in eine Mulde hinab klettert, oder auf
-einen Berggipfel oder entlang eines Sattelpunktes spaziert.
+Gegeben ist die Gl.(\ref{GradientQlinGl3}) mit  
+\[
+ \boldsymbol{J}^{(\kappa) \textsf{T}} \, \boldsymbol{J}^{(\kappa)} \, \Delta \mathbf{p}_\kappa
+\; \overset{!}{=} \; 
+-  \boldsymbol{J}^{(\kappa) \textsf{T}} \, \boldsymbol{\varepsilon}(\mathbf{p}_\kappa)
+\]
+zur Bestimmung der Modellparameter. Mit dieser Gleichung wird mit jeder Iteration die Änderung des Modellparameters
+$\Delta \mathbf{p}_\kappa$ bestimmt. Nach jeder Iteration $\kappa$  erhält man einen neuen Modellparameter  $\mathbf{p}_{\kappa +1}$ erhält. 
+\[
+\mathbf{p}_{\kappa+1} \; = \; \mathbf{p}_{\kappa} \, + \,
+\Delta \mathbf{p}_{\kappa}
+\]
 
-Die Numeriker haben Verfahren entwickelt, die auf dieser Grundidee den Gradienten
-der Zielfunktion (Summe der Quadrate der Residuen) zu berechnen
-basieren, aber ausgereiferter sind hinsichtlich Stabilität und Konvergenz.
-Der sog.\ der \textsl{Levenberg-Marquardt}-Algorithmus ist eine solche gradientenbasierte Methode,
-die in den Numerikbibliotheken zu Matlab, Gnu-Octave, Python bis hin zu Labview, für nichtlineare
-Regression zur Verfügung gestellt wird. Die Grundidee dieser Methode wollen wir im Folgenden
-skizzieren.
+Die Optimierung endet entweder wenn die Residuen kleiner sind als vorgegeben oder
+bei einer vorgegebenen Interationsanzahl. 
+Die Jakobimatrix $J$ sind die partiellen Ableitungen (=Gradienten) nach den 
+Modellparametern $\boldsymbol{p}$: 
+\[ (\mathbf{J})_{jl} = \frac{\D \partial \varepsilon_j (\boldsymbol \theta^{(\kappa)})}{\D \partial  p_l}\]
+Hierbei läuft der Index der Wertepaare von $j=1,\ldots,J$  und der Index
+der gesuchten Modellparamter von $l=1,\ldots,M$. 
+(Weitere Infos zum Gauß-Newton Verfahren, siehe z.B. \cite{Wiki02})
 
+Die Gl. (\ref{GradientQlinGl3}) kann in einen Programmiercode
+umgesetzt werden. 
+
+\textbf{Algorithmus des Gauß-Newton-Verfahrendes}
+
+Input: Startwert: $\boldsymbol p_0$, Zielfunktional $F(p_\kappa):= \boldsymbol\epsilon (\boldsymbol p^{(\kappa)}) $, Partielle Ableitungen $F'(\boldsymbol p_{\kappa}) := \mathbf J$ \\
+\hspace*{1em}\textit{for} $\kappa = 0,1, \ldots$ \\[-3ex]
+\begin{itemize}
+	\item[i)] Berechne $F(\theta_\kappa)$, $F'(\theta_\kappa)$ 
+	\item[ii)] Bestimme den Korrekturvektor~$s_\kappa := \Delta \boldsymbol p^{(\kappa)}$~über~
+	$F^\prime(x_k)^T\;F^\prime(x_\kappa)\; s_\kappa = -F^\prime(x_\kappa)^T\;F(x_\kappa)$
+	\item[iii)] Setze~$\boldsymbol p_{\kappa+1} = \boldsymbol p_\kappa + s_\kappa$
+\end{itemize}
+\hspace*{1em}\textit{end} \\
+
+Eine einfache mögliche Realisierung in Octave-/Matlab ist nachfolgend dargestellt:
+\begin{verbatim}
+	function theta = gauss_newton(F,DF,p0,maxit,tol)
+	% F: Zielfunktional,DF:Ableitung des Zielfunktionals (Jakobimatrix)
+	% p0: Startwerte für die gesuchten Modellparamter 
+	% maxit: Anzahl der maximalen Iterationen
+	% tol: Toleranz / Residuum   
+	k=0;
+	p=p0;
+	s=-(DF(p0)'*DF(p0))\(DF(p0)'*F(p0));
+	while norm(s)>tol && k<maxit
+	k=k+1;
+	p=p+s;
+	s=-(DF(p)'*DF(p))\(DF(p)'*F(p));
+	end
+	end
+\end{verbatim} 
+\textbf{Nichtlinearer Fit eines Kreises mit dem Gauß-Newton-Verfahren} \\
+Es soll im folgenden ein Kreisfit, d.h. nichtlinearer Fit mit dem Gauß-Newton-Verfahren durchgeführt werden.
+Gegeben ist die Punktwolke mit den Wertepaaren $X_j,Y_j$ mit $j =1,\ldots J$. 
+Alle Punkte sollen näherungsweise auf einem Kreis liegen. 
+Geht man von einem Kreis mit Mittelpunkt $M=(x_\mathrm{c},y_\mathrm{c})$ und einem Radius
+$r>0$ aus, so müssten die Punkte die folgende Bedingung erfüllen:
+\begin{equation}
+	\sqrt{(X_j-x_\mathrm{c})^2+(Y_j-y_\mathrm{c})^2} \approx r; \quad j=1,\ldots,J
+	\label{eq:Bedingung}
+\end{equation}
+Die Aufgabe besteht also darin, den Mittelpunkt $M$ und den Radius $r$
+so zu bestimmen, dass die Summe über die Quadrate der einzelnen Abstände
+mininmiert wird. Die Residuen sind gegeben durch: 
+\begin{equation}
+	\epsilon = \sqrt{(X_j-x_\mathrm{c})^2+(Y_j-y_\mathrm{c})^2} - r ; \quad j=1,\ldots,J
+\end{equation}
+Gesucht ist das Minimum der Summe der Residuenquadrate . Das Problem lässt sich 
+dann wie folgt formulieren: 
+\begin{equation}
+	||\boldsymbol \varepsilon||^2 \rightarrow \min  \quad \leftrightarrow \quad
+	g(x_\mathrm{c},y_\mathrm{c},r) = Q := \sum_{j=1}^{J} \left( \sqrt{(X_j-x_\mathrm{c})^2+(Y_j-y_\mathrm{c})^2}-r\right)^2
+	\rightarrow \min
+\end{equation}
+\begin{figure}[!htp]
+	\begin{center}
+		\includegraphics[width=100mm]{03_vorlesung/media/KreisfitSkizze.png}
+		\caption{Skizze für den Fit eines Kreises}
+		\label{fig:KreisfitSkizze}
+	\end{center}
+\end{figure}
+Es besteht also \textbf{kein linearer} Zusammenhang zwischen den Parametern 
+$\boldsymbol\theta = [x_\mathrm{c},y_\mathrm{c},r]$ und den 
+Residuen.
+Zur Demonstration des Gauß-Newton Algorithmus nehmen wir zur Vereinfachung an, das wir nur den ersten Parameter, also den 
+x-Wert des Mittelpunktes $x_c$ schätzen. Die beiden anderen 
+Parameter setzen wir zu $y_c=0$ und $r=1$.
+Dann besteht die Jakobi-Matrix nur aus einer partiellen Ableitung nach dem x-Wert des Mittelpunktes $x_c$. Wenn alle drei Parameter geschätzt werden sollen, müssten entsprechend die partiellen Ableitungen nach $y_c$ und $r$ mitverwendet werden.
+
+Die Messpunkte erfüllen annäherend die Bedingung in Gl.(\ref{eq:Bedingung}):
+\[
+\sqrt{(X_j-x_\mathrm{c})^2+(Y_j-y_\mathrm{c})^2} \approx r; \quad j=1,\ldots,J
+\]
+
+Die Zielfunktion $Q$ lautet dann:
+\begin{equation}
+	F(x_c) = Q(x_c) := \sum_{j=1}^{J} \left( \sqrt{(X_j-x_\mathrm{c})^2+(Y_j-y_\mathrm{c})^2}-r\right)^2
+	\rightarrow \min
+\end{equation}
+Die partielle Ableitung nach $x_c$ lautet:
+\begin{equation}
+	DF(x_c) = \frac{\partial Q(x_c)}{\partial x_c} = \D\sum_{j=1}^{J} \left[
+	\frac{2(X_j-x_c)\cdot \left( \sqrt{(X_j-x_c)^2 +(Y_j-y_c)^2}-r\right)}
+	{\sqrt{(X_j-x_c)^2+(Y_j-y_c)^2}} \right] 
+\end{equation}
+\begin{figure}[!htp]
+	\begin{center}
+		\includegraphics[width=140mm]{03_vorlesung/media/Kreisfit_Gauss_Newton.png}
+		\caption{Ergebnis des Gauss Newton Fits}
+		\label{fig:Kreisfit_Gauss_Newton}
+	\end{center}
+\end{figure}
+Als Ergebnis erhält man den Halbkreisfit in Abb.~\ref*{fig:Kreisfit_Gauss_Newton} mit einem Schätzwert $x_c$ in dem dargestellten Beispiel von -0.0067.
+Das Octave-/Matlab-Skript lautet: 
+\begin{verbatim}
+	% Anzahl der Messpunkte 
+	M = 41;
+	Xj=linspace(-0.95,0.95,M);
+	r=1;
+	Yj = sqrt(r.^2-Xj.^2);
+	
+	figure
+	plot(Xj,Yj,'*')
+	
+	Xj_Noise = (1-0.01*randn(1,M)).*Xj;
+	Yj_Noise = (1-0.01*randn(1,M)).*Yj;
+	
+	figure
+	plot(Xj_Noise,Yj_Noise,'ro','linewidth',2)
+	hold on
+	Xj=Xj_Noise;
+	Yj=Yj_Noise;
+	yc = 0;
+	r=1;
+	% Suche das Minimum der Funktion F(theta), die xc minimiert
+	F = @(theta) sum((sqrt((Xj-theta).^2+(Yj-yc).^2)-r).^2);
+	
+	DF = @(theta) sum(2*(sqrt((Xj-theta).^2+(Yj-yc).^2)-r) .*...
+	((1/2) * ((Xj-theta).^2 +(Yj-yc).^2).^(-0.5)) .*...
+	(2*(Xj-theta)*(-1)));
+	% Startparameter
+	theta0 = 0.1;
+	maxit = 1000; % Anzahl der Interationen
+	tol = 1E-15; % Abruchbedingung
+	xc_estimate = gauss_newton(F,DF,theta0,maxit,tol);
+	disp(xc_estimate);
+	
+	Xjfit=linspace(-0.95,0.95,101);
+	% 
+	Yjfit = sqrt(r.^2-(Xjfit-xc_estimate).^2)+ yc;
+	plot(Xjfit,Yjfit,'-','linewidth',2)
+	grid on;
+	xlim([-1,1])
+	ylim([0,1.05])
+	legend('Messpunkte','Gauss Newton Fit','Location','South')
+	xlabel('X_j','fontsize',14)
+	ylabel('Y_j','fontsize',14)
+	set(gcf, 'PaperUnits', 'centimeters');
+	x_width=15 ;y_width= 10;
+	set(gcf, 'PaperPosition', [0 0 x_width y_width]);
+	print '-dpng' Kreisfit_Gauss_Newton.png
+\end{verbatim}
+
+\newpage
 \section{Levenberg-Marquardt-Verfahren}
-\begin{figure}
+\begin{figure}[htp]
 \begin{center}
 \includegraphics[width=0.6\textwidth, angle = 0]{03_vorlesung/media/pltSS_nonlin_leastsquare_sin_zB1signal.pdf}
 \end{center}
@@ -403,6 +559,18 @@ in drei verschiedenen Perspektiven dargestellt (\textsl{oben} und \textsl{unten 
  und die Beträge der
 Gradienten als Funktion der 2 zu schätzenden Parameter (\textsl{unten rechts}).\label{LSoptiExample1SinusRQS}}
 \end{figure}
+Um eine sinnvolle Konvergenz zu erzielen, ist eine gute Vorkenntnis, also ein geeignetes 
+Modellparametertupel $\mathbf{p}_0$ erforderlich, das in einigen Problemstellungen
+nur schwerlich, oder gar nicht verfügbar ist. Das bedeutet, dass nicht klar ist, ob
+der Gradient dazu führt, dass der Parametervektor in eine Mulde hinab klettert, oder auf
+einen Berggipfel oder entlang eines Sattelpunktes spaziert.
+
+Die Numeriker haben Verfahren entwickelt, die auf dieser Grundidee den Gradienten
+der Zielfunktion (Summe der Quadrate der Residuen) zu berechnen
+basieren, aber ausgereiferter sind hinsichtlich Stabilität und Konvergenz.
+Der sog.\ der \textsl{Levenberg-Marquardt}-Algorithmus ist eine solche gradientenbasierte Methode,
+die in den Numerikbibliotheken zu Matlab, Gnu-Octave, Python bis hin zu Labview, für nichtlineare
+Regression zur Verfügung gestellt wird. Die Grundidee dieser Methode wollen wir im Folgenden skizzieren.
 Die Problematik, dass sich der Vektor $\Delta \mathbf{p}_{\kappa}$, den wir im
 Folgenden \textsl{Inkrementvektor} nennen, verirrt und auf
 einen Berggipfel oder entlang eines Sattelpunktes spaziert, soll anhand eines Beispielsignals
@@ -562,10 +730,10 @@ $\rho_{\mu} \ge \beta_1$: & $\Delta \mathbf{p}_\kappa$ wird akzeptiert \textsl{E
 
 \newpage
 \textbf{Ein möglicher Algorithmus des Levenberg-Marquardt-Verfahrens} \\
-Input: Startwert $\mathbf{p}_0$, Zielfunktion $\epsilon(\mathbf{p}_{\kappa})$, Partielle Ableitungen $J=\epsilon'(\mathbf{p}_{\kappa})$, Marquardt-Parameter $\mu$, weitere Parameter $0 < \beta_0 < \beta_1 < 1$  \\
+Input: Startwert $\mathbf{p}_0$, Zielfunktion $\varepsilon(\mathbf{p}_{\kappa})$, Partielle Ableitungen $J=\varepsilon'(\mathbf{p}_{\kappa})$, Marquardt-Parameter $\mu$, weitere Parameter $0 < \beta_0 < \beta_1 < 1$  \\
 \hspace*{1em} \textit{for} $k = 0,1, \ldots$
 \begin{itemize}
-	\item[i)] Berechne $\epsilon(\mathbf{p}_{\kappa})$, $F'(\mathbf{p}_{\kappa})$ 
+	\item[i)] Berechne $\varepsilon(\mathbf{p}_{\kappa})$, $F'(\mathbf{p}_{\kappa})$ 
 	\item[ii)] Bestimme den Korrekturvekor $\Delta \mathbf{p}_\kappa$ 
 	\item[iii)] Test, ob die Korrektur $\Delta \mathbf{p}_\kappa$  akzeptabel ist: \\
 	$\bullet$ $\rho_{\mu} \le \beta_0: \;$ Setze $\mu = 2 \mu $ und berechne $ \Delta \mathbf{p}_\kappa$ gemäß ii) neu \\
@@ -575,12 +743,73 @@ Input: Startwert $\mathbf{p}_0$, Zielfunktion $\epsilon(\mathbf{p}_{\kappa})$, P
 \end{itemize}
 \hspace*{1em} \textit{end} \\
 
-Diese Methode wurde hier auf das zuvor beschriebene Beispiel des in Abb.~\ref{LSoptiExampleSinus}
-dargestellten sinusförmigen Signals mit folgendem Gnu-Octave/Matlab-Skript ausprobiert:
-\begin{lstlisting}[style=Matlab]
+Diese Methode wird nun auf das zuvor beschriebene Beispiel des in Abb.~\ref{LSoptiExampleSinus}
+dargestellten sinusförmigen Signals mit einem Gnu-Octave/Matlab-Skript getestet.
+Ziel ist es, durch die gegebenen Spannungswerte $(s_j,t_j)$ eine Sinusfunktion 
+durchzulegen. Der Modellansatz für dieses Beispiel lautet:
+\begin{equation}
+	s(t) \; = \; a \sin(2\pi \frac{t}{\lambda} + \varphi) \; + \; \varepsilon \qquad 
+	\textrm{mit} \qquad \varepsilon \sim {\cal N}(0,\sigma) 
+\end{equation}
+bei dem die Residuen in Richtung von $s$ streuen und bei dem die Abtastpunkte
+entlang der Zeitachse $t$ als Regressor vorgegeben sind, so dass
+wir einen Regressionsansatz der Gestalt
+\begin{equation}
+	\varepsilon_j \; = \; Y_j \; - \; f(X_j, \boldsymbol{p}) \qquad \textrm{mit} \qquad 
+	j=1, 2,\dots, J 
+\end{equation}
+vorliegen haben. $\boldsymbol{p}$ sind die gesuchten Modellparameter. Die Kostenfunktion sieht damit wie folgt aus
+\begin{equation}
+	Q(\boldsymbol{p}) \; = \; \sum\limits_{j=1}^J \left(Y_j \; - \; f(X_j, \boldsymbol{p})\right)^2.
+\end{equation}
+In dem vorliegenden Fall haben wir zwei Modellparameter $p(1) = \lambda$ und $p(2) = \varphi$ 
+\begin{equation}
+\boldsymbol{p} =
+\left(\begin{array}{c}
+	p(1) \\
+	p(2)
+\end{array}\right)
+= \left(\begin{array}{c}
+	\lambda \\
+	\varphi
+\end{array}\right) 
+\end{equation}
+Die Residuen sind wie folgt gegeben: 
+\begin{equation}
+\varepsilon_j = s_j - a \cdot \sin \left[ \frac{2 \pi}{p(1)}t_j +p(2)\right]
+\end{equation}
+Für die Jakobimatrix benötigen wir die beiden partiellen Ableitungen nach den Modellparametern
+$p(1)$ und $p(2)$: 
+\begin{equation} \boldsymbol{J} = 
+	\left(	\begin{array}{c} J_{11} \\ J_{21} \end{array}
+	\right)
+	= \left(
+	\begin{array}{c}
+		\frac{\D \partial \varepsilon}{\D \partial p(1)} \\
+		\frac{\D \partial \varepsilon}{\D \partial p(2)}
+	\end{array}
+\right)
+\end{equation}
+
+\begin{eqnarray}
+ \nonumber J_{11} = \frac{\partial\varphi(\boldsymbol{p})}{\partial p(1)} &=& 
+	- a\cdot \cos \left[ \frac{2\pi}{p(1)} \cdot t +p(2) \right] \cdot 
+	\left(\frac{-2\pi t}{p(1)^2} \right) \\
+	&=& \frac{4a\cdot \pi}{p(1)^2}\cdot t \cdot \cos \left[\frac{2 \pi}{p(1)} t +p(2) \right] 
+	\label{eq:JakobiMatrix_J11}
+\end{eqnarray}
+\begin{equation}
+	J_{21} = \frac{\partial\varphi(\boldsymbol{p})}{\partial p(2)} = - a \cos \left[ 
+	\frac{2 \pi}{p(1)} t + p(2) \right] 
+		\label{eq:JakobiMatrix_J21}
+\end{equation}
+
+ Das Octave/Matlab-Skript sieht wir folgt aus:
+
+\begin{verbatim}
 function fit_sin_LMAC(gen_new)
-% Stand: 2019-11-05
-% Laeuft unter Matlab und Octave
+% Stand: 191105
+% Läuft unter Matlab und Octave
 t = [0:99]'; % Sekunden
 N = length(t);
 a = 5; % Volt
@@ -614,6 +843,9 @@ epsi = @(x, p) (x(:,2) - a*sin(2*pi*x(:,1)/p(1) + p(2)));
 % muss M Spalten und J Zeilen haben, wobei M die Anzahl der Fitparameter
 % und J die Anzahl der Messpunkte ist
 %
+\end{verbatim}
+siehe Gl.(\ref{eq:JakobiMatrix_J11}) und (\ref{eq:JakobiMatrix_J21})
+\begin{verbatim}
 Jac = @(x, p) [(4*a*pi/p(1)^2)*x(:,1).*cos(2*pi*x(:,1)/p(1)+p(2)),...
 -a*cos(2*pi*x(:,1)/p(1)+p(2))];
 %
@@ -696,13 +928,13 @@ end
 function gradQabs = abbruchkrit(F,DF,x,p)
 gradQabs = ( F(x,p)'*DF(x,p) * DF(x,p)'*F(x,p) );
 end
-\end{lstlisting}
+\end{verbatim}
 
 Dieses Gnu-Octave-/Matlab-Skript hat dazu das in Abb.~\ref{LSoptiExampleSinusFitted} dargestellte Ergebnis mit den Werten
-\begin{lstlisting}[style=Matlab]
+\begin{verbatim}
 Anzahl Interationen: 1878
 gefittete Werte: lambda = 30.0505; phi/pi = 0.2051
-\end{lstlisting}
+\end{verbatim}
 geliefert.
 \begin{figure}
 \begin{center}
@@ -713,35 +945,20 @@ Gln.~(\ref{ZielfunktionalGradTaylorResiDaempf}) und (\ref{DaempfTuning}) zusamme
 den Entscheidungen aus Tabelle 1.\label{LSoptiExampleSinusFitted}}
 \end{figure}
 
-Dieses Beispiel hat einen Modellansatz
-\begin{equation}
-s(t) \; = \; a \sin(2\pi \frac{t}{\lambda} + \varphi) \; + \; \varepsilon \qquad 
-\textrm{mit} \qquad \varepsilon \sim {\cal N}(0,\sigma) 
-\end{equation}
-bei dem die Residuen in Richtung von $s$ streuen und bei dem die Abtastpunkte
-entlang der Zeitachse $t$ als Regressor vorgegeben sind, so dass
-wir einen Regressionsansatz der Gestalt
-\begin{equation}
-\epsilon_j \; = \; Y_j \; - \; f(X_j, \boldsymbol{\theta}) \qquad \textrm{mit} \qquad 
-j=1, 2,\dots, J 
-\end{equation}
-vorliegen haben. Die Kostenfunktion sieht damit wie folgt aus
-\begin{equation}
-Q \; = \; \sum\limits_{j=1}^J \left(Y_j \; - \; f(X_j, \boldsymbol{\theta})\right)^2.
-\end{equation}
+
 Für die nichtlineare Regression gibt es in Gnu-Octave  beispielsweise folgende
 Funktion:
-\begin{lstlisting}[style=Matlab]
+\begin{verbatim}
 [f, p, cvg, iter] =leasqr (x, y, init, F);
-\end{lstlisting}
+\end{verbatim}
 Angewendet auf unser Beispiel vom sinusförmigen Signal kann sie in folgender Weise
 verwendet werden
-\begin{lstlisting}[style=Matlab]
+\begin{verbatim}
 function fit_sin(gen_new)
- % Stand: 2019-11-05
- % Laeuft nur unter Octave, da leasqr nur unter Octave
- % frei zur Verfuegung steht. Bei Matlab gibt es
- % einen aehnlichen Befehl, der heisst nlinfit
+ % Stand: 191105
+ % Läuft nur unter Octave, da leasqr nur unter Octave
+ % frei zur Verfügung steht. Bei Matlab gibt es
+ % einen ähnlichen Befehl, der heisst nlinfit
   load('pltSS_nonlin_leastsquare_sin_zB2.mat');
   p0 = [34; 0.23*pi];
   sf = @(x, p) a*sin(2*pi*x/p(1) + p(2));
@@ -772,11 +989,11 @@ function fit_sin(gen_new)
   set(gca,'fontsize',12);
   grid on;
   end
-\end{lstlisting}
+\end{verbatim}
 und wir erhalten folgendes Ergebnis
-\begin{lstlisting}[style=Matlab]
+\begin{verbatim}
 gefittete Werte: lambda = 30.0505;  phi/pi = 0.2051
-\end{lstlisting}
+\end{verbatim}
 
 \newpage
 \section{Matlabfunktionen zur Berechnung nichtlinearer Fits}
@@ -792,7 +1009,7 @@ Q(\boldsymbol{p}) = \sum_{j=1}^{J} (a \cdot \sin(2\cdot \pi \cdot t(j) /p(1) + p
 \;\rightarrow \;\textrm{Min.}
 \end{equation}
 Der dazugehörige Matlab-Code lautet: 
-\begin{lstlisting}[style=Matlab]
+\begin{verbatim}
 load('pltSS_nonlin_leastsquare_sin_zB2.mat');
 a = 5; % Volt
 p0 = [34; 0.23*pi];
@@ -803,11 +1020,11 @@ maxit =1000;
 p1= fminsearch(Q, p0, optimset('TolX',tol, 'MaxIter', maxit));
 disp(['gefittete Werte: lambda =', num2str(p1(1)),';  ', ...
 num2str(p1(2)/pi)])
-\end{lstlisting}
+\end{verbatim}
 Als Ergebnis erhält man: 
-\begin{lstlisting}[style=Matlab]
+\begin{verbatim}
 gefittete Werte: lambda =30.0505; phi/pi=0.2051
-\end{lstlisting}
+\end{verbatim}
 \begin{figure}[htb]
 	\begin{center}
 		\includegraphics[width=0.9\textwidth, angle = 0]{03_vorlesung/media/OptimToolMatlab.png}
@@ -829,7 +1046,8 @@ S.~S.~Rao \cite{Rao09}. $\mathbf{lb}$ steht für \glq lower bound\grq~ und $\mat
 		Funktion von einer  \newline Variablen  & Finde $x$, indem $f(x)$ minimiert wird mit
 		$x_1 < x < x_2$ & \textsf{fminbnd} \\[1ex] \hline 
 		Minimierung ohne Randbedingung von einer Funktion oder mehreren Variablen &
-		Finde $\mathbf x$, so dass $f(\mathbf x)$ minimiert wird.  & 
+		Finde $\mathbf x$, so dass $f(\mathbf x)$ minimiert wird.
+		Hinweis: Simplexmethode nach Nelder und Mead & 
 		\textsf{fminunc} oder \newline \textsf{fminsearch} \\[1ex] \hline 
 		Lineares Problem & Finde $\mathbf x $ durch Minimierung von $\mathbf{f^T x}$ mit $A \mathbf x \le b$, $A_{eq} \mathbf x = \mathbf b_{eq}$, \newline
 		$\mathbf{lb} \le \mathbf{x} \le \mathbf{ub}$ & \textsf{linprog} \\[1ex] \hline
@@ -1127,3 +1345,5 @@ Abb.~\ref{RobustIter} stellt die ursprüngliche Häufigkeitsverteilung aus Abb.~
 durchgezogene, schwarze Linie dar. Nach dem ersten Iterationsschritt der Umgewichtung, hat sich die Verteilung so verändert,
 wie es durch die blaue gestrichpunktete Linie gezeigt wird, zu der ein Mittelwert von $24.20$ gehört. Nach mehr als acht Iterationen
 wurde ein Mittelwert von $23.23$ erzielt und die mit rot gestrichelter Verteilungskurve eingezeichnet sind.
+
+
