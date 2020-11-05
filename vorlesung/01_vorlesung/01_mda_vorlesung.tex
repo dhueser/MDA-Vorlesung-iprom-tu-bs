@@ -4,10 +4,10 @@ Um über einen Sachverhalt kommunizieren zu können, müssen seine Gegenstände,
 \textbf{bezeichnet} werden. Damit die Kommunikationspartner sich gegenseitig verstehen, muss zuvor
 festgelegt sein, welcher Begriff / welcher Bezeichner / welche Vokabel welchen Bedeutungsinhalt darstellt.
 Deshalb müssen wir auch die Begrifflichkeiten der Bereiche Messtechnik und Statistik lernen und ihren
-Bedeutungsinhalt verstehen. \\
+Bedeutungsinhalt verstehen.
 
 Die statistischen Begriffe und Sprachkonventionen sind nicht einheitlich.
-Beim Literatur\-studium wird man feststellen, dass verschiedene Fachgebiete dieselben statistischen und
+Beim Literaturstudium wird man feststellen, dass verschiedene Fachgebiete dieselben statistischen und
 systemtheoretischen Sachverhalte unterschiedlich darstellen und auch mit teilweise recht unterschiedlichen
 Ansätzen behandeln.
 
@@ -833,7 +833,7 @@ Die Varianz ist gemäß ihrer Definition
 \begin{equation}
 \operatorname {Var}\left(\sum _{{i=1}}^{N}c_i X_{i}\right) \; = \;
 \int\limits_{-\infty}^{\infty} \dots \int\limits_{-\infty}^{\infty}
-\, \left[ \left(\sum_{i=1}^N c_i X_i\right) \; - \; E(\sum_{i=1}^N c_i X_i) \right]^2 \, p(X_1, \dots, X_2)
+\, \left[ \left(\sum_{i=1}^N c_i X_i\right) \; - \; E(\sum_{i=1}^N c_i X_i) \right]^2 \, p(X_1, \dots, X_N)
 \, \operatorname{d}X_1 \dots \operatorname{d}X_N .
 \end{equation}
 Da der Erwartungswert einer Summe von Zufallsgrößen gleich der Summe der
@@ -846,14 +846,14 @@ so dass gilt
 \begin{equation}
 \operatorname {Var}\left(\sum _{{i=1}}^{N}c_i X_{i}\right) \; = \;
 \int\limits_{-\infty}^{\infty} \dots \int\limits_{-\infty}^{\infty}
-\, \left[ \sum_{i=1}^N \left(c_i X_i \; - \; E(c_i X_i)\right) \right]^2 \, p(X_1, \dots, X_2)
+\, \left[ \sum_{i=1}^N \left(c_i X_i \; - \; E(c_i X_i)\right) \right]^2 \, p(X_1, \dots, X_N)
 \, \operatorname{d}X_1 \dots \operatorname{d}X_N
 \end{equation}
 und mit $E(c_i X_i) = c_i E(X_i)$ also
 \begin{equation}
 \operatorname {Var}\left(\sum _{{i=1}}^{N}c_i X_{i}\right) \; = \;
 \int\limits_{-\infty}^{\infty} \dots \int\limits_{-\infty}^{\infty}
-\, \left[ \sum_{i=1}^N c_i \left( X_i \; - \; E(X_i)\right) \right]^2 \, p(X_1, \dots, X_2)
+\, \left[ \sum_{i=1}^N c_i \left( X_i \; - \; E(X_i)\right) \right]^2 \, p(X_1, \dots, X_N)
 \, \operatorname{d}X_1 \dots \operatorname{d}X_N .
 \end{equation}
 
@@ -873,7 +873,7 @@ gilt
 \operatorname {Var}\left(\sum _{{i=1}}^{N}c_i X_{i}\right) \; = \;
 \int\limits_{-\infty}^{\infty} \dots \int\limits_{-\infty}^{\infty}
 \, \sum_{i=1}^N \sum_{k=1}^N c_i c_k  \left(X_i \; - \; E(X_i)\right) \;
-\left(X_k \; - \; E(X_k)\right) \, p(X_1, \dots, X_2)
+\left(X_k \; - \; E(X_k)\right) \, p(X_1, \dots, X_N)
 \, \operatorname{d}X_1 \dots \operatorname{d}X_N .
 \end{equation}
 Durch Berechnung der Marginalverteilungen und weil $\int p(X_j) \, \operatorname{d}X_j = 1$
