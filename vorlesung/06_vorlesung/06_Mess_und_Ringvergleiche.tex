@@ -51,14 +51,14 @@ Größe aufgetragen: T-Score. Diese ist direkt proportional zu den Z-Scores nur 
 anderen Normierung, derart skaliert, dass ihr Erwartungswert $50$ ist und die
 Standardabweichung den Wert $10$ annimmt. 
 
-Entsprechend der internationalen Norm \cite{ISO13528} kann der Z-Wert für den Vergleich eines 
+Entsprechend der internationalen Norm \cite{6_ISO13528} kann der Z-Wert für den Vergleich eines 
 Messwertes $x_{i}$ eines Labors~$i$ mit dem Referenzwert $x_\mathrm{ref}$, der eine
 Standardabweichung (Standardunsicherheit) $\sigma_\mathrm{ref}$ hat, verglichen werden.
 Es wird folgender Z-Score berechnet und anschließend bewertet: 
 \begin{equation}
  z_i = \frac{x_{i}-x_\mathrm{ref}}{\sigma_\mathrm{ref}}
 \end{equation}
-Nach \cite{ISO13528} gibt es die folgende übliche Interpretation für die Bewertung: 
+Nach \cite{6_ISO13528} gibt es die folgende übliche Interpretation für die Bewertung: 
 \begin{itemize}
 	\item Ein Ergebnis mit $|z_i| \le 2.0$ ist noch akzeptabel.
 	\item Ein Ergebnis mit $ 2.0 < |z_i| < 3.0$ gibt ein Warnsignal.
@@ -94,7 +94,7 @@ E_\mathrm{n} = \frac{x_{i}- x_\mathrm{ref}}{\sqrt{U_{i}^2+U_\mathrm{ref}^2}}
 Der \textbf{En-Wert} gibt an, wie gut der Laborwert $x_{i}$ mit dem 
 Referenzwert $x_\mathrm{ref}$ übereinstimmt. Es werden hier die erweiterten Messunsicherheiten $U$ für $k=2$ kombiniert.
 Da hier mit den erweiterten Unsicherheiten gerechnet wird, liegen die Grenzen der akzeptablen Werte nicht bei 2 sondern bei 1.
-$|E_n|$ ist gemäß t-Test zu bewerten (siehe auch \cite{ISO13528}):
+$|E_n|$ ist gemäß t-Test zu bewerten (siehe auch \cite{6_ISO13528}):
 \begin{itemize}
 	\item $|E_\mathrm{n}| < 1$: Die Nullhypothese wird angenommen und gilt als Indikator für eine gute Übereinstimmung
 	\item $|E_\mathrm{n}| \ge 1$: Die Nullhypothese wird abgelehnt und gilt als Indikator, dass die Messdaten nicht konsistent zueinander sind.
@@ -107,7 +107,7 @@ Ringvergleiche zwischen den NMIs (\textsl{National Metrology Institutes}), sog.
 value}) mit einer zugeordneten Unsicherheit festzulegen.
 Der Grad der Übereinstimmung der Messdaten von teilnehmenden Instituts $i$ zum Referenzwert ist hier gesucht. Es gibt keinen Referenzwert, weil man a priori nicht davon ausgehen kann, dass es ein Staatsinstitut gibt, das signifikant besser messen kann als alle anderen.
 Ein mögliches Auswerteverfahren, das häufig Anwendung findet, ist bei 
-\cite{Cox02} beschrieben. Bei diesem Auswerteverfahren müssen 
+\cite{6_Cox02} beschrieben. Bei diesem Auswerteverfahren müssen 
 folgende 3 Voraussetzungen erfüllt sein: 
 \begin{itemize}
 	\item Jeder teilnehmende Partner $i$ ($i=1, \dots, N$) stellt Messdaten $x_i$ mit 
@@ -292,7 +292,7 @@ En = d./(2*sqrt(u_d.^2))
 Wir wollen uns hier noch etwas genauer anschauen, wie man feststellt, 
 ob die Messdaten eines Ringvergleiches konsistent sind und wie man mit Inkonsistenten umgeht.
 Als \textbf{Ausreißer} werden häufig Messwerte deklariert, deren Abweichungen größer  
-als 3 mal die erweiterte Messunsicherheit des Referenzwertes \cite{GuideKey} sind.
+als 3 mal die erweiterte Messunsicherheit des Referenzwertes \cite{6_GuideKey} sind.
 Diese Ausreißer werden in Abstimmung mit dem Partner gelöscht. 
 Anschließend werden die verbliebenen Daten auf statistische Konsistenz
 überprüft. Wir haben dazu bereits in Gl.(\ref{eq:T_for_consistencecheck}) und Gl.(\ref{eq:consistencecheck}) 
@@ -370,7 +370,7 @@ R_\mathrm{B}^2 = \sum_{i=1}^N \frac{w_i (x_i - x_\mathrm{ref})^2}{N-1}
 mit den Gewichten $w_i = 1/\sigma_i^2$ für $i=1,2,\ldots, N$ und dem 
 Referenzwert (gewichteten Mittelwert) $x_{ref}=\sum_i w_i x_i / \sum_i w_i$.
 Der Birge Test kann auch bei korrelierten Messdaten $x_1,\ldots ,x_N$, wenn die 
-Kovarianzen $\sigma_{12},\ldots, \sigma_{(N-1)N}$ gegeben sind, durchgeführt werden, siehe \cite{Kac08}.
+Kovarianzen $\sigma_{12},\ldots, \sigma_{(N-1)N}$ gegeben sind, durchgeführt werden, siehe \cite{6_Kac08}.
 
 \subsection{Paule-Mandel Methode zur Anpassung von Gewichtsfaktoren}
 
@@ -848,12 +848,12 @@ s_b = 10.616355 bei Anzahl Iterationen 18
 \nopagebreak 
 \begin{thebibliography}{-----------}
 	\item[] \hspace*{5em}{\Large\bf zu Kapitel 6:}
-	\bibitem[Cox02]{Cox02} M. G. Cox: The evaluation of key comparison data, Metrologia 39, 589-595 (2002)
-	\bibitem[ISO13528]{ISO13528} ISO: Statistical methods for use in proficency testing by interlaboratory comparison, Second edition 2015-08-01, corrected version 2016-10-15
-	\bibitem[Kac08]{Kac08} R.N.Kacker, A.B.Forgbers
+	\bibitem[Cox02]{6_Cox02} M. G. Cox: The evaluation of key comparison data, Metrologia 39, 589-595 (2002)
+	\bibitem[ISO13528]{6_ISO13528} ISO: Statistical methods for use in proficency testing by interlaboratory comparison, Second edition 2015-08-01, corrected version 2016-10-15
+	\bibitem[Kac08]{6_Kac08} R.N.Kacker, A.B.Forgbers
 	R. N. Kacker, A. B. Forbes, R. Kessel and K. Sommer Bayesian posterior predictive
 	p-value of statistical consistency in interlaboratory evaluations Metrologia 45 512-523 (2008)
-	\bibitem[GuideKey]{GuideKey} Guidelines for CCPR Key Comparison Report
+	\bibitem[GuideKey]{6_GuideKey} Guidelines for CCPR Key Comparison Report
 	Preparation, https://www.bipm.org/utils/common/pdf/CC/CCPR/CCPR-G2.pdf
-	\bibitem[Pau82]{Pau82}  R.C. Paule, J. Mandel: Consensus Values and Weighting Factors, J. Res. NBS, Vol.87, No.5,377-385 (1982)
+	\bibitem[Pau82]{6_Pau82}  R.C. Paule, J. Mandel: Consensus Values and Weighting Factors, J. Res. NBS, Vol.87, No.5,377-385 (1982)
 \end{thebibliography}
