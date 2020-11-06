@@ -21,7 +21,7 @@ Wert zu erwarten ist. Wir \textsl{vertrauen} also darauf, dass wir einen Wert me
 gewissen Intervalls liegen müsste, oder sagen, dass es plausibel oder \textsl{glaubwürdig}
 (engl.\ \textsl{credible}) ist, dass die Beobachtungen in dem Intervall liegen.
 Statt zu sagen, dass wir \textsl{eine Vorstellung haben}, können wir auch sagen,
-dass wir \textsl{eine Hypothese aufstellen}. 
+dass wir \textsl{eine Hypothese aufstellen}.
 
 Die Normalverteilung (Gaußverteilung) ist die grundlegende Verteilungsdichtefunktion
 zur Beschreibung zufälliger Prozesse, beispielsweise Zerfallsprozesse und Diffusionsprozesse.
@@ -43,19 +43,19 @@ asymptotisch einer stabilen Verteilung.
 Bei endlicher und positiver Varianz der Zufallsgrößen ist ihre Summe annähernd
 normalverteilt, was die Sonderstellung der Normalverteilung erklärt.
 
-Hierzu wird das Ziehen eines Wertes (das Machen einer Beobachtung) als Zufallsgröße
-interpretiert.
+Hierzu wird das Ziehen eines Wertes (das Machen einer Beobachtung / das Eintreten eines
+Ereignisses) als Zufallsgröße interpretiert.
 Damit betrachten wir eine Stichprobe als Folge von Zufallsgrößen. Sind die Elemente
 einer Stichprobe Zufallsgrößen, die
-\textsl{unabhängig und identisch verteilt}, kurz u.i.v., sind, so ist auch ihre Summe
+\textsl{unabhängig und identisch verteilt} (Abkürzung: u.i.v.) sind, so ist auch ihre Summe
 eine Zufallsgröße, die normalverteilt ist, wenn der Stichprobenumfang beliebig groß ist,
-also gegen Unendlich konvergiert. In der englischsprachigen Literatur ist 
+also gegen Unendlich konvergiert. In der englischsprachigen Literatur ist
 \textsl{unabhängig und identisch verteilt} unter dem Begriff
 \textsl{independent and identically distributed}, kurz i.i.d., zu finden.
 
 Liegt nun eine Einzelbeobachtung innerhalb der flachen
 Ausläufer (\textsl{tails}) der Wahrscheinlichkeitsdichteverteilung,
-also außerhalb des Vertrauensintervalls, so 
+also außerhalb des Vertrauensintervalls, so
 spricht man dann davon, dass der Wert (die Einzelbeobachtung)
 signifikant von dem, was zu erwarten ist, abweicht. Das heißt, dass ein Ereignis eintritt,
 das \textsl{nicht der Erwartung entspricht}. Somit \textsl{vermuten wir ein Problem}. Das Aufspüren
@@ -90,18 +90,18 @@ im folgenden erläuterte statistische Betrachtung zugrunde: Es liegt eine Annahm
 (Hypothese) darüber vor, welcher Gestalt die Wahrscheinlichkeitsverteilung der
 Beobachtungen ist und ob eine Reihe von Beobachtungen zu einer gemeinsamen Verteilung
 gehören oder zu unterschiedlichen Verteilungen. Technisch gesehen stellen sich die
-Fragen, die statistisch formuliert lauten \glqq gehören Beobachtungen zu einer 
+Fragen, die statistisch formuliert lauten \glqq gehören Beobachtungen zu einer
 Verteilung\grqq ~oder \glqq gehören Beobachtungen zu mehreren verschiedenen Verteilungen\grqq,
-als 
+als
 \begin{itemize}
 \item \glqq stammen die Messwerte aus einem Prozess\grqq ~oder \glqq aus unterschiedlichen
-Prozessen\grqq, 
+Prozessen\grqq,
 \item \glqq werden alle Messwerte von demselben Effekt beeinflusst \grqq ~oder \glqq gibt es
 für verschiedene Gruppen aus der Messreihe unterschiedliche beeinflussende Effekte\grqq.
 \end{itemize}
 Die Annahmen bzw.\ Hypothesen bezüglich der Verteilungen zur Wahrscheinlichkeit
 von Beobachtungswerten werden geprüft. Diese Art der Prüfung wird \textsl{Hypothesentest}
-genannt. Es gibt unterschiedliche Typen von Hypothesentests, einer davon ist 
+genannt. Es gibt unterschiedliche Typen von Hypothesentests, einer davon ist
 der \textsl{Kolmogorow-Smirnow-Test}.
 Er ist ein statistischer Test auf Übereinstimmung zweier Wahrscheinlichkeitsverteilungen.
 
@@ -128,17 +128,17 @@ empirischen Varianz $s^2 \, = \, \frac{1}{J-1} \sum_{j=1}^J (X_{1,j} \, - \, y)^
 ist. Die kumulierte Normalverteilung, mit der wir die kumulierte Verteilung der relativen Häufigkeiten
 vergleichen, ist
 \begin{equation}
-P(X) \; = \;  \frac{1}{\sqrt{2\pi} s} 
+P(X) \; = \;  \frac{1}{\sqrt{2\pi} s}
 \int\limits_{-\infty}^X \, e^{-\frac{1}{2}\left(\frac{X^\prime \, - \, y}{s}\right)^2} \, \mathrm{d} X^\prime.
 \label{cdfKS}
 \end{equation}
-Für die kumulierte Gaußverteilung entspricht im wesentlichen der
+Die kumulierte Gaußverteilung entspricht im wesentlichen der
 Fehlerfunktion $\mathrm{erf}$, englisch \textsl{Error Function}.
 \begin{equation}
 \mathrm{erf}(X) \; := \; \frac{2}{\sqrt{\pi}} \; \int\limits_0^X \, e^{-X^{\prime 2}} \, \mathrm{d} X^\prime.
 \label{erf}
 \end{equation}
-Die unterschiedlichen Definitionen für die kumulierte Gaußverteilung 
+Die unterschiedlichen Definitionen für die kumulierte Gaußverteilung
 und die Fehlerfuntion führen zu unterschiedlichen Wertebereichen.
 Während die kumulierte Gaußverteilung einen Wertebereich von $0$ bis $1$ hat, ist die Fehlerfunktion so
 definiert, dass sie einen Wertebereich von $-1$ bis $1$ hat. Sie lassen sich wie folgt in einander
@@ -149,7 +149,7 @@ P(X) \; = \; \frac{1}{2} \left(1 \, + \, \mathrm{erf}(\frac{X - y}{\sqrt{2} \, s
 Für standardnormalverteilte Zufallszahlen $Z = \frac{X-\mu}{\sigma}$ oder $Z = \frac{X-y}{s}$
 wird für die kumulierte Gaußverteilung der Bezeichner $\Phi$ verwendet
 \begin{equation}
- \Phi(Z) := \frac{1}{\sqrt{2\pi}} 
+ \Phi(Z) := \frac{1}{\sqrt{2\pi}}
 \int\limits_{-\infty}^Z \, e^{-\frac{1}{2} Z^{\prime 2} } \, \mathrm{d} Z^\prime
 \quad \Rightarrow \quad
 \Phi(Z) \; = \; \frac{1}{2} \left(1 \, + \, \mathrm{erf}(\frac{Z}{\sqrt{2}})\right).
@@ -172,8 +172,8 @@ kleinsten Beobachtungen $(X_{1,k_1}, X_{1,k_2})$ hat die relative kumulierte Hä
 Die Teilstichprobe mit den $j$ kleinsten Beobachtungen
 \begin{equation}
 (X_{1,k_1}, X_{1,k_2}, \dots, X_{1,k_j})
-\qquad \text{die~rel.~kum.~Häufigk.} 
-\qquad H(X_{1,k_j}) \; = \; \frac{j}{J}
+\quad \text{hat~die~relative~kumulierte~Häufigkeit}
+\quad H(X_{1,k_j}) \; = \; \frac{j}{J}
 \label{cdfH}
 \end{equation}
 \begin{figure}
@@ -203,18 +203,18 @@ Die Prüfgröße des \textsl{Kolmogorow-Smirnow}-Tests ist
 \lim\limits_{X \rightarrow X_{1,k_j}} \mid H(X) \, - \, P(X_{1,k_j} - 1) \mid \right\} \; \right\} .
 \end{array}
 \end{equation}
-Dabei steht sup für Supremum, was \textsl{kleinste, obere Schranke} heißt.
-Zu jeder Ausprägung der Stich\-probe wird der Betrag der beiden Wahrscheinlichkeitsverteilungen
-gebildet. Die Berechnung des Grenzwertes
+Dabei steht sup für Supremum, was \textsl{kleinste obere Schranke} heißt.
+Zu jeder Ausprägung der Stich\-probe wird der Betrag der Differenz der beiden
+Wahrscheinlichkeiten berechnet. Die Berechnung des Grenzwertes
 $\lim\limits_{X \rightarrow X_{1,k_j}} \mid H(X) \, - \, P(X_{1,k_j} - 1) \mid$
 für das Supremum ist erforderlich, wenn die kumulierte relative Häufigkeit
 (Summenhäufigkeit) durch Kumulieren eines Histogramms, also einer in Klassen
 quantisierten Stichprobe, berechnet wurde. Dabei soll die Schreibweise mit
-dem Grenzwert 
+dem Grenzwert
 $$
 \lim\limits_{X \rightarrow X_{1,k_j}} \mid H(X) \, - \, P(X_{1,k_j} - 1) \mid
 $$
-zum Ausdruck bringen, dass man infinitesimal dicht aber doch prinzipiell rechts 
+zum Ausdruck bringen, dass man infinitesimal dicht aber doch prinzipiell rechts
 von $X_{1,k_j}$ an der Stufe ist, praktisch wird aber direkt
 $\mid H(X_{1,k_j}) \, - \, P(X_{1,k_j} - 1) \mid$
 berechnet. Für die nichtklassierte, sortierte Stichprobe berechnen wir einfach nur
@@ -243,7 +243,7 @@ K_{\alpha, J} \; = \; \sqrt{-\frac{1}{2 \, J} \, \ln(\frac{\alpha}{2})}
 \end{equation}
 
 
-Hypothesentests in Python (\href{https://mybinder.org/v2/gh/dhueser/MDA-Vorlesung-iprom-tu-bs/master?urlpath=/lab/tree/vorlesung/05_vorlesung/code/hypothesentests.ipynb}{Klicke hier für interaktive Session}): 
+Hypothesentests in Python (\href{https://mybinder.org/v2/gh/dhueser/MDA-Vorlesung-iprom-tu-bs/master?urlpath=/lab/tree/vorlesung/05_vorlesung/code/hypothesentests.ipynb}{Klicke hier für interaktive Session}):
 \lstinputlisting[style=Python]{05_vorlesung/code/example_KSTest.py}
 
 
@@ -257,7 +257,7 @@ zwei normalverteilte Grundgesamtheiten mit verschiedenen Erwartungswerten $\mu_1
 $\mu_2$ und mit unterschiedlichen Varianzen $\sigma^2_1$ und $\sigma^2_2$.
 
 Für eine Bewertung von gemessenen Werten einer Größe, d.h.\ von Beobachtungen, werden statistische
-Modelle zugrunde gelegt. Ein statistisches Modell zu beobachtbaren Größen umfasst die 
+Modelle zugrunde gelegt. Ein statistisches Modell zu beobachtbaren Größen umfasst die
 Vorstellung von Zufallsgrößen und der Verteilung ihrer Beobachtungswerte.
 Wahrscheinlichkeitsdichtefunktionen werden parametrisiert über ihre statistischen Momente.
 Diese charakterisieren den Kurvenverlauf der Funktion hinsichtlich ihrer Lage, Breite,
@@ -343,7 +343,7 @@ wird. Das vierte statistische Moment der normierten Zufallsgröße heißt
 %für den Fall, dass beide Zufallgrößen normalverteilt seien genauer anschauen
 %\begin{equation}
 %p(\mathbf{X}) = \frac{1}{2 \pi \sigma_1 \sigma_2} \,
-%e^{-\frac{1}{2} \, 
+%e^{-\frac{1}{2} \,
 %  \left(\frac{X_1-\mu_1}{\sigma_1}\right)^2
 %  \, - \, \frac{1}{2} \,  \left(\frac{X_2-\mu_2}{\sigma_2}\right)^2}
 %\end{equation}
@@ -355,7 +355,7 @@ wird. Das vierte statistische Moment der normierten Zufallsgröße heißt
 Wir hatten bereits in Kapitel \ref{KonzepteinverseProbleme} angesprochen, wie
 \textsl{Vertrauensintervall} $[x_1, x_2]$, Wahrscheinlichkeistdichtefunktion $p$,
 \textsl{Signifikanzniveau} $\alpha$ und \textsl{Vertrauensniveau} $1-\alpha$ zusammen hängen.
-Das Vertrauensintervall gibt den Bereich an, in dem ein Ereignis mit 
+Das Vertrauensintervall gibt den Bereich an, in dem ein Ereignis mit
 Wahrscheinlichkeit $1-\alpha$ beobachtet wird bzw.\ die Messgröße einen Wert in diesem Bereich
 annimmt, also
 \begin{equation}
@@ -377,7 +377,7 @@ Erwartungswert
 E(X) \; = \; \int\limits_{-\infty}^\infty \, X  p(X) \, \operatorname{d} X
 \end{equation}
 zu bestimmen und um aus der Umkehrfunktion $P^{-1}$ der kumulativen Verteilung
-das Über\-deck\-ungs\-intervall 
+das Über\-deck\-ungs\-intervall
 \begin{equation}
 [P^{-1}(\frac{\alpha}{2}), P^{-1}(1-\frac{\alpha}{2})]
 \end{equation}
@@ -391,10 +391,10 @@ folgendes der Fall ist:
 \item Über die reinen Beobachtungen $X_{1,j}$ hinaus liegen keine
 Informationen vor, also keine vorherigen Ergebnisse zu den zu
 schätzenden Modellparameter (kein \textsl{Prior})
-und keine weiteren beeinflussenden Verteilungen. 
-\item Es kann davon ausgegangen werden, dass die Streuung der
+und keine weiteren beeinflussenden Verteilungen.
+\item Es kann davon ausgegangen werden, dass die
 einzelnen Beobachtungswerte um das Modell
-normalverteilt sind.
+normalverteilt streuen.
 \end{itemize}
 Für kleine
 Stichprobenumfänge wird eine der Normalverteilung ähnliche Verteilung
@@ -413,7 +413,7 @@ $Z$ ist \textsl{standardnormalverteilt}
 Z \; \sim \; \mathcal{N}(0,1) .
 \label{standardNormalverteilt}
 \end{equation}
-Die Wahrscheinlichkeitsdichtefunktion $p(Z)$ ist die \textsl{Standard}normalverteilung 
+Die Wahrscheinlichkeitsdichtefunktion $p(Z)$ ist die \textsl{Standard}normalverteilung
 \begin{equation}
 p(Z) \; = \; \frac{1}{\sqrt{2 \pi}} \, e^{-\frac{1}{2} Z^2}
 \qquad \textrm{mit} \qquad Z \; = \; \frac{X - \mu}{\sigma} .
@@ -425,7 +425,7 @@ als obere Integrationsgrenze definiert
 \int\limits_{-\infty}^{z_\alpha} p(Z) \mathrm{d} Z \; = \; \alpha .
 \label{WahrscheinlichkeitQuantil}
 \end{equation}
-In Abb.~\ref{normVertQuantil} wird dies anhand des Quantils $z_\alpha = 0.5244$ 
+In Abb.~\ref{normVertQuantil} wird dies anhand des Quantils $z_\alpha = 0.5244$
 zu $\alpha = 0.7$ also $70 \%$ Wahrscheinlichkeit beispielhaft gezeigt.
 
 \begin{figure}
@@ -433,7 +433,7 @@ zu $\alpha = 0.7$ also $70 \%$ Wahrscheinlichkeit beispielhaft gezeigt.
 \includegraphics[width=79mm]{05_vorlesung/media/normpdfQuantil.pdf}
 \hspace{5mm}
 \includegraphics[width=81mm]{05_vorlesung/media/normcdfQuantil.pdf}
-\caption{\label{normVertQuantil} Quantil $z_\alpha = 0.5244$ und Wahrscheinlichkeit 
+\caption{\label{normVertQuantil} Quantil $z_\alpha = 0.5244$ und Wahrscheinlichkeit
 $\alpha = 0.7$ der Standard\-normalverteilung.}
 \end{center}
 \end{figure}
@@ -485,11 +485,11 @@ z_{0.975} \; = \; 1.960
 $$
 weil
 $$
-0.95 \; = \; 
+0.95 \; = \;
 \underbrace{\int\limits_{-\infty}^{z_{0.975}} \, p(Z) \, \operatorname{d} Z}_{0.975} \; - \;
 \underbrace{\int\limits_{-\infty}^{z_{0.025}} \, p(Z) \, \operatorname{d} Z}_{0.025}
 $$
-Aufgrund der Achssymmetrie der Normalverteilung gilt 
+Aufgrund der Achssymmetrie der Normalverteilung gilt
 $$
 z_{\frac{1}{2}\alpha} = -z_{1-\frac{1}{2}\alpha} .
 $$
@@ -500,12 +500,12 @@ Z \; = \; \frac{X - \mu}{\sigma} \qquad \Leftrightarrow \qquad X \; = \; \mu + Z
 \end{equation}
 also
 \begin{equation}
-[z_{\frac{1}{2}\alpha}, z_{1-\frac{1}{2}\alpha}] = 
+[z_{\frac{1}{2}\alpha}, z_{1-\frac{1}{2}\alpha}] =
 [-z_{1-\frac{1}{2}\alpha}, z_{1-\frac{1}{2}\alpha}]
  \qquad \Leftrightarrow  \qquad
 [\mu \, - \, z_{1-\frac{1}{2}\alpha} \, \sigma, \mu \, + \, z_{1-\frac{1}{2}\alpha} \, \sigma]
 \end{equation}
-Mit $\alpha$ sind die $5 \%$ und mit $1-\alpha$ die $95 \%$ Vertrauensniveau gemeint.
+Mit $\alpha$ sind die $5 \%$ Signifikanzniveau und mit $1-\alpha$ die $95 \%$ Vertrauensniveau gemeint.
 
 Die Likelihood wird maximal für
 \begin{equation}
@@ -534,7 +534,7 @@ Wenn wir aus einer sehr großen Stichprobe, die einer Grundgesamtheit entnommen 
 disjunkte Teilstichproben von kleinerem Umfang ($J < 100$) in Grüppchen unterteilen, so können wir
 beobachten, dass sowohl die Mittelwerte streuen als auch die Varianzen.
 Diese Grüppchen oder Teilstichproben können wir als mehrere Stichproben aus einer normalverteilten
-Grundgesamtheit ansehen. 
+Grundgesamtheit ansehen.
 Abb.~\ref{kumulWahrsch} illustriert wie unterschiedlich die Verteilungsfunktionen von
 Stichproben mit relativ kleinem Umfang ($J \, = \ 50$) aussehen können, obwohl sie zu derselben
 Grundgesamtheit gehören. Dieses Beispiel wurde wie folgt mit Gnu-octave generiert:
@@ -542,7 +542,7 @@ Grundgesamtheit gehören. Dieses Beispiel wurde wie folgt mit Gnu-octave generie
 \lstinputlisting[style=Matlab]{05_vorlesung/code/example_t.m}
 
 Zur Bewertung der Flachheit bzw.\ Ausgeprägtheit der Ausläufer einer Verteilung berechnen wir
-ihre \textsl{Kurtosis}. Die \textsl{Kurtosis} der Normalverteilung hat den Wert $3$. 
+ihre \textsl{Kurtosis}. Die \textsl{Kurtosis} der Normalverteilung hat den Wert $3$.
 
 Die empirischen Schätzer für den Erwartungswert, die Varianz, die Skewness und Kurtosis
 berechnen wir aus einer Stichprobe mit Beobachtungswerten $X_{1,1}, \dots, X_{1,J}$
@@ -560,7 +560,7 @@ s \; = \; \sqrt{ \frac{1}{J-1}\sum_{j=1}^J \, (X_{1,j} - y)^2 }.
 Zu bemerken ist, dass jetzt durch $J-1$ und nicht durch $J$ geteilt wird, weil
 das $y$ aus den Werten der Stichprobe $X_{1,1}, \dots, X_{1,J}$ gewonnen wurde und somit
 die Anzahl der Freiheitsgrade $\nu$ um Eins verringert wird, also $\nu = J-1$.
-\item[] 
+\item[]
 Die empirische Skewness wird berechnet mit
 \begin{equation}
 \textrm{skew} \; = \; \frac{1}{J} \sum_{j=1}^J \, \left( \frac{X_{1,j} - y}{s} \right)^3 .
@@ -571,7 +571,7 @@ Die empirische Skewness wird berechnet mit
 \end{equation}
 \end{itemize}
 Bei dem in Abb.~\ref{kumulWahrsch} gezeigten Beispiel mit mehreren Stichprobenentnahmen aus
-einer Grundgesamtheit erhalten wir folgende aus den Momenten abgeleiteten empirischen 
+einer Grundgesamtheit erhalten wir folgende aus den Momenten abgeleiteten empirischen
 Parameter der Verteilungen:
 \begin{center}
 Tabelle 1:
@@ -609,7 +609,7 @@ Normalvert. & 42.00 &  5.00 &  0.00 &  3.00 \\
 
 Man kann der Beschreibung einer kleinen Stichprobe besser gerecht werden, wenn die
 Verteilung flacher ist als eine Standardnormalverteilung. Das bedeutet, dass ihre Ausläufer
-ausgeprägter sind. 
+ausgeprägter sind.
 Eine Verteilungsdichtefunktion, die der Gaußverteilung ähnlich ist, aber unter
 Berücksichtigung des begrenzten Stichprobenumfangs entsprechend ausgeprägtere Tails hat,
 ist die im folgenden dargestellte \textsl{Student-t}-Verteilung, kurz auch
@@ -633,12 +633,12 @@ Arbeiten von R. A. Fisher belegt, der die Verteilung \textsl{Student}-Verteilung
 
 Die $t$-Verteilung bezieht sich auf eine standardnormalverteilte Zufallsgröße $Z$ und sieht wie folgt aus
 \begin{equation}
-p_\mathrm{t}(Z,\nu) \; = \; 
+p_\mathrm{t}(Z,\nu) \; = \;
 {\frac {\Gamma \left({\frac {\nu+1}{2}}\right)}{{\sqrt {\nu \pi }} \;
 \Gamma \left({\frac {\nu}{2}}\right)}} \, \left(1+{\frac {Z^2}{\nu}}\right)^{-{\frac {\nu+1}{2}}} ,
 \end{equation}
 wobei $\nu$ die Anzahl der Freiheitsgrade ist (was für den Fall, dass $Z$
-die Summe der Stichprobenelemente darstellt, um den Mittelwert der Stichprobe mit Umfang $J$ 
+die Summe der Stichprobenelemente darstellt, um den Mittelwert der Stichprobe mit Umfang $J$
 zu repräsentieren, dann $\nu = J-1$ ist), und wobei
 die Gamma-Funktion für natürliche Zahlen $\nu \, \in I \!\! N$ dividiert durch Zwei
 wie folgt definiert ist:
@@ -659,17 +659,17 @@ Abb.~\ref{studentt}.
 \begin{figure}
 \begin{center}
 \includegraphics[width=90mm]{05_vorlesung/media/learn_Student_tpdf.pdf}
-\caption{\label{studentt} Student-t Verteilungen für unterschiedliche Stichprobenumfänge.}
+\caption{\label{studentt} \textsl{Student-t}-Verteilungen für unterschiedliche Stichprobenumfänge.}
 \end{center}
 \end{figure}
-Um zu verdeutlichen, wie sich die Gaußverteilung und die Student-t-Verteilung hinsichtlich
+Um zu verdeutlichen, wie sich die Gaußverteilung und die \textsl{Student-t}-Verteilung hinsichtlich
 Breite und lange Ausläufer unterscheiden, haben wir hier dies im Vergleich berechnet.
 Dabei haben wir bewusst ganz extrem wenig Freiheitsgrade gewählt, nämlich nur $5$.
 Wir verwenden jetzt mal den empirischen Mittelwert und die empirische Standardabweichung,
 die wir aus der Gesamtheit aller Stichproben gewonnen hatten, also $y = 41.57$
 und $s = 4.88$. Daraus rechnen wir sowohl die Normalverteilung als auch die
-Student-t-Verteilung für nur fünf Freiheitsgrade und erhalten eine größere Standardabweichung
-und eine größere Kurtosis aus der Student-t-Verteilung:
+\textsl{Student-t}-Verteilung für nur fünf Freiheitsgrade und erhalten eine größere Standardabweichung
+und eine größere Kurtosis aus der \textsl{Student-t}-Verteilung:
 \begin{center}
 \begin{tabular}{l||c|c}
 \hline
@@ -683,15 +683,14 @@ Student-t &  5.86 &  3.59 \\
 Dementsprechend sind auch die Quantile größer.
 
 
-Die Kurtosis
-der Student-t Verteilungen nimmt Werte an, die um so größer werden, je flacher die Verteilungsdichte
-ist, also je ausgeprägter die \textsl{Tails} sind, also je kleiner die Stichprobenumfänge bzw.\ die 
+Die Kurtosis der \textsl{Student-t}-Verteilungen nimmt Werte an, die um so größer werden, je flacher die Verteilungsdichte
+ist, also je ausgeprägter die \textsl{Tails} sind, also je kleiner die Stichprobenumfänge bzw.\ die
 Anzahl der Freiheitsgrade sind.
 
 %----
 
 Das Vertrauensintervall zu einem Vertrauensniveau von $1 - \alpha$ für eine endlich große
-Strichprobe mit Stichprobenumfang $J$ schätzen wir mit dem Quantil der Student-t-Verteilung ab.
+Strichprobe mit Stichprobenumfang $J$ schätzen wir mit dem Quantil der \textsl{Student-t}-Verteilung ab.
 Die Anzahl der Freiheitsgrade entspricht dem Stichprobenumfang abzüglich der Anzahl der zu
 schätzenden Modellparameter, was in diesem Fall einer ist, also $\nu = J - 1$.
 
@@ -700,15 +699,15 @@ schätzenden Modellparameter, was in diesem Fall einer ist, also $\nu = J - 1$.
 %---------------
 
 Während für die Standardnormalverteilung das Quantil $z_{0.975} \; = \; 1.96$ beträgt, haben
-wir aus der Student-t-Verteilung zu demselben Vertrauensniveau für $\nu = 50$ Freiheitsgrade
+wir aus der \textsl{Student-t}-Verteilung zu demselben Vertrauensniveau für $\nu = 50$ Freiheitsgrade
 $t_{0.975, 50} \; = \; 2.01$ und für $\nu = 5$ Freiheitsgrade $t_{0.975, 5} \; = \; 2.57$.
 
 \begin{figure}
 \begin{center}
 \includegraphics[width=80mm]{05_vorlesung/media/vertrauensintervall_nu_11.pdf}
-\caption{\label{Vertrauensintervalle} Vertrauensintervalle in Vergleich für die 
+\caption{\label{Vertrauensintervalle} Vertrauensintervalle in Vergleich für die
 Standardnormalverteilung (rote Kurve)
-und die Student-t-Verteilung für $\nu = 11$ Freiheitsgrade (schwarze gestrichelte Kurve).}
+und die \textsl{Student-t}-Verteilung für $\nu = 11$ Freiheitsgrade (schwarze gestrichelte Kurve).}
 \end{center}
 \end{figure}
 Für das zweiseitige, symmetrische Intervall verwenden wir das Quantil $t_{1-\alpha/2,\nu}$, so dass
@@ -719,7 +718,7 @@ $$
 Die Breite wird durch die Anzahl der Freiheitgrade beeinflusst, je kleiner
 die Anzahl der Freiheitsgrade ist, desto breiter wird das Intervall. Die beiden Abbn.~\ref{studentt}
 und \ref{Vertrauensintervalle}
-zeigen, dass die \textsl{Tails} einer Student-t-Verteilung für wenige Freiheitsgrade
+zeigen, dass die \textsl{Tails} einer \textsl{Student-t}-Verteilung für wenige Freiheitsgrade
 deutlich breiter sind als bei der Standardnormalverteilung, folglich auch das
 Vertrauensintervall breiter ist. In Abb.~\ref{Vertrauensintervalle} sind die Quantile für
 ein Vertrauensniveau von $1 - \alpha = 0.95$ eingezeichnet.
@@ -768,11 +767,11 @@ $$
 Das wiederholte Ziehen von Stichproben kann für so manche Anwendung kostspielig sein,
 so dass es gilt die empirische Standardabweichung des Mittelwerts aus nur einer
 Stichprobe abzuschätzen.
-Dazu betrachten wir die Likelihood 
+Dazu betrachten wir die Likelihood
 \begin{equation}
 l(Y, \sigma | \{X_{1,1}, \dots, X_{1,J}\}) \; = \;
 \prod\limits_{j=1}^J \frac{1}{\sqrt{2 \pi} \, \sigma}
- e^{- \frac{1}{2} \, \left( \frac{(X_{1,j} - Y)}{\sigma} \right)^2 } 
+ e^{- \frac{1}{2} \, \left( \frac{(X_{1,j} - Y)}{\sigma} \right)^2 }
 \label{LikelihoodY}
 \end{equation}
 und
@@ -780,7 +779,7 @@ setzten den Schätzer $y$ der Größe $Y$ als nahrhafte Null ein
 \begin{equation}
 l(Y, \sigma | \{X_{1,1}, \dots, X_{1,J}\}) \; = \;
 \prod\limits_{j=1}^J \frac{1}{\sqrt{2 \pi} \, \sigma}
- e^{- \frac{1}{2} \, \left( \frac{(X_{1,j} - y) - (Y - y)}{\sigma} \right)^2 } 
+ e^{- \frac{1}{2} \, \left( \frac{(X_{1,j} - y) - (Y - y)}{\sigma} \right)^2 }
 \label{LikelihoodNahrhafteNull}
 \end{equation}
 d.h.
@@ -795,10 +794,10 @@ $$
 \begin{array}{ll}
 \sum\limits_{j=1}^J \left( (X_{1,j} - y) - (Y - y) \right)^2  & =
 \sum\limits_{j=1}^J \left( (X_{1,j} - y)^2 + (Y - y)^2 - 2 (X_{1,j} - y) (Y - y) \right) \\
- & = \left( \sum\limits_{j=1}^J  (Y - y)^2\right) + 
+ & = \left( \sum\limits_{j=1}^J  (Y - y)^2\right) +
  \left( \sum\limits_{j=1}^J  (X_{1,j} - y)^2\right) - 2 \sum\limits_{j=1}^J (X_{1,j} - y) (Y - y)\\
- & = J (Y - y)^2 + 
- \left( \sum\limits_{j=1}^J  (X_{1,j} - y)^2\right) = J (Y - y)^2 
+ & = J (Y - y)^2 +
+ \left( \sum\limits_{j=1}^J  (X_{1,j} - y)^2\right) = J (Y - y)^2
 \end{array}
 $$
 und $\sum\limits_{j=1}^J (X_{1,j} - y) (Y - y) = 0$ wegen $J y = \sum\limits_{j=1}^J X_{1,j}$
@@ -863,21 +862,21 @@ Y \; = \; y \, \pm \, t_{1-\alpha/2,\nu} \bar s .
 %===============
 
 
-\section{t-Test - Mittelwerttest}
+\section{\textsl{t}-Test - Mittelwerttest}
 
 
 Nicht nur um die Qualität von schwarzem Bier (Stout) zu überprüfen, sondern ganz
-allgemein, wird der t-Test eingesetzt, um zu testen, ob 
+allgemein, wird der \textsl{t}-Test eingesetzt, um zu testen, ob
 \begin{enumerate}
 \item eine Stichprobe zu einer Grundgesamtheit gehört,
  deren Erwartungswert bekannt ist;
 \item zwei Stichproben zur gleichen Grundgesamtheit gehören,
- deren Erwartungswert nicht bekannt ist, sondern deren jeweilige
- Mittelwerte miteinander verglichen werden.
+ deren Erwartungswert nicht bekannt ist, sondern die beiden
+ Mittelwerte der jeweiligen Stichproben miteinander verglichen werden.
 \end{enumerate}
 
 Sei $\mu_1$ der Erwartungswert der Grundgesamtheit zu Stichprobe 1 mit
-Beobachtungen $(X_{1,1},\dots,$ $X_{1,J_1})$ und sei $\mu_2$ der Erwartungswert der 
+Beobachtungen $(X_{1,1},\dots,$ $X_{1,J_1})$ und sei $\mu_2$ der Erwartungswert der
 zu Stichprobe 2 mit Beobachtungen $(X_{2,1}, \dots, X_{2,J_2})$.
 Die Nullhypothese $H_0$ lautet, dass beide denselben Erwartungswert haben,
 was soviel bedeutet wie $\mu_1 = \mu_2$. Die Alternativhypothese $H_\mathrm{a}$
@@ -886,11 +885,11 @@ und damit zu unterschiedlichen Grundgesamtheiten gehören.
 
 Umgekehrt, bedeutet aber nicht, dass wenn sie denselben Erwartungswert haben,
 sie zwingend zu derselben Grundgesamtheit gehören. Das zu prüfen erfordert die
-in den nachfolgenden Abschnitten behandelten Tests der Varianzen, den $\chi^2$-Test bei 
+in den nachfolgenden Abschnitten behandelten Tests der Varianzen, den $\chi^2$-Test bei
 Test der empirischen Varianz einer Stichprobe mit einer bekannten Varianz, den
 F-Test bei Test der Varianzen zweier Stichproben.
 
-Der Test auf Erwartungswerte, der t-Test wird wie folgt formuliert:
+Der Test auf Erwartungswerte, der \textsl{t}-Test wird wie folgt formuliert:
 \begin{center}
 \begin{tabular}{c|cl}
 $H_0$ & $\mu_1 = \mu_2$ & beide Stichproben den gleichen Erwartungswert\\
@@ -905,11 +904,12 @@ Standardabweichungen der Mittelwerte. Mit Gl.~(\ref{empirischeStd}) wird die
 empirische Standardabweichung einer Stichprobe berechnet. Das in Tabelle 1 aufgeführte
 Beispiel zeigt, dass die Mittelwerte deutlich weniger streuen, als die Werte innerhalb
 einer einzelnen Stichprobe. Die Varianz des Mittelwertes einer Stichprobe wird gemäß
-Gl.~(\ref{empirischeVarianzMittelwert}) darüber abgeschätzt, dass sie durch den Stichprobenumfang geteilt wird:
+Gl.~(\ref{empirischeVarianzMittelwert})
+darüber abgeschätzt, dass sie durch den Stichprobenumfang geteilt wird:
 \begin{equation}
 \bar s_i^2 \; = \; \frac{1}{J_i (J_i - 1)} \sum_{j=1}^{J_i} \, (X_{i,j} - y_i)^2
 \end{equation}
-Die Prüfgröße des t-Tests für den Vergleich der beiden Stichproben $i = 1,2$ ist wie folgt definiert
+Die Prüfgröße des \textsl{t}-Tests für den Vergleich der beiden Stichproben $i = 1,2$ ist wie folgt definiert
 \begin{equation}
 T \; = \; \frac{y_1 \, - \, y_2}{\sqrt{\bar s_1^2 + \bar s_2^2}}
 \label{tTest}
@@ -920,7 +920,7 @@ y_i \; = \; \frac{1}{J_i}\sum_{j=1}^{J_i} \, X_{i,j} \qquad \mathrm{mit} \qquad
 i = 1, 2
 \end{equation}
 Die Nullhypothese wird mit einem Signifikanzniveau von $\alpha = 0.05$ abgelehnt, wenn
-der Betrag der Prüfgröße größer als das entsprechende Quantil der t-Verteilung ist
+der Betrag der Prüfgröße größer als das entsprechende Quantil der \textsl{t}-Verteilung ist
 \begin{equation}
 |T| \; > \; t_{1-\frac{1}{2} \alpha, \, \nu} \qquad \Rightarrow \qquad H_0 \; \; \mathrm{ablehnen}
 \end{equation}
@@ -937,7 +937,7 @@ Die gemeinsame Anzahl der Freiheitsgrade für \textsl{gepoolte} Samples, die fü
 und für NICHT \textsl{gepoolte}
 \begin{equation}
 \nu \; = \;
- \frac{ \left(\frac{s_1^2}{J_1} +\frac{s_2^2}{J_2}\right)^2}{ 
+ \frac{ \left(\frac{s_1^2}{J_1} +\frac{s_2^2}{J_2}\right)^2}{
   \frac{\left(\frac{s_1^2}{J_1}\right)^2}{J_1 - 1} + \frac{\left(\frac{s_2^2}{J_2}\right)^2}{J_2 - 1} } .
 \label{dofnonpooled}
 \end{equation}
@@ -969,13 +969,13 @@ $|T| \; = \; 2.21 \; < \; 2.37$ liegt.
 http://www.itl.nist.gov/div898/handbook/eda/section3/eda353.htm
 \end{verbatim}
 
-\section{Chi2-Verteilung und Test einer Varianz}
+\section{$\chi^2$-Verteilung und Test einer Varianz}
 
 
 Eine Verteilungsdichtefunktion, die die Verteilung der Quadrate einer
  normierten Zufallsgröße $Z$,
-also die Verteilung der Varianzen einer Zufallsgröße $X$, beschreibt, ist die 
-\textsl{Chi-Quadrat}-Verteilung.
+also die Verteilung der Varianzen einer Zufallsgröße $X$, beschreibt, ist die
+$\chi^2$-Verteilung, gesprochen \textsl{Chi-Quadrat}-Verteilung.
 
 
 Bisher haben wir uns damit befasst, wie eine Zufallsgröße $X$ streut.
@@ -1001,8 +1001,8 @@ Die Charakteristik der Verteilungsdichte der Varianzen hängt vom
 Stichprobenumfang $J_i$ ab. Der Stichprobenumfang entspricht der Anzahl der Freiheitsgrade.
 
 Gegeben sei eine Stichprobe $Z_1, \dots, Z_J$ unabhängiger Beobachtungen einer
-standardnormalverteilten Zufallsgröße $Z$:
-Dann ist die Summe der Quadrate der Beobachtungen $Q$ 
+standardnormalverteilten Zufallsgröße $Z  \sim \; \mathcal{N}(0, 1)$:
+Dann ist die Summe der Quadrate der Beobachtungen $Q$
 \begin{equation}
 Q \; = \; \sum_{j=1}^J \, Z_j^2
 \end{equation}
@@ -1017,14 +1017,14 @@ im Abschnitt zuvor als Gl.~(\ref{GammaHalfInt}) angegebenen Gammafunktion.
 
 Eine Schreibweise für die Aussage
 \begin{quote}
-$Q$ ist Chi2-verteilt
+$Q$ ist $\chi^2$-verteilt
 \end{quote}
 ist
 \begin{equation}
 Q \; \sim \; \chi^2(\nu).
 \label{Chi2verteilt}
 \end{equation}
-Die Definition der $\chi^2$-Verteilungsdichtefunktion braucht nicht auswendig gelernt zu 
+Die Definition der $\chi^2$-Verteilungsdichtefunktion braucht nicht auswendig gelernt zu
 werden. Der Umgang mit den Quantiltabellen ist aber zu üben.
 Wichtig zu wissen ist, dass die $\chi^2$-Verteilungs\-dichte\-funktion für
 einen positiven Wertebereich gilt, sie ihr Maximum in der Nähe von $Q = J$ hat, sie um so
@@ -1033,14 +1033,14 @@ schiefer und breiter ist, je kleiner $J$ ist und die Verteilungsdichte der Varia
 s_{\mu,i}^2 \; = \; \frac{1}{J_i} \, \sum_{j=1}^{J_i} \, (X_{i,j} \, - \, \mu)^2
 \end{equation}
 \begin{equation}
-s_{\mu}^2 \; = \; \frac{1}{J} Q \, \sigma^2  \qquad \Leftrightarrow \qquad 
+s_{\mu}^2 \; = \; \frac{1}{J} Q \, \sigma^2  \qquad \Leftrightarrow \qquad
 Q \; = \; J \, \left( \frac{s_{\mu}}{\sigma} \right)^2
 \label{s2Q}
 \end{equation}
-liefert. Was in der Praxis hinsichtlich des Statistiktests, dem Chi2-Test, gebraucht wird,
+liefert. Was in der Praxis hinsichtlich des Statistiktests, dem $\chi^2$-Test, gebraucht wird,
 ist das Verständnis wie die Tabellen verwendet werden
-und für Methoden der Bayesischen Statistik erforderlichenfalls auch wie die
-Funktionen der jeweils eingesetzten Numerik-/Statistik\-biblio\-theken zu benutzen sind. 
+und für Methoden der bayesischen Statistik erforderlichenfalls auch wie die
+Funktionen der jeweils eingesetzten Numerik-/Statistik\-biblio\-theken zu benutzen sind.
 
 \begin{figure}
 \begin{center}
@@ -1093,13 +1093,13 @@ Definitionem nur positive Werte haben kann, siehe Abb.~\ref{chi2quantil}.
 \includegraphics[width=100mm]{05_vorlesung/media/chiquadrat.pdf}
 \caption{\label{chi2quantil}Wahrscheinlichkeitsverteilungsdichte (pdf) und
 kumulierte Wahrscheinlichkeitsfunktion (cdf)
-der normierten Varianzen, das Quantil wird $\chi^2$ genannt. Hier für 
+der normierten Varianzen, das Quantil wird $\chi^2$ genannt. Hier für
 $\nu = 9$ Freiheitgrade und $1 - \alpha = 0.7$, somit $\chi^2_{\nu, 1-\alpha} = 10.66$
 dargestellt.}
 \end{center}
 \end{figure}
 \begin{equation}
-P(Q) \; = \; 
+P(Q) \; = \;
 \int \limits_0^{\chi^2_{1-\alpha, \nu}}
 p(Q^\prime, \nu) \; \operatorname{d} Q^\prime \; = \;
 1 \, - \, \alpha
@@ -1123,12 +1123,13 @@ Dann ist die Anzahl der Freiheitsgrade $\nu = J-1$ um einen vermindert,
 weil der Mittelwert $y_i$ von den Werten $X_{i,j}$ abhängt. Die $\chi^2$-Verteilung
 ist mit der Anzahl der Freiheitsgrade und nicht mit dem Stichprobenumfang zu verwenden
 \begin{equation}
-s^2 \; = \; \frac{1}{\nu} Q \, \sigma^2  \qquad \Leftrightarrow \qquad 
+s^2 \; = \; \frac{1}{\nu} Q \, \sigma^2  \qquad \Leftrightarrow \qquad
 Q \; = \; \nu \, \left( \frac{s}{\sigma} \right)^2 ,
 \label{s2Qempir}
 \end{equation}
-so dass die $\chi^2$-Verteilungsdichte, in Gnu-Octave mit dem Funktionsaufruf
-\texttt{chi2pdf} für $\nu = J-1$ zu verwenden ist:
+so dass die $\chi^2$-Verteilungsdichte  für $\nu = J-1$ zu verwenden ist,
+in Gnu-Octave beispielsweise mit dem Funktionsaufruf
+\texttt{chi2pdf}:
 
 \begin{lstlisting}[style=Matlab]
   [haeuf, bin] = hist(d,nbin);
@@ -1137,7 +1138,7 @@ so dass die $\chi^2$-Verteilungsdichte, in Gnu-Octave mit dem Funktionsaufruf
   xlabel('(J-1) * (s / \sigma)^2', 'fontsize', 14);
 \end{lstlisting}
 
-Beim Chi-Quadrat-Test wird geprüft, ob die Varianz einer Stichprobe gleich einer
+Beim $\chi^2$-Test wird geprüft, ob die Varianz einer Stichprobe gleich einer
 spezifizierten Varianz $\sigma_0^2$ ist. Wir formulieren die Hypothesen
 \begin{center}
 \begin{tabular}{c|cl}
@@ -1163,7 +1164,7 @@ Hälfte des Signifikanzniveaus verwendet wird, also $\alpha/2$.
 
 \begin{verbatim}
 http://www.itl.nist.gov/div898/handbook/eda/section3/eda358.htm
-\end{verbatim} 
+\end{verbatim}
 
 
 \section{Fisherverteilung und Vergleich zweier empirischer Varianzen}
@@ -1188,7 +1189,7 @@ T \; = \; \left( \frac{s_1}{s_2} \right)^2.
 Sie wird verglichen mit den beiden Quantilen, dem linksseitigen und dem rechtsseitigen, der Fisherverteilung.
 Der Test wird in der Literatur Fisher-Test oder kurz F-Test genannt.
 
-Die Fisherverteilung ist die Marginalverteilung des Produkts der Wahrscheinlichkeitsdichtefunktionen zweier 
+Die Fisherverteilung ist die Marginalverteilung des Produkts der Wahrscheinlichkeitsdichtefunktionen zweier
 $\chi^2$-verteilter Zufallsgrößen $Q_1$ und $Q_2$
 \begin{equation}
 p_\mathrm{F}(R, \nu_1, \nu_2) \; = \; \int\limits_0^{\infty}
@@ -1196,7 +1197,7 @@ p_\mathrm{\chi^2}(R, \nu_1) \, p_\mathrm{\chi^2}(Q_2, \nu_2) \; \frac{\nu_1}{\nu
 \mathrm{d} Q_2
 \label{FisherverteilungAnsatz}
 \end{equation}
-mit 
+mit
 \begin{equation}
 R  \; = \; \frac{\frac{1}{\nu_1} Q_1}{\frac{1}{\nu_2} Q_2} .
 \label{TrafoQ1Q2}
@@ -1205,14 +1206,14 @@ Dabei ist der Faktor $\frac{\nu_1}{\nu_2} Q_2$
 die Funktionaldeterminante aus der Transformation $(Q_1, Q_2) \rightarrow (R, Q_2)$,
 um aus der Wahrscheinlichkeitsdichtefunktion der beiden $\chi^2$-verteilten Zufallszahlen
 $$
-p_\mathrm{\chi^2}(Q_1, \nu_1) \, p_\mathrm{\chi^2}(Q_2, \nu_2) 
+p_\mathrm{\chi^2}(Q_1, \nu_1) \, p_\mathrm{\chi^2}(Q_2, \nu_2)
 $$
 die Fisherverteilung zu berechnen. Nach Einsetzen der Gleichung für
-die $\chi^2$-Verteilung, Gl.~\ref{Chi2pdf}, und Ausführen der Integration 
-in Gl.~\ref{FisherverteilungAnsatz}, sieht die Fisherverteilung wie folgt aus
+die $\chi^2$-Verteilung, Gl.~(\ref{Chi2pdf}), und Ausführen der Integration
+in Gl.~(\ref{FisherverteilungAnsatz}), sieht die Fisherverteilung wie folgt aus
 \begin{equation}
-p_\mathrm{F}(R, \nu_1, \nu_2) \; = \; 
-\nu_1^{\frac{\nu_1}{2}} \nu_2^{\frac{\nu_2}{2}} \, 
+p_\mathrm{F}(R, \nu_1, \nu_2) \; = \;
+\nu_1^{\frac{\nu_1}{2}} \nu_2^{\frac{\nu_2}{2}} \,
 \frac{\Gamma\left(\frac{\nu_1+\nu_1}{2}\right)}
 {\Gamma\left(\frac{\nu_1}{2}\right)\Gamma\left(\frac{\nu_2}{2}\right)}
 \frac{R^{\frac{\nu_1}{2}-1}}{\left(\nu_1 R + \nu_2 \right)^\frac{\nu_1+\nu_1}{2}} .
@@ -1224,9 +1225,9 @@ schwarz durchgezogener Kurve für $\nu_1 = \nu_2 = 8$ Freiheitsgrade.
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=75mm]{05_vorlesung/media/BeispielFverteilung.pdf} 
+\includegraphics[width=75mm]{05_vorlesung/media/BeispielFverteilung.pdf}
 \caption{\label{Fverteilbeispiel}Fisherverteilung des Quotienten $R$
-zweier $\chi^2$-verteilter Zufallsgrößen $Q_1$ und $Q_2$, also 
+zweier $\chi^2$-verteilter Zufallsgrößen $Q_1$ und $Q_2$, also
 $R \; = \; \frac{\frac{1}{\nu_1} Q_1}{\frac{1}{\nu_2} Q_2} \;
 = \; \frac{s_1^2}{s_2^2}$ mit jeweils der Anzahl der Freiheitsgrade
 $\nu_1$ und $\nu_2$. Die beiden Kurven zeigen zwei Beispiele, die
@@ -1246,15 +1247,15 @@ T \; > \; F_{1-\alpha/2, \nu_2, \nu_1} .
 \end{equation}
 Dabei ist $\nu_1$ die Anzahl der Freiheitsgrade zu $s_1$, die
 im Zähler stehende Standardabweichung
-aber in den Tabellen Nennerfreiheitsgrad genannt wird, und $\nu_2$ 
+aber in den Tabellen Nennerfreiheitsgrad genannt wird, und $\nu_2$
 die Anzahl der Freiheitsgrade zu $s_2$, die im Nenner stehende
 Standardabweichung deren Freiheitsgrad
-aber in den Tabellen Nennerfreiheitsgrad genannt wird. Das kommt
-daher, dass in Gl.~\ref{TrafoQ1Q2} die Freiheitsgrade $\nu_1$ zur
+aber in den Tabellen Zählerfreiheitsgrad genannt wird. Das kommt
+daher, dass in Gl.~(\ref{TrafoQ1Q2}) die Freiheitsgrade $\nu_1$ zur
 Zufallsgröße $Q_1$ im Nenner stehen.
 
 Beispiel:
-Der \textsl{General Social Survey (GSS)} hatte in den USA im Jahr 2000 anhand einer 
+Der \textsl{General Social Survey (GSS)} hatte in den USA im Jahr 2000 anhand einer
 zufallsgenerierten Teilstichprobe mit $J = 652$ Erwachsenen Menschen untersucht,
 wie sich die Nutzungsdauer $t$ in Stunden/Woche der Internetnutzung nach Geschlecht unterscheidet.
 
@@ -1269,8 +1270,10 @@ weiblich & $347$ & $3.84$ & $5.86$
 \end{center}
 
 mit $J_i$ für die Stichprobenumfänge und $s_i$ für die Standardabweichung mit $i = 1,2$.
-Die Standardabweichung zur Nutzungsdauer $t$ beträgt bei den Männern 
-$s_1 = 7.80$ Stunden/Woche und bei den Frauen $s_2 = 5.86$ Stunden/Woche.
+Die Standardabweichung zur Nutzungsdauer $t$ beträgt bei den Männern $t_1 = 5.48$  Stunden/Woche
+mit einer Streuung von
+$s_1 = 7.80$ Stunden/Woche und bei den Frauen
+$t_1 = 3.84$  Stunden/Woche mit einer Streuung von $s_2 = 5.86$ Stunden/Woche.
 Der F-Test überprüft, ob der Unterschied der Varianzen $s_1^2$ und $s_2^2$ signifikant ist.
 Im vorliegenden Beispiel beträgt der Nennerfreiheitsgrad $\nu_1 = J_1 - 1 = 305-1 = 304$ und der
 Zählerfreiheitsgrad $\nu_2 = J_2 - 1 = 347-1 = 346$.
@@ -1292,7 +1295,7 @@ Flinks = scipy.stats.f.ppf(alpha/2, nuZaehl, nuNenn)
 Frechts = scipy.stats.f.ppf(1-alpha/2, nuZaehl, nuNenn)
 print(Flinks, Tpruef, Frechts)
 \end{lstlisting}
-$T = 1.772$ und $F_{\alpha/2, \nu_2, \nu_1} = 0.805$ und 
+$T = 1.772$ und $F_{\alpha/2, \nu_2, \nu_1} = 0.805$ und
 $F_{1-\alpha/2, \nu_2, \nu_1} = 1.245$. Mit $T = 1.772 \; > \; F_{1-\alpha/2, \nu_2, \nu_1} = 1.245$
 liegt die Prüfgröße signifikant höher als das rechte Quantil.
 Es kann also davon ausgegangen werden, dass sich die Varianzen der beiden Geschlechter signifikant voneinander unterscheiden.
@@ -1300,11 +1303,11 @@ Es kann also davon ausgegangen werden, dass sich die Varianzen der beiden Geschl
 \section{Anwendung von Hypothesentests}
 
 Anwendung finden die Hypothesentests im Bereich der Qualitätssicherung in der Produktion (siehe beispielsweise
-zur Prüfung des Stout in der Guinessbrauerei schon vor 100 Jahren), oder im Bereich der Naturwissenschaften
+zur Prüfung des Stout in der Guinnessbrauerei schon vor 100 Jahren), oder im Bereich der Naturwissenschaften
 (Biologie, Chemie, Pharmazie, Medizien) zum Nachweis von Substanzen. Es geht darum, dass zu bewerten ist,
 mit welcher Wahrscheinlichkeit Beobachtungen zu welcher Verteilung gehören.
-Einer Entscheidung liegen Regeln zugrunde. Mit dem t-Test haben wir die Regeln kennengelernt, über
-die wir entscheiden, ob zwei Datensätze den gleichen Erwartungswert haben. 
+Einer Entscheidung liegen Regeln zugrunde. Mit dem $t$-Test haben wir die Regeln kennengelernt, über
+die wir entscheiden, ob zwei Datensätze den gleichen Erwartungswert haben.
 
 Als nächstes wollen wir untersuchen, welche Fehler mit welcher Wahrscheinlichkeit dabei entstehen können.
 Anschließend wollen wir uns ansehen, wie eine Stichprobe mit einer Toleranzvorgabe verglichen wird.
@@ -1389,7 +1392,7 @@ end
 \end{lstlisting}
 
 \subsection{Konformitätsprüfung}
-Nachdem wir gesehen haben wie wir zwei Hypothesen über die Lage zweier Wahrscheinlichkeitsdichteverteilungen
+Nachdem wir gesehen haben wie wir zwei Hypothesen über die Lage zweier Wahrscheinlich\-keits\-dichte\-ver\-teilungen
 verglichen haben, befassen wir uns jetzt mit dem Vergleich von Grenzen, den Toleranzgrenzen, mit einer
 Wahrscheinlichkeitsdichteverteilung. Für die Fertigung werden in den Konstruktionszeichnungen zu den Merkmalen
 von Bauteilen die Toleranzgrenzen eingetragen, innerhalb derer die Merkmale des Werkstücks liegen müssen. Wie nun
@@ -1397,7 +1400,7 @@ bewertet man nach Fertigstellung des Werkstücks, ob ein Merkmal innerhalb einer
 wird durch einen Messvorgang geprüft. Der Messvorgang liefert ein Ergebnis: Einen Zahlenwert für das Merkmal und
 ein Überdeckungsintervall zusammen mit einem Vertrauensniveau. Anstelle von Überdeckungsintervall und Vertrauensniveau
 kann auch direkt eine Wahrscheinlichkeitsdichteverteilung angegeben werden, ist aber sehr unüblich in der industriellen
-Praxis. Für die Bewertung, ob das gefertigte Werkstück mit der Vorgabe der Konstruktion übereinstimmt, konform ist,
+Praxis. Für die Bewertung, ob das gefertigte Werkstück mit der Vorgabe der Konstruktion übereinstimmt, ob es konform ist,
 werden Messergebnis und Toleranzvorgabe verglichen.
 
 Als Ergänzung (\textsl{Supplement}) zum \glqq Guide of Uncertainty\grqq ~gibt es das Dokument
@@ -1427,7 +1430,7 @@ wir in Kapitel \ref{KonzepteinverseProbleme} das Prinzip der bayesischen Statist
 so steht $C$ für ein Intervall $C = [T_\mathrm{L}, T_\mathrm{U}]$ im Falle der zweiseitigen
 Grenzen, $C = [-\infty, T_\mathrm{U}]$ für den Fall, dass es eine Obergrenze gibt,
 $C = [T_\mathrm{L}, \infty]$, dass es eine Untergrenze gibt. Dabei sollen der Index L für \glqq lower
-limit\grqq ~und der Index U für \glqq upper limit\grqq ~stehen. Der Bezeichner $T$ ist in der 
+limit\grqq ~und der Index U für \glqq upper limit\grqq ~stehen. Der Bezeichner $T$ ist in der
 Normung das üblicherweise für Toleranzgrenzen verwendete Symbol und bedeutet an dieser
 Stelle nicht Testgröße! Er unterscheidet sich von den Testgrößen durch seine Indizes.
 
@@ -1442,7 +1445,7 @@ gewonnen ($\bar y = \frac{1}{J} \sum\limits_{j=1}^J X_j$) und die Varianz als em
 $s = \frac{1}{J-1}\sum\limits_{j=1}^J (X_j - \bar y)^2$ berechnet
 und für die Wahrscheinlichkeitsdichte $p$ die Gaußverteilung verwendet
 \begin{equation}
-	p_\mathrm{c} = \frac{1}{\sqrt{2 \pi} s} \int\limits_{T_\mathrm{L}}^{T_\mathrm{U}} 
+	p_\mathrm{c} = \frac{1}{\sqrt{2 \pi} s} \int\limits_{T_\mathrm{L}}^{T_\mathrm{U}}
 	e^{-\frac{1}{2}\left(\frac{y - \bar y}{s}\right)^2} \mathrm{d}y .
 \end{equation}
 Die Größe $\frac{y - \bar y}{s}$ ist eine normierte Zufallsgröße. Die Integrationsgrenzen können gleichfalls
@@ -1451,8 +1454,8 @@ $z_\mathrm{U} = \frac{y_\mathrm{U} - \bar y}{s}$, so dass die Tabellenwerke für
 standardnormalverteilte Gaußfunktion oder die Bibliotheksfunktion
 für die gauß'sche Fehlerfunktion (\textsl{error function}) wie folgt verwendet werden kann:
 \begin{equation}
-p_\mathrm{c} = \frac{1}{\sqrt{2 \pi}} \int\limits_{-\infty}^{z_\mathrm{U}} 
-	e^{-\frac{1}{2} z^2} \mathrm{d}z - 
+p_\mathrm{c} = \frac{1}{\sqrt{2 \pi}} \int\limits_{-\infty}^{z_\mathrm{U}}
+	e^{-\frac{1}{2} z^2} \mathrm{d}z -
 	\frac{1}{\sqrt{2 \pi}} \int\limits_{-\infty}^{z_\mathrm{L}} e^{-\frac{1}{2} z^2} \mathrm{d}z
 \end{equation}
 d.h.
@@ -1549,8 +1552,3 @@ Stichprobe 2:
 \end{enumerate}
 
 Verwenden Sie die Quantiltabellen aus dem Anhang Kapitel~\ref{quantiltabellen}.
-
-
-
-
-

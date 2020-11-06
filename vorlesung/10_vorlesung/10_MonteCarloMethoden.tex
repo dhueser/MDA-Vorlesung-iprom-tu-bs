@@ -6,12 +6,12 @@
 % \title{\Large Parameterschätzung und Messunsicherheit mit der Bayesschen Statistik \\[2ex]}
 % \author{Dozent: Dr.-Ing. Gerd Ehret \\ Physikalisch-Technische Bundesanstalt}
 % date wird automatisch generiert
-% \date{23. Oktober 2017} 
+% \date{23. Oktober 2017}
 % Kommentierung uer mehrere Zeilen \begin{comment} \end{comment}
 % \begin{document}
 % \maketitle
 % \begin{centering}
-% 	\Large{Zehnte Vorlesung (Teil 1/2) zu} \\[1ex] 
+% 	\Large{Zehnte Vorlesung (Teil 1/2) zu} \\[1ex]
 %	\Large{\textbf{Messdatenauswertung und Messunsicherheit (MDA)}} \\[2ex]
 %	\large{Modulverantwortlicher:} \\
 %	\large{Prof. Dr.-Ing. R. Tutsch, iprom, TU Braunschweig}\\
@@ -19,23 +19,23 @@
 
 \section{Einbeziehen von a-Priori-Wissen, \glqq scharfer\grqq ~Model-Prior}
 \subsection{Kurze Wiederholung: Bayessche Statistik zur MU-Bestimmung}
-In der 8. Vorlesung haben wir das Bayes-Theorem kennengelernt. 
+In der 8. Vorlesung haben wir das Bayes-Theorem kennengelernt.
 Mit diesem ist es möglich a-Priori-Wissen $p(Y)$ über die zu bestimmende indirekte Messgröße $Y$ zu berücksichtigen.
-Wir haben folgenden Zusammenhang kennengelernt: 
+Wir haben folgenden Zusammenhang kennengelernt:
 \begin{equation}
-p(Y|X_1,\ldots,X_N) \propto l(Y|X_1,\ldots,X_N) \cdot p(Y) 
+p(Y|X_1,\ldots,X_N) \propto l(Y|X_1,\ldots,X_N) \cdot p(Y)
 \label{eq:BayesTheorem01}
-\end{equation} 
-bzw. 
+\end{equation}
+bzw.
 \[
-p(Y|X_1,\ldots,X_N) \propto p(X_1,\ldots,X_N|Y) \cdot p(Y) 
-\] 
-mit $p(Y)$ dem Prior der indirekten Messgröße $Y$ (auch oft als Ausgangsgröße bezeichnet), $l(Y|X_1,\ldots,X_N)$ Likelihood der Messdaten 
-(Eingangsgrößen) $X_1,\ldots,X_N$. 
+p(Y|X_1,\ldots,X_N) \propto p(X_1,\ldots,X_N|Y) \cdot p(Y)
+\]
+mit $p(Y)$ dem Prior der indirekten Messgröße $Y$ (auch oft als Ausgangsgröße bezeichnet), $l(Y|X_1,\ldots,X_N)$ Likelihood der Messdaten
+(Eingangsgrößen) $X_1,\ldots,X_N$.
 
-Die Likelihood kann auch -- wie in der 8. Vorlesung dargestellt -- als bedingte Wahrscheinlichkeitsdichte $p(X_1,\ldots,X_N|Y)$ aufgefasst werden. 
+Die Likelihood kann auch -- wie in der 8. Vorlesung dargestellt -- als bedingte Wahrscheinlichkeitsdichte $p(X_1,\ldots,X_N|Y)$ aufgefasst werden.
 
-Der \textsl{Erwartungswert} $y := \operatorname{E}(Y)$ ist der \textsl{beste Schätzwert} für die Messgröße $Y$ und die \textsl{Varianz} ist ein 
+Der \textsl{Erwartungswert} $y := \operatorname{E}(Y)$ ist der \textsl{beste Schätzwert} für die Messgröße $Y$ und die \textsl{Varianz} ist ein
 \textsl{Maß für die Unsicherheit} $u^2(y) := \operatorname{Var}(Y)$.
 
 \textbf{Beispiel: Bestimmung einer physikalischen Größe}\\
@@ -58,7 +58,7 @@ bezeichnen und uns auf keine physikalische Einheit festlegen, sondern diese allg
 \glqq Einheit\grqq ~nennen. Das Modell, das wir betrachten, ist wie folgt: Das rohe Messsignal (Rohdaten),
 das als Spannung $U$ bzw.\ direkte Größe $X_\mathrm{M}$ vorliegt, ist über
 einen Kalibrierfaktor $K$ bzw.\ eine direkte Größe $X_\mathrm{K}$
-in die indirekte physikalische Größe $Y$ umzurechnen. 
+in die indirekte physikalische Größe $Y$ umzurechnen.
 Der Index M steht hier für Messung und der Index K für Kalibrierfaktor.
 
 In dem betrachteten Beispiel
@@ -95,7 +95,7 @@ Der Kalibrierfaktor sei nach Herstellung des Sensors bestimmt worden mit einem W
 $K_0$ und einer Unsicherheit $U_\mathrm{K}$, zu der der Erweiterungsfaktor mit $k = 2$
 angegeben sei, so dass wir die Standardabweichung $s_\mathrm{K} = \frac{1}{2} U_\mathrm{K}$.
 \begin{equation}
-p_\mathrm{K} \propto 
+p_\mathrm{K} \propto
  e^{\T -\;\frac{1}{2} \left(\frac{ X_\mathrm{K} - K_0}{s_\mathrm{K}} \right)^2}
 \label{PriorKalibrierfaktor}
 \end{equation}
@@ -133,12 +133,12 @@ Varianz. Dies nennen wir Fall (B.).
 Wir betrachen nun folgende vier Ansätze zur Bestimmung einer Posterior:
 
 \begin{itemize}
-	\item[(A.)] Präziser Sensor, 
+	\item[(A.)] Präziser Sensor,
 	der die Rohdaten in der physikalischen Einheit Volt ausgibt und sehr wenig streut
 	(z.~B. $s_\mathrm{S} = 0.3~\mathrm{V}$). Die sensorintrinsische Standardabweichung
 	$s_\mathrm{S}$ wird für die Likelihood der direkten Messgröße $X_\mathrm{M}$ verwendet.
 \begin{equation}
-p_\mathrm{L} \propto \prod\limits_{j=1}^J 
+p_\mathrm{L} \propto \prod\limits_{j=1}^J
 e^{\T -\;\frac{1}{2} \left(\frac{ X_\mathrm{M} - X_{\mathrm{M},j} }{s_\mathrm{S}} \right)^2}
 \label{LikeliGenauerSensor}
 \end{equation}
@@ -147,7 +147,7 @@ e^{\T -\;\frac{1}{2} \left(\frac{ X_\mathrm{M} - X_{\mathrm{M},j} }{s_\mathrm{S}
 	größer ist als die intrinsische Sensorstreuung $s_\mathrm{S}$ wird für die Likelihood der
 	Sensorspannung $X_\mathrm{M}$ verwendet.
 \begin{equation}
-p_\mathrm{L} \propto \prod\limits_{j=1}^J 
+p_\mathrm{L} \propto \prod\limits_{j=1}^J
 e^{\T \; -\frac{1}{2} \left(\frac{X_\mathrm{M} - X_{\mathrm{M},j}}{s_\mathrm{M}} \right)^2}
 \label{LikeliGemischteStreuung}
 \end{equation}
@@ -176,7 +176,7 @@ Kurve eingezeichnet. Hier sehen wir eine gemeinsame, breite Normalverteilung.
 \end{figure}
 \newpage
 \begin{enumerate}
-	\item Im Fall 1 verwenden wir die Likelihood mit bekannter Streuung 
+	\item Im Fall 1 verwenden wir die Likelihood mit bekannter Streuung
 	$s_\mathrm{S} = 0.3~\mathrm{V}$ des Präzisions\-sensors (A.), Gl.~(\ref{LikeliGenauerSensor}),
 	zusammen mit der Verteilung des Kalibrierfaktors, dem Prior Gl.~(\ref{PriorKalibrierfaktor}),
 	und einer Normalverteilung für die indirekte Messgröße $Y$ mit einer zu
@@ -205,10 +205,10 @@ e^{\T -\;\frac{1}{2} \left(\frac{ X_\mathrm{M} - X_{\mathrm{M},j} }{s_\mathrm{S}
 \label{PosteriorFall1}
 \end{equation}
 	\item Im Fall 2 betrachten wir für die Likelihood (B.) der direkten Messgröße $X_\mathrm{M}$
-	die Standardabweichung $s_\mathrm{M}$, Gl.~(\ref{LikeliGemischteStreuung}), und für 
+	die Standardabweichung $s_\mathrm{M}$, Gl.~(\ref{LikeliGemischteStreuung}), und für
 	Verteilung B (\glqq Gerät ungenau\grqq) ~in Kombination mit der Verteilung des
 	Kalibrierfaktors und für die
-	Modellverteilung nehmen wir wieder eine Standardabweichung $s_\mathrm{KM}$ 
+	Modellverteilung nehmen wir wieder eine Standardabweichung $s_\mathrm{KM}$
 	an.
 \begin{equation}
 \arraycolsep=2.0pt\def\arraystretch{2.0}
@@ -244,7 +244,7 @@ e^{\T-\;\frac{1}{2} \left(\frac{ X_\mathrm{M} - X_{\mathrm{M},j} }{s_\mathrm{M}}
 \end{equation}
 	mit $\sigma_\mathrm{winzig} \; = \; 0.003 \cdot s_\mathrm{KM}$.
 	\item Im Fall 4 wird für die pdf des Modells der Grenzübergang
-	$\sigma_Y \rightarrow 0$ vollzogen, siehe Paper von Wuebbler et al. 
+	$\sigma_Y \rightarrow 0$ vollzogen, siehe Paper von Wuebbler et al.
 	\cite{Wue08}, also
 \begin{equation}
 p_\mathrm{Modell} (X_\mathrm{K}, X_\mathrm{M} | Y) \propto
@@ -303,7 +303,7 @@ e^{\T-\;\frac{1}{2} \left(\frac{ X_\mathrm{M} - X_{\mathrm{M},j} }{s_\mathrm{S}}
 \end{equation}
 für Fall 1, bei dem $s_\mathrm{S}$ die aus vorheriger Charakterisierung des
 Sensors, d.h.\ aus {\`a}-priori Wissen, bekannte Standardabweichung der Sensorspannung ist
-und 
+und
 \begin{equation}
 \arraycolsep=2.0pt\def\arraystretch{2.0}
 \begin{array}{l}
@@ -385,8 +385,8 @@ mit dem scharfen \textsl{Model-Prior} Gl.~(\ref{marginalPosteriorFall4}).
 
 \subsection{Modellgleichung als {\`a}-Priori-Wissen $\rightarrow$  klass. Statistik}
 
-Wenn eine Modellgleichung gegeben ist, so kann diese als {\`a}-Priori-Wissen miteinbezogen werden. 
-Gegeben sei die Modellgleichung zwischen der gesuchten 
+Wenn eine Modellgleichung gegeben ist, so kann diese als {\`a}-Priori-Wissen miteinbezogen werden.
+Gegeben sei die Modellgleichung zwischen der gesuchten
 Messgröße $Y$ und den direkten Messgröße $X_1,\ldots, X_N$, die wir auch in einem
 Vektor $\boldsymbol{X} := (X_1 \ldots  X_N)$ schreiben
 \begin{equation}
@@ -430,10 +430,10 @@ und es wird für die indirekte Messgröße keine Verteilung mehr angenommen.
 Anders ausgedrückt heißt es, dass bei einem gemessenen Satz an Eingangsgrößen,
 sich die Ausgangsgröße nach der Modellgleichung Gl.(\ref{eq:Modellgleichung}) berechnet,
 so wird die gesuchte Messgröße $Y$ festgelegt. Man kann sich das auch so vorstellen, dass
-die angenommene Modellverteilung immer schmaler wird und somit nur 
-noch ein $Y_j$ Wert bei jeder Beobachtung $\boldsymbol{X}_j = (X_{1,j}, \dots X_{N,j})$ 
+die angenommene Modellverteilung immer schmaler wird und somit nur
+noch ein $Y_j$ Wert bei jeder Beobachtung $\boldsymbol{X}_j = (X_{1,j}, \dots X_{N,j})$
 erlaubt ist.
-Diesen Übergang stellt auch Abb. \ref*{fig:Uebergang_Delta_Funktion} dar. 
+Diesen Übergang stellt auch Abb. \ref*{fig:Uebergang_Delta_Funktion} dar.
 \begin{figure}[!htp]
 	\begin{center}
 		\includegraphics[width=130mm]{10_vorlesung/media/DeltaPeaken.png}
@@ -443,14 +443,14 @@ Diesen Übergang stellt auch Abb. \ref*{fig:Uebergang_Delta_Funktion} dar.
 \end{figure}
 
 Wir verwenden
-gemäß Gl.~(\ref{pdfallgemeinesModellDiracPeak}) den \textbf{Model-Prior} als Dirac'sche delta-Funktion: 
+gemäß Gl.~(\ref{pdfallgemeinesModellDiracPeak}) den \textbf{Model-Prior} als Dirac'sche delta-Funktion:
 \begin{equation}
 \delta(Y-f(\boldsymbol{X}))
 \end{equation}
-Dadurch, dass wir hier $Y$ festlegen sind wir nicht mehr in der 
-Bayes-Welt (Bayes-Statistik), sondern wieder in der klassischen 
-Statistik. 
-Durch Messungen oder andere Informationen seien 
+Dadurch, dass wir hier $Y$ festlegen sind wir nicht mehr in der
+Bayes-Welt (Bayes-Statistik), sondern wieder in der klassischen
+Statistik.
+Durch Messungen oder andere Informationen seien
 \textbf{Wahrscheinlichkeitsdichteverteilungen der Messdaten} $\boldsymbol{X}$
 gegeben, d.h.
 \begin{equation}
@@ -458,7 +458,7 @@ p(\boldsymbol{X})
 \end{equation}
 Darüberhinaus können haben wir zusätzliche Informationen über die Größe
 $Y$ in die statistische Analyse einarbeiten, beispielsweise Ergebnisse
-aus anderen Instituten oder aus vergangenen Messkampagnen. 
+aus anderen Instituten oder aus vergangenen Messkampagnen.
 Die können wir ganz genau so behandeln wie den Prior in der
 bayes'schen Statistik. Da wir von den anderen Instituten oder Messkampagnen
 keine direkten Größen und somit auch keine Likelihood vorliegen haben, verwenden
@@ -466,74 +466,74 @@ wird eine Wahrscheinlichkeitsdichteverteilung für $Y$ gemäß den Annahmen übe
 die Streuung von $Y$, die aus dem vollständigen Messergebnis des anderen Instituts oder
 der anderen Messkampagne hervorgeht. Dies kann eine Normalverteilung, eine Student-t-Verteilung
 oder dergleichen sein. Die Wahrscheinlichkeitsdichteverteilung (PDF) des
-Priors zu $Y$ kennzeichnen wir hier mit einem Index 
-\glqq Null\grqq, also $p_0(Y)$ (\textbf{Prior der Messgröße} $Y$) 
+Priors zu $Y$ kennzeichnen wir hier mit einem Index
+\glqq Null\grqq, also $p_0(Y)$ (\textbf{Prior der Messgröße} $Y$)
 \begin{equation}
 p_0(Y)
 \end{equation}
 Wir können nun eine gemeinsame PDF für $\boldsymbol{Z} = (\boldsymbol{X},Y)$
-aufstellen, die wie folgt gegeben ist \cite{Els07}: 
+aufstellen, die wie folgt gegeben ist \cite{Els07}:
 \begin{equation}
-p(\boldsymbol{Z}) = p(\boldsymbol{X},Y) \propto p(\boldsymbol{X}) \cdot p_0(Y) \cdot \delta(Y-f(\boldsymbol{X})) 
+p(\boldsymbol{Z}) = p(\boldsymbol{X},Y) \propto p(\boldsymbol{X}) \cdot p_0(Y) \cdot \delta(Y-f(\boldsymbol{X}))
 \end{equation}
 Die gesuchte PDF für die Messgröße $Y$ erhalten wir durch Marginalisierung der $p(\boldsymbol{X},Y)$ über $X$:
 \begin{equation}
 p(Y) = \int_{-\infty}^{\infty} p(\boldsymbol{X'},Y) \mathrm{d} X'
-\propto p_0(Y)\int_{-\infty}^{\infty}  p(\boldsymbol{X'}) \cdot \delta(Y-f(\boldsymbol{X'})) \mathrm{d} \boldsymbol{X'} 
+\propto p_0(Y)\int_{-\infty}^{\infty}  p(\boldsymbol{X'}) \cdot \delta(Y-f(\boldsymbol{X'})) \mathrm{d} \boldsymbol{X'}
 \label{eq:pdf_Y_durch_Marginalisierung}
 \end{equation}
-Den besten Schätzwert für $Y$ erhalten wir wieder über den 
+Den besten Schätzwert für $Y$ erhalten wir wieder über den
 Erwartungswert $y=E(Y)$:
 %\begin{equation}
 \begin{align}
-y &= \int Y' p(Y') dY' \nonumber\\ 
+y &= \int Y' p(Y') dY' \nonumber\\
 &=  \int Y'\frac{\T p_0(Y) \int p(\boldsymbol{X'}) \cdot \delta(Y'-f(\boldsymbol{X}')) \mathrm{d} \boldsymbol{X}' }
 {\T \int p_0(Y'')\int  p(\boldsymbol{X}') \cdot \delta(Y''-f(\boldsymbol{X}')) \mathrm{d} \boldsymbol{X}'\mathrm{d} \boldsymbol{Y}'' } \mathrm{d} Y'  \nonumber \\[2ex]
 &= \frac{\T\int \left( \int Y' \cdot p_0(Y) \cdot p(\boldsymbol{X}') \cdot \delta(Y'-f(\boldsymbol{X}'))\mathrm{d}Y' \right) \mathrm{d} \boldsymbol{X}' }
-{\T \int \left(\int p_0(Y'') p(\boldsymbol{X}') \cdot \delta(Y''-f(\boldsymbol{X}')) \mathrm{d}  \boldsymbol{Y}'' \right) \mathrm{d} \boldsymbol{X}'}\nonumber \\[2ex]  
+{\T \int \left(\int p_0(Y'') p(\boldsymbol{X}') \cdot \delta(Y''-f(\boldsymbol{X}')) \mathrm{d}  \boldsymbol{Y}'' \right) \mathrm{d} \boldsymbol{X}'}\nonumber \\[2ex]
 &=  \frac{\T\int f(\boldsymbol{X}') \cdot p_0(f(\boldsymbol{X}')) \cdot p(\boldsymbol{X}')  \mathrm{d} \boldsymbol{X}' }
-{\T \int   p_0(f(\boldsymbol{X}')) \cdot p(\boldsymbol{X}') 
+{\T \int   p_0(f(\boldsymbol{X}')) \cdot p(\boldsymbol{X}')
 	\mathrm{d} \boldsymbol{X}'}  \label{eq:schaetzwert_y}
 \end{align}
 % \end{equation}
-Die Unsicherheit ergibt sich aus der Varianz von $Y$  
+Die Unsicherheit ergibt sich aus der Varianz von $Y$
 \begin{align}
 u^2(y) &= \int (y-Y')^2 p(Y') dY' \nonumber \\[2ex]
 &= \frac{\T \int (y-f(\boldsymbol{X}'))^2 \cdot p_0(f(\boldsymbol{X}'))
 	\cdot p(\boldsymbol{X}') \mathrm{d} \boldsymbol{X}' }
-{\T p_0(f(\boldsymbol{X}')) \cdot p(\boldsymbol{X}') \mathrm{d} \boldsymbol{X}'}  
+{\T p_0(f(\boldsymbol{X}')) \cdot p(\boldsymbol{X}') \mathrm{d} \boldsymbol{X}'}
 \label{eq:Unsicherheit_y}
 \end{align}
 Die Nenner in den beiden Gleichungen (\ref{eq:schaetzwert_y}) und
 (\ref{eq:Unsicherheit_y}) sind für die Normierung da.
 
 Für den Fall, dass wir keine Vorkenntnisse über die Messgröße $Y$
-haben und als Prior-Verteilung eine 1 verwenden (siehe auch 
+haben und als Prior-Verteilung eine 1 verwenden (siehe auch
 die Hinweise der 8. Vorlesung zu non-informativen Priors), d.h.
 $p_0(Y)~\propto~1$ ergibt sich für die Verteilungsdichte von $Y$ aus
-der Gl.(\ref{eq:pdf_Y_durch_Marginalisierung}) die sogenannte 
-\textbf{Markov-Formel} \cite{Cox06}: 
+der Gl.(\ref{eq:pdf_Y_durch_Marginalisierung}) die sogenannte
+\textbf{Markov-Formel} \cite{Cox06}:
 \begin{equation}
-p(Y) = \int_{-\infty}^{\infty} 
+p(Y) = \int_{-\infty}^{\infty}
 p(\boldsymbol{X}') \cdot \delta (Y-f(\boldsymbol{X}')) d \boldsymbol{X}'
 \label{eq:Markov_Formel}
 \end{equation}
-In der Regel benötigen die Formeln (\ref{eq:Markov_Formel}) und (\ref{eq:pdf_Y_durch_Marginalisierung}) numerische Lösungsverfahren. In 
+In der Regel benötigen die Formeln (\ref{eq:Markov_Formel}) und (\ref{eq:pdf_Y_durch_Marginalisierung}) numerische Lösungsverfahren. In
 einer späteren Vorlesung Monte-Carlo-Methoden als Lösungsverfahren vorgestellt werden.
 
-Hier zeigen wir für den Fall, dass wir eine lineares Modell und  Normalverteilungen haben, eine analytische Lösung. Dieser Ansatz 
+Hier zeigen wir für den Fall, dass wir eine lineares Modell und  Normalverteilungen haben, eine analytische Lösung. Dieser Ansatz
 geht natürlich auch, wenn die Modellgleichung (\ref{eq:Modellgleichung}) linearisiert werden kann.
 \newpage
 \subsection{Analyt. Lösung für lineares Modell und Normalverteilungsdichten}
-Die Herleitung findet sich im Paper \cite{Els07}. 
-Gegeben ist die lineare Modellgleichung: 
+Die Herleitung findet sich im Paper \cite{Els07}.
+Gegeben ist die lineare Modellgleichung:
 \begin{equation}
 Y= \sum_{i=1}^{N} c_i\cdot X_i = \boldsymbol{c^T}
-\boldsymbol{X} 
-\label{eq:LinearesModell} 
+\boldsymbol{X}
+\label{eq:LinearesModell}
 \end{equation}
 Darüber hinaus seien die Kovarianzen der direkten Messgrößen $\boldsymbol{X}$
-gegeben, d.h. die Kovarianzmatrix $\boldsymbol{V(X)}$ bzw. äquivalent 
+gegeben, d.h. die Kovarianzmatrix $\boldsymbol{V(X)}$ bzw. äquivalent
 $\boldsymbol{X}$ als Index geschrieben $\boldsymbol{V_X}$:
 \begin{align}
 \boldsymbol{V}(\boldsymbol{X}) &= \left(\operatorname{Cov}(X_i, X_j)\right)_{i,j=1,\ldots,N} \nonumber\\[2ex]
@@ -552,12 +552,12 @@ $\boldsymbol{X}$ als Index geschrieben $\boldsymbol{V_X}$:
 \end{align}
 
 Die Unsicherheiten $u(\boldsymbol{X})$ der direkten Messgrößen $\boldsymbol{X}$
-stehen auf der Hauptdiagonalen der Kovarianzmatrix $\boldsymbol{V}$, d.~h. 
-$u^2(X_i) = \operatorname{Var}(X_i)$. (Hinweis: Zu den Begriffen \textsl{Varianz} und 
+stehen auf der Hauptdiagonalen der Kovarianzmatrix $\boldsymbol{V}$, d.~h.
+$u^2(X_i) = \operatorname{Var}(X_i)$. (Hinweis: Zu den Begriffen \textsl{Varianz} und
 \textsl{Kovarianz}, siehe auch 5. Vorlesung)
 
-Für die pdfs des linearen Modells nehmen wir eine Normalverteilung 
-an, d.h. 
+Für die pdfs des linearen Modells nehmen wir eine Normalverteilung
+an, d.h.
 \begin{equation}
 p(\boldsymbol{X} | \boldsymbol{x}) = \frac{\T \exp \left[- \; \frac{1}{2} (\boldsymbol{X} - \boldsymbol{x})^T \boldsymbol{V_X^{-1}} (\boldsymbol{X}-\boldsymbol{x}) \right]}{\T \sqrt{(2 \pi)^N \operatorname{det}(\boldsymbol{V_X})}}
 \label{eq:pdf_linearModell}
@@ -565,8 +565,8 @@ p(\boldsymbol{X} | \boldsymbol{x}) = \frac{\T \exp \left[- \; \frac{1}{2} (\bold
 wobei $\boldsymbol{x}$ der Vektor mit beobachteten oder geschätzten
 Werten zu den Größen $\boldsymbol{X}$ ist.
 
-Die Priorinformationen über die zu bestimmende Messgröße $Y$ seien 
-gegeben durch die Standardabweichung $\sigma_0$ und den Schätzwert $y_0$ zur Größe $Y$: 
+Die Priorinformationen über die zu bestimmende Messgröße $Y$ seien
+gegeben durch die Standardabweichung $\sigma_0$ und den Schätzwert $y_0$ zur Größe $Y$:
 \begin{equation}
 p_0(Y | y_0, \sigma_0) = \frac{\T \exp \left[- \; \frac{1}{2} (Y - y_0)^2/\sigma_0^2 \right]}{\T \sqrt{(2 \pi)} \, \sigma_0}
 \label{eq:pdf_Prior_fuer_Y_Normalverteilt}
@@ -577,7 +577,7 @@ direkten Größen gewonnen haben, für die indirekte Größe
 $Y$ aufgrund des linearen Zusammenhangs, Gl.~(\ref{eq:LinearesModell}), folgendes Ergebnis
 für den Schätzwert $y$ und die Standardabweichung $u(y)$ bzw.\ Varianz $u^2(y)$:
 \begin{equation}
-y = \boldsymbol{c^T} \, \boldsymbol{x}, \quad 
+y = \boldsymbol{c^T} \, \boldsymbol{x}, \quad
 u^2(y) = \boldsymbol{c^T} \, \boldsymbol{V_X} \, \boldsymbol{c}.
 \label{eq:nurMessung}
 \end{equation}
@@ -585,19 +585,19 @@ Wenn die Information aus den Messungen, also aus $\boldsymbol{x}$, nicht berück
 sondern nur die Priorinformation $\sigma_0$ und $y_0$ vorliegt,
 dann gilt, dass das Ergebnis für $Y$ gleich dem seiner Priorinformationen ist:
 \begin{equation}
-y = y_0, \quad 
+y = y_0, \quad
 u^2(y) = \sigma_0^2 .
 \end{equation}
 Wenn wir beide Informationen, die {\`a}-priori mit $y_0$ und $\sigma_0$ und die aktuelle
 Messung mit dem Schätzervektor $\boldsymbol{x}$, verknüpfen wollen, bilden wir wie gehabt
 das Produkt der entsprechenden Wahrscheinlichkeitsdichteverteilungen (PDFs)
 \begin{equation}
-p(Y | \boldsymbol{x}, y_0, \sigma_0) \propto 
+p(Y | \boldsymbol{x}, y_0, \sigma_0) \propto
 p(\boldsymbol{X} | \boldsymbol{x}) \; p_0(Y | y_0, \sigma_0)
 \end{equation}
 d.h.
 \begin{equation}
-p(Y | \boldsymbol{x}, y_0, \sigma_0) \propto 
+p(Y | \boldsymbol{x}, y_0, \sigma_0) \propto
 \frac{\T \exp \left[- \; \frac{1}{2} (\boldsymbol{X} - \boldsymbol{x})^T \boldsymbol{V_X^{-1}} (\boldsymbol{X}-\boldsymbol{x}) \right]}{\T \sqrt{(2 \pi)^N \operatorname{det}(\boldsymbol{V_X})}}
 \; \frac{\T \exp \left[- \; \frac{1}{2} (Y - y_0)^2/\sigma_0^2 \right]}{\T \sqrt{(2 \pi)} \, \sigma_0}
 \end{equation}
@@ -605,14 +605,14 @@ Hier haben wir zunächst \glqq proportional\grqq ~geschrieben, denn das Produkt
 der beiden Verteilungen Gl.~(\ref{eq:pdf_linearModell}) und Gl.~(\ref{eq:pdf_Prior_fuer_Y_Normalverteilt}) muss noch derart normiert werden, dass
 gilt
 $$
-\int\limits_{-\infty}^{\infty} p(Y | \boldsymbol{x}, y_0, \sigma_0) 
+\int\limits_{-\infty}^{\infty} p(Y | \boldsymbol{x}, y_0, \sigma_0)
 \operatorname{d}Y \; = \; 1 .
 $$
-Die pdf $p(Y | \boldsymbol{x}, y_0, \sigma_0)$ für $Y$ ist also gegeben durch das normierte 
-Produkt der beiden Verteilungen Gl.(\ref{eq:pdf_linearModell}) und 
+Die pdf $p(Y | \boldsymbol{x}, y_0, \sigma_0)$ für $Y$ ist also gegeben durch das normierte
+Produkt der beiden Verteilungen Gl.(\ref{eq:pdf_linearModell}) und
 Gl.(\ref{eq:pdf_Prior_fuer_Y_Normalverteilt})
 bzw. deren Marginalverteilung Gl.(\ref{eq:pdf_Y_durch_Marginalisierung}).
-Diese aus dem Produkt resultierende Verteilung $p(Y | \boldsymbol{x}, y_0, \sigma_0)$ ist 
+Diese aus dem Produkt resultierende Verteilung $p(Y | \boldsymbol{x}, y_0, \sigma_0)$ ist
 wegen des Potenzgesetzes mit $e^a \, e^b \, = \, e^{a+b}$ ebenso normalverteilt. Also
 schreiben wir folgenden Ansatz auf:
 \begin{equation}
@@ -622,17 +622,17 @@ Dabei müssen also der Schätzer $y$ und dessen Varianz $u^2(y)$ eine Verknüpfu
 den Schätzern $y_0$ und $\boldsymbol{x}$ und deren (Ko-)Varianzen $\sigma_0^2$ und
 $\boldsymbol{V_X}$ darstellen.
 
-Der Erwartungswert $y$ ist gegeben durch: 
+Der Erwartungswert $y$ ist gegeben durch:
 \begin{equation}
 y = u^2(y) \left[\frac{\T \boldsymbol{c^T} \cdot \boldsymbol{x}}
-{\T \boldsymbol{c^T}\cdot\boldsymbol{V_X} \cdot \boldsymbol{c}} + 
+{\T \boldsymbol{c^T}\cdot\boldsymbol{V_X} \cdot \boldsymbol{c}} +
 \frac{\T y_0}{\T \sigma_0^2} \right]
 \label{eq:Erwartungswert_y_Normalverteilung}
 \end{equation}
 Die Varianz bzw. Unsicherheit $u^2(y)$ ist gegeben durch:
 \begin{equation}
 u^2(y) =  \left[\frac{1}
-{\T \boldsymbol{c^T}\cdot\boldsymbol{V_X} \cdot \boldsymbol{c}} + 
+{\T \boldsymbol{c^T}\cdot\boldsymbol{V_X} \cdot \boldsymbol{c}} +
 \frac{\T 1}{\T \sigma_0^2} \right]^{-1}
 \label{eq:Unsicherheit_y_Normalverteilung}
 \end{equation}
@@ -643,12 +643,12 @@ der Priorinformation $y_0$. Dabei sind die Gewichtsfaktoren, wie wir es
 für den Fall einer einzelnen Messgröße kennengelernt haben, die reziproken
 Varianzen bzw.\ reziproken Kovarianzmatrizen. Als Beispiel siehe Übungsaufgabe 10-1.
 
-Für den Fall, dass keine Priorinformationen vorhanden sind, d.h. 
+Für den Fall, dass keine Priorinformationen vorhanden sind, d.h.
 $\sigma_0 \rightarrow \infty$ ist der Erwartungswert und die Unsicherheit durch die Messung gegeben.
 In der Gl. (\ref{eq:Erwartungswert_y_Normalverteilung}) und (\ref{eq:Unsicherheit_y_Normalverteilung}) verschwindet dann der 2. Term.
 \section{MU-Berechnung mit rechteck- und U-förmigen Messgrößen}
 \subsection{Messunsicherheitsfortpflanzung linearisierbarer Modelle}
-Kurze Wiederholung: 
+Kurze Wiederholung:
 Das klassische Gesetz zur Fortpflanzung der Messunsicherheit mit der Gleichung
 \begin{equation}
 u^2(Y) \; = \; \sum\limits_{i=1}^n c_i^2 \, u(X_i)^2 \; + \;
@@ -667,7 +667,7 @@ gilt für
 	\sum\limits_{i=1}^n \underbrace{\left. \frac{\partial f}{\partial X_i} \right|_{\bar x_1,\dots, \bar x_n}}_{c_i} \,
 	\Delta X_i
 	\end{equation}
-	\item für glockenförmige Streuung der direkten Messgrößen $X_i$: 
+	\item für glockenförmige Streuung der direkten Messgrößen $X_i$:
 	\begin{itemize}
 		\item Die Wahrscheinlichkeitsdichteverteilung
 		ist eine glockenförmige Kurve mit genau einem Maximum, d.h.\ sie ist unimodal.
@@ -680,7 +680,7 @@ gilt für
 Es gibt zwei Grenzfälle, die in der Metrologie vorkommen können und notbehelfsmäßig
 in das Fort\-pflanzungs\-gesetz eingebastelt werden: Die U-Verteilung und die Rechteckverteilung.
 
-Diese erfüllen nicht die oben genannte dritte Voraussetzung, 
+Diese erfüllen nicht die oben genannte dritte Voraussetzung,
 dass diese glockenförmig sind, d.h. ein Maximum relativ mittig besitzen und nach außen mit abnehmender Wahrscheinlichkeit verlaufend sind.
 
 Die Bestimmung von Vertrauensintervallen zu bestimmten Vertrauensniveaus anhand der Quantile
@@ -698,7 +698,7 @@ Wir betrachten folgende U-Verteilung
 p(X) \; = \; \left\{\begin{array}{lll}
 \mathrm{arcsin}^2\left(\frac{X - \bar x}{s}\right) & \text{für} & \bar x - s  \leq X \leq \bar x + s\\
 0 & \text{für} & (X < \bar x - s) \vee (\bar x + s < X)
-\end{array}\right. 
+\end{array}\right.
 \label{uverteilung}
 \end{equation}
 für eine Schwingung mit der Amplitude $s$ als Störung, die die Streuung der Größe $X$
@@ -718,7 +718,7 @@ um den Wert $\bar x$ verursacht.
 In der Mitte, nämlich bei $\bar x$ ist die Wahrscheinlichkeit am geringsten.
 Das Signifikanzniveau $\alpha$ liegt folglich in der Mitte und nicht am Rand.
 Vom $95 \%$ Vertrauensniveau wird jeweils die Hälfte auf jeden der beiden
-Peaks am Rand aufgeteilt, also $47.5 \%$ der Fläche der 
+Peaks am Rand aufgeteilt, also $47.5 \%$ der Fläche der
 Wahrscheinlichkeitsdichtekurve auf den einen Peak und die anderen $47.5 \%$ der Fläche auf den anderen
 Peak. Dann müssen wir zwei Intervalle angeben und sagen: Mit $95 \%$ Wahrscheinlichkeit sind
 Werte entweder in dem einen oder dem anderen Intervall zu erwarten, siehe Abb.~\ref{Uverteilungsquantile}.
@@ -747,7 +747,7 @@ dann auch direkt die Sensitivitäten: $c_1 = a$ und $c_2 = b$.
 
 Bei diesem Beispiel soll $X_1$ eine Größe darstellen, die nicht der Voraussetzung genügt, gauß- oder
 t-verteilt zu sein. Wir untersuchen zwei Fälle, einerseits den Fall, dass sie U-verteilt mit
-der Amplitude $s_1$ sei, also $p(X_1)$ gemäß Gl.~(\ref{uverteilung}), andererseits den Fall, 
+der Amplitude $s_1$ sei, also $p(X_1)$ gemäß Gl.~(\ref{uverteilung}), andererseits den Fall,
 dass sie rechteckverteilt sei, $p(X_1)$ gemäß Gl.~(\ref{rechteckvert}), mit der halben Spanne $s_1$.
 
 Die Größe $X_2$ sei gaußverteilt.
@@ -765,7 +765,7 @@ Die Wahrscheinlichkeitsdichteverteilung als Funktion der beiden direkten Größe
 und $X_2$ ist in Abb.~\ref{pdfx1x2} dargestellt, für die U-Verteilung von $X_1$ links
 und für die Rechteckverteilung von $X_1$ rechts:
 \begin{equation}
-p(X_1, X_2) \; = \; p(X_1) \; \underbrace{\frac{1}{\sqrt{2\pi} s_2} 
+p(X_1, X_2) \; = \; p(X_1) \; \underbrace{\frac{1}{\sqrt{2\pi} s_2}
 	e^{-\frac{1}{2}\left(\frac{X_2 - \bar x_2}{s_2}\right)^2} }_{p(X_2)}.
 \end{equation}
 \begin{figure}
@@ -783,14 +783,14 @@ p(X_1, X_2) \; = \; p(X_1) \; \underbrace{\frac{1}{\sqrt{2\pi} s_2}
 Die Wahrscheinlichkeitsdichteverteilung als Funktion der indirekten Größe $Y$ ist
 die Marginalverteilung $p(Y)$ der Verteilung $p(Y,X_1,X_2)$, die sich aus folgendem Produkt ergibt:
 \begin{equation}
-p(Y,X_1,X_2) \; = \; C_\mathrm{norm} 
+p(Y,X_1,X_2) \; = \; C_\mathrm{norm}
 \frac{1}{\sqrt{2\pi} \sigma} e^{-\frac{1}{2}\left(\frac{Y - f(X_1, X_2)}{\sigma}\right)^2}
-\, p(X_1,X_2) 
+\, p(X_1,X_2)
 \end{equation}
 mit $f(X_1, X_2) = a X_1 + b X_2$ und $\sigma$ für die Unsicherheit des Modells, sowie des
 Systems, das die Messvorgänge der direkten Größen verknüpft. Letzendlich steckt dahinter
 die Vorstellung, dass die indirekte Größe $Y$ ihrerseits auch eine Zufallsgröße ist, nicht nur
-die direkten. Die Konstante $C_\mathrm{norm}$ ist so definiert, dass 
+die direkten. Die Konstante $C_\mathrm{norm}$ ist so definiert, dass
 $\iiint p(Y,X_1,X_2) \mathrm{d}X_1 \mathrm{d}X_2 \mathrm{d}Y = 1$ (Normierungsbedingung) erfüllt wird, also
 \begin{equation}
 C_\mathrm{norm} \; = \; \frac{1}{\int\limits_{-\infty}^{\infty} \int\limits_{-\infty}^{\infty}
@@ -813,7 +813,7 @@ C_\mathrm{norm} \; = \; \frac{1}{\int\limits_{-\infty}^{\infty} \int\limits_{-\i
 Für die Vorstellung von einer indirekten Messgröße, die einen exakten wahren Wert haben muss und
 die für sich genommen keine Zufallsgröße ist, deren Streuung einzig durch die Streuung der direkten
 Größen verursacht wird, wird in der Messtechnik (nirgends sonst in der Statistik) ein
-Modellprior verwendet, der durch einen unendlich scharfen Peak repräsentiert wird. 
+Modellprior verwendet, der durch einen unendlich scharfen Peak repräsentiert wird.
 Wir bezeichnen den (siehe oben) als \textsl{scharfen Modellprior}.
 
 \begin{figure}
@@ -847,7 +847,7 @@ Sie ist in Abb.~\ref{pdfYsigma} für einen gaußglockenförmigen Modellprior mit
 Abb.~\ref{pdfYscharf} für einen scharfen Modellprior dargestellt.
 
 In den beiden Abbn.~\ref{pdfYsigma} und \ref{pdfYscharf} auf der linken Seite gezeigten
-Diagrammen ist die Marginalverteilung für $Y$ für den Fall dargestellt, dass die direkte Größe 
+Diagrammen ist die Marginalverteilung für $Y$ für den Fall dargestellt, dass die direkte Größe
 $X_1$ U-verteilt ist. Sie weist zwei Peaks auf, d.h.\ sie ist bimodal.
 Hier müsste man sich also genau anschauen, wo das Signifikanzniveau anzusiedeln ist, also, ob ein
 Teil davon in den mittleren Bereich gehört. Der Fall mit rechteckverteilter Größe $X_1$ ist
@@ -860,7 +860,7 @@ siehe Abb.~\ref{PkumY}.
 	\includegraphics[width=80mm]{10_vorlesung/media/Pkum_indirekte_y_Gauss_sigma0p050.png}
 		\hspace{2mm}
 	\includegraphics[width=80mm]{10_vorlesung/media/Pkum_indirekte_y_Gauss_sigma0p050_box.png}
-		\caption{Die zur kumulierten Verteilung $P(Y)$ der Wahrscheinlichkeitsdichteverteilung $p(Y)$ 
+		\caption{Die zur kumulierten Verteilung $P(Y)$ der Wahrscheinlichkeitsdichteverteilung $p(Y)$
 			erworbene Umkehrfunktion liefert mit $P^{-1}(\alpha/2)$ und $P^{-1}(1-\alpha/2)$ zum
 			Signifikanzniveau $\alpha$ das entsprechende Vertrauensintervall:
 			\textsl{Links:} U-verteilte Größe $X_1$,
@@ -871,10 +871,10 @@ siehe Abb.~\ref{PkumY}.
 Diese Vorgehensweise übernehmen wir hier einfach auch für das Beispiel mit der U-Verteilung. Die in den Diagrammen in Abb.~\ref{pdfYsigma} gestrichelt rot
 eingezeichneten Linien kennzeichnen die Vertrauensintervalle.
 
-Zum Vergleich sind in diesen Abb.~\ref{pdfYsigma} die Überdeckungsintervalle, die 
+Zum Vergleich sind in diesen Abb.~\ref{pdfYsigma} die Überdeckungsintervalle, die
 man aus dem Fortpflanzungsgesetz des GUM von 1995/2008 erhalten würde mit blauer
 Strichpunktlinie eingezeichnet. Gemäß dem GUM soll für U-verteilte
-Größen der Ansatz für die Unsicherheit $u = \mathrm{Spanne}/\sqrt{8}$ und für 
+Größen der Ansatz für die Unsicherheit $u = \mathrm{Spanne}/\sqrt{8}$ und für
 rechteckverteilte
 $u = \mathrm{Spanne}/\sqrt{12}$ verwendet werden. Mit $s_1$ als halbe Spanne ist dies
 also
@@ -891,7 +891,7 @@ a^2 \, \frac{s_1^2}{3} \; + \; b^2 \, s_2^2 & \text{für rechteckverteilte~} X_1
 \end{array}\right. .
 \label{GUMMUFF}
 \end{equation}
-Das Vertrauensintervall, durch die blaue Strichpunktlinie gekennzeichnet, ergeben sich mit den Quantile der Gaußverteilung $z_{\alpha/2} = -1.96$ und $z_{1-\alpha/2} = 1.96$ zu: 
+Das Vertrauensintervall, durch die blaue Strichpunktlinie gekennzeichnet, ergeben sich mit den Quantile der Gaußverteilung $z_{\alpha/2} = -1.96$ und $z_{1-\alpha/2} = 1.96$ zu:
 \begin{equation}
 [\bar y \; - \; 1.96 \, u(Y), \; \bar y \; + \; 1.96 \, u(Y)]
 \; = \; \left\{\begin{array}{ll}
@@ -912,12 +912,12 @@ Die Werte aus der Marginalverteilung $p(Y)$ im Vergleich dazu sind
 für die Breite der Verteilung des Modellprior $\sigma = 0.05$. Sie bilden das
 Überdeckungsintervall, das mit roten gestrichelten Linien eingezeichnet ist. Es ist kleiner als das gemäß GUM, Gl~(\ref{GUMMUFF}), ermittelte und zeigt sehr schön, dass
 U-verteilte und rechteckverteilte Messgrößen bei der Behandlung mit dem klassischen
-Fehlerforpflanzungsgesetz zu falschen Vertrauensintervallen führen kann. 
- 
+Fehlerforpflanzungsgesetz zu falschen Vertrauensintervallen führen kann.
+
 Der dazugehörige Octavecode lautet:
 \begin{verbatim}
 function non_belldistri_linmodel (sigma=0.05)
-% sigma = 0.05, d.h. der Modellparanmter y wird hier mit gaussfoermigem 
+% sigma = 0.05, d.h. der Modellparanmter y wird hier mit gaussfoermigem
 % Modellprior, aber sehr schmal, fast dirac'sche delta-Distribution angenommen.
 
 close all
@@ -1223,7 +1223,7 @@ p_KM_2 = p_KM_matrix(:);
 
 %
 % Wahrscheinlichkeitsdichteverteilung des Modells
-% zur Vereinfachung nehme ich jetzt keine 
+% zur Vereinfachung nehme ich jetzt keine
 % Verteilung um die std_m sondern nur den einen Schätzwert
 p_y = exp(-0.5 * ( delta_y/std_KM ).^2 );
 %
@@ -1293,30 +1293,30 @@ Messgröße) $Y$ und den Eingangsgrößen $X_j$ (direkte Messgrößen) wie folgt
 \[
 Y = c_1 \cdot X_1 + c_2 \cdot X_2
 \]
-Die direkten Messgrößen $X_1$ und $X_2$ sind nicht korreliert und 
-normalverteilt mit: 
+Die direkten Messgrößen $X_1$ und $X_2$ sind nicht korreliert und
+normalverteilt mit:
 \[
-X_1 \sim N_{1}(\mu_1 =x_1=3,\sigma_1^2= 0.5^2 ) 
+X_1 \sim N_{1}(\mu_1 =x_1=3,\sigma_1^2= 0.5^2 )
 \quad X_2 \sim N_{2}(\mu_2=x_2= 5,\sigma_2^2=0.2^2 )
 \]
-Nehmen Sie für $c_1 = 2$ und für $c_2 = 3$ an. 
+Nehmen Sie für $c_1 = 2$ und für $c_2 = 3$ an.
 
 Als Priorinformation ist bekannt, dass die indirekte Messgröße
 normalverteilt ist mit \newline  $N_0(y_0=20,\sigma_0^2=3)$
 
-Bestimmen Sie den Schätzwert $y$ und die dazugehörige Unsicherheit 
-$u(y)$ mit den Gl.(\ref{eq:Erwartungswert_y_Normalverteilung}) und 
+Bestimmen Sie den Schätzwert $y$ und die dazugehörige Unsicherheit
+$u(y)$ mit den Gl.(\ref{eq:Erwartungswert_y_Normalverteilung}) und
 (\ref{eq:Unsicherheit_y_Normalverteilung})
 
 \textbf{Lösung zu 10-1} \\
-Die Kovarianzmatrix ist gegegen durch 
+Die Kovarianzmatrix ist gegegen durch
 \begin{align}
-\boldsymbol{V(X)} &= 
+\boldsymbol{V(X)} &=
 \begin{pmatrix}
 \operatorname{Var}(X_1) & 0 \\
 0 & \operatorname{Var}(X_2)  \\
 \end{pmatrix}
-= 
+=
 \begin{pmatrix}
 \sigma_1^2 & 0 \\
 0 & \sigma_2^2 \\
@@ -1324,9 +1324,9 @@ Die Kovarianzmatrix ist gegegen durch
 \end{align}
 Für die Unsicherheit von $y$ erhält man mit Vorwissen nach Gl.	(\ref{eq:Unsicherheit_y_Normalverteilung}):
 \[
-u^2(y) = \left[ \frac{1}{c_1^2\cdot \sigma_1^2 + c_2^2\cdot \sigma_2^2} 
+u^2(y) = \left[ \frac{1}{c_1^2\cdot \sigma_1^2 + c_2^2\cdot \sigma_2^2}
 + \frac{1}{\sigma_0^2} \right]^{-1}
- = \left[ \frac{1}{2^2\cdot 0.5^2 + 3^2\cdot 0.2^2} 
+ = \left[ \frac{1}{2^2\cdot 0.5^2 + 3^2\cdot 0.2^2}
 + \frac{1}{3^2} \right]^{-1} = 1.1815
 \]
 
@@ -1340,20 +1340,20 @@ y = u^2(y) \;\left[ \frac{\T c_1\cdot x_1 + c_2\cdot x_2}
 Als \textbf{Schätzwert} erhält man $y=20.89$ und als \textbf{Unsicherheit} $u(y)= 1.09 $
 
 
-\begin{thebibliography}{------}
-	\item[] \hspace*{5em}{\Large\bf zu Kapitel 10:}
-		\bibitem[Els07]{Els07} C. Elster: Calculation of unceratinty
-		in the presence of prior knowledge, Metrologia 44, 111-116, (2007)
-		\bibitem[Cox06]{Cox06} M.G. Cox, B.R.L. Siebert:The use of
-		a Monte Carlo method for evaluating ..., Metrologie 43, S178-88,
-		(2006)
-		\bibitem[GUMS1]{GUMS1} 
-		JCGM 101:2008; Evaluation of measurement data — Supplement 1 to the 
-		“Guide to the expression of uncertainty in measurement” — 
-		Propagation of distributions using a Monte Carlo method (2008); \newline 
-		https://www.bipm.org/utils/common/documents/jcgm/JCGM\_101\_2008\_E.pdf
-		\bibitem[Wue08]{Wue08} Gerd Wübbeler, Michael Krystek and Clemens Elster: Evaluation of measurement uncertainty
-		and its numerical calculation by a Monte Carlo method
-		Meas. Sci. Technol. 19 (2008) 084009 (4pp)
-		doi:10.1088/0957-0233/19/8/084009
-\end{thebibliography}
+%\begin{thebibliography}{------}
+%	\item[] \hspace*{5em}{\Large\bf zu Kapitel 10:}
+%		\bibitem[Els07]{Els07} C. Elster: Calculation of unceratinty
+%		in the presence of prior knowledge, Metrologia 44, 111-116, (2007)
+%		\bibitem[Cox06]{Cox06} M.G. Cox, B.R.L. Siebert:The use of
+%		a Monte Carlo method for evaluating ..., Metrologie 43, S178-88,
+%		(2006)
+%		\bibitem[GUMS1]{GUMS1}
+%		JCGM 101:2008; Evaluation of measurement data — Supplement 1 to the
+%		“Guide to the expression of uncertainty in measurement” —
+%		Propagation of distributions using a Monte Carlo method (2008); \newline
+%		https://www.bipm.org/utils/common/documents/jcgm/JCGM\_101\_2008\_E.pdf
+%		\bibitem[Wue08]{Wue08} Gerd Wübbeler, Michael Krystek and Clemens Elster: Evaluation of measurement uncertainty
+%		and its numerical calculation by a Monte Carlo method
+%		Meas. Sci. Technol. 19 (2008) 084009 (4pp)
+%		doi:10.1088/0957-0233/19/8/084009
+%\end{thebibliography}

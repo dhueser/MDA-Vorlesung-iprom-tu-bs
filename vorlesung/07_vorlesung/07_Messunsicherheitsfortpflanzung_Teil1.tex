@@ -1,10 +1,10 @@
 \section{Konzepte der Messunsicherheitsfortpflanzung (M.U.F.)}
 
 % 1 Fortpflanzung für lineare Modelle
-% 2 Überdeckungsintervall 
-% 3 Kombinierte Standardabweichung 
-%   (Sattherthwaite) 
-% 4 Erweiterungsfaktor 
+% 2 Überdeckungsintervall
+% 3 Kombinierte Standardabweichung
+%   (Sattherthwaite)
+% 4 Erweiterungsfaktor
 
 In der Messtechnik geht es darum, indirekte Messgrößen über Beobachtungen von direkten
 Messgrößen und über ein Schätzverfahren auf Basis eines Modells zu ermitteln.
@@ -117,8 +117,8 @@ Die internationale Richtlinie zur Berechnung von Messunsicherheiten umfasst mehr
 Dokumente:
 \begin{itemize}
 \item JCGM 100:2008 GUM 1995 with minor corrections \textsl{Evaluation of measurement
-data - Guide to the expression of uncertainty in measurement}; oftmals einfach mit \glqq GUM\grqq ~bezeichnet,
-betrifft univariate und explizite Modelle, 
+data - Guide to the expression of uncertainty in measurement} \cite{GUM95}; oftmals einfach mit \glqq GUM\grqq ~bezeichnet,
+betrifft univariate und explizite Modelle,
   \begin{itemize}
   \item die linear sind
   \begin{equation}
@@ -128,7 +128,7 @@ betrifft univariate und explizite Modelle,
   oder für die eine Linearisierung zulässig ist
   \begin{equation}
   Y = f(\mathbf{X})
-  = \left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}} + 
+  = \left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}} +
     \sum_{i=1}^N \underbrace{\left. \frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}}}_{c_i} \Delta X_i
   \label{univarTaylorLin}
   \end{equation}
@@ -149,15 +149,15 @@ bekannt.
 
 \item JCGM 101:2008 \textsl{Evaluation of measurement
 data - Supplement 1 to the Guide to the expression of
-uncertainty in measurement - Propagation of distributions using a Monte Carlo method}; 
+uncertainty in measurement - Propagation of distributions using a Monte Carlo method} \cite{GUMS1};
 kurz mit \glqq GUM - supplement 1\grqq ~bezeichnet, betrifft
 explizite und implizite, univariate Modelle,
   \begin{itemize}
-  \item die sich nicht einfach linearisieren lassen 
+  \item die sich nicht einfach linearisieren lassen
   \item und/oder die sich nicht in einer geschlossenen analytischen Form darstellen lassen.
   \end{itemize}
 Hier wird zu jeder direkten Messgröße eine Wahrscheinlichkeitsdichteverteilung vorgegeben.
-Gemäß den jeweiligen Verteilungen wird eine große Stichprobe (ein großes \textsl{Sample}) 
+Gemäß den jeweiligen Verteilungen wird eine große Stichprobe (ein großes \textsl{Sample})
 $$
 \mathbf{x}_1 = (x_{1,1},\dots,x_{N,1})^\mathsf{T}, \dots, \mathbf{x}_J = (x_{1,J},\dots,x_{N,J})^\mathsf{T}
 $$
@@ -175,7 +175,7 @@ $\rightarrow$ Dieses Verfahren wird Kapitel~\ref{montecarloMU} dargelegt.
 Guide to the expression of uncertainty in measurement - Extension to any number of output quantities}
 liefert die Verallgemeinerung der beiden Richtliniendokumente JCGM 100 und JCGM 101 für den multivariaten
 Fall mit mehreren $M>1$ indirekten Größen, also einem Größenvektor $\mathbf{Y}$.
-Hier wird dargelegt, wie man die Unsicherheit 
+Hier wird dargelegt, wie man die Unsicherheit
   \begin{itemize}
   \item bei linearen oder linearisierbaren Modellen
     mittels der Berechnung der Kovarianzen (in der Art wie wir es
@@ -261,9 +261,9 @@ Die wesentlichen Komponenten der Messunsicherheit sind
 
 Bei der Schätzung von Modellparametern (Quantifizierung der indirekten Messgrößen)
 spielt vielfach die numerische Zuverlässigkeit des Optimierungsalgorithmus eine
-wichtige Rolle. Wenn wir das Kostenfunktionsbeispiel der Abbn.~\ref{LSoptiExample1NM} und \ref{LSoptiExample1Grad} 
-mit dem der Abb.~\ref{LSoptiExample1NM} in Kapitel~\ref{LSoptiExample1SinusRQS} vergleichen, 
-erkennen wir, dass die Modellparameter bei Abb.~\ref{LSoptiExample1NM} und \ref{LSoptiExample1Grad} 
+wichtige Rolle. Wenn wir das Kostenfunktionsbeispiel der Abbn.~\ref{LSoptiExample1NM} und \ref{LSoptiExample1Grad}
+mit dem der Abb.~\ref{LSoptiExample1NM} in Kapitel~\ref{LSoptiExample1SinusRQS} vergleichen,
+erkennen wir, dass die Modellparameter bei Abb.~\ref{LSoptiExample1NM} und \ref{LSoptiExample1Grad}
 in etwa die gleiche Skalierung aufweisen, während die in Abb.~\ref{LSoptiExample1NM} stark unterschiedlich sind. In Abb.~\ref{LSoptiExample1NM} und \ref{LSoptiExample1Grad} sehen wir eine schöne, runde
 Kuhle und in Abb.~\ref{LSoptiExample1Grad} einen schmalen Graben. Im letzteren ist das Modell mit seinen
 Parametern nicht so gut konditioniert, so dass das Minimum nicht klar erkennbar ist.
@@ -327,7 +327,7 @@ Mit
 und
 $$
 \left(\sum_{i=1}^N c_i X_i \right) \; - \; E\left(\sum_{i=1}^N c_i X_i\right) \; = \;
-\left(\sum_{i=1}^N c_i X_i \right) \; - \; \sum_{i=1}^N c_i E(X_i) 
+\left(\sum_{i=1}^N c_i X_i \right) \; - \; \sum_{i=1}^N c_i E(X_i)
 $$
 gilt
 \begin{equation}
@@ -348,13 +348,13 @@ Durch Berechnung der Marginalverteilungen und weil $\int p(X_j) \, \operatorname
 für alle $j$, die weder $i$ noch $k$ sind erhalten wir
 \begin{equation}
 \operatorname {Var}\left(\sum _{{i=1}}^{N}c_i X_{i}\right) \; = \;
-\sum_{i=1}^N \sum_{k=1}^N  \; 
+\sum_{i=1}^N \sum_{k=1}^N  \;
 \int\limits_{-\infty}^{\infty} \int\limits_{-\infty}^{\infty}
 \, c_i \, \left(X_i \; - \; E(X_i)\right) \;
      c_k \, \left(X_k \; - \; E(X_k)\right) \, p(X_i, X_k)
 \, \operatorname{d}X_i \operatorname{d}X_k .
 \end{equation}
-Der Term auf der rechten Seite ist genau die Kovarianz der beiden 
+Der Term auf der rechten Seite ist genau die Kovarianz der beiden
 Größen $X_i$ und $X_k$.
 
 Mit der Definition der Kovarianz
@@ -388,23 +388,23 @@ die direkten Messgrößen korrelieren oder nicht.
 Es gibt Anwendungen, bei denen die Korrelationkoeffizienten, definiert in
 Abschnitt \ref{Kap1Kovarianzen} Gl.~(\ref{KorrelationskoeffizientKap1})
 $\rho_{i,k} = \frac{\operatorname {Cov}(X_{i},X_{k})}{\sqrt{\operatorname {Var}(X_{i}) \operatorname {Var}(X_{k})}}$,
-angegeben werden und die Standardabweichungen $\sigma_i = \sqrt{\operatorname {Var}(X_{i})}$, so dass 
+angegeben werden und die Standardabweichungen $\sigma_i = \sqrt{\operatorname {Var}(X_{i})}$, so dass
 das Unsicherheitsfortpflanzungsgesetz auch in dieser Form aufgeschrieben wird
 \begin{equation}
-\operatorname {Var}\left(Y\right) = \sigma_Y^2  = 
+\operatorname {Var}\left(Y\right) = \sigma_Y^2  =
 \sum _{{i=1}}^{N} \, c_i^2 \sigma_i^2 \, + \, 2\sum _{{i=1}}^{{N-1}}
-  \sum _{{k=i+1}}^{N} \, c_i c_k \rho_{i,k} \sigma_i \sigma_k 
+  \sum _{{k=i+1}}^{N} \, c_i c_k \rho_{i,k} \sigma_i \sigma_k
 \label{FortpflaKorrStd}
 \end{equation}
 
 Die aus dem Fortpflanzungsgesetz resultierende Messunsicherheit $\sigma_Y$ wird auch
 \textsl{kombinierte Standardabweichung} genannt wird.
 
-Oftmals, so auch im \textsl{Guide} für Messunsicherheit GUM - JCGM 100, wird anstelle der 
+Oftmals, so auch im \textsl{Guide} für Messunsicherheit GUM - JCGM 100, wird anstelle der
 Bezeichnung $\rho_{i,k}$ die
 Bezeichnung $r(X_{i},X_{k})$ verwendet, meint aber dasselbe.
 
-Alternativ, insbesondere im GUM - JCGM 100, gibt es die Schreibweise mit $u$ anstelle der 
+Alternativ, insbesondere im GUM - JCGM 100, gibt es die Schreibweise mit $u$ anstelle der
 Standardabweichungen $\sigma$ als Kürzel für \textsl{uncertainty} oder \textsl{Unsicherheit},
 und heißt in diesem Zusammenhang \textsl{Standardunsicherheit} (engl.\ \textsl{standard uncertainty}).
 
@@ -412,7 +412,7 @@ und heißt in diesem Zusammenhang \textsl{Standardunsicherheit} (engl.\ \textsl{
 {\begin{aligned}
 u^2(Y) & = \sum\limits_{i=1}^{N} \, c_i^2 \operatorname {Var}(X_{i}) \; + \; 2 \, \sum _{{i=1}}^{{N-1}}
   \sum\limits_{k=i+1}^{N} \, c_i \, c_k \operatorname {Cov}(X_{i},X_{k})\\
- & = \underbrace{\sum\limits_{i=1}^{N} \, c_i^2 \, u^2(X_i)}_{\mathrm{unkorrelierter~Fall}} \;  + \; 
+ & = \underbrace{\sum\limits_{i=1}^{N} \, c_i^2 \, u^2(X_i)}_{\mathrm{unkorrelierter~Fall}} \;  + \;
  \underbrace{2 \, \sum\limits_{i=1}^{{N-1}}
  \sum\limits_{k=i+1}^{N} \, c_i \, c_k \, \rho_{i,k} \, u(X_i) \, u(X_k)}_{\mathrm{Mischterme:~korrelierter~Fall}} .
 \end{aligned}}
@@ -420,12 +420,12 @@ u^2(Y) & = \sum\limits_{i=1}^{N} \, c_i^2 \operatorname {Var}(X_{i}) \; + \; 2 \
 \end{equation}
 mit
 \begin{equation}
-\operatorname{Cov}(X_i, X_i) \; \equiv \; \operatorname{Var}(X_i) 
+\operatorname{Cov}(X_i, X_i) \; \equiv \; \operatorname{Var}(X_i)
 \; \equiv \; \sigma^2_i \; \equiv \;  u^2(X_i)
 \end{equation}
 und
 \begin{equation}
-\operatorname{Cov}(X_i, X_k) \; \equiv \; 
+\operatorname{Cov}(X_i, X_k) \; \equiv \;
 \sigma_{i,k} \; \equiv \; u(X_i,X_k)
 \end{equation}
 Hier sind keine Tippfehler bezüglich der Quadrate, es gilt tatsächlich $u^2(X_i) = u(X_i,X_i)$
@@ -530,9 +530,9 @@ $s_y$ eine \textsl{kombinierte Standardabweichung}.
 
 Für den allgemeinen Fall mit einer Linearsierung durch die Taylorreihenentwicklung
 Gl.~(\ref{univarTaylorLin}) stellen die partiellen Ableitungen, also der Gradient, an
-der Stelle der Schätzer der direkten Größen die Sensitivitäten 
+der Stelle der Schätzer der direkten Größen die Sensitivitäten
 $c_i = \left. \frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}}$ dar. Sie drücken aus,
-wie stark sich die indirekte Größe $Y$ gemäß der Steigung (Gradienten) des Kurvenverlaufs des Modells 
+wie stark sich die indirekte Größe $Y$ gemäß der Steigung (Gradienten) des Kurvenverlaufs des Modells
 ändert, wenn es kleine Änderungen der direkten Größen gibt. Mit anderen Worten besagt dies, wie
 empfindlich die indirekte Größe auf Änderungen der direkten Größen reagiert, d.h.\ wie sensistiv
 das Modell an der Position $\bar{\mathbf{x}}$ ist.
@@ -542,8 +542,8 @@ in Taylorreihe entwickelbar bis zum linearen Term mit dem Erwartungswertevektor
 $\bar{\mathbf{x}}$ als Entwicklungspunkt
 \begin{equation}
 Y = f(\mathbf{X}) \approx \left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}} +
-\sum_{i=1}^N \left. 
-\frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i 
+\sum_{i=1}^N \left.
+\frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i
 \quad \text{und} \quad \mathrm{X} = \bar{\mathbf{x}} + \Delta \mathrm{X}
 \label{linearisiertesModellY}
 \end{equation}
@@ -562,19 +562,19 @@ direkten Messgrößen in die Modellgleichung $Y = f(\mathrm{X})$ gewonnen
 Zu der indirekten Messgröße soll die Varianz ermittelt werden
 \begin{equation}
 \operatorname{Var}(Y) =
-\int \left(Y - E(Y) \right)^2 p(Y) \mathrm{d}Y = 
+\int \left(Y - E(Y) \right)^2 p(Y) \mathrm{d}Y =
 \int \left(Y^2 - 2 Y \mathrm{E}(Y) + \mathrm{E}(Y)^2\right)  p(Y) \mathrm{d}Y
 \end{equation}
-mit $\int Y \mathrm{E}(Y) p(Y) \mathrm{d}Y = E(Y) \int Y p(Y) \mathrm{d}Y = 
+mit $\int Y \mathrm{E}(Y) p(Y) \mathrm{d}Y = E(Y) \int Y p(Y) \mathrm{d}Y =
 \mathrm{E}(Y) \mathrm{E}(Y)$ wird dies zu
 \begin{equation*}
-\operatorname{Var}(Y) 
+\operatorname{Var}(Y)
 = \int \left(Y^2 - \mathrm{E}(Y)^2\right)  p(Y) \mathrm{d}Y
 = \left(\int Y^2 p(Y) \mathrm{d}Y \right) - \mathrm{E}(Y)^2,
 \end{equation*}
 so dass gilt
 \begin{equation}
-\operatorname{Var}(Y) 
+\operatorname{Var}(Y)
 = \int \left(Y^2 - \mathrm{E}(Y)^2\right)  p(Y) \mathrm{d}Y
 = \int Y^2 p(Y) \mathrm{d}Y - \int \mathrm{E}(Y)^2  p(Y) \mathrm{d}Y .
 \end{equation}
@@ -583,93 +583,93 @@ $p(Y)$ aus $p(X_1,\dots,X_N) = p(\mathbf{X})$ und mit
 $\mathrm{d} \mathbf{X} = \mathrm{d} X_1\dots \mathrm{d} X_N$,
 sowie mit $\int \mathrm{E}(Y)^2  p(Y) \mathrm{d}Y = \mathrm{E}(Y)^2$
 \begin{equation}
-\operatorname{Var}(Y) 
+\operatorname{Var}(Y)
 = \int \left( \left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}} +
-\sum_{i=1}^N \left. 
+\sum_{i=1}^N \left.
 \frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i
  \right)^2
-p(\mathbf{X}) \mathrm{d} \mathbf{X} 
- \; - \; \mathrm{E}(Y)^2 
+p(\mathbf{X}) \mathrm{d} \mathbf{X}
+ \; - \; \mathrm{E}(Y)^2
 \end{equation}
 %\begin{small}
 \begin{equation*}
 = \int \left[ \left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}}^2 +
-2   \left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}} 
-\sum_{i=1}^N \left. 
+2   \left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}}
+\sum_{i=1}^N \left.
 \frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i
 + \left(
-\sum_{i=1}^N \left. 
+\sum_{i=1}^N \left.
 \frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i
  \right)^2 \right]  p(\mathbf{X}) \mathrm{d} \mathbf{X}
-\; - \mathrm{E}(Y)^2 
+\; - \mathrm{E}(Y)^2
 \end{equation*}
 %\end{small}
 \begin{equation*}
-= \int \left[ 
-2   \left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}} 
-\sum_{i=1}^N \left. 
+= \int \left[
+2   \left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}}
+\sum_{i=1}^N \left.
 \frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i
 + \left(
-\sum_{i=1}^N \left. 
+\sum_{i=1}^N \left.
 \frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i
- \right)^2 
+ \right)^2
 \right]  p(\mathbf{X}) \mathrm{d} \mathbf{X}
 \end{equation*}
 
 \begin{equation*}
-\operatorname{Var}(Y) 
-= \int \left[ 
-2   \left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}} 
-\sum_{i=1}^N \left. 
+\operatorname{Var}(Y)
+= \int \left[
+2   \left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}}
+\sum_{i=1}^N \left.
 \frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i
 + \left(
-\sum_{i=1}^N \left. 
+\sum_{i=1}^N \left.
 \frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i
- \right)^2 
+ \right)^2
 \right]  p(\mathbf{X}) \mathrm{d} \mathbf{X}
 \end{equation*}
 \begin{equation*}
-= 2 \int   \left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}} 
-\sum_{i=1}^N \left. 
+= 2 \int   \left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}}
+\sum_{i=1}^N \left.
 \frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i
 \,  p(\mathbf{X}) \mathrm{d} \mathbf{X}
 + \int \left(
-\sum_{i=1}^N \left. 
+\sum_{i=1}^N \left.
 \frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i
- \right)^2 
+ \right)^2
  p(\mathbf{X}) \mathrm{d} \mathbf{X}
 \end{equation*}
 \begin{equation*}
-= 2 \left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}}  \sum_{i=1}^N \left. 
-\frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} 
+= 2 \left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}}  \sum_{i=1}^N \left.
+\frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}}
 \underbrace{\int  \Delta X_i \, p(\mathbf{X}) \mathrm{d} \mathbf{X}}_{= 0}
 + \int \left(
-\sum_{i=1}^N \left. 
+\sum_{i=1}^N \left.
 \frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i
- \right)^2 
+ \right)^2
  p(\mathbf{X}) \mathrm{d} \mathbf{X}
 \end{equation*}
 
 \begin{equation}
-\operatorname{Var}(Y) 
-= 
+\operatorname{Var}(Y)
+=
 \int \left(
-\sum_{i=1}^N \left. 
+\sum_{i=1}^N \left.
 \frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i
- \right)^2 
- p(\mathbf{X}) \mathrm{d} \mathbf{X} 
-= 
+ \right)^2
+ p(\mathbf{X}) \mathrm{d} \mathbf{X}
+=
 \operatorname{Var}\left(\sum_{i=1}^N \left. \frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i\right)
 \end{equation}
 
 Als nächstes wollen wir wieder das Fortpflanzungsgesetz für die Messunsicherheit
 in der Gestalt von Gl.~(\ref{univarLinearFortpflanzungKap7}) erhalten, wobei jetzt die Koeffizienten
 $c_i$ die Steigungen der Tangenten $\frac{\partial f}{\partial X_i}$ an der Stelle
-der geschätzten Erwartungswerte sind, d.h.\ 
+der geschätzten Erwartungswerte sind, d.h.\
 $c_i = \left. \frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}}$
 
 \begin{equation}
-\operatorname{Var}(Y) 
+\operatorname{Var}(Y)
 = \operatorname{Var}\left(\sum_{i=1}^N c_i \Delta X_i\right)
 \end{equation}
 \begin{equation}
@@ -684,7 +684,7 @@ sei angemerkt, dass für die Sensitivitäten eine verkürzte, unmathematische Sc
 für die Sensitivitäten gewählt wurde, indem dort geschrieben steht $\frac{\partial f}{\partial x_i}$
 anstelle von $\left. \frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}}$ oder
 $\left. \frac{\partial f}{\partial X_i} \right|_{\bar x_1, \dots, \bar x_N}$.
-Im GUM wird angemerkt, dass die saloppe Notation $\frac{\partial f}{\partial x_i}$ für 
+Im GUM wird angemerkt, dass die saloppe Notation $\frac{\partial f}{\partial x_i}$ für
 $\frac{\partial f}{\partial X_i}$
 unter Verwendung der Schätzwerte $x_i$ zu den $X_i$ gewählt wird.
 In unserer Vorlesungsreihe sowie im GUM steht das Symbol mit dem großgeschriebenen $X_i$ für die
@@ -702,12 +702,12 @@ Die Intervallgrenzen des Vertrauensintervalls haben wir
 auch als Produkt aus einem Quantil und einer Standardabweichung repräsentiert, im Fall, dass
 eine Normalverteilung zugrunde gelegt wird in der Form
 \begin{equation}
-\left[\bar x \, - \, z_{1-\frac{1}{2}\alpha} \, \sigma_X, 
+\left[\bar x \, - \, z_{1-\frac{1}{2}\alpha} \, \sigma_X,
 \bar x \, + \, z_{1-\frac{1}{2}\alpha} \, \sigma_X \right]
 \end{equation}
 und im Fall, dass eine $t$-Verteilung zugrunde gelegt wird
 \begin{equation}
-\left[\bar x \, - \, t_{1-\frac{1}{2}\alpha, \nu} \, \sigma_X, 
+\left[\bar x \, - \, t_{1-\frac{1}{2}\alpha, \nu} \, \sigma_X,
 \bar x \, + \, t_{1-\frac{1}{2}\alpha, \nu} \, \sigma_X \right] .
 \end{equation}
 Bei dem Fall, dass eine $t$-Verteilung zugrunde gelegt wird, und zwar, wenn es um kleinere
@@ -730,7 +730,7 @@ was zwei Verteilungen liefert, und als dritte Verteilung noch
 \begin{equation}
 p_\mathrm{L,y}( X_1, X_2 | Y, s) \; = \;
 \frac{1}{\sqrt{2 \pi} \, s}
- e^{- \frac{1}{2} \, \left( \frac{Y - X_1 \, X_2}{s} \right)^2 } 
+ e^{- \frac{1}{2} \, \left( \frac{Y - X_1 \, X_2}{s} \right)^2 }
 \end{equation}
 wobei dann nicht nur über $s$, sondern auch über $X_1$ und $X_2$ integriert wird, um die
 Posterior als Marginalverteilung, die nur noch von $Y$ abhängt, zu erhalten.
@@ -740,19 +740,19 @@ und für ein\-fachere implizite Modellansätze wie die lineare Regression, ist
 es nicht erforderlich die numerisch aufwendigere
 kolmogoroff'sche Wahrscheinlichkeitsrechnung (Bildung
 der Produkte der Verteilungen) anzuwenden.
-Für explizite linearisierbare Modelle 
+Für explizite linearisierbare Modelle
 $$
 Y = f(\mathbf{X}) \qquad \mathbf{Y} = \vec f(\mathbf{X})
 $$
-mit $\vec f = (f_1,\dots,f_l, \dots, f_M)^\mathsf{T}$ ist das 
+mit $\vec f = (f_1,\dots,f_l, \dots, f_M)^\mathsf{T}$ ist das
 Fortpflanzungsgesetz gemäß Gl.~(\ref{UnsichFortpfl2}) wie folgt
 \begin{equation}
-u^2(Y_l) = \sum\limits_{i=1}^{N} \, \left( \left. \frac{\partial f_l(\mathbf{X})}{\partial X_i}\right|_{\bar{\mathbf{x}}} \right)^2 \, u^2(X_i) \;  + \; 
+u^2(Y_l) = \sum\limits_{i=1}^{N} \, \left( \left. \frac{\partial f_l(\mathbf{X})}{\partial X_i}\right|_{\bar{\mathbf{x}}} \right)^2 \, u^2(X_i) \;  + \;
 2 \, \sum\limits_{i=1}^{{N-1}}
  \sum\limits_{k=i+1}^{N} \, \left. \frac{\partial f_l(\mathbf{X})}{\partial X_i}\right|_{\bar{\mathbf{x}}} \,
  \left. \frac{\partial f_l(\mathbf{X})}{\partial X_k}\right|_{\bar{\mathbf{x}}}  \; \rho_{i,k} \, u(X_i) \, u(X_k)
 \end{equation}
-verwendbar. Für die lineare Regression 
+verwendbar. Für die lineare Regression
 $$
 Y_\mathrm{Regr} = \sum_{l=1}^M \theta_i X_l
 $$
@@ -769,7 +769,7 @@ Kovarianz der Modellparameter
 \end{equation}
 mit $J$ für den Stichprobenumfang und $M$ für die Anzahl der Modellparameter und mit
 \begin{equation}
-\operatorname{Var}(\boldsymbol \varepsilon) \; = \; 
+\operatorname{Var}(\boldsymbol \varepsilon) \; = \;
 	\frac{1}{J-M}\left(\boldsymbol Y \; - \; \boldsymbol X \, \hat{\boldsymbol \theta}\right)^\mathsf{T}
 \left(\boldsymbol Y \; - \; \boldsymbol X \, \hat{\boldsymbol \theta}\right) .
 \end{equation}
@@ -849,27 +849,27 @@ also
 \begin{equation}
 \operatorname{Var}(s_i^2) \; = \; \frac{2 \sigma_i^4}{\nu_i} .
 \end{equation}
-so dass nach Sattherthwaite aus Gl.~(\ref{VarianzvarianzSumme}) die \textsl{effektive Anzahl
+so dass nach Sattherthwaite \cite{Sat41} aus Gl.~(\ref{VarianzvarianzSumme}) die \textsl{effektive Anzahl
 der Freiheitsgrade} $\nu_\mathrm{eff}$ für die Größe $Y$, also $\nu_\mathrm{eff} = \nu_y$
 abgeschätzt wird mit
 $$
-\frac{2 \sigma_y^4}{\nu_y} \; = \;  \frac{2 c_1^4 \sigma_1^4}{\nu_1} 
+\frac{2 \sigma_y^4}{\nu_y} \; = \;  \frac{2 c_1^4 \sigma_1^4}{\nu_1}
  \; + \; \frac{2 c_2^4 \sigma_2^4}{\nu_2}
 $$
-mit $\operatorname{Var}(s_y^2) \; = \; \frac{2 \sigma_y^4}{\nu_y}$ 
+mit $\operatorname{Var}(s_y^2) \; = \; \frac{2 \sigma_y^4}{\nu_y}$
 und nach Rauskürzen des Faktors 2
 \begin{equation}
-\frac{\sigma_y^4}{\nu_y} \; = \;  \frac{c_1^4 \sigma_1^4}{\nu_1} 
+\frac{\sigma_y^4}{\nu_y} \; = \;  \frac{c_1^4 \sigma_1^4}{\nu_1}
  \; + \; \frac{c_2^4 \sigma_2^4}{\nu_2}
 \label{Satterthwaite}
 \end{equation}
 so dass
 \begin{equation}
-\nu_y \; = \; \frac{\sigma_y^4}{\frac{(c_1 \, \sigma_1)^4}{\nu_1} 
+\nu_y \; = \; \frac{\sigma_y^4}{\frac{(c_1 \, \sigma_1)^4}{\nu_1}
  \; + \; \frac{(c_2 \, \sigma_2)^4}{\nu_2}} .
 \label{EffectiveDFfuer2}
 \end{equation}
-Wenn mit Gleichung (\ref{ErwartungswertQ}) der Erwartungswert 
+Wenn mit Gleichung (\ref{ErwartungswertQ}) der Erwartungswert
 von $Q$ gleich der Anzahl der Freiheitsgrade ist, also $\operatorname{E}(Q) = \nu$
 für $Q = \nu \left(\frac{s}{\sigma}\right)^2$, dann ist der Erwartungswert der
 Varianz $s^2$
@@ -879,7 +879,7 @@ Varianz $s^2$
 und mit $\frac{\sigma^2}{\nu}$ als konstanter Faktor bezüglich der Wahrscheinlichkeitsdichte
 und mit Gl.~(\ref{ErwartungswertQ}) erhalten wir
 \begin{equation}
-\operatorname{E}(s^2) \; = \; \frac{\sigma^2}{\nu}  \operatorname{E}(Q) \; = \; 
+\operatorname{E}(s^2) \; = \; \frac{\sigma^2}{\nu}  \operatorname{E}(Q) \; = \;
 \frac{\sigma^2}{\nu} \nu \; = \; \sigma^2
 \end{equation}
 und wir setzten in Gl.~(\ref{EffectiveDFfuer2}) die Erwartungswerte
@@ -920,7 +920,7 @@ $z_\mathrm{max} - \bar Y = \bar Y - z_\mathrm{min}$
 \begin{equation}
 k \; = \; \frac{z_\mathrm{max} - \bar Y}{\sqrt{\operatorname{Var}(Y)}}
 \end{equation}
-was für klassische Berechnungsverfahren dem 
+was für klassische Berechnungsverfahren dem
 t-Quantil $t_{1-\alpha/2,\nu_\mathrm{eff}}$ entspricht
 \begin{equation}
 k \; = \; t_{1-\alpha/2,\nu_\mathrm{eff}} .
@@ -933,7 +933,7 @@ Erweiterungsfaktor und empirischer Standardabweichung sein.
 Während mit \textsl{kleinem} Buchstaben $u$ die Standardabweichungen bezeichnet werden,
 werden mit \textsl{großem} Buchstaben $U$ die erweiterten Unsicherheiten geschrieben. Die
 erweiterten Unsicherheiten sind das Produkt aus
-dem Erweiterungsfaktor $k$, der in der klassischen Statistik das $t$-Quantil ist, 
+dem Erweiterungsfaktor $k$, der in der klassischen Statistik das $t$-Quantil ist,
 und der Unsicherheit $u$.
 
 \section{Vergleich der klassischen mit der bayesischen Methode}
@@ -964,14 +964,14 @@ bezeichnen und uns auf keine physikalische Einheit festlegen, sondern diese allg
 \glqq Einheit\grqq ~nennen. Das Modell, das wir betrachten, ist wie folgt: Das rohe Messsignal,
 das als Spannung $U$ bzw.\ direkte Größe $X_\mathrm{M}$ vorliegt, ist über
 einen Kalibrierfaktor $K$ bzw.\ eine direkte Größe $X_\mathrm{K}$
-in die physikalische Einheit der indirekten physikalischen Größe $Y$ umzurechnen. 
+in die physikalische Einheit der indirekten physikalischen Größe $Y$ umzurechnen.
 Der Index M steht hier für Messung und der Index K für Kalibrierfaktor.
 
 Die indirekte Größe $Y$ habe irgendeine physikalische Einheit $\mathrm{E}$
 \begin{equation}
 Y \; = \; f(X_\mathrm{K}, X_\mathrm{M})  \; = \; X_\mathrm{K} \, X_\mathrm{M}
 \end{equation}
-und die beiden direkten Größen $X_\mathrm{M}$ und $X_\mathrm{K}$ 
+und die beiden direkten Größen $X_\mathrm{M}$ und $X_\mathrm{K}$
 sollen die Einheiten Volt $\mathrm{V}$ und $\frac{\mathrm{E}}{\mathrm{V}}$
 haben.
 
@@ -1002,12 +1002,12 @@ X_\mathrm{K} \; = \; (K_0 \, \pm \, U_\mathrm{K}) \, \frac{\mathrm{E}}{\mathrm{V
  \; = \; (0.0925 \, \pm \, 0.0180) \, \frac{\mathrm{E}}{\mathrm{V}}
  \qquad \mathrm{mit} \qquad k = 2 \quad \mathrm{und} \quad \nu_\mathrm{K} = 45
 $$
-Der Erweiterungsfaktor $k = 2$ ist der gerundete Wert für das 
+Der Erweiterungsfaktor $k = 2$ ist der gerundete Wert für das
 t-Quantil für $95 \, \%$ Vertrauensniveau $\nu_\mathrm{K} = 45$ Freiheitsgrade.
 Der genauere Wert wäre $k = 2.0141$, die Rundung ist hier zulässig.
 
 Wir beleuchten den Fall, dass wir die dem Sensor intrinsische Unsicherheit nicht kennen, aber
-davon ausgehen, dass die Unsicherheit $\sigma_\mathrm{winzig}$ 
+davon ausgehen, dass die Unsicherheit $\sigma_\mathrm{winzig}$
 wesentlich kleiner ist als die Streuung der Messvorgänge beim
 Erfassen der Rohdaten und der Sensorkalibrierung. Die beruht auf der Annahme
 das sich der Sensor linear verhält, also dass Linearitätsabweichungen vernachlässigbar
@@ -1032,10 +1032,10 @@ $$
 und
 $$
 s_\mathrm{M} \, = \, \sqrt{ \frac{1}{\nu_\mathrm{M}} \sum_{j=1}^9 (X_{\mathrm{M},j} - \bar x_\mathrm{M})^2 }
- \, = \, 17.8927 \, \mathrm{V} \, \approx \,  17.89 \, \mathrm{V} 
+ \, = \, 17.8927 \, \mathrm{V} \, \approx \,  17.89 \, \mathrm{V}
 $$
 mit $\nu_\mathrm{M} = 8$ Freiheitsgraden,
-damit also  
+damit also
 $K_0 \, s_\mathrm{M} \, = \, s_\mathrm{KM} \, = \, 1.655 \, \mathrm{E}$ und entsprechend für $\sigma_\mathrm{winzig} \, = \, 0.00497$.
 Da die Stichprobenwerte
 der Größe $X_\mathrm{M}$ in der Tabelle mit 2 Nachkommastellen angegeben werden, wird das Ergebnis
@@ -1060,24 +1060,23 @@ e^{-\frac{1}{2} \left(\frac{ Y \; - \; X_\mathrm{K} \, X_\mathrm{M}}{\sigma_\mat
  e^{-\frac{1}{2} \left(\frac{ X_\mathrm{M} - X_{\mathrm{M},j} }{s_\mathrm{M}} \right)^2} \,
 \operatorname{d}X_\mathrm{M} \, \operatorname{d}X_\mathrm{K} \, \operatorname{d}Y}
 \end{array}
-\label{marginalPosteriorFall2}
 \end{equation}
 Wir erhalten den Schätzwert $\bar y$ aus
 \begin{equation}
-\bar y \; = \; \int\limits_{-\infty}^\infty \, Y \, 
+\bar y \; = \; \int\limits_{-\infty}^\infty \, Y \,
 p(Y | (X_{\mathrm{M},1}, \dots, X_{\mathrm{M},J}), K_0, s_\mathrm{K}) \, \operatorname{d}Y
 \label{ErwartungswertY}
 \end{equation}
 und für die Bestimmung der Intervallgrenzen $y_1, y_2$ für das Überdeckungsintervall
 berechnen wir die kumulierte Verteilung
 \begin{equation}
-P(Y) \; = \;  \int\limits_{-\infty}^Y \, 
+P(Y) \; = \;  \int\limits_{-\infty}^Y \,
 p(Y^\prime | (X_{\mathrm{M},1}, \dots, X_{\mathrm{M},J}), K_0, s_\mathrm{K}) \, \operatorname{d}Y^\prime
 \label{cdfBeispiel}
 \end{equation}
 und dann für $95 \%$ Wahrscheinlichkeit
 \begin{equation}
-P(y_1) \, = \, 0.025 \; \Leftrightarrow \; y_1 \, = \, P^{-1}(0.025) 
+P(y_1) \, = \, 0.025 \; \Leftrightarrow \; y_1 \, = \, P^{-1}(0.025)
 \qquad \mathrm{und} \qquad P(y_2) \, = \, 0.975 \;
 \Leftrightarrow \;  y_2 \, = \, P^{-1}(0.975) .
 \end{equation}
@@ -1117,9 +1116,9 @@ für die Bestimmung des Überdeckungsintervalls einer indirekten Messgröße}
 Wir berechnen für $\rho_{\mathrm{M}, \mathrm{K}} = 0$
 $$
 u^2(Y) \; = \;
-\left(\frac{\partial}{\partial X_\mathrm{M}} X_\mathrm{M} X_\mathrm{K} 
+\left(\frac{\partial}{\partial X_\mathrm{M}} X_\mathrm{M} X_\mathrm{K}
 \right)^2_{\bar x_\mathrm{M}, K_0} \, s_\mathrm{M}^2 \; + \;
-\left(\frac{\partial}{\partial X_\mathrm{K}} X_\mathrm{M} X_\mathrm{K} 
+\left(\frac{\partial}{\partial X_\mathrm{K}} X_\mathrm{M} X_\mathrm{K}
 \right)^2_{\bar x_\mathrm{M}, K_0} \, s_\mathrm{K}^2
 $$
 d.h.
@@ -1160,7 +1159,7 @@ nimmt man dann auch einfach $k = 2$.
 Gemäß GUM kann die Formel für die effektive Anzahl von Freiheitsgraden also auch wie folgt
 geschrieben werden
 \begin{equation}
-\nu_y \; = \;  \lfloor u(Y)^4 \, \left( \sum\limits_{i=1}^N \, \frac{ (c_i \, s_i)^4}{\nu_i}  \right)^{-1} \rfloor 
+\nu_y \; = \;  \lfloor u(Y)^4 \, \left( \sum\limits_{i=1}^N \, \frac{ (c_i \, s_i)^4}{\nu_i}  \right)^{-1} \rfloor
 \label{SatterthwaiteFloor}
 \end{equation}
 wobei die beiden Symbole $\lfloor r \rfloor$ um die Variable $r$ geschrieben heißen, dass
@@ -1192,7 +1191,7 @@ liegen weiter auseinander, um die Intervalle besser einzeichnen zu können.
 %Wie wir in der letzten Vorlesung schon gelernt haben, wird in einigen Fällen angenommen, dass
 %die Verteilung sogar eine Rechteckverteilung ist, das heißt dass die Werte gleichverteilt über ein
 %Intervall sind. Wir haben in dem Zusammenhang den Begriff der \textbf{Ermittlungsmethode Typ B der Messunsicherheit}
-%eingeführt. 
+%eingeführt.
 
 Für Größen, deren Messunsicherheit nicht unmittelbar aus vorliegenden
 Stichproben gewonnen wurde, so dass Stichprobenumfang und Verteilungen nicht ermittelt
@@ -1253,7 +1252,7 @@ Den Begriff \glqq Verteilung\grqq ~setzen wir hier in Anführungsstriche, weil
 so eine dirac'sche Deltafunktion der Grenzfall ist, bei dem die Verteilung keine Verteilung mehr ist,
 weil die Werte scharf und nicht mehr verteilt sind.
 
-Bei dem Beispiel (mit Gun-Octave/matalb-Skript in Anhang \ref{AnhangBayesBeispiel}) 
+Bei dem Beispiel (mit Gun-Octave/matalb-Skript in Anhang \ref{AnhangBayesBeispiel})
 haben wir die numerischen Integrationen in
 sehr schlichter Weise dadurch realisiert, dass wir die betreffenden Größen in ein Raster äquidistanter
 Stützstellen diskretisiert haben und dann einfach summiert haben. Es sollte hiermit nur das Grundprinzip der
@@ -1329,7 +1328,7 @@ d_\mathrm{W} \; = \; \frac{d}{U_\mathrm{B}} \, U_\mathrm{W}
 Die Änderungen aufgrund der statistischen Streuung der Spannungswerte $U_\mathrm{B}$ sind
 so klein, dass für die Sensitivität $c_\mathrm{B}$ von $d_\mathrm{W}$
 bezüglich Änderungen von $U_\mathrm{B}$
-mit dem hyperbolischen Zusammenhang $d_\mathrm{W} \sim \frac{1}{U_\mathrm{B}}$ 
+mit dem hyperbolischen Zusammenhang $d_\mathrm{W} \sim \frac{1}{U_\mathrm{B}}$
 die Steigung der Tangenten an die Hyperbel verwendet wird. Es wird die
 Tangente verwendet, die an dem Punkt, der sich aus den Mittelwerten
 ergibt, anliegt.
@@ -1348,7 +1347,7 @@ definiert.
 Die kombinierte Varianz unter der Voraussetzung, dass die gemessenen Größen und
 die Angabe aus dem Kalbrierschein unkorreliert sind, ist
 \begin{equation}
-s_\mathrm{dW}^2 \; = \; (c_\mathrm{d} \, s_\mathrm{d})^2 \; + \; 
+s_\mathrm{dW}^2 \; = \; (c_\mathrm{d} \, s_\mathrm{d})^2 \; + \;
 (c_\mathrm{B} \, s_\mathrm{B})^2 \; + \; (c_\mathrm{W} \, s_\mathrm{W})^2
 \end{equation}
 mit $s_\mathrm{B}$ für die Standardabweichung der in Tabelle A5.1 aufgelisteten Werte,
@@ -1433,9 +1432,9 @@ und nach Integration mit Computeralgebrasoftware (beispielsweise Maxima)
 \begin{equation}
 \operatorname{E}(Q) \; = \; \frac{2 \Gamma\left(\frac{\nu}{2} + 1 \right)}{\Gamma\left(\frac{\nu}{2}\right)}
 \end{equation}
-und mit 
+und mit
 $$
-\Gamma\left(\frac{\nu}{2} + 1 \right) = 
+\Gamma\left(\frac{\nu}{2} + 1 \right) =
 \Gamma\left(\frac{\nu}{2} + \frac{2}{2} \right) = \Gamma\left(\frac{\nu+2}{2}\right)
 $$
 und
@@ -1446,7 +1445,7 @@ erhalten wir
 \begin{equation}
 \arraycolsep=2.4pt\def\arraystretch{2}
 \begin{array}{ll}
-2 \frac{\Gamma(\nu/2 + 1)}{\Gamma(\nu/2)} 
+2 \frac{\Gamma(\nu/2 + 1)}{\Gamma(\nu/2)}
  & = 2 \frac{(\nu)!!}{(\nu-2)!!} \; \frac{ 2^{(\nu-1)/2} }{ 2^{(\nu-1)/2 + 1}}\\
  & = 2 \frac{(\nu)!!}{(\nu-2)!!} \; \frac{1}{2} \\
  & = \nu
@@ -1485,7 +1484,3 @@ Gnu-Octave Code zu dem Beispiel aus Abschnitt~\ref{MUFklassischvsbayes}
 
 %\lstset{language=Matlab}
 \lstinputlisting[style=Matlab]{07_vorlesung/code/bayes_indirect_quantity_product.m}
-
-
-
-

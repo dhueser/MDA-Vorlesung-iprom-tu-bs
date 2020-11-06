@@ -23,7 +23,7 @@ physikalischen Prinzipien basieren. Die von einem Sensorsystem angezeigten
 Größen sind dabei im allgemeinem andere Größen als diejenigen, die zu messen sind.
 
 Wir hatten in der ersten Vorlesung, in Abschnitt \ref{ModelleStatistik},
-das Beispiel \glqq Beugung am Gitter\grqq ~betrachtet, 
+das Beispiel \glqq Beugung am Gitter\grqq ~betrachtet,
 um die Aufgabenstellung zu verstehen, dass man
 aus den einem Messsystem direkt zugänglichen Größen die gesuchten physikalischen
 Größen gewinnen möchte. Dabei wurde der Begriff des \textsl{Lösens inverser Probleme}
@@ -36,10 +36,11 @@ es etwas unterschiedliche Konzepte oder Heransgehensweisen für Schätzverfahren
 Auf der einen Seite steht der sogenannte \textsl{frequentistische} Ansatz, bei dem allein
 Beobachtungswerte direkter Größen verwendet werden und die Annahmen über die
 Verteilung der Streuung der direkten Größen impliziet schon ins Schätzverfahren
-selber eingebaut ist. Der Begriff Frequenz von englischen \textsl{frequency} übernommen
+selber eingebaut ist. Der Begriff Frequenz wurde an dieser Stelle aus der
+englischen Sprachkonvention \textsl{frequency} übernommen. Das
 heißt hier \textsl{Häufigkeit} und nicht \textsl{Frequenz} wie wir das im Deutschen
 vielfach mit einer periodischen Bewegung verbunden verstehen. Aber auch die
-Deutsche Sprache kennt die Sprechweise: \glqq Dies oder jenes Restaurant oder so
+deutsche Sprache kennt die Sprechweise: \glqq Dies oder jenes Restaurant oder so
 wird gut frequentiert\grqq ~im Sinne von \glqq wird häufig besucht\grqq.
 
 Eine Verallgemeinerung der Schätzmethoden wurde in den letzten Jahrzehnten
@@ -62,8 +63,8 @@ Ein Modell wird dargestellt durch eine Vorstellung darüber, wie die
 indirekten Messgrößen $Y_m$ mit den direkten Messgrößen $X_i$ verknüpft sind:
 \begin{equation}
 (Y_1, \dots, Y_M) \xrightarrow{\mathrm{Modell}} (X_1, \dots, X_N)
-\label{forwardModel}
-\end{equation} 
+\label{forwardModel1}
+\end{equation}
 \begin{figure}
 \begin{center}
 \includegraphics[width=0.8\textwidth, angle = 0]{04_vorlesung/media/Modell1.pdf}
@@ -97,7 +98,7 @@ P_1 \approx Y_1, \dots, P_M \approx Y_M
 Der Schätzvorgang wird als \textsl{Lösen eines inversen Problems} interpretiert.
 \begin{equation}
 (X_1, \dots, X_N) \xrightarrow{\mathrm{inverses \; Problem}} (Y_1, \dots, Y_M)
-\label{inverseProblem}
+\label{inverseProblemEq}
 \end{equation}
 
 Dazu haben wir die \textsl{Maximum-Likelihood}-Methode kennen gelernt, und gesehen, wie
@@ -128,15 +129,14 @@ Größen beteiligt sind, die keine Zufallsgrößen darstellen, die Regressoren.
 Die Residuen und entsprechend die Regressanden sind die Zufallsgrößen,
 für die die in Gl.~(\ref{Maximumlikelihood1}) formulierte Wahrscheinlichkeitsdichte
 angenommen wird.
-Diese Modellannahme, dass die \textsl{Residuen} als normalverteilt seien,
+Diese Modellannahme, dass die \textsl{Residuen} normalverteilt seien,
 hatten wir in Abschnitt \ref{RegressionsIdee} wie folgt formuliert:
 \begin{quote}
-Die abhängigen Größen $Y$, d.h.\ die \textsl{Regressanden} streuen und ihre Residuen sind
-	normalverteilt mit Erwartungswert $E(\varepsilon) = 0$ und Varianz $\mathrm{Var}(\varepsilon) = \sigma^2$. 
+Die abhängigen Größen $Y$, d.h.\ die \textsl{Regressanden}, streuen und ihre Residuen sind
+	normalverteilt mit Erwartungswert $E(\varepsilon) = 0$ und Varianz $\mathrm{Var}(\varepsilon) = \sigma^2$.
 	Die Residuen sind \textsl{unabhängig und identisch verteilt}, kurz u.i.v.
 	\begin{equation}
 	\varepsilon \; \overset{\mathrm{u.i.v.}}{\sim} \; \mathcal{N}(0,\sigma) .
-	\label{Resinormalverteilt}
 	\end{equation}
 \end{quote}
 Ein Residuum der linearen Regression mit $Y$ als Regressand und $X_i$ als Regressoren
@@ -165,12 +165,12 @@ Die Modellparameter sind der Steigungswinkel $\alpha$ der Geraden relativ zur Ab
 der Abstand $d$ der Geraden vom Koordinatenursprung. Das Residuum $\varepsilon_j$ stellt den
 Abstand des $j$-ten Messpunktes $(X_{1,j}, X_{2,j})$ zum Modell dar, siehe Abb.~\ref{ResiduenVarianzen}.
 \begin{equation}
-\varepsilon_j \; = \; 
+\varepsilon_j \; = \;
 \left(\begin{array}{c} X_{1,j}\\ X_{2,j}\end{array}\right) \cdot
 \left(\begin{array}{c} -\sin(\alpha)\\ \cos(\alpha)\end{array}\right) \; - \; d .
 \label{TLSgerade4}
 \end{equation}
-Wir haben in vorherigen Kapitel gesehen, dass 
+Wir haben in vorherigen Kapitel gesehen, dass
 bei der Lösung von inversen Problemen, bei denen im Gegensatz zur linearen
 Regression eine nichtlineare Verknüpfung der Modellparameter vorliegt,
 die Parameter nicht mehr durch Lösen eines linearen Gleichungssystems
@@ -180,18 +180,18 @@ d.h.\ viele unterschiedliche Werte vorzugeben,
 \begin{equation}
 (P_1, \dots, P_M) \xrightarrow{\mathrm{Modell}} (X_{\mathrm{Modell},1,j}, \dots, X_{\mathrm{Modell},N,j})
 \label{forwardModel2}
-\end{equation} 
- und das Ergebnis der 
+\end{equation}
+ und das Ergebnis der
 Modellrechnungen (\ref{forwardModel2}) mit den beobachteten Werten zu vergleichen, solange,
 bis das Ergebnis \glqq gut zu den beobachteten Werten passt\grqq, die Kostenfunktion minimal wird.
-Wir haben dazu im vorigen Kapitel einen Einblick erhalten, wie numerische entsprechende 
+Wir haben dazu im vorigen Kapitel einen Einblick erhalten, wie numerische entsprechende
 Optimierungsverfahren prinzipiell funktionieren.
 Im Fall der linearen Regression repäsentiert $\mathbf{p} = (\theta_1,\dots,\theta_M)$,
 im Fall der Geraden $\mathbf{p} = (\alpha, d)$ und im Fall der Einzelgröße
 $\mathbf{p} = \mu$.
 
 Die beiden Annahmen, dass - wie wir in Kapitel \ref{KapitellinReg} bereits bei der linearen Regression
-aufgeschrieben hatten - jede einzelne Beobachtung unabhängig und identisch verteilt 
+aufgeschrieben hatten - jede einzelne Beobachtung unabhängig und identisch verteilt
 (u.i.v) ist, sind Voraussetzung der Maximum-Likelihood-Methode:
 \begin{itemize}
 \item Jeder Messpunkt wurde unabhängig von allen anderen gewonnen.
@@ -203,9 +203,9 @@ Residuen von $j$ voneinander unabhängigen Messungen ist dann das Produkt der
 Wahrscheinlichkeitsdichten $p(\varepsilon_j | \mathbf{p}, \sigma)$
 jedes Residuums:
 \begin{equation}
-p(\varepsilon_1,\dots,\varepsilon_J | \mathbf{p}, \sigma) \; = \; 
-\prod\limits_{j = 1}^J \, p(\varepsilon_j | \mathbf{p}, \sigma) \; = \; 
- \frac{1}{(\sigma \sqrt{2 \pi})^J} \prod\limits_{j = 1}^J \, 
+p(\varepsilon_1,\dots,\varepsilon_J | \mathbf{p}, \sigma) \; = \;
+\prod\limits_{j = 1}^J \, p(\varepsilon_j | \mathbf{p}, \sigma) \; = \;
+ \frac{1}{(\sigma \sqrt{2 \pi})^J} \prod\limits_{j = 1}^J \,
 e^{-\frac{1}{2} \left(\frac{\varepsilon_j}{\sigma}\right)^2}.
 \end{equation}
 Anhand des kleinen Beispiels mit dem ohm'schen Gesetz haben wir in Abschnitt \ref{ModelleStatistik}
@@ -214,25 +214,25 @@ wie die Maximum-Likelihood-Methode in die Methode der kleinsten Summe der
 Residuenquadrate überführt wird:
 Unter Anwendung des Potenzgesetzes wird das Produkt der Wahrscheinlichkeiten also
 \begin{equation}
-p(\varepsilon_1,\dots,\varepsilon_J | \mathbf{p}, \sigma) \; = \; 
- \frac{1}{(\sigma \sqrt{2 \pi})^J}  \, 
+p(\varepsilon_1,\dots,\varepsilon_J | \mathbf{p}, \sigma) \; = \;
+ \frac{1}{(\sigma \sqrt{2 \pi})^J}  \,
 e^{-\frac{1}{2} \sum\limits_{j = 1}^J \left(\frac{\varepsilon_j}{\sigma}\right)^2} .
 \label{Likelihood1}
 \end{equation}
 Für die Maximum-Likelihood-Methode wird diese Wahrscheinlichkeitsdichte sorum gesehen,
-dass die in den Residuen steckenden Beobachtungen vorgegeben sind, und die 
+dass die in den Residuen steckenden Beobachtungen vorgegeben sind, und die
 Parameter $\mathbf{p}$ durch Maximieren der Verteilung gesucht werden und sich daraus
-die Streuung der Residuen $\sigma$ ergibt. Die Residuen sind Funktion der
+die Streuung $\sigma$ der Residuen ergibt. Die Residuen sind Funktion der
 Beobachtungen $X_{1,j},\dots,X_{N,j}$ und der Parameter $\mathbf{p}$, also
-$\varepsilon_j = \varepsilon(X_{1,j},\dots,X_{N,j}, \mathbf{p})$. 
+$\varepsilon_j = \varepsilon(X_{1,j},\dots,X_{N,j}, \mathbf{p})$.
 Deshalb formulieren wir die Wahrscheinlichkeitsdichte
-$p(\varepsilon_1,\dots,\varepsilon_J | \mathbf{p}, \sigma)$ 
+$p(\varepsilon_1,\dots,\varepsilon_J | \mathbf{p}, \sigma)$
 als \textsl{Likelihood} \\
 $l(\mathbf{p}, \sigma | \{X_{1,1}, \dots, X_{1,J}\}, \dots, \{X_{N,1}, \dots, X_{N,J}\})$
 um und Gl.~(\ref{Likelihood1}) formen wir damit wie folgt um zu
 \begin{equation}
-l(\mathbf{p}, \sigma | \{X_{1,1}, \dots, X_{1,J}\}, \dots, \{X_{N,1}, \dots, X_{N,J}\}) \; = \; 
- \frac{1}{(\sigma \sqrt{2 \pi})^J}  \, 
+l(\mathbf{p}, \sigma | \{X_{1,1}, \dots, X_{1,J}\}, \dots, \{X_{N,1}, \dots, X_{N,J}\}) \; = \;
+ \frac{1}{(\sigma \sqrt{2 \pi})^J}  \,
 e^{-\frac{1}{2} \sum\limits_{j = 1}^J \left(\frac{\varepsilon(X_{1,j},\dots,X_{N,j}, \mathbf{p})}{\sigma}\right)^2} .
 \label{Likelihood2}
 \end{equation}
@@ -242,12 +242,20 @@ die \textsl{Likelihood} maximal wird
 \begin{equation}
 \max_{\mathbf{p}} \, \left\{ l(\mathbf{p}) \right\}.
 \end{equation}
+Die Schreibweise $p(A | B)$ wird gesprochen \glqq Wahrscheinlichkeit $p$ des Eintretens eines Ereignisses
+$A$ gegeben $B$\grqq. Damit bedeutet $p(\varepsilon_1,\dots,\varepsilon_J | \mathbf{p}, \sigma)$ die Wahrscheinlichkeit,
+dass die Residuen die Werte $\varepsilon_1,\dots,\varepsilon_J$ annehmen, wenn die Parameter und die Streuung gegeben ist
+mit den Werten $\mathbf{p}, \sigma$. Die Formulierung der Wahrscheinlichkeit als \textsl{Likelihood}
+$l(\mathbf{p}, \sigma | \{X_{1,1}, \dots, X_{1,J}\}, \dots, \{X_{N,1}, \dots, X_{N,J}\})$ drückt die
+Wahrscheinlichkeit aus, dass die Parameter die Werte $\mathbf{p}, \sigma$ annehmen für gegebene Werte der
+direkten Messgrößen $\{X_{1,1}, \dots, X_{1,J}\}, \dots, \{X_{N,1}, \dots, X_{N,J}\}$.
+
 Wir maximieren die in Gl.~(\ref{Likelihood2}) gegebene \textsl{Likelihood}, indem wir
 ihren Exponenten minimieren
 \begin{equation}
 \min_{\mathbf{p}}\left\{ \sum\limits_{j = 1}^J \left(\frac{\varepsilon(X_{1,j},\dots,X_{N,j},\mathbf{p})}{\sigma}\right)^2  \right\}.
 \end{equation}
-Hierbei fällt die Varianz, die für alle Residuen und Parameter denselben Wert hat, raus und
+Hierbei fällt die Varianz $\sigma^2$, die für alle Residuen und Parameter denselben Wert hat, raus und
 das Optimierungsproblem, d.h.\ die Suche des Minimums, reduziert sich
 auf das Variieren der Parameter $\mathbf{p}$
 \begin{equation}
@@ -282,7 +290,7 @@ Vektorkomponenten parallel zu den die beiden Größen repäsentierenden Achsen z
 so dass wir für die Wahrscheinlichkeitsdichte
 der $j$-ten Beobachtung den verschiedenen Streubreiten Rechnung tragen können:
 \begin{equation}
-p(\varepsilon_j | \alpha, d, \sigma_1, \sigma_2) \; \propto \; 
+p(\varepsilon_j | \alpha, d, \sigma_1, \sigma_2) \; \propto \;
 e^{-\frac{1}{2} \left(\frac{\varepsilon_j \sin(\alpha)}{\sigma_1}\right)^2}
 \, e^{-\frac{1}{2} \left(\frac{\varepsilon_j \cos(\alpha)}{\sigma_2}\right)^2}
 \end{equation}
@@ -307,17 +315,17 @@ zusammengefasst wird.
 Die Wahrscheinlichkeitsdichteverteilung für den Vektor der Residuen der
 $j$-ten Beobachtung ist dann
 \begin{equation}
-p(\vec \varepsilon_j | \mathbf{p}, \boldsymbol{\Sigma}) \; \propto \; 
+p(\vec \varepsilon_j | \mathbf{p}, \boldsymbol{\Sigma}) \; \propto \;
 e^{-\frac{1}{2} \, \vec \varepsilon^\mathsf{T}_j \, \boldsymbol{\Sigma}^{-1} \, \vec \varepsilon_j }
 \end{equation}
 wobei
 \begin{equation}
-\vec \varepsilon_j \; = \; 
+\vec \varepsilon_j \; = \;
 \left(\begin{array}{c}
 X_{1,j}\\
 \vdots\\
 X_{N,j}
-\end{array}\right) \, - \, 
+\end{array}\right) \, - \,
 \left(\begin{array}{c}
 X_{\mathrm{Modell},1,j}\\
 \vdots \\
@@ -327,7 +335,7 @@ X_{\mathrm{Modell},N,j}
 \end{equation}
 Die \textsl{joined probability density} ist dann entsprechend
 \begin{equation}
-p(\vec \varepsilon_1,\dots, \vec \varepsilon_J | \mathbf{p}, \boldsymbol{\Sigma}) \; \propto \; 
+p(\vec \varepsilon_1,\dots, \vec \varepsilon_J | \mathbf{p}, \boldsymbol{\Sigma}) \; \propto \;
 \prod\limits_{j=1}^J \,
 e^{-\frac{1}{2} \, \vec \varepsilon^\mathsf{T}_j \, \boldsymbol{\Sigma}^{-1} \, \vec \varepsilon_j } \; = \;
 e^{-\frac{1}{2} \; \sum\limits_{j=1}^J \, \vec \varepsilon^\mathsf{T}_j \, \boldsymbol{\Sigma}^{-1} \, \vec \varepsilon_j } .
@@ -343,21 +351,20 @@ für die Wahrscheinlichkeit so, dass wir als Likelihood $l$, die eine Funktion d
 Variablen $\mathbf{p}$ und $\boldsymbol{\Sigma}$ für gegebene Beobachtungen $(X_{1,j},\dots,X_{N,j})$ ist,
 ausdrücken. Gl.~(\ref{LikelihoodKov}) bekommt dann folgende Gestalt
 \begin{equation}
-l(\mathbf{p}, \boldsymbol{\Sigma} | \{X_{1,1}, \dots, X_{1,J}\}, \dots, \{X_{N,1}, \dots, X_{N,J}\} ) \; \propto \; 
+l(\mathbf{p}, \boldsymbol{\Sigma} | \{X_{1,1}, \dots, X_{1,J}\}, \dots, \{X_{N,1}, \dots, X_{N,J}\} ) \; \propto \;
 e^{-\frac{1}{2} \; \sum\limits_{j=1}^J \, \vec \varepsilon^\mathsf{T}(X_{1,j},\dots,X_{N,j},\mathbf{p}) \, \boldsymbol{\Sigma}^{-1} \, \vec \varepsilon(X_{1,j},\dots,X_{N,j},\mathbf{p}) } .
 \label{LikelihoodKov2}
 \end{equation}
 Die Kovarianzmatrix ist wie die Residuen Funktion der Parameter und der Beobachtungen,
 also $\boldsymbol{\Sigma}(X_{1,j},\dots,X_{N,j},\mathbf{p})$ und
 variiert werden die Parameter $\mathbf{p}$.
-Zur Maximierung der in Gl.~(\ref{LikelihoodKov2}) gegebenen 
+Zur Maximierung der in Gl.~(\ref{LikelihoodKov2}) gegebenen
 \textsl{Likelihood} wird der Exponent minimiert, was in die Methode der kleinsten Residuenquadratsumme
 übergeht, also
 \begin{equation}
-\min_{\mathbf{p}} \; \left\{ 
- \sum\limits_{j=1}^J \, \vec \varepsilon(X_{1,j},\dots,X_{N,j},\mathbf{p})^\mathsf{T} \, 
+\min_{\mathbf{p}} \; \left\{
+ \sum\limits_{j=1}^J \, \vec \varepsilon(X_{1,j},\dots,X_{N,j},\mathbf{p})^\mathsf{T} \,
 \boldsymbol{\Sigma}(X_{1,j},\dots,X_{N,j},\mathbf{p})^{-1} \, \vec \varepsilon(X_{1,j},\dots,X_{N,j},\mathbf{p})_j \right\} .
-\label{generalLSmethod}
 \end{equation}
 
 \section{Konzept der bayesischen Verfahren zum Lösen inverser Probleme}
@@ -389,7 +396,7 @@ Wahrscheinlichkeitsdichteverteilung zugrunde gelegt wird.
 \underbrace{(X_1, \dots, X_N)}_{\mathrm{Zufallsgroessen}}
 \end{equation}
 \item Umgekehrt ist die Weise, wie das Zustandekommen der Streuung von Größen gesehen wird,
-in der Statistik, die den Satz von Bayes zum Berechnen bedingter Wahrscheinlichkeiten 
+in der Statistik, die den Satz von Bayes zum Berechnen bedingter Wahrscheinlichkeiten
 verwendet. Dieses Gebiet der Statistik wird wegen der Verwendung des
 Satzes von Bayes auch \textbf{bayesische Statistik} genannt.
 
@@ -404,7 +411,7 @@ Erwartungswert (das erste statistische Moment) und die Varianz (das zweite stati
 dieser kombinierten Verteilungsdichte ermittelt.
 
 Dabei repräsentieren die Wahrscheinlichkeiten für die zu erwartenden Beobachtungen eines Parameters
-(einer indirekten Messgröße), 
+(einer indirekten Messgröße),
 den Grad der Erkenntnis, vernünftiger Glaubwürdigkeit, über die indirekte Messgröße.
 In der englischsprachigen Literatur wird dies \textsl{Degree of Belief} genannt.
 
@@ -412,7 +419,7 @@ Vielleicht kann man sich diese Denkweise so vorstellen wie die Vorgehensweise ei
 oder Kriminalkommissars beim Sammeln von immer mehr Indizien zum Aufklären eines Falls.
 \begin{equation}
 \underbrace{(X_1, \dots, X_N)}_{\mathrm{Beobachtungen}} \xrightarrow{\mathrm{inverses \; Problem}}
-\underbrace{(Y_1, \dots, Y_M)}_{\mathrm{Zufallsgroessen}} 
+\underbrace{(Y_1, \dots, Y_M)}_{\mathrm{Zufallsgroessen}}
 \end{equation}
 Die Erkenntnis über die indirekten Größen (Modellparameter $Y_1, \dots, Y_M$) wird mit jeder
 neuen Messkampagne $\kappa$ revidiert
@@ -421,10 +428,10 @@ neuen Messkampagne $\kappa$ revidiert
 \left.
 \begin{array}{l}
 \underbrace{(X_1, \dots, X_N)}_{\mathrm{neue~Beobachtungen}}\\
-\underbrace{(Y_1, \dots, Y_M)_{\kappa-1}}_{\mathrm{Zufallsgroessen, vorher}} 
+\underbrace{(Y_1, \dots, Y_M)_{\kappa-1}}_{\mathrm{Zufallsgroessen, vorher}}
 \end{array}\right\}
  \xrightarrow{\mathrm{inverses \; Problem}}
-\underbrace{(Y_1, \dots, Y_M)_{\kappa}}_{\mathrm{Zufallsgroessen}} 
+\underbrace{(Y_1, \dots, Y_M)_{\kappa}}_{\mathrm{Zufallsgroessen}}
 \end{equation}
 \end{enumerate}
 Da wir wie vorher detailiert dargelegt die indirekten Größen durch approximative Modellparameter ersetzten,
@@ -435,10 +442,10 @@ sozusagen \glqq\textsl{upgedated}\grqq ~werden.
 \left.
 \begin{array}{l}
 \underbrace{(X_1, \dots, X_N)}_{\mathrm{neue~Beobachtung}}\\
-\underbrace{(P_1, \sigma^2_1, \dots, P_M, \sigma^2_M)_{\kappa-1}}_{\mathrm{Zufallsgroesse, vorher}} 
+\underbrace{(P_1, \sigma^2_1, \dots, P_M, \sigma^2_M)_{\kappa-1}}_{\mathrm{Zufallsgroesse, vorher}}
 \end{array}\right\}
  \xrightarrow{\mathrm{inverses \; Problem}}
-\underbrace{(P_1, \sigma^2_1, \dots, P_M, \sigma^2_M)_{\kappa}}_{\mathrm{Zufallsgroesse}} 
+\underbrace{(P_1, \sigma^2_1, \dots, P_M, \sigma^2_M)_{\kappa}}_{\mathrm{Zufallsgroesse}}
 \end{equation}
 
 Wir betrachten wie in Gl.~(\ref{oneQuantityOnly1}) den einfachsten Fall einer Größe,
@@ -464,7 +471,7 @@ Die gesamte Wahrscheinlichkeitsdichteverteilung $p(Y,\sigma)$ für die indirekte
 $Y$ bzw.\ deren Approximation als Modellparameter $P = \mu$ mit Streuung $\sigma$ wird als Produkt
 folgender Wahrscheinlichkeiten berechnet,
 \begin{itemize}
-\item der Likelihood $p_\mathrm{L}$, 
+\item der Likelihood $p_\mathrm{L}$,
 \item der Verteilungsdichte $p_\mathcal{N}(y | y_0, s_0)$ der Größe $\mu$ aus den {\`a} priori Informationen,
 \item der Verteilungsdichte $p_{\chi^2,\nu}(s)$ der Varianz $\sigma^2$ dieser Größe.
 \end{itemize}
@@ -510,8 +517,8 @@ $$
 \mathrm{d}s \, \mathrm{d}y \; = \; 1 .
 $$
 Die Verteilungsdichte $p(y, s | \{X_{1,1}, \dots, X_{1,J}\}, y_0, s_0)$ ist Funktion der
-Variablen $y$ und $s$ mit vorgegebenen Parametern 
-(festen Werten) $\{X_{1,1}, \dots, X_{1,J}\}$, $y_0, s_0$, wie es beispielhaft in 
+Variablen $y$ und $s$ mit vorgegebenen Parametern
+(festen Werten) $\{X_{1,1}, \dots, X_{1,J}\}$, $y_0, s_0$, wie es beispielhaft in
 Abb.~\ref{posteriormatrix} dargestellt wird.
 
 Die Wahrscheinlichkeitsdichteverteilung
@@ -519,7 +526,7 @@ $p_\mathcal{N}(y | y_0, s_0)$ wird \textsl{Prior} genannt und die
 Wahr\-schein\-lich\-keits\-dichte\-ver\-teilung $p(y, s | \{X_{1,1}, \dots, X_{1,J}\}, y_0, s_0)$
 wird \textsl{Posterior} genannt.
 
-Wir integrieren Gl.~(\ref{ProduktWahrscheinlichkeiten}) über $s$, um eine 
+Wir integrieren Gl.~(\ref{ProduktWahrscheinlichkeiten}) über $s$, um eine
 Wahrscheinlichkeits\-dichte\-verteilung zu gewinnen, die nur noch Funktion von $y$ ist
 \begin{equation}
 p(y | \{X_{1,1}, \dots, X_{1,J}\}, y_0, s_0)  \; = \;
@@ -535,10 +542,10 @@ Als Schätzwert für $Y$ berechnen wir den Erwartungswert des Modellparameters $
 durch Integration über alle Werte $y$ gewichtet mit der Wahrscheinlichkeitsdichte\\
 $p(y | \{X_{1,1}, \dots, X_{1,J}\}, y_0, s_0)$ aus Gl.~(\ref{RandverteilungPosterior})
 \begin{equation}
-y_1 \; = \; \int\limits_{-\infty}^\infty \, y \, p(y | \{X_{1,1}, \dots, X_{1,J}\}, y_0, s_0) 
+y_1 \; = \; \int\limits_{-\infty}^\infty \, y \, p(y | \{X_{1,1}, \dots, X_{1,J}\}, y_0, s_0)
 \operatorname{d}y
 \end{equation}
-wobei wir $y_1$ mit Index $1$ schreiben, um anzuzeigen, dass dies die Revision der Schätzung des 
+wobei wir $y_1$ mit Index $1$ schreiben, um anzuzeigen, dass dies die Revision der Schätzung des
 Modellparameters $\mu \approx Y$ gegenüber vorheriger Kenntnis mit Schätzwert $y_0$ ist.
 
 Zu einem \textsl{Messergebnis} gehört jeweils ein Intervall, das ein Maß für die Unsicherheit
@@ -574,7 +581,7 @@ Mit der in Anmerkung~1 angesprochenen Wahrscheinlichkeitsdichtefunktion sind Ver
 die in den Gln.~(\ref{Likelihood2}) und (\ref{LikelihoodKov2}) vorgestellen Likelihoods oder
 der in Gl.~(\ref{RandverteilungPosterior}) vorgestellten Posterior
 mit $p(y | \{X_{1,1}, \dots, X_{1,J}\}, y_0, s_0)$ gemeint. Die Likelihood wird
-für kleine Stich\-proben\-um\-fänge ($N < 100$) anstelle durch eine Gaußverteilung durch eine Verteilung 
+für kleine Stich\-proben\-um\-fänge ($N < 100$) anstelle durch eine Gaußverteilung durch eine Verteilung
 repräsentiert, deren Charakteristik im Kurvenverlauf
 überhöhter und mit länger auslaufenden Rändern ist. Sie wird $t$-Verteilung genannt.
 Wir werden später in der 5.\ Vorlesung auf diesen Verteilungtyp zurück kommen.
@@ -586,8 +593,8 @@ $1-\alpha = 0.95$ oder $0.90$ oder so.
 Dies ist die Wahrscheinlichkeit einer Größe, einen Messwert im Bereich (Intervall) $[y_\mathrm{min}, y_\mathrm{max}]$,
 anzunehmen
 \begin{equation}
-1 \, - \, \alpha \; = \; 
-\int\limits_{y_\mathrm{min}}^{y_\mathrm{max}} p(y) 
+1 \, - \, \alpha \; = \;
+\int\limits_{y_\mathrm{min}}^{y_\mathrm{max}} p(y)
 \operatorname{d}y .
 \label{UeberdeckungWahrscheinlichkeit}
 \end{equation}
@@ -597,7 +604,7 @@ Das Intervall $[y_\mathrm{min}, y_\mathrm{max}]$, zu dem die Fläche $1 - \alpha
 Verteilungsdichte $p(y)$ repräsentierenden Kurve gehört, wird \textsl{Überdeckungsintervall} genannt.
 Es ist der verallgemeinerte Begriff aus der Metrologie für das, was in der
 \textsl{frequentistischen} Statistik \textsl{Vertrauensintervall},
-engl.\  \textsl{Confidence Interval}, und in der \textsl{bayesischen} Statistik 
+engl.\  \textsl{Confidence Interval}, und in der \textsl{bayesischen} Statistik
 \textsl{Glaubwürdigkeitsintervall}, engl.\ \textsl{Credible Interval},
 heißt. Während der Begriff \textsl{Vertrauensintervall} in der deutschsprachigen
 Literatur üblich ist, wird anstelle des Begriffs \textsl{Glaubwürdigkeitsintervall} üblicherweise
@@ -611,7 +618,7 @@ dass im Fall der \textsl{bayesischen} Statistik
 die indirekte Messgröße $Y$ als Größe, die intrinsisch eine Zufallsgröße ist, betrachtet
 wird. Im Fall der \textsl{frequentistischen} Statistik wird $Y$ als eine Größe betrachtet,
 die einen festen, wahren Wert hat, der aber nicht zugänglich ist. Nur der
-Modellparameter, der eine indirekte Messgröße approximiert und der indirekt aus anderen 
+Modellparameter, der eine indirekte Messgröße approximiert und der indirekt aus anderen
 Zufallsgrößen gewonnen wird, wird als daraus resultierend einer Streuung unterliegend betrachtet.
 
 Die Wahrscheinlichkeit $1 - \alpha$ wird in der \textsl{frequentistischen} Statistik
@@ -624,15 +631,15 @@ Im folgenden werden wir sehen, wie eine \textsl{Messunsicherheit} im Rahmen der
 Die Grenzen des \textsl{Credible Interval} $[y_\mathrm{min}, y_\mathrm{max}]$ bilden die
 Integrationsgrenzen $y_\mathrm{min}$ und $y_\mathrm{max}$ der \textsl{Posterior}, so dass
 \begin{equation}
-1 \, - \, \alpha \; = \; 
-\int\limits_{y_\mathrm{min}}^{y_\mathrm{max}} p(y | \{X_{1,1}, \dots, X_{1,J}\}, y_0, s_0) 
+1 \, - \, \alpha \; = \;
+\int\limits_{y_\mathrm{min}}^{y_\mathrm{max}} p(y | \{X_{1,1}, \dots, X_{1,J}\}, y_0, s_0)
 \operatorname{d}y .
 \label{UeberdeckungPosterior}
 \end{equation}
 Die Integrationsgrenzen werden über die Umkehrfunktion der kumulativen Verteilung $P$ berechnet.
 Die kumulative Verteilung $P$ ist
 \begin{equation}
-P(y) \; = \; \int\limits_{-\infty}^{y} p(y^\prime | \{X_{1,1}, \dots, X_{1,J}\}, y_0, s_0) 
+P(y) \; = \; \int\limits_{-\infty}^{y} p(y^\prime | \{X_{1,1}, \dots, X_{1,J}\}, y_0, s_0)
 \operatorname{d}y^\prime .
 \end{equation}
 Die Umkehrfunktion schreiben wir symbolisch als $P^{-1}$.
@@ -664,7 +671,7 @@ graphisch dargestellten Beispiel verwendeten Stichprobe mit Stichprobenumfang $J
 $\nu = J - 1 = 6$ Freiheitsgraden ergeben hat, sowie das Vertrauensintervall (rote, gestrichelte Linien),
 das aus dem Mittelwert der Stichprobe
 und der empirischen Standardabweichung des Mittelwerts multipliziert mit dem
-t-Quantil gewonnen wurde. Mit dem Begriff t-Quantil werden die Integrationsgrenzen dieser Verteilung
+$t$-Quantil gewonnen wurde. Mit dem Begriff $t$-Quantil werden die Integrationsgrenzen dieser Verteilung
 zu vorgegebenen Wahrscheinlichkeiten $\frac{\alpha}{2}$ und $1 - \frac{\alpha}{2}$ bezeichnet.
 \end{itemize}
 
@@ -676,4 +683,3 @@ Die Ermittlung der \textsl{Messunsicherheit} im Rahmen der
 \textsl{frequentistischen} Statistik unter Verwendung der $t$-Verteilung
 wird in den kommenden Wochen detailiert und mit Beispielen dargelegt werden.
 Sie wird einen großen Teil dieser Vorlesungsreihe ausmachen und Klausurrelevanz haben.
-
