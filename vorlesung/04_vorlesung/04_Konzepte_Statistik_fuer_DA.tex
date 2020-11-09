@@ -36,7 +36,7 @@ es etwas unterschiedliche Konzepte oder Heransgehensweisen für Schätzverfahren
 Auf der einen Seite steht der sogenannte \textsl{frequentistische} Ansatz, bei dem allein
 Beobachtungswerte direkter Größen verwendet werden und die Annahmen über die
 Verteilung der Streuung der direkten Größen impliziet schon ins Schätzverfahren
-selber eingebaut ist. Der Begriff Frequenz wurde an dieser Stelle aus der
+selber eingebaut sind. Der Begriff Frequenz wurde an dieser Stelle aus der
 englischen Sprachkonvention \textsl{frequency} übernommen. Das
 heißt hier \textsl{Häufigkeit} und nicht \textsl{Frequenz} wie wir das im Deutschen
 vielfach mit einer periodischen Bewegung verbunden verstehen. Aber auch die
@@ -118,10 +118,31 @@ Wahrscheinlichkeit $p$ des Eintretens des Ereignises $\varepsilon$
 gegeben die Parameter $\theta_1,\dots,\theta_M$ und $\sigma$.
 \end{quote}
 Der Sprachgebrauch \glqq Eintretens des Ereignisses $\varepsilon$\grqq ~stellt die
-Sprechweise der Statistik dar. In den angewandten Wissenschaften, Messtechnik,
+Sprechweise der Statistik für \textsl{bedingte Wahrscheinlichkeiten} dar.
+
+\textsl{Bedingte Wahrscheinlichkeit} heißt:
+\begin{quote}
+Die Wahrscheinlichkeit des Eintretens
+zweier Ereignisse $A_1$ und $A_2$ geteilt durch die Wahrscheinlichkeit des Eintretens von $p(A_2)$
+\begin{equation}
+p(A_1 | A_2) \; = \; \frac{p(A_1 \; \mathrm{und} \; A_2)}{p(A_2)}
+\end{equation}
+\end{quote}
+Zur Illustration des Begriffs der bedingten Wahrscheinlichkeit betrachten wir ein
+Kartendeck mit 52 Spielkarten: Die Anzahl der Buben $B$ ist $4$, die Wahscheinlichkeit, einen Buben
+zu ziehen, ist $4/52$, die
+Wahrscheinlichkeit $p(B | F)$ von allen Bildern bzw.\ Figuren $F = \{B, D, K\}$, einen
+ Buben zu ziehen, ist $p(B | F) = 1/3$, die Wahrscheinlichkeit, eine Bildkarte zu ziehen ist $12/52$
+$$
+p(B | F) = \frac{p(B)}{p(F)} = \frac{4/52}{12/52} = \frac{4}{12} = \frac{1}{3} .
+$$
+
+In den angewandten Wissenschaften, Messtechnik,
 Elektrotechnik, etc.\ spricht man von der Wahrscheinlichkeit, dass die Messgröße
 oder hier die Abweichung der Messgröße vom Modell einen Wert $\varepsilon$ annimmt oder
-dass dieser Wert \glqq beobachtet\grqq ~wird.
+dass dieser Wert \glqq beobachtet\grqq ~wird unter der Bedingung, dass die Modellparameter
+die Werte $\theta_1,\dots,\theta_M, \sigma$ haben.
+
 
 In Kapitel \ref{KapitellinReg} wurden Sie mit der Regressionsrechnung vertraut gemacht, die
 eine spezielle Anwendung der Maximum-Likelihood-Methode darstellt, bei der
@@ -155,40 +176,28 @@ einzigen Zufallsgröße $X$ mit einem Modellparameter $\mu$ ist einfach
 \label{oneQuantityOnly1}
 \end{equation}
 
-Ein Residuum nach der Methode der kleinsten Quadrate für ein Modell ohne Regressoren,
-also mit allen beteiligten Größen als Zufallsgrößen, lässt sich allgemein nicht mit
-einem Ansatz darstellen, in dem die Modellparameter linear sind. In Abschnitt
-\ref{unterschiedVar} haben wir gesehen, dass bereits bei einer
-Geraden, für die sowohl die Abzissengröße $X_1$ als auch die Ordinatengröße $X_2$ streut,
-die Modellparameter nichtlinear in die Kostenfuntion eingehen.
-Die Modellparameter sind der Steigungswinkel $\alpha$ der Geraden relativ zur Abzisse und
-der Abstand $d$ der Geraden vom Koordinatenursprung. Das Residuum $\varepsilon_j$ stellt den
-Abstand des $j$-ten Messpunktes $(X_{1,j}, X_{2,j})$ zum Modell dar, siehe Abb.~\ref{ResiduenVarianzen}.
-\begin{equation}
-\varepsilon_j \; = \;
-\left(\begin{array}{c} X_{1,j}\\ X_{2,j}\end{array}\right) \cdot
-\left(\begin{array}{c} -\sin(\alpha)\\ \cos(\alpha)\end{array}\right) \; - \; d .
-\label{TLSgerade4}
-\end{equation}
-Wir haben in vorherigen Kapitel gesehen, dass
-bei der Lösung von inversen Problemen, bei denen im Gegensatz zur linearen
-Regression eine nichtlineare Verknüpfung der Modellparameter vorliegt,
-die Parameter nicht mehr durch Lösen eines linearen Gleichungssystems
-bestimmen werden können.
+Im Fall der linearen Regression repäsentiert $\mathbf{p} = (\theta_1,\dots,\theta_M)$,
+im Fall der Geraden $\mathbf{p} = (\alpha, d)$ und im Fall der Einzelgröße
+$\mathbf{p} = \mu$.
+
 Die Schätzung von Modellparametern besteht dann darin, die Modellparameter auszuprobieren,
-d.h.\ viele unterschiedliche Werte vorzugeben,
+d.h.\ viele unterschiedliche Werte \glqq auszuprobieren\grqq,
 \begin{equation}
 (P_1, \dots, P_M) \xrightarrow{\mathrm{Modell}} (X_{\mathrm{Modell},1,j}, \dots, X_{\mathrm{Modell},N,j})
 \label{forwardModel2}
 \end{equation}
  und das Ergebnis der
 Modellrechnungen (\ref{forwardModel2}) mit den beobachteten Werten zu vergleichen, solange,
-bis das Ergebnis \glqq gut zu den beobachteten Werten passt\grqq, die Kostenfunktion minimal wird.
-Wir haben dazu im vorigen Kapitel einen Einblick erhalten, wie numerische entsprechende
-Optimierungsverfahren prinzipiell funktionieren.
-Im Fall der linearen Regression repäsentiert $\mathbf{p} = (\theta_1,\dots,\theta_M)$,
-im Fall der Geraden $\mathbf{p} = (\alpha, d)$ und im Fall der Einzelgröße
-$\mathbf{p} = \mu$.
+bis das Ergebnis \glqq gut zu den beobachteten Werten passt\grqq.
+
+%, die Kostenfunktion minimal wird.
+
+%Dieses Ausprobieren, d.h.\ die Variation bzw.\ iterative Veränderung der Modellparameter
+%kann beispielsweise dadurch realisiert werden, dass die Steigung der Kostenfunktion,
+%d.h.\ die Gradientenfunktion $\nabla Q$, berechnet wird und zu jedem Iterationsschritt der
+%entsprechende Parametervektor eingesetzt, um den Schrittvektor zum nächsten Iterationsschritt
+%zu erhalten. Einen Einblick, wie numerische
+%Optimierungsverfahren prinzipiell funktionieren können, haben wir im vorigen Kapitel erhalten.
 
 Die beiden Annahmen, dass - wie wir in Kapitel \ref{KapitellinReg} bereits bei der linearen Regression
 aufgeschrieben hatten - jede einzelne Beobachtung unabhängig und identisch verteilt
@@ -240,10 +249,9 @@ e^{-\frac{1}{2} \sum\limits_{j = 1}^J \left(\frac{\varepsilon(X_{1,j},\dots,X_{N
 Die Maximum-Likelihood-Methode bedeutet: Finde derartige Parameter $\mathbf{p}$, für die
 die \textsl{Likelihood} maximal wird
 \begin{equation}
-\max_{\mathbf{p}} \, \left\{ l(\mathbf{p}) \right\}.
+\max_{\mathbf{p}, \sigma} \, \left\{ l(\mathbf{p}, \sigma | \{X_{1,1}, \dots, X_{1,J}\}, \dots, \{X_{N,1}, \dots, X_{N,J}\}) \right\}.
 \end{equation}
-Die Schreibweise $p(A | B)$ wird gesprochen \glqq Wahrscheinlichkeit $p$ des Eintretens eines Ereignisses
-$A$ gegeben $B$\grqq. Damit bedeutet $p(\varepsilon_1,\dots,\varepsilon_J | \mathbf{p}, \sigma)$ die Wahrscheinlichkeit,
+Damit bedeutet $p(\varepsilon_1,\dots,\varepsilon_J | \mathbf{p}, \sigma)$ die Wahrscheinlichkeit,
 dass die Residuen die Werte $\varepsilon_1,\dots,\varepsilon_J$ annehmen, wenn die Parameter und die Streuung gegeben ist
 mit den Werten $\mathbf{p}, \sigma$. Die Formulierung der Wahrscheinlichkeit als \textsl{Likelihood}
 $l(\mathbf{p}, \sigma | \{X_{1,1}, \dots, X_{1,J}\}, \dots, \{X_{N,1}, \dots, X_{N,J}\})$ drückt die
@@ -253,7 +261,7 @@ direkten Messgrößen $\{X_{1,1}, \dots, X_{1,J}\}, \dots, \{X_{N,1}, \dots, X_{
 Wir maximieren die in Gl.~(\ref{Likelihood2}) gegebene \textsl{Likelihood}, indem wir
 ihren Exponenten minimieren
 \begin{equation}
-\min_{\mathbf{p}}\left\{ \sum\limits_{j = 1}^J \left(\frac{\varepsilon(X_{1,j},\dots,X_{N,j},\mathbf{p})}{\sigma}\right)^2  \right\}.
+\min_{\mathbf{p}, \sigma}\left\{ \sum\limits_{j = 1}^J \left(\frac{\varepsilon(X_{1,j},\dots,X_{N,j},\mathbf{p})}{\sigma}\right)^2  \right\}.
 \end{equation}
 Hierbei fällt die Varianz $\sigma^2$, die für alle Residuen und Parameter denselben Wert hat, raus und
 das Optimierungsproblem, d.h.\ die Suche des Minimums, reduziert sich
@@ -266,10 +274,13 @@ Die Aussage, dass jeder Messpunkt identisch verteilt ist, also die gleiche Streu
 bedeutet aber nicht unbedingt, dass die Streubreite eine skalare Größe $\sigma$ sein muss,
 sondern nur, dass für alle Beobachtungen die identischen Varianzen gelten.
 
-Wenn der Messpunkt wie in Gl.~(\ref{TLSgerade4}) ein Vektor aus zwei Größen ist, die nicht
+
+Wenn der Messpunkt ein Vektor aus mehreren Größen ist, die nicht
 dieselbe physikalische Dimension haben oder zwar dieselbe physikalische Dimension, aber dennoch
 unterschiedlich stark streuen, weil die Messprinzipien sich unterscheiden, dann stellt sich
-die Darstellung der Residuen komplizierter dar. Ein Beispiel für unterschiedliche physikalische
+die Darstellung der Residuen komplizierter dar.
+
+Ein Beispiel für unterschiedliche physikalische
 Dimensionen kann wieder das mit der Messung eines elektrischen Widerstandes sein, bei dem $X_1$ eine
 Strommessung und $X_2$ eine Spannungsmessung repräsentieren kann.
 Ein Beispiel für dieselbe physikalische Dimension mit unterschiedlichem Streuverhalten kann ein
@@ -277,28 +288,76 @@ Oberflächenmessgerät sein, bei dem die Sensorik in vertikaler Richtung zur Mes
 Topographie ein optischer oder taktiler Punktsensor sein kann und die horizontale Achse durch einen
 Schlitten mit einem Wegmesssystem in Form eines Glasmaßstabs sein kann.
 
-Angenommen Größe $X_1$ zu Gl.~(\ref{TLSgerade4}) streue normalverteilt mit $\sigma_1$ und
-$X_2$ mit $\sigma_2$, so müsste man beispielsweise die Residuen aus Gl.~(\ref{TLSgerade4}) in
-Vektorkomponenten parallel zu den die beiden Größen repäsentierenden Achsen zerlegen
+Ein Residuum nach der Methode der kleinsten Quadrate für ein Modell ohne Regressoren,
+also mit allen beteiligten Größen als Zufallsgrößen, lässt sich allgemein nicht mit
+einem Ansatz darstellen, in dem die Modellparameter linear sind. Bereits bei einer
+Geraden, für die sowohl die Abzissengröße $X_1$ als auch die Ordinatengröße $X_2$ streut,
+gehen die Modellparameter nichtlinear in die Kostenfuntion ein.
+Die Modellparameter sind der Steigungswinkel $\alpha$ der Geraden relativ zur Abzisse und
+der Abstand $d$ der Geraden vom Koordinatenursprung. Das Residuum $\varepsilon_j$ stellt den
+Abstand des $j$-ten Messpunktes $(X_{1,j}, X_{2,j})$ zum Modell dar, siehe Abb.~\ref{ResiduenVarianzen}.
+
+Wir betrachten als Beispiel zwei Messgrößen gleicher physikalischer Dimension, jedoch
+mit unterschiedlichem Streuverhalten:
+\begin{figure}
+\begin{center}
+\includegraphics[width=100mm]{03_vorlesung/media/ResiduenVarianzen.pdf}
+\end{center}
+\caption{Veranschaulichung für Schätzung von Geradenparametern durch
+Minimierung der Summe der Quadrate der Residuen bei verschiedenen Varianzen
+$\sigma_1^2$ und $\sigma_2^2$ der beiden direkten Messgrößen $X_1$ und $X_2$
+\label{ResiduenVarianzen}}
+\end{figure}
+Eine Gerade, die in einer Ebene liegt, mit den beiden direkten Messgrößen $X_1$ und $X_2$
+und den Modellparametern $\alpha$ für den Winkel und
+$d$ für den Abstand der Geraden vom Koordinatenursprung
+\begin{equation}
+\varepsilon_j \; = \;
+\left(\begin{array}{c} X_{1,j}\\ X_{2,j}\end{array}\right) \cdot
+\left(\begin{array}{c} -\sin(\alpha)\\ \cos(\alpha)\end{array}\right) \; - \; d .
+\label{TLSgerade}
+\end{equation}
+Hier stehen die Residuen $\varepsilon_j$ des $j$-ten Messpunktes $(X_{1,j}, X_{2,j})$
+senkrecht auf der Modellgeraden, siehe Abb.~\ref{ResiduenVarianzen}, weil beide
+Messgrößen $X_1$ und $X_2$ gleichermaßen Zufallsgrößen sind und nicht eine davon
+ein Regressor ist und die andere ein Regressand ist. Bei dieser \textsl{Least-Square} Methode
+spricht man auch von \textsl{Total Least-Square} Methode, weil \glqq total\grqq ~alle Größen
+streuen können, also Zufallsgrößen sind.
+
+\begin{equation}
+Q(\alpha, d) \; = \;
+\sum\limits_{j=1}^J \,  \left(\frac{\varepsilon_j(\alpha, d) \sin(\alpha)}{\sigma_1}\right)^2
+\; + \; \sum\limits_{j=1}^J \, \left(\frac{\varepsilon_j(\alpha, d) \cos(\alpha)}{\sigma_2}\right)^2 .
+\label{KostenfktLTSVarmatrix1}
+\end{equation}
+$\sigma_i^2$ ist die Varianz der Messgröße $X_i$ für alle $j=1,\dots,J$ Beobachtungen zu
+dieser Messgröße. Zu jeder Messgröße gibt es ein Beobachtungstupel $(X_{i,1}, \dots, X_{i,J})$
+mit $i = 1, \dots, N$ und andererseits zu jeder Beobachtung $j = 1, \dots, J$
+ein Messwertetupel gemäß den direkten Messgrößen $(X_{1,j}, \dots, X_{N,j})$. Zu jeder
+Beobachtung gibt es das Residuum entsprechend als Vektor
 \begin{equation}
 \vec \varepsilon_j \; = \;
-\left(\begin{array}{c}
--\varepsilon_j \sin(\alpha)\\
+\left(\begin{array}{c} -\varepsilon_j \sin(\alpha)\\
 \varepsilon_j \cos(\alpha)
-\end{array}\right) ,
+\end{array}\right)  \; = \;
+\left(\begin{array}{c} \varepsilon_{1,j}\\
+\varepsilon_{2,j}
+\end{array}\right).
 \end{equation}
-so dass wir für die Wahrscheinlichkeitsdichte
-der $j$-ten Beobachtung den verschiedenen Streubreiten Rechnung tragen können:
+Die Kostenfunktion Gl.~(\ref{KostenfktLTSVarmatrix1}) in Vektorschreibweise sieht dann wie folgt aus
 \begin{equation}
-p(\varepsilon_j | \alpha, d, \sigma_1, \sigma_2) \; \propto \;
-e^{-\frac{1}{2} \left(\frac{\varepsilon_j \sin(\alpha)}{\sigma_1}\right)^2}
-\, e^{-\frac{1}{2} \left(\frac{\varepsilon_j \cos(\alpha)}{\sigma_2}\right)^2}
+Q(\alpha, d) \; = \;
+\sum\limits_{j=1}^J \,
+\vec \varepsilon_j^\mathsf{T} \left(
+\begin{array}{cc}
+\frac{1}{\sigma_1^2} & 0 \\
+0 & \frac{1}{\sigma_2^2}
+\end{array}\right) \vec \varepsilon_j \,
+\label{KostenfktLTSVarmatrix2} .
 \end{equation}
-In der Literatur werden zur Anpassung einer Geraden an zwei Größen
-unterschiedlicher Varianz sehr verschiedene Ansätze und Methoden vorgeschlagen.
 
-Die Abweichungen der direkten Messgrößen zu den entsprechenden Werten, also die Residuen,
-die bei der Modellschätzung Gl.~(\ref{forwardModel2}) errechnet werden, müssen als
+Die Abweichungen der direkten Messgrößen zu den entsprechenden Werten, die Residuen,
+die bei der Modellschätzung Gl.~(\ref{forwardModel2}) errechnet werden, müssen also als
 vektorielle Größen behandelt werden, wenn die verschiedenen direkten Messgrößen $X_i$ eine
 unterschiedliche Varianz $\sigma_i^2 = \sigma_{i,i}$ oder noch allgemeiner auch
 Kovarianzen $\sigma_{i,k}$ aufweisen, die als Kovarianzmatrix
@@ -310,29 +369,28 @@ Kovarianzen $\sigma_{i,k}$ aufweisen, die als Kovarianzmatrix
 \sigma_{N,1} & \dots & \sigma_N^2
 \end{array}\right)
 \end{equation}
-zusammengefasst wird.
+zusammengefasst wird, so dass die Kostenfunktion in folgender Gestalt dargestellt wird
+\begin{equation}
+Q(\mathbf{p}) \; = \;
+ \sum\limits_{j=1}^J \, \vec \varepsilon(X_{1,j},\dots,X_{N,j},\mathbf{p})^\mathsf{T} \,
+\boldsymbol{\Sigma}(X_{1,j},\dots,X_{N,j},\mathbf{p})^{-1} \, \vec \varepsilon(X_{1,j},\dots,X_{N,j},\mathbf{p})_j .
+\label{generalLSmethod}
+\end{equation}
+Wir haben im vorherigen Kapitel gesehen, dass
+bei der Lösung von inversen Problemen, bei denen im Gegensatz zur linearen
+Regression eine nichtlineare Verknüpfung der Modellparameter vorliegt,
+die Parameter nicht mehr durch Lösen eines linearen Gleichungssystems
+bestimmt werden können, sondern mittels eines der Methoden der
+nichtlinearen Optimierung, die iterative Verfahren sind.
+
 
 Die Wahrscheinlichkeitsdichteverteilung für den Vektor der Residuen der
 $j$-ten Beobachtung ist dann
 \begin{equation}
 p(\vec \varepsilon_j | \mathbf{p}, \boldsymbol{\Sigma}) \; \propto \;
-e^{-\frac{1}{2} \, \vec \varepsilon^\mathsf{T}_j \, \boldsymbol{\Sigma}^{-1} \, \vec \varepsilon_j }
+e^{-\frac{1}{2} \, \vec \varepsilon^\mathsf{T}_j \, \boldsymbol{\Sigma}^{-1} \, \vec \varepsilon_j }.
 \end{equation}
-wobei
-\begin{equation}
-\vec \varepsilon_j \; = \;
-\left(\begin{array}{c}
-X_{1,j}\\
-\vdots\\
-X_{N,j}
-\end{array}\right) \, - \,
-\left(\begin{array}{c}
-X_{\mathrm{Modell},1,j}\\
-\vdots \\
-X_{\mathrm{Modell},N,j}
-\end{array}\right) .
-\label{Residuen}
-\end{equation}
+
 Die \textsl{joined probability density} ist dann entsprechend
 \begin{equation}
 p(\vec \varepsilon_1,\dots, \vec \varepsilon_J | \mathbf{p}, \boldsymbol{\Sigma}) \; \propto \;
@@ -343,16 +401,18 @@ e^{-\frac{1}{2} \; \sum\limits_{j=1}^J \, \vec \varepsilon^\mathsf{T}_j \, \bold
 \end{equation}
 
 
-Für die Lösung eines inversen Problems geht es darum, die Parameter $\mathbf{p}$
-für gegebene Beobachtungen $X_{i,j}$ zu finden, die die Wahrscheinlichkeitsdichte
-in Gl.~(\ref{LikelihoodKov}) maximieren. Wir schreiben deshalb die Residuenvektoren $\vec \varepsilon_j$ als Funktion
+Bei der Lösung eines inversen Problems geht es darum, die Parameter $\mathbf{p}$
+für gegebene Beobachtungen $X_{i,j}$ zu finden, die das Maximum der Wahrscheinlichkeitsdichtefunktion
+Gl.~(\ref{LikelihoodKov}) bilden, d.h.\ die Parameter, für die die Wahrscheinlichkeitsdichte
+maximal wird. Wir schreiben deshalb die Residuenvektoren $\vec \varepsilon_j$ als Funktion
 der Beobachtungen $\vec \varepsilon(X_{1,j},\dots,X_{N,j},\mathbf{p})$ auf und verändern die Schreibweise
 für die Wahrscheinlichkeit so, dass wir als Likelihood $l$, die eine Funktion der
 Variablen $\mathbf{p}$ und $\boldsymbol{\Sigma}$ für gegebene Beobachtungen $(X_{1,j},\dots,X_{N,j})$ ist,
 ausdrücken. Gl.~(\ref{LikelihoodKov}) bekommt dann folgende Gestalt
 \begin{equation}
 l(\mathbf{p}, \boldsymbol{\Sigma} | \{X_{1,1}, \dots, X_{1,J}\}, \dots, \{X_{N,1}, \dots, X_{N,J}\} ) \; \propto \;
-e^{-\frac{1}{2} \; \sum\limits_{j=1}^J \, \vec \varepsilon^\mathsf{T}(X_{1,j},\dots,X_{N,j},\mathbf{p}) \, \boldsymbol{\Sigma}^{-1} \, \vec \varepsilon(X_{1,j},\dots,X_{N,j},\mathbf{p}) } .
+e^{-\frac{1}{2} \; \sum\limits_{j=1}^J \, \vec \varepsilon^\mathsf{T}(X_{1,j},\dots,X_{N,j},\mathbf{p}) \,
+ \boldsymbol{\Sigma}^{-1} \, \vec \varepsilon(X_{1,j},\dots,X_{N,j},\mathbf{p}) } .
 \label{LikelihoodKov2}
 \end{equation}
 Die Kovarianzmatrix ist wie die Residuen Funktion der Parameter und der Beobachtungen,
@@ -448,10 +508,53 @@ sozusagen \glqq\textsl{upgedated}\grqq ~werden.
 \underbrace{(P_1, \sigma^2_1, \dots, P_M, \sigma^2_M)_{\kappa}}_{\mathrm{Zufallsgroesse}}
 \end{equation}
 
-Wir betrachten wie in Gl.~(\ref{oneQuantityOnly1}) den einfachsten Fall einer Größe,
-die wir wie in Gl.~(\ref{oneQuantityOnly1}) auch hier als Modellparameter $P = \mu$, der
-eine indirekte Messgröße $Y$ repräsentieren soll, aufschreiben.
-Die Größe $\mu$ ist aus einer Stichprobe zu schätzen.
+Die hier umgangsprachlich einfach \glqq\textsl{updaten}\grqq ~der Modellparameter genannte
+Veränderung der Parameter aufgrund neuer Beobachtungen, das heißt neuer Informationen, wird
+Informationszuwachs oder Erkenntniszuwachs genannt. In Abb.\ \ref{BayesFreqVergleich}
+sind die beiden Heransgehensweisen der frequentistischen und der bayesischen Statistik im
+Überblick dargestellt.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=140mm]{04_vorlesung/media/Konzept_Bayes.pdf}
+\caption{Übersicht zu den Heransgehensweisen der frequentistischen und der bayesischen
+Statistik}
+\label{BayesFreqVergleich}
+\end{center}
+\end{figure}
+
+Der Heransgehensweise, einen Informationszuwachs statistisch zu verarbeiten, liegt der \textsl{Satz von
+Bayes} zu bedingten Wahrscheinlichkeiten zugrunde:
+\begin{equation}
+p(M | D) \; = \; \frac{p(D | M) p(T)}{p(D | M) p(M) \, + \, p(D | \lnot M) p(\lnot M)}
+\label{bayestheorem}
+\end{equation}
+mit $M$ für die Theorie und $D$ für die Indizien (engl.\ \textsl{evidence}).
+
+
+Die Theorie ist dabei
+ein Modell $f$ mit Parametern $\mathbf{p}$, $\boldsymbol{\Sigma}$, die als statistisches Ereignis $M$
+betrachtet wird. Die Indizien sind die Tupel von Beobachtungen zu
+den direkten Messgrößen, die Daten, die ebenfalls als Ereignis $D$ betrachtet werden.
+\begin{itemize}
+\item $p(M)$ heißt \textsl{Prior}:
+
+Wahrscheinlichkeit des {\`a} priori geschätzten
+Modells mit $(\mathbf{p}_0, \boldsymbol{\Sigma}_0)$
+
+\item $p(M | D)$ heißt \textsl{Posterior}:
+
+Wahrscheinlichkeit des Modells mit Parametern $(\mathbf{p}, \boldsymbol{\Sigma})$
+für die neuen Beobachtungen, also den hinzugewonnenen Datensatz
+ $D = \{(X_{1,1},\dots,X_{1,J}), \dots,(X_{N,1},\dots  X_{N,J})\}$.
+\end{itemize}
+
+% ----------
+
+Für das Verständnis, wie das Prinzip der bayesischen Statistik funktioniert,
+betrachten wir das ganz einfache Beispiel Gl.~(\ref{oneQuantityOnly1}), also
+ den einfachsten Fall einer einzigen Größe. Der Modellparameter $P = \mu$ repräsentiere
+eine indirekte Messgröße $Y$. Die Größe $\mu$ ist aus einer Stichprobe zu schätzen.
 Als {\`a} priori Information seien folgende Angaben bekannt:
 \begin{itemize}
 \item Der {\`a} priori Schätzwert der Modellgröße $\mu$ sei $y_0$.
@@ -459,7 +562,8 @@ Als {\`a} priori Information seien folgende Angaben bekannt:
 \item Diese Größe sei normalverteilt, also verwenden wir als
 Verteilungsdichtefunktion $p$ die Gaußverteilung.
 \end{itemize}
-Die neue Stichprobe $\{X_{1,1}, \dots, X_{1,J}\}$ sei vom Umfang deutlich kleiner, so dass
+Die neue Stichprobe $\{X_{1,1}, \dots, X_{1,J}\}$ sei vom Umfang deutlich kleiner als
+die Informationsbasis, die dem {\`a} priori-Wissen zugrunde gelegen hat, so dass
 für die Streuung der Varianz die $\chi^2$-Verteilung $p_{\chi^2,\nu}$
 für $\nu = J-1$ Freiheitsgrade verwendet wird. Hierzu müssen wir im Stoff vorgreifen.
 Diese Verteilungsdichtefunktion werden wir in der 5.\ Vorlesung behandeln.
@@ -475,7 +579,7 @@ folgender Wahrscheinlichkeiten berechnet,
 \item der Verteilungsdichte $p_\mathcal{N}(y | y_0, s_0)$ der Größe $\mu$ aus den {\`a} priori Informationen,
 \item der Verteilungsdichte $p_{\chi^2,\nu}(s)$ der Varianz $\sigma^2$ dieser Größe.
 \end{itemize}
-Die zu ermittelnde, bedingte Wahrscheinlichkeitsdichte wird so interpretiert, dass die Verteilung Funktion
+Die zu ermittelnde bedingte Wahrscheinlichkeitsdichte wird so interpretiert, dass die Verteilung Funktion
 der Variablen $\mu$ und $\sigma$ ist, gegeben die Beobachtungswerte der Stichprobe. Die Likelihood wird
 dabei betrachtet als die bedingte Wahrscheinlichkeitsdichte $p_\mathrm{L}$ der
 direkten Messgröße $X_1$ gegeben die Modellparameter $\mu$ und $\sigma$:
@@ -485,7 +589,7 @@ p_\mathrm{L}(\{X_{1,1}, \dots, X_{1,J}\} | \mu, \sigma) \; = \;
  e^{- \frac{1}{2} \, \left( \frac{X_{1,j} - \mu}{\sigma} \right)^2 }  \; = \;
 l(\mu, \sigma | \{X_{1,1}, \dots, X_{1,J}\}).
 \end{equation}
-Die Varianz $\sigma^2$ wird gemäß der $\chi^2$-Verteilung variert. Das Variieren der Varianz
+Die Varianz $\sigma^2$ wird gemäß der $\chi^2$-Verteilung variiert. Das Variieren der Varianz
 bzw.\ deren Wurzel $\sigma$ symbolisieren wir durch den Gebrauch der Variablen $s$.
 Das Variieren des Modellparameters $\mu$ symbolisieren wir durch den Gebrauch der Variablen $y$.
 Der Parameter $\mu$ wird ebenfalls variiert gemäß der Gaußverteilung, wir verwenden folgende
@@ -539,7 +643,7 @@ $p(A, B)$; dann heißen die Verteilungen der einzelnen Zufallsgrößen
 $A$ und $B$ die Randverteilungen des Zufallsvektors $(A, B)$.
 
 Als Schätzwert für $Y$ berechnen wir den Erwartungswert des Modellparameters $\mu$
-durch Integration über alle Werte $y$ gewichtet mit der Wahrscheinlichkeitsdichte\\
+durch Integration über alle Werte $y$ gewichtet mit der Wahrscheinlichkeitsdichte
 $p(y | \{X_{1,1}, \dots, X_{1,J}\}, y_0, s_0)$ aus Gl.~(\ref{RandverteilungPosterior})
 \begin{equation}
 y_1 \; = \; \int\limits_{-\infty}^\infty \, y \, p(y | \{X_{1,1}, \dots, X_{1,J}\}, y_0, s_0)
@@ -611,7 +715,7 @@ Literatur üblich ist, wird anstelle des Begriffs \textsl{Glaubwürdigkeitsinter
 auch in der deutschsprachigen Literatur der Begriff \textsl{Credible Interval} verwendet.
 
 Die Verwendung unterschiedlicher Bezeichnungen, \textsl{Confidence Interval} und
-\textsl{Credible Interval}, sollen die Unterschiedlichkeit der Vorstellungen
+\textsl{Credible Interval}, soll die Unterschiedlichkeit der Vorstellungen
 über den Charakter einer indirekten Messgröße $Y$ zum Ausdruck bringen.
 Die Unterschiedlichkeit in der Vorstellung von einer indirekten Messgröße $Y$ besteht darin,
 dass im Fall der \textsl{bayesischen} Statistik
