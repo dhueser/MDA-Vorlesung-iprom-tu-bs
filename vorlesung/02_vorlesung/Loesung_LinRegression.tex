@@ -14,7 +14,7 @@ Die Modellgleichung lautet
 z_j \; = \; a \, x_j \, + \, c \, + \, h \, \delta_{j \in C} \; + \; \varepsilon_j
 \label{Modellgl1}
 \end{equation}
-In Vektorschreibweise mit $\boldsymbol x$ und $\boldsymbol z$ als Spaltenvektoren sieht 
+In Vektorschreibweise mit $\boldsymbol x$ und $\boldsymbol z$ als Spaltenvektoren sieht
 dies mit allen in der oben aufgeführten Werten wie folgt aus
 $$
 \boldsymbol x = \left(
@@ -90,7 +90,7 @@ h\\
 a
 \end{array}\right) .
 $$
-Wenn man diesen Ansatz in dieser Form hat, kann man einfach Gl.~(\ref{LsgRegressionGlSys}) 
+Wenn man diesen Ansatz in dieser Form hat, kann man einfach Gl.~(\ref{LsgRegressionGlSys})
 verwenden und alles einsetzten.
 Für die Klausur kommt es also nur darauf an, die Regressormatrix $\boldsymbol X$, das ist Gl.~(\ref{Regressormatrix})
 aufstellen zu können und Gl.~(\ref{LsgRegressionGlSys}) aus dieser Vorlesung zu kennen:
@@ -100,7 +100,7 @@ c\\
 h\\
 a
 \end{array}\right) \; = \;
- \mathbf{X}^\mathsf{T} \, \mathbf{z} 
+ \mathbf{X}^\mathsf{T} \, \mathbf{z}
 \end{equation}
 wobei $\boldsymbol X^\mathsf{T}$ die transponierte Matrix ist, die in der ersten Zeile alles Einsen hat, in der
 zweiten Zeile an den ersten $J_C = 10$ Spaltenpositionen Einsen und an den letzten 11 Nullen hat und in der dritten
@@ -109,8 +109,13 @@ Hier ist dieser Teil der Aufgabenstellung fertig.
 
 
 zu (b) Schreiben Sie die Gleichung für die Stufenhöhe $d$ als Funktion von $h$ und $a$ auf.
+\begin{center}
+	\includegraphics[width=80mm]{02_vorlesung/media/uebungA5_step_plot_loesung.pdf}
+\end{center}
+Aus $d = h \cos(w)$ folgt gemäß trigonometrischer Beziehung $\cos(w) = 1 / \sqrt{1 + \tan^2(w)}$,
+die auf dem Satz des Pythagoras basiert,
 \begin{equation}
-d \; = \; \frac{h}{\sqrt{1 + a^2}}
+d \; = \; \frac{h}{\sqrt{1 + a^2}} .
 \end{equation}
 Wer zuvor die x-Werte in Millimetern gerechnet hat, muss spätestens hier die Steigung
 $a$ entsprechend umrechnen und durch $1000$ teilen.
@@ -127,7 +132,7 @@ Wir verwenden dazu Gl.~(\ref{UnsicherheitRegressparams}) dieser Vorlesung
 \begin{equation}
 \boldsymbol \Sigma \; = \; \left( \mathbf{X}^\mathsf{T}  \, \mathbf{X} \right)^{-1} \, \sigma_\varepsilon^2
 \end{equation}
-mit 
+mit
 
 zu (e) Verwenden Sie eine Programmierumgebung Ihrer Wahl, Matlab, Octave, Python, R, ...
 die Ihnen einen Solver für lineare Gleichungssysteme zur Verfügung stellt, sowie
@@ -204,7 +209,7 @@ B. P. Flannery, W. H. Press, S. A. Teukolsky, W. T. Vetterling. \textsl{Numerica
 in C}. Cambridge University Press, 2.~Auflage (1992-2002)
 
 Wichtig, diese Routine überschreibt den Vektor mit der Inhomogenität des Gleichungssystems
-mit der Lösung, also den gewünschten Modellparametern und 
+mit der Lösung, also den gewünschten Modellparametern und
 die Matrix \texttt{a} mit den Summen aus den Regressoren mit deren Inversen
 \texttt{a}$^{-1}$, die Sie dann für die Kovarianz der Modellparameter brauchen.
 
@@ -319,5 +324,3 @@ free(indxr);
 free(indxc);
 }
 \end{verbatim}
-
-
