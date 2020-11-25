@@ -70,7 +70,7 @@ des Teilnehmerlabors des $i$-ten Partners $U_{i}$ für das
 so kann der sogenannte \textbf{En-Wert} berechnet werden.
 
 In der vorigen Vorlesung hatten wir die Prüfgröße
-$T = \frac{x_1 - x_2}{\sqrt{s_1^2 + s_2^2}}$, die prüft ob zwei Stichproben mit ihren Erwartungswerten
+$T = \frac{x_1 - x_2}{\sqrt{\bar s_1^2 + \bar s_2^2}}$, die prüft ob zwei Stichproben mit ihren Erwartungswerten
 $x_1$ und $x_2$ zur selben Grundgesamtheit gehören.
 Dieser Hypothesentest prüft diese Größe auf $|T| > k$. Der Parameter $k$ steht hier allgemein für das Quantil,
 also für $z_{1-\alpha/2}$ im Falle der Verwendung der Standardnormalverteilung wie sie hier in Abb.~\ref{fig:StandardScore}
@@ -78,15 +78,17 @@ dargestellt ist. Er steht für das Quantil $t_{1-\alpha/2,\nu}$ im Falle der Ver
 Freiheitsgrad). Ferner steht der Parameter $k$ auch für das Quantil einer Posteriorverteilung, also den Faktor
 eines \textsl{Credible} Intervalls, weshalb er allgemein \textsl{Erweiterungsfaktor} genannt wird.
 
-Wenn wir eine Unsicherheit $u_i$ eines Labors vorliegen haben, die beispielsweise eine Standardabweichung $s_i$ sein kann, und haben wir ein symmetrisches Überdeckungsintervall, wie es bei normalverteilten oder t-verteilten Zufallsgrößen der Fall ist, so ist die halbe Breite des Überdeckungsintervalls $U_i = k u_i$. Dabei wird $U_i$ die \textsl{erweiterte Messunsicherheit} genannt.
+Wenn wir eine Unsicherheit $u_i$ eines Labors vorliegen haben, die beispielsweise $\bar s_i$, d.h. die Standardabweichung  eines Mittelwerts,
+sein kann, und haben wir ein symmetrisches Überdeckungsintervall, wie es bei normalverteilten oder t-verteilten Zufallsgrößen
+der Fall ist, so ist die halbe Breite des Überdeckungsintervalls $U_i = k u_i$. Dabei wird $U_i$ die \textsl{erweiterte Messunsicherheit} genannt.
 
 Jetzt dividieren wir die Prüfgröße $T$ durch das Quantil bzw. den Erweiterungsfaktor $k$
 $$
-\frac{T}{k} = \frac{x_1 - x_2}{k \sqrt{s_1^2 + s_2^2}}  = \frac{x_1 - x_2}
-{\sqrt{(k s_1)^2 + (k s_2)^2}}
+\frac{T}{k} = \frac{x_1 - x_2}{k \sqrt{\bar s_1^2 + \bar s_2^2}}  = \frac{x_1 - x_2}
+{\sqrt{(k \bar s_1)^2 + (k \bar s_2)^2}}
 $$
 und führen die bei Ringvergleichen allgemein verwendete Bezeichnung $E_n := T /k$ ein,
-so dass die Prüfgröße mit $U_i = k u_i$ bzw.\  $U_i = k s_i$ wie folgt aussieht:
+so dass die Prüfgröße mit $U_i = k u_i$ bzw.\  $U_i = k \bar s_i$ wie folgt aussieht:
 \begin{equation}
 E_\mathrm{n} = \frac{x_{i}- x_\mathrm{ref}}{\sqrt{U_{i}^2+U_\mathrm{ref}^2}}
 \label{eq:EnWert}
