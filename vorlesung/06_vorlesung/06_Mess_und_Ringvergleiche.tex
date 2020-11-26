@@ -66,7 +66,7 @@ Nach \cite{ISO13528} gibt es die folgende übliche Interpretation für die Bewer
 \end{itemize}
 Sind die erweiterten Unsicherheiten sowohl des Referenzlabors $U_\mathrm{ref}$ als auch
 des Teilnehmerlabors des $i$-ten Partners $U_{i}$ für das
-Überdeckungsintervall $[2 u; 2 u]$ zum 95,45\% Vertrauensniveau bekannt,
+Überdeckungsintervall $[-2 u; 2 u]$ zum 95,45\% Vertrauensniveau bekannt,
 so kann der sogenannte \textbf{En-Wert} berechnet werden.
 
 In der vorigen Vorlesung hatten wir die Prüfgröße
@@ -151,10 +151,10 @@ T := \chi^2_\mathrm{obs} = \frac{(x_1 - \tilde x)^2}{u^2(x_1)} + \cdots +
 \end{equation}
 Diese Testgröße weist eher einen kleinen Wert auf, wenn alle Partner
 recht dicht am Mittelpartner liegen und natürlich umgekehrt.
-Vergleiche diese Testgröße mit der $\chi^2 (\nu)$ -Verteilung
+Vergleiche diese Testgröße mit dem Quantil der $\chi^2 (\nu)$ -Verteilung
 mit Freiheitsgrad $\nu = N-1$ ($N$ Anzahl der Partner),
 die am Messvergleich teilgenommen haben.
-Der Konsistenzcheck schlägt fehl, wenn die folgende Bedingung
+Der Konsistenzcheck \textbf{schlägt fehl}, wenn die folgende Bedingung
 erfüllt ist:
 \begin{equation}
 \mathrm{Pr}\left(\chi^2(\nu) > T\right) < 0.05
@@ -243,7 +243,7 @@ $u(x_i) / \mathrm{g}$ & 0.80 & 0.63 & 0.86 & 0.82 & 0.98
 \end{center}
 Als Ergebnis erhalten wir: $x_\mathrm{ref} = 99.29$ und $u_\mathrm{ref} = 0.35$.
 Mit der Testgröße $T=0.6239$ ergibt sich die Wahrscheinlichkeit
-$\mathrm{Pr}\{\chi^2(\nu) > T\} = 0.8858$. Da die Wahrscheinlichkeit größer als 0.05 ist, schlägt der
+$\mathrm{Pr}\{\chi^2(\nu) > T\} = 0.9604$. Da die Wahrscheinlichkeit größer als 0.05 ist, schlägt der
 Konsistenzcheck nicht fehl,
 d.h.\ die Daten der 5 Messpartner sind konsistent.
 
@@ -282,7 +282,7 @@ u_ref = sqrt(1./sum(1./(u_x).^2))
 T = sum((x-x_ref).^2./(u_x.^2))
 
 % Bestimme die Wahrscheinlichkeit Pr der Chi^2-Verteilung fuer Chi^2(\nu) > T:
-Pr = 1 - chi2pdf(T,nu)
+Pr = 1 - chi2cdf(T,nu)
 
 % Schritt 4: Grad der Uebereinstimmung
 d = x-x_ref;
@@ -623,7 +623,8 @@ $u^2_i = \bar s^2_i = \operatorname{Var}(\bar x_{S_i})$
 bzw.\ für die Konsensusvarianzen
 $\bar s^2_{i,\mathrm{c}} = \operatorname{Var}(\bar x_{S_i,\mathrm{c}})$
 \begin{equation}
-\bar s^2_{i,\mathrm{c}} \; = \; \bar s^2_j \; + \; s^2_\mathrm{b}
+\bar s^2_{i,\mathrm{c}} \; = \; \bar s^2_i \; + \; s^2_\mathrm{b}
+\quad i=1,2
 \label{eq:consensusVariability}
 \end{equation}
 wobei der Index b für \textsl{between} und c für \textsl{consensus}
