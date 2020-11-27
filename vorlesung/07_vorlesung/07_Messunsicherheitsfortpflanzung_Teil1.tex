@@ -15,7 +15,7 @@ Das nichtdeterministische Verhalten eines Systems wird in vielen Fällen
 von nicht vorhersehbaren, kleinen Störeinflüssen und Auflösungsbegrenzungen
 beim Beobachtungsvorgang verursacht. Es gibt aber auch Prozesse, bei denen
 der physikalische Vorgang, der zu untersuchen ist, selber stochastischen Charakter hat,
-wie beispielsweise bei radioaktiven Zerfällen, Streuprozesse atomarer Vorgänge oder bei
+wie beispielsweise bei radioaktiven Zerfällen, Streuprozessen atomarer Vorgänge oder bei
 biologischen Prozessen. Das nicht deterministische Verhalten, die
 Stochastik, eines Prozesses wird mittels entsprechender Wahrscheinlichkeitsverteilungen modelliert.
 
@@ -30,8 +30,8 @@ oder
 einer Wahrscheinlichkeitsdichteverteilung, zusammen mit einer Wahrscheinlichkeit $1-\alpha$
 bzw.\ einem Quantil $k$
 $$
-x = \int X p(X) \operatorname d X, \quad
-\sigma_X = \sqrt{\int (X-x)^2 p(X) \operatorname d X}, \quad k = P^{-1}(1-\alpha/2).
+x = \int X \, p(X) \operatorname d X, \quad
+\sigma_X = \sqrt{\int (X-x)^2 \, p(X) \operatorname d X}, \quad k = P^{-1}(1-\alpha/2).
 $$
 \end{itemize}
 Dreh- und Angelpunkt bei der Quantifizierung von Messgrößen ist die Vorgehensweise, wie ein
@@ -89,7 +89,7 @@ Das \glqq Multivariate\grqq ~für die Unsicherheitsberechnung betrifft die indir
 Messgrößen $\boldsymbol \theta \equiv \boldsymbol Y$, das \glqq Univariate\grqq ~für die
 Regression betrifft den Regressanden $Y_{\mathrm{Regr}}$.
 
-Fall zwei kann im allgemeinen so geartet sein, dass jede der direkten Größen in jeweils unabhängigen
+Fall Zwei kann im allgemeinen so geartet sein, dass jede der direkten Größen in jeweils unabhängigen
 Messvorgängen gewonnen wird, bei denen im allgemeinen unterschiedliche Stichprobenumfänge $J_i, J_k$ vorliegen
 können und dann keine paarweise Zuordnung der einzelnen Beobachtungswerte $X_{i,j}$ zu $X_{k,l}$ für
 $i \neq k$ vorliegt.
@@ -136,7 +136,7 @@ betrifft univariate und explizite Modelle,
   $t$-verteilt ist.
   \end{itemize}
 Die indirekte Messgröße $Y$ ist damit Linearkombination der direkten Messgrößen $X_i$, d.h.
-$Y = \sum X_i$, so dass für die Varianz $\operatorname{Var}(Y) = \operatorname{Var}(\sum X_i)$
+$Y = \sum c_i X_i$, so dass für die Varianz $\operatorname{Var}(Y) = \operatorname{Var}(\sum c_i X_i)$
 gemäß Gl.~(\ref{univarLinearFortpflanzungKap1}) aus Abschnitt \ref{Kap1Kovarianzen} gilt
 \begin{equation}
 \operatorname{Var}(Y) = \sum_{i=1}^N \sum_{k=1}^N  c_i c_k \operatorname{Cov}(X_i, X_k)
@@ -213,12 +213,12 @@ JCGM 106-Dokument behandelt.
 \end{itemize}
 
 Das historisch älteste Dokument JCGM~100, das für linearisierbare, explizite, univariate, skalare und
-gauß- oder $t$-verteilte indirekte Messgrößen gilt, wurde zunächst erweitert durch das JCGM~101. Mit der
-in JCGM~101 spezifizierten Monte-Carlo-Methode ermöglicht, dass man nicht auf die Bestimmung der Unsicherheit
+gauß- oder $t$-verteilte indirekte Messgrößen gilt, wurde zunächst erweitert durch das JCGM~101. Die
+in JCGM~101 spezifizierten Monte-Carlo-Methode ermöglicht es, dass man nicht auf die Bestimmung der Unsicherheit
 expliziter, univarter, linearisierbarer Messgrößen begrenzt ist.
 Es bietet die Möglichkeit auch die Unsicherheit für implizite, multivariate Messgrößen,
 deren direkte Eingangsgrößen beliebig verteilt sein können zu ermitteln. Die Verteilung der
-Größen können eine von Null verschiedene Skewness aufweisen, sie können die Form einer
+Größen können eine von Null verschiedene Skewness aufweisen, sie können sogar die Form einer
 U-Verteilung haben. Die Größen können irgendwelchen Verteilungen gehorchen, so dass die
 Wahrscheinlichkeitsverteilungen der indirekten Messgrößen entsprechend einen
 irgendwie gearteten Verlauf aufweisen können.

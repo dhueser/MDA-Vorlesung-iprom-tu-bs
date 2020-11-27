@@ -875,12 +875,52 @@ allgemein, wird der \textsl{t}-Test eingesetzt, um zu testen, ob
  Mittelwerte der jeweiligen Stichproben miteinander verglichen werden.
 \end{enumerate}
 
+Die Nullhypothese $H_0$ für den Test (1.), ob der Erwartungswert $\mu_1$ einer
+Stichprobe zu einer Grundgesamtheit gehört
+und damit dem Erwartungswert der Grundgesamtheit, deren Erwartungswert $\mu_0$ bekannt ist,
+entspricht lautet: Der Erwartungswert $\mu_1$ der Stichprobe
+ist gleich dem  Erwartungswert $\mu_0$ der Grundgesamtheit, $\mu_1 = \mu_0$.
+Die Alternativhypothese $H_\mathrm{a}$
+lautet, dass sie einen anderen Erwartungswert hat, also $\mu_1 \neq \mu_0$,
+und damit zu einer anderen Grundgesamtheit gehört.
+
+Der Test auf Erwartungswerte, der \textsl{t}-Test wird wie folgt formuliert:
+\begin{center}
+\begin{tabular}{c|cl}
+$H_0$ & $\mu_1 = \mu_0$ & die Stichprobe hat den gleichen Erwartungswert wie die Grundgesamtheit\\
+\hline
+$H_\mathrm{a}$ & $\mu_1 \neq \mu_0$ & die Stichprobe hat einen anderen Erwartungswert und\\
+ & & gehört somit nicht zur Grundgesamtheit
+\end{tabular}
+\end{center}
+
+Die Prüfgröße ist die Differenz zwischen empirisch berechnetem Mittelwert der Stichprobe
+und Erwartungswert der Grundgesamtheit normiert auf die
+Standardabweichung des Mittelwerts $\bar s$ der Stichprobe. Mit $y$ für den Mittelwert der
+Stichprobe ist $y = \frac{1}{J}\sum_{j=1}^J X_{1,j}$ und mit der Varianz des Mittelwerts
+\begin{equation}
+\bar s^2 \; = \; \frac{1}{J (J - 1)} \sum_{j=1}^{J} \, (X_{1,j} - y)^2
+\end{equation}
+ist die Prüfgröße des Einstichproben-\textsl{t}-Tests wie folgt definiert
+\begin{equation}
+T \; = \; \frac{y \, - \, \mu_0}{\bar s}
+\label{tTestonesample}
+\end{equation}
+Die Nullhypothese wird mit einem Signifikanzniveau von $\alpha = 0.05$ abgelehnt, wenn
+der Betrag der Prüfgröße größer als das entsprechende Quantil der \textsl{t}-Verteilung ist
+\begin{equation}
+|T| \; > \; t_{1-\frac{1}{2} \alpha, \, \nu} \qquad \Rightarrow \qquad H_0 \; \; \mathrm{ablehnen}
+\end{equation}
+wobei $\nu$ die Anzahl der Freiheitsgrade der Stichprobe ist, $\nu = J-1$.
+
+Der Test (2.), ob zwei Stichproben zur gleichen Grundgesamtheit gehören,
+ deren Erwartungswert nicht bekannt ist, sieht wie folgt aus:
 Sei $\mu_1$ der Erwartungswert der Grundgesamtheit zu Stichprobe 1 mit
 Beobachtungen $(X_{1,1},\dots,$ $X_{1,J_1})$ und sei $\mu_2$ der Erwartungswert der
 zu Stichprobe 2 mit Beobachtungen $(X_{2,1}, \dots, X_{2,J_2})$.
 Die Nullhypothese $H_0$ lautet, dass beide denselben Erwartungswert haben,
 was soviel bedeutet wie $\mu_1 = \mu_2$. Die Alternativhypothese $H_\mathrm{a}$
-lautet, dass sie unterschiedliche Erwartungswerte haben,was soviel bedeutet wie $\mu_1 \neq \mu_2$,
+lautet, dass sie unterschiedliche Erwartungswerte haben, was soviel bedeutet wie $\mu_1 \neq \mu_2$,
 und damit zu unterschiedlichen Grundgesamtheiten gehören.
 
 Umgekehrt, bedeutet aber nicht, dass wenn sie denselben Erwartungswert haben,
@@ -892,7 +932,7 @@ F-Test bei Test der Varianzen zweier Stichproben.
 Der Test auf Erwartungswerte, der \textsl{t}-Test wird wie folgt formuliert:
 \begin{center}
 \begin{tabular}{c|cl}
-$H_0$ & $\mu_1 = \mu_2$ & beide Stichproben den gleichen Erwartungswert\\
+$H_0$ & $\mu_1 = \mu_2$ & beide Stichproben haben den gleichen Erwartungswert\\
 \hline
 $H_\mathrm{a}$ & $\mu_1 \neq \mu_2$ & beide Stichproben haben unterschiedliche Erwartungswerte und\\
  & & gehören somit unterschiedlichen Grundgesamtheiten an
