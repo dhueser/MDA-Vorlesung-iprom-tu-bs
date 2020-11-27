@@ -212,14 +212,16 @@ also der Einhaltung von Toleranzgrenzen. Dies wird Konformitätsbewertung genann
 JCGM 106-Dokument behandelt.
 \end{itemize}
 
-Das historisch älteste Dokument JCGM~100, das für linearisierbare, explizite, univariate, skalare und
-gauß- oder $t$-verteilte indirekte Messgrößen gilt, wurde zunächst erweitert durch das JCGM~101. Die
-in JCGM~101 spezifizierten Monte-Carlo-Methode ermöglicht es, dass man nicht auf die Bestimmung der Unsicherheit
-expliziter, univarter, linearisierbarer Messgrößen begrenzt ist.
+Das historisch älteste Dokument JCGM~100 gilt für explizite, univariate, skalare und
+gauß- oder $t$-verteilte indirekte Messgrößen mit linearem oder linearisierbarem Modell für die
+Abhängigkeit der indirekten Messgröße von den direkten Messgrößen. Es wurde zunächst erweitert durch das JCGM~101. Die
+in JCGM~101 spezifizierte Monte-Carlo-Methode ermöglicht es, dass man nicht auf die Bestimmung der Unsicherheit
+expliziter, univarter indirekter Messgrößen mit linearisierbarem Modell begrenzt ist.
 Es bietet die Möglichkeit auch die Unsicherheit für implizite, multivariate Messgrößen,
 deren direkte Eingangsgrößen beliebig verteilt sein können zu ermitteln. Die Verteilung der
-Größen können eine von Null verschiedene Skewness aufweisen, sie können sogar die Form einer
-U-Verteilung haben. Die Größen können irgendwelchen Verteilungen gehorchen, so dass die
+Größen können eine von Null verschiedene Skewness aufweisen. Sie können sogar die Form einer
+U-Verteilung haben, was beispielsweise bei direkten Größen, die durch Vibrationen beeinflusst
+werden, vorkommen kann. Die Größen können irgendwelchen Verteilungen gehorchen, so dass die
 Wahrscheinlichkeitsverteilungen der indirekten Messgrößen entsprechend einen
 irgendwie gearteten Verlauf aufweisen können.
 
@@ -261,7 +263,7 @@ Die wesentlichen Komponenten der Messunsicherheit sind
 
 Bei der Schätzung von Modellparametern (Quantifizierung der indirekten Messgrößen)
 spielt vielfach die numerische Zuverlässigkeit des Optimierungsalgorithmus eine
-wichtige Rolle. Wenn wir das Kostenfunktionsbeispiel der Abbn.~\ref{LSoptiExample1NM} und \ref{LSoptiExample1Grad}
+wichtige Rolle. Wenn wir das Kosten\-funktions\-beispiel der Abbn.~\ref{LSoptiExample1NM} und \ref{LSoptiExample1Grad}
 mit dem der Abb.~\ref{LSoptiExample1NM} in Kapitel~\ref{LSoptiExample1SinusRQS} vergleichen,
 erkennen wir, dass die Modellparameter bei Abb.~\ref{LSoptiExample1NM} und \ref{LSoptiExample1Grad}
 in etwa die gleiche Skalierung aufweisen, während die in Abb.~\ref{LSoptiExample1NM} stark unterschiedlich sind. In Abb.~\ref{LSoptiExample1NM} und \ref{LSoptiExample1Grad} sehen wir eine schöne, runde
@@ -393,12 +395,12 @@ das Unsicherheitsfortpflanzungsgesetz auch in dieser Form aufgeschrieben wird
 \begin{equation}
 \operatorname {Var}\left(Y\right) = \sigma_Y^2  =
 \sum _{{i=1}}^{N} \, c_i^2 \sigma_i^2 \, + \, 2\sum _{{i=1}}^{{N-1}}
-  \sum _{{k=i+1}}^{N} \, c_i c_k \rho_{i,k} \sigma_i \sigma_k
+  \sum _{{k=i+1}}^{N} \, c_i c_k \rho_{i,k} \sigma_i \sigma_k .
 \label{FortpflaKorrStd}
 \end{equation}
 
 Die aus dem Fortpflanzungsgesetz resultierende Messunsicherheit $\sigma_Y$ wird auch
-\textsl{kombinierte Standardabweichung} genannt wird.
+\textsl{kombinierte Standardabweichung} genannt.
 
 Oftmals, so auch im \textsl{Guide} für Messunsicherheit GUM - JCGM 100, wird anstelle der
 Bezeichnung $\rho_{i,k}$ die
@@ -407,6 +409,9 @@ Bezeichnung $r(X_{i},X_{k})$ verwendet, meint aber dasselbe.
 Alternativ, insbesondere im GUM - JCGM 100, gibt es die Schreibweise mit $u$ anstelle der
 Standardabweichungen $\sigma$ als Kürzel für \textsl{uncertainty} oder \textsl{Unsicherheit},
 und heißt in diesem Zusammenhang \textsl{Standardunsicherheit} (engl.\ \textsl{standard uncertainty}).
+Dabei können je nach Anwendung mit den Standardabweichungen $\sigma$ Standardabweichungen je einer
+Einzelstichprobe sein, oder - was häufiger vorkommt - Standardabweichungen der Mittelwerte der Stichproben
+zu den jeweiligen Messgrößen:
 
 \begin{equation}
 {\begin{aligned}
@@ -428,8 +433,8 @@ und
 \operatorname{Cov}(X_i, X_k) \; \equiv \;
 \sigma_{i,k} \; \equiv \; u(X_i,X_k)
 \end{equation}
-Hier sind keine Tippfehler bezüglich der Quadrate, es gilt tatsächlich $u^2(X_i) = u(X_i,X_i)$
-sowie $\sigma^2(X_i) = \sigma(X_i,X_i)$.
+Hier sind keine Tippfehler bezüglich der Quadrate, es gilt tatsächlich $u^2(X_i) = u(X_i,X_i)$ für die Varianzen
+sowie $\sigma^2(X_i) = \sigma(X_i,X_i)$ für die Kovarianzen.
 
 Im JCGM 100-Dokument des \textsl{Guide} für Messunsicherheit GUM in Absatz 5.2.4
 werden als typische Ursachen für die Korrelation von Eingangsgrößen  folgende aufgeführt:
@@ -467,7 +472,7 @@ $\rho$ oder $r$ eine geeignete Modellbildung.
 
 Zunächst beleuchten wir ein Beispiel, bei dem ein Modellparameter $Y$ berechnet wird,
 der sich aus dem Produkt zweier direkter
-Messgrößen $X_1$ und $X_2$ ergibt. Wir beschäftigen uns zunächst mit dem Fall, dass
+Messgrößen $X_1$ und $X_2$ ergibt. Wir beschäftigen uns mit dem Fall, dass
 die beiden direkten Größen nicht von einander abhängen. Sie sollen zwei unterschiedlichen
 und unabhängigen Grundgesamtheiten angehören, d.h.\ unkorreliert sein.
 
@@ -483,10 +488,10 @@ Die naheliegende Vorgehensweise ist nun, die Mittelwerte der beiden Stichproben 
 diese miteinander zu multiplizieren
 \begin{equation}
 y \; = \; \left(\frac{1}{J_1} \sum_{j=1}^{J_1} X_{1,j}\right) \,
-          \left(\frac{1}{J_2} \sum_{j=1}^{J_2} X_{2,j}\right)
+          \left(\frac{1}{J_2} \sum_{j=1}^{J_2} X_{2,j}\right) .
 \end{equation}
 Für die Berechnung der kombinierten Standardabweichung von $Y$ bestimmen wir
-die Standardabweichungen der beiden Stichproben $i = 1,2$ zu den Größen $X_1$ und $X_2$.
+die Standardabweichungen $s_i$ der beiden Stichproben $i = 1,2$ zu den Größen $X_1$ und $X_2$:
 \begin{equation}
 s_i \; = \; \sqrt{ \frac{1}{J_i - 1} \sum_{k=1}^{J_i}
  \left( X_{i,k} \; - \; \frac{1}{J_i} \sum_{j=1}^{J_i} X_{i,j}\right)^2 }
@@ -529,22 +534,25 @@ Diese Varianz $s_y^2$ ist also wieder eine \textsl{kombinierte Varianz} und dere
 $s_y$ eine \textsl{kombinierte Standardabweichung}.
 
 Für den allgemeinen Fall mit einer Linearsierung durch die Taylorreihenentwicklung
-Gl.~(\ref{univarTaylorLin}) stellen die partiellen Ableitungen, also der Gradient, an
+Gl.~(\ref{univarTaylorLin}) stellen die partiellen Ableitungen an
 der Stelle der Schätzer der direkten Größen die Sensitivitäten
-$c_i = \left. \frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}}$ dar. Sie drücken aus,
-wie stark sich die indirekte Größe $Y$ gemäß der Steigung (Gradienten) des Kurvenverlaufs des Modells
+$c_i = \left. \frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}}$ dar. Der
+Vektor der partiellen Ableitungen heißt \textsl{Gradient}. Der Gradient ist also
+der Steigungsvektor.
+Der Gradient drückt aus, wie stark sich die indirekte Größe $Y$ gemäß der Steigung
+des Kurvenverlaufs des Modells
 ändert, wenn es kleine Änderungen der direkten Größen gibt. Mit anderen Worten besagt dies, wie
 empfindlich die indirekte Größe auf Änderungen der direkten Größen reagiert, d.h.\ wie sensistiv
 das Modell an der Position $\bar{\mathbf{x}}$ ist.
 
-Gegeben sei ein univariates, expliziten Modell $Y = f(\mathrm{X})$, das linearisierbar ist also
+Gegeben sei ein univariates, expliziten Modell $Y = f(\mathrm{X})$, das linearisierbar ist, also
 in Taylorreihe entwickelbar bis zum linearen Term mit dem Erwartungswertevektor
 $\bar{\mathbf{x}}$ als Entwicklungspunkt
 \begin{equation}
 Y = f(\mathbf{X}) \approx \left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}} +
 \sum_{i=1}^N \left.
 \frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i
-\quad \text{und} \quad \mathrm{X} = \bar{\mathbf{x}} + \Delta \mathrm{X}
+\quad \text{und} \quad \mathrm{X} = \bar{\mathbf{x}} + \Delta \mathrm{X} .
 \label{linearisiertesModellY}
 \end{equation}
 Die direkten Messgrößen $X_i$ sind Zufallsgrößen.
@@ -697,7 +705,9 @@ kann man nach dieser natürlich nicht ableiten.
 
 Am Ende von Kapitel~\ref{konzepteStatistik} haben wir das Überdeckungsintervall eingeführt
 und nach Einführung der Quantile der t-Verteilung in Kapitel~\ref{wahrscheinlichHyp} genauer
-behandelt, als \textsl{Credible intervall} und als \textsl{Vertrauensintervall}.
+behandelt, als \textsl{Vertrauensintervall}, sowie im Zusammenhang der bayesischen Statistik
+gewonnen aus der inversen kumulierten Posteriorverteilung als \textsl{Credible intervall}.
+
 Die Intervallgrenzen des Vertrauensintervalls haben wir
 auch als Produkt aus einem Quantil und einer Standardabweichung repräsentiert, im Fall, dass
 eine Normalverteilung zugrunde gelegt wird in der Form
@@ -787,7 +797,7 @@ In Abschnitt G.4 des Dokuments JCGM 100 GUM:2008 wird auf die Berechnungsmethode
 für $\nu_\mathrm{eff}$ von Satterthwaite aus dem Jahr 1941 \cite{Sat41} zurückgegriffen.
 
 Satterthwaite betrachtet die Varianz $\operatorname{Var}(s_i^2)$
-der Varianz $s_i^2$. Die $s_i^2$ sind unabhängige
+der Varianz $s_i^2$. Die Varianzen $s_i^2$ sind unabhängige
 Zufallsgrößen, also als Größen zu betrachten, die unkorreliert sind, so dass
 \begin{equation}
 \operatorname{Var}(s_y^2) \; = \;  \operatorname{Var}\left( c_1^2 s_1^2 \right)

@@ -31,7 +31,7 @@ Stückchen ganz am Ende.
 Das erste Stückchen hat die halbe Breite und die Fläche
 $$
 \underbrace{\frac{\Delta Y}{2} \, p(y_1)}_{\mathrm{Rechteck}}
- \; + \; 
+ \; + \;
 \underbrace{\frac{\Delta Y}{4} \, (p(y_1 + \frac{\Delta Y}{2}) - p(y_1))}_{\mathrm{Dreieck}}
 \; = \;
 \frac{\Delta Y}{4} \, (p(y_1 + \frac{\Delta Y}{2}) + p(y_1))
@@ -55,7 +55,7 @@ oder andersrum ausgedrückt für die Anzahl $n$ der Intervalle zu treffen.
 Eine Möglichkeit ist, sich iterativ zu einer sinnvollen Anzahl von Intervallen
 vorzuarbeiten, indem die Intervallbreite $\Delta Y$ mit jedem Iterationsschritt halbiert wird.
 Dabei arbeitet man sich solange vor bis sich die approximierte Fläche
-durch weiteres Halbieren der Intervallbreiten nicht mehr 
+durch weiteres Halbieren der Intervallbreiten nicht mehr
 signifikant ändert. Diese Methode wird \textsl{Romberg}-Verfahren genannt.
 Werner Romberg war ein in Berlin geborener Mathematiker, der in Heidelberg und München
 studierte und promovierte. Kurz nach dem Rigorosum im Jahr 1933 musste er als Kritiker
@@ -89,10 +89,10 @@ einen Wert annimmt, der kleiner als ein zuvor definierter sehr kleiner Wert $\va
 
 Dabei werden die Flächenstücke durch Halbierung der Intervallbreite gleichförmig schmaler gemacht.
 Die einzelnen Abweichungen zu jedem der Intervalle können für unterschiedlich stark gekrümmte
-Segmente der unterschiedlichen Stückchen verschieden groß sein, so dass es für manche
-Anwendungen Sinn machen kann dadurch Rechenzeit zu sparen, dass nur ausgewählte Bereiche
+Segmente der unterschiedlichen Stückchen verschieden groß sein, so dass für manche
+Anwendungen dadurch Rechenzeit gesparen werden, dass nur ausgewählte Bereiche
 verfeinert werden. Hier ist mehr Aufwand bei der Implementierung der Verästelung des Baumes,
-der für unterschiedliche Integrationsbereiche unterschiedliche Iterationstiefen verwaltet,
+der für unterschiedlichen Integrationsbereiche unterschiedliche Iterationstiefen verwaltet,
 erforderlich. Wir nennen die Grenzen der Flächenstückchen, die bei Romberg gleichförmig die Positionen
 $$
 Y_i \, = \, y_1 \, + \, (i-1) \Delta Y
@@ -129,17 +129,17 @@ Betrachten wir konkret die Aufgabe, Wahrscheinlichkeitsdichteverteilungen $p$
 integrieren zu wollen, welche dadurch gekennzeichnet sind, dass ihre Funktionswerte
 positiv sind und dass sie aus einem
 oder vielleicht auch ganz wenig mehr als einem breiteren \textsl{Peak} (Glocke) bestehen.
-Diese Glocke muss dabei nicht unbedingt so schön symmetrisch sein wie bei der 
+Diese Glocke muss dabei nicht unbedingt so schön symmetrisch sein wie bei der
 Normalverteilung oder bei der Student-t-Verteilung, sondern kann eine gewisse Schiefe haben
 wie beispielsweise bei der $\chi^2$-Verteilung für wenige Freiheitsgrade.
 Wenn wir Abb.~\ref{Trapez} genauer anschauen, sehen wir, dass die Sekanten im Zentrum
-des \textsl{Peak}, der Glocke, stärker von der Kurve der Glocke abweichen als in den
+des \textsl{Peaks}, der Glocke, stärker von der Kurve der Glocke abweichen als in den
 \textsl{Tails}. Die Sample-Stützstellen wollen wir also im Bereich des Glockenmaximums, bzw.\
 in den Bereichen der Glockenmaxima, enger legen als in den \textsl{Tails}. Dies ist äquivalent
 zu dem, die Dichte der Stützstellen gemäß der Verteilung $p$ selbst zu samplen.
 Mit anderen Worten, es wird eine nach $p$ verteilte Stichprobe der Größen $X_i$
 entnommen. Die Verteilung $p$ wird verwendet, um gleichverteilte Pseudozufallszahlen auf nach $p$
-verteilte Zahlen abzubilden. 
+verteilte Zahlen abzubilden.
 Dieser Ansatz liegt den sogenannten \textsl{Importance Sampling}-Algorithmen zugrunde.
 
 Wenn eine Verteilung $p$ stark fluktuiert, also innerhalb eines
@@ -170,7 +170,7 @@ Der zurückgelegte Pfad eines Moleküls, \textsl{Random Walk},
 Die Abfolge der Transformationen, die eine aktuelle Position eines Gegenstands oder den
 aktuellen Zustand eines Prozesses in die nachfolgende Position bzw.\ den nachfolgenden
 Zustand überführt, und daraus die danach nachfolgende Position (den daraus folgenden Zustand)
-und so weiter, heißt \textsl{Markow-Kette}. Kennzeichen einer Markow-Kette ist, dass die 
+und so weiter, heißt \textsl{Markow-Kette}. Kennzeichen einer Markow-Kette ist, dass die
 Positions\-änder\-ung des Moleküls nur von der aktuellen Position,
 nicht aber von den Positionen davor, abhängt. Allgemein lassen sich viele statistische Prozesse,
 nicht nur Pfade von Fluidpartikeln oder Abfolgen der Werte von Zufallssampeln, mit Hilfe von
@@ -217,7 +217,7 @@ in Matlab und Gnu-Octave zur Erzeugung von normalverteilten Zufallszahlen. \text
 liefert exponentiell verteilte Zufallszahlen, \texttt{randg} Zufallszahlen, die nach
 der Gammafunktion verteilt sind und \texttt{randp} poissonverteilte Zufallszahlen. In Python sind
 diese in der zu \texttt{numpy} gehörenden Biblothek \texttt{random} zu finden. Mit
-\texttt{randn} werden standardnormalverteilte Zufallszahlen erzeugt: 
+\texttt{randn} werden standardnormalverteilte Zufallszahlen erzeugt:
 %\lstset{language=Python}
 \begin{lstlisting}[style=Python]
 import numpy as np
@@ -254,7 +254,7 @@ Z = scipy.stats.t.ppf(R[0], nu)
 In Kapitel~\ref{montecarloMU} werden wir das Monte-Carlo-Verfahren gemäß GUM-supplement~1 JCGM 101
 erläutern, bei dem wie oben bereits erwähnt,
 gemäß den jeweiligen Ver\-teil\-ungen der unterschiedlichen direkten Messgrößen
-eine große Stichprobe (ein großes \textsl{Sample}) 
+eine große Stichprobe (ein großes \textsl{Sample})
 $\mathbf{x}_1 = (x_{1,1},\dots,x_{N,1})^\mathsf{T}$, $\dots$, $\mathbf{x}_J = (x_{1,J},\dots,x_{N,J})^\mathsf{T}$
 für die direkten Größen $\mathbf{X}$ per Zufallszahlengenerator erzeugt
 wird. Diese wird in das Modell $f$ gesteckt,
@@ -281,7 +281,7 @@ Verteilung in die folgende übergeht:
 p(Y, X_\mathrm{K}, X_\mathrm{M} | (X_{\mathrm{M},1}, \dots, X_{\mathrm{M},J}), K_0, s_\mathrm{K}) \propto \\
 \delta\left(Y \; - \; X_\mathrm{K} \, X_\mathrm{M}\right)
 \;  e^{-\frac{1}{2} \left(\frac{X_\mathrm{K} - K_0}{s_\mathrm{K}} \right)^2} \; \prod\limits_{j=1}^J  \,
-e^{-\frac{1}{2} \left(\frac{ X_\mathrm{M} - X_{\mathrm{M},j} }{s_\mathrm{M}} \right)^2} 
+e^{-\frac{1}{2} \left(\frac{ X_\mathrm{M} - X_{\mathrm{M},j} }{s_\mathrm{M}} \right)^2}
 \end{array}
 \label{PosteriorFall4}
 \end{equation}
@@ -303,7 +303,7 @@ Posterior mit \textsl{scharfem Modellprior} dann wie folgt aus
 p(Y, X_\mathrm{1}, \dots, X_\mathrm{N} | (X_{1,1}, \dots, X_{1,J_1}), ..., (X_{K,1}, \dots, X_{K,J_1}),
  \bar x_{K+1}, s_\mathrm{K+1}, \dots, \bar x_{N}, s_\mathrm{N}) \propto \\
 \delta\left(Y \; - \; f(X_1, \dots \, X_N)\right)
-\; \left( \prod\limits_{i=1}^K \, \prod\limits_{j=1}^{J_i}  \, 
+\; \left( \prod\limits_{i=1}^K \, \prod\limits_{j=1}^{J_i}  \,
 e^{-\frac{1}{2} \left(\frac{ X_i - X_{i,j} }{s_i} \right)^2} \right)
 \;  \left( \prod\limits_{i=K+1}^N \,  e^{-\frac{1}{2} \left(\frac{X_i - \bar x_i}{s_i} \right)^2} \right) .
 \end{array}
@@ -366,11 +366,10 @@ Aus der Verteilung der Werte $Y_l$ lässt sich dann die Messunsicherheit bestimm
 Dieses Verfahren wird angewendet, wenn sich keine Sensitivitätskoeffizienten zu $f$
 berechnen lassen oder wenn die Sensitivitätskoeffizienten in der Nähe von Null liegen, weil
 $f$ in der Umgebung der Schätzwerte ganz flach ist, also ein Extremum oder Sattelpunkt hat.
-Das bedeutet, das $f$ nicht linearisierbar ist.
+Das bedeutet, dass $f$ nicht linearisierbar ist.
 
 Insbesondere wird das Verfahren mit den großen Zufallszahlensamples dann angewendet, wenn es
-keine analystisch geschlossene Darstellung zu dem Modell $f$ gibt.
+keine analytisch geschlossene Darstellung zu dem Modell $f$ gibt.
 Numerische Verfahren unter Anwendung von Zufallszahlen werden häufig in Anlehnung an den Zufall
 des Würfel- oder Roulettespiels Monte-Carlo-Verfahren genannt, so auch hier bei der Ermittlung
 von Messunsicherheiten.
-
