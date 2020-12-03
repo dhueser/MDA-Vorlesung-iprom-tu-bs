@@ -222,7 +222,7 @@ Da
 \[
 \sum_{j=1}^{J} (X_j-\theta)^2 = \sum_{j=1}^{J} (X_j-\bar{(X)})^2+J(\theta-\bar{(X)})^2
 \]
-und die gegebenen Daten $\sum(X_j-\bar{Y})^2$ eine feste Konstante ist, so ist
+und die gegebenen Daten $\sum(X_j-\bar{X})^2$ eine feste Konstante ist, so ist
 die Likelihood:
 % Likelihood des Erwartungswertes
 \begin{equation}
@@ -450,7 +450,7 @@ Einige nützliche Priors sind beispielhaft in Tab.\ref{tab:Einige_Priors} darges
 	 Es sind schon vorhandene (historische) Werte bekannt. Der Erwartungswert und die Varianz ist jedoch unbekannt. \vspace*{4ex} &
 	 Skalierte und \newline verschobene t-Verteilung $t_{n-1}(\bar \xi, s^2/n)$ &
 	 \includegraphics[width=40mm]{08_vorlesung/media/Prior_Studentverteilung.png}
-	 & $x = \bar \xi, \newline u(x) = \left(\frac{n-1}{n-3}\right) \frac{s}{\sqrt{n}}$ \\
+	 & $x = \bar \xi, \newline u(x) = \sqrt{\frac{n-1}{n-3}} \frac{s}{\sqrt{n}}$ \\
 	 \hline \vspace*{6ex}
 	 Kenntnisse über die Varianzen sind bekannt \vspace*{4ex} &
 
@@ -674,9 +674,9 @@ Parametern sind numerische Verfahren mit gleichförmigem Raster zu kostspielig /
 
 \section{Regression mit Vorkenntnis (Prior)}
 Wir hatten klassisch die Regressionsrechnung nach der Methode der kleinsten Quadrate
-(\textsl{Least Squares}) berechnet, also
+(\textsl{Least Squares}) berechnet, also Minimierung der Residuenquadrate
 $$
-\min\limits_{\theta} \left\{ \left(
+\min\limits_{\theta} \left\{ \boldsymbol{\varepsilon}^T \boldsymbol{\varepsilon} \right\} = \min\limits_{\theta} \left\{ \left(
 \mathbf{Y}^\mathsf{T}
 \; - \;
 \boldsymbol{\theta}^\mathsf{T} \mathbf{X}^\mathsf{T} \right)
@@ -690,7 +690,11 @@ was äquivalent dem Maximieren der Likelihood ist
 	\boldsymbol{\theta}^\mathsf{T} \mathbf{X}^\mathsf{T} \right)
 	\left(\mathbf{Y} \; - \;  \mathbf{X} \boldsymbol{\theta} \right)} \right\} .
 \end{equation}
-
+Als Lösung erhielten wir: 
+$$ 
+\left( \mathbf{X}^\mathsf{T} \mathbf{X} \right) \hat{\boldsymbol{\theta}} = 
+\mathbf{X}^\mathsf{T} \mathbf{Y}
+$$
 Wir stellen uns vor, dass von einer vorherigen Messkampagne $\kappa-1$ zu der gleichen Messaufgabe
 für alle Regressionparameter $\hat \theta_l^{(\kappa-1)}$ mit $l = 1,\dots,M$ schon ein vollständiges Messergebnis mit
 \begin{equation}
@@ -973,15 +977,14 @@ d.h.
 $$
 \min_{\theta} \left\{ \sum_i \left(\frac{\varepsilon_i(\theta)}{\sigma}\right)^2 \right\} .
 $$
-Mit $\operatorname{Var}(\boldsymbol \varepsilon) = \sum_i \varepsilon_i(\theta)^2$ bedeutet dies, dass
-die Varianz der Residuen minimiert wird
+Mit $Q(\theta) := \sum_i \varepsilon_i(\theta)^2$ (Q: Qualitätsmaß, siehe Kapitel 2) bedeutet dies, dass das Qualitätsmaß bzw. gleichbedeutend die Varianz der Residuen minimiert wird
 \begin{equation}
-\min_{\theta} \left\{ \int_{-\infty}^{\infty} \operatorname{Var}(\boldsymbol \varepsilon)  \, l(\theta) \, \operatorname d \theta \right\} .
+\min_{\theta} \left\{ \int_{-\infty}^{\infty} Q(\theta)  \, l(\theta) \, \operatorname d \theta \right\} .
 \end{equation}
 
-Analog lässt sich auch die Varianz bezüglich der Posterior $p(\theta|X)$ für die bayes'sche Statistik minimieren:
+Analog lässt sich auch das Qualitätsmaß bezüglich der Posterior $p(\theta|X)$ für die bayes'sche Statistik minimieren:
 \begin{equation}
-\min_{\theta} \left\{ \int_{-\infty}^{\infty} \operatorname{Var}(\boldsymbol \varepsilon)  \, p(\theta|X) \, \operatorname d \theta \right\} .
+\min_{\theta} \left\{ \int_{-\infty}^{\infty} Q(\theta)  \, p(\theta|X) \, \operatorname d \theta \right\} .
 \end{equation}
 Betrachte einen skalaren Modellparameter $\theta$ mit Schätzwert $\hat \theta$ und $\varepsilon = \theta - \hat \theta$, so dass
 \begin{equation}
@@ -1012,7 +1015,7 @@ Das linke Integral ist auf Grund der Normierungsbedingung $\int_{-\infty}^{\inft
 \hat\theta = \int_{-\infty}^{\infty} \theta p(\theta|X) d \theta = E(p(\theta|X))
 \end{equation}
 Der Erwartungswert $E(p(\theta|X))$ der Posterior-Verteilung $p(\theta|X)$ ist derjenige Schätzwert
-$\hat{\theta}$, der die Residuen minimiert.
+$\hat{\theta}$, der die Residuen minimiert.Der Erwartungswert gibt den Schwerpunkt einer Verteilung an und wird als 1. statisches Moment bezeichnet (s. Kap. 5 im Skript).  
 
 Zur Behandlung von Beobachtungen, die nicht rein stochastischer Natur sind, sondern durch andere, nicht weiter
 modellierbare Einflüsse gegeben sind, wie z.B. mit einer größeren Wahrscheinlichkeit - als bei der Normalverteilung in den
@@ -1057,8 +1060,9 @@ Daraus folgt:
 = 0.5
 \]
 Somit ist $\hat{\theta}$ der Median bzw. das 50-Prozent-Quantil $Q_{0.5}$.
+Der Median ist ein gebräuchlicher Lageparameter. Er gibt an, welcher Wert auf der x-Achse die Wahrscheinlichkeitsdichte so trennt, dass links und rechts des Medians jeweils die Hälfte der Wahrscheinlichkeit anzutreffen ist.
 
-Der Median ist robust gegenüber langen \glqq tails\grqq und kann für
+Der Median ist robust gegenüber langen \glqq tails\grqq~und kann für
 jede beliebige Posterior-Verteilung bestimmt werden.
 
 \begin{figure}[!htb]
@@ -1074,14 +1078,15 @@ jede beliebige Posterior-Verteilung bestimmt werden.
 
 Wesentliche Unterschiede zwischen der L1-und der L2-Norm sind in
 Tab. \ref{tab:L2_und_L1_Norm} aufgezählt.
+
 \begin{table}[!htbp]
-	\caption{Unterschiede zwischen L2- und L1-Norm}
+	\caption{Unterschiede zwischen L2- und L1-Norm} \vspace*{1ex}
 	\label{tab:L2_und_L1_Norm}
 	\centering
 	\begin{tabular}{|m{8cm} | m{8cm}| }  \hline
 	\textbf{L2-Norm:} & \textbf{L1-Norm:} \\
   \textbf{Minimierung der quadr. Abweichungen} & \textbf{Minimierung der Beträge} \\ \hline
-   Nicht sehr robust & robust \\ \hline
+   Nicht sehr robust, z.B. gegenüber Ausreißer & robust, z.B. gegenüber langen \glqq tails\grqq~ \\ \hline
    stabile Lösung & instabile Lösung möglich \\\hline
    immer nur eine Lösung möglich & mehrere Lösungen möglich \\\hline
 	\end{tabular}
@@ -1091,7 +1096,7 @@ Tab. \ref{tab:L2_und_L1_Norm} aufgezählt.
 %\begin{thebibliography}{------}
 % \item[] \hspace*{5em}{\Large\bf zu Kapitel 8:}
 %\bibitem[VIM08]{8_VIM08} VIM International vocabulary of metrology – Basic and general
-  concepts and associated terms (VIM) 3rd edition (2008)
+%  concepts and associated terms (VIM) 3rd edition (2008)
 %\bibitem[GUM95]{8_GUM95} JCGM 100:2008 BIPM, IEC, IFCC, ISO, IUPAC, IUPAP and OIML 1995 Guide to the Expression of Uncertainty in Measurement (GUM)
 %(Geneva, Switzerland: International Organization for
 %Standardization) ISBN 92-67-10188-9
@@ -1201,7 +1206,7 @@ Normalverteilung mit $N(20.5,0.5^2)$ folgt.
 \begin{itemize}
    \item[(a)] Bestimmen sie die Posteriorverteilung, wenn eine
    Stichprobe von 4 Messungen durchgeführt wird.
-   \item[b] Bestimmen Sie die obere und untere Grenze des 95\%igen Credible-Intervall der Posterior-Verteilung.
+   \item[(b)] Bestimmen Sie die obere und untere Grenze des 95\%igen Credible-Intervall der Posterior-Verteilung.
 \end{itemize}
 
 \textbf{Lösung zu 9-2(a)}
@@ -1215,13 +1220,15 @@ w_0 = \frac{1}{\sigma_0^2} = 1/2^2 = 0.25;
 w_1 = \frac{1}{\sigma_0^2/J} = 1/0.25^2 = 16;
 \]
 \[
-\bar{\sigma}^2 = 1/(w_0 + w_1) = 0.062
+\bar{\sigma}^2 = 1/(w_0 + w_1) = 0.062 \rightarrow 
+\bar{\sigma} = 0.25
 \]
 \[
 \bar{\theta} = \frac{1}{w_0 + w_1} (w_0\theta_0 + w_1 x) =
 \frac{1}{0.25 + 16} (0.25 \cdot 20 + 16 \cdot 20.5) = 20.49
 \]
-Die Posterior ist also eine Normalverteilung mit $N(20.49,0.25^2)$.
+Die Posterior ist also eine Normalverteilung mit 
+$N(\bar{\theta} =20.49,\bar{\sigma}^2 = 0.25^2)$.
 Das Vorwissen hat hier fast keinen Einfluss mehr auf die Posterior.
 
 \textbf{Lösung zu 9-2(b)} \\
