@@ -690,9 +690,9 @@ was äquivalent dem Maximieren der Likelihood ist
 	\boldsymbol{\theta}^\mathsf{T} \mathbf{X}^\mathsf{T} \right)
 	\left(\mathbf{Y} \; - \;  \mathbf{X} \boldsymbol{\theta} \right)} \right\} .
 \end{equation}
-Als Lösung erhielten wir: 
-$$ 
-\left( \mathbf{X}^\mathsf{T} \mathbf{X} \right) \hat{\boldsymbol{\theta}} = 
+Als Lösung erhielten wir:
+$$
+\left( \mathbf{X}^\mathsf{T} \mathbf{X} \right) \hat{\boldsymbol{\theta}} =
 \mathbf{X}^\mathsf{T} \mathbf{Y}
 $$
 Wir stellen uns vor, dass von einer vorherigen Messkampagne $\kappa-1$ zu der gleichen Messaufgabe
@@ -1015,7 +1015,8 @@ Das linke Integral ist auf Grund der Normierungsbedingung $\int_{-\infty}^{\inft
 \hat\theta = \int_{-\infty}^{\infty} \theta p(\theta|X) d \theta = E(p(\theta|X))
 \end{equation}
 Der Erwartungswert $E(p(\theta|X))$ der Posterior-Verteilung $p(\theta|X)$ ist derjenige Schätzwert
-$\hat{\theta}$, der die Residuen minimiert.Der Erwartungswert gibt den Schwerpunkt einer Verteilung an und wird als 1. statisches Moment bezeichnet (s. Kap. 5 im Skript).  
+$\hat{\theta}$, der die Residuen minimiert.Der Erwartungswert gibt den Schwerpunkt einer Verteilung an und wird als
+erstes statisches Moment bezeichnet (s.\ Kap.\ 5 im Skript). 
 
 Zur Behandlung von Beobachtungen, die nicht rein stochastischer Natur sind, sondern durch andere, nicht weiter
 modellierbare Einflüsse gegeben sind, wie z.B. mit einer größeren Wahrscheinlichkeit - als bei der Normalverteilung in den
@@ -1220,14 +1221,14 @@ w_0 = \frac{1}{\sigma_0^2} = 1/2^2 = 0.25;
 w_1 = \frac{1}{\sigma_0^2/J} = 1/0.25^2 = 16;
 \]
 \[
-\bar{\sigma}^2 = 1/(w_0 + w_1) = 0.062 \rightarrow 
+\bar{\sigma}^2 = 1/(w_0 + w_1) = 0.062 \rightarrow
 \bar{\sigma} = 0.25
 \]
 \[
 \bar{\theta} = \frac{1}{w_0 + w_1} (w_0\theta_0 + w_1 x) =
 \frac{1}{0.25 + 16} (0.25 \cdot 20 + 16 \cdot 20.5) = 20.49
 \]
-Die Posterior ist also eine Normalverteilung mit 
+Die Posterior ist also eine Normalverteilung mit
 $N(\bar{\theta} =20.49,\bar{\sigma}^2 = 0.25^2)$.
 Das Vorwissen hat hier fast keinen Einfluss mehr auf die Posterior.
 

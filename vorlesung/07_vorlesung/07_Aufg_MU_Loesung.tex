@@ -77,6 +77,7 @@ linearen Zusammenhangs genau
 \begin{equation}
 c_\mathrm{d} \; = \; \left. \frac{U_\mathrm{W}}{U_\mathrm{B}} \right|_{\bar U_\mathrm{B}, \bar U_\mathrm{W}} \qquad
 c_\mathrm{W} \; = \; \left. \frac{d}{U_\mathrm{B}} \right|_{\bar U_\mathrm{B}, \bar d}
+\label{AufgPartiellLinear}
 \end{equation}
 definiert.
 Die kombinierte Varianz unter der Voraussetzung, dass die gemessenen Größen und
@@ -93,9 +94,14 @@ $s_\mathrm{d}$ für die Standardabweichung der Angabe aus dem Kalibrierschein.
 \item[a)] Ermitteln Sie aus den Angaben des Kalibrierscheins (hier Gl.~(\ref{kalBezug}))
 die Standardabweichung $s_\mathrm{d}$, indem Sie den dort genannten Erweiterungsfaktor verwenden.
 %>> d = 4.997 d =  4.9970
+
+Die im Kalibrierschein angegebene erweiterte Messunsicherheit $U(d)\, = \, k s_\mathrm{d}$
+beträgt $0.011 \, \mathrm{mu m}$. Um an die Standardabweichung $s_\mathrm{d}$ zu kommen,
+die in die Unsicherheitsfortpflanzungsformel einzusetzen ist,
+muss durch den Erweiterungsfaktor $k = 2.1$ geteilt werden:
 %>> sd = 0.011/2.1 sd =  0.0052381
 $$
-s_\mathrm{d} =   0.00524 \; \mathrm{\mu m}
+s_\mathrm{d} = \frac{0.011 \, \mathrm{\mu m}}{2.1} = 0.00524 \; \mathrm{\mu m}
 $$
 \item[b)] Ermitteln Sie die beiden Mittelwerte $\bar U_\mathrm{B}$ und $\bar U_\mathrm{W}$,
 sowie die beiden empirischen Standardabweichungen $s_\mathrm{B}$ und $s_\mathrm{W}$
@@ -107,9 +113,18 @@ aus den beiden Tabellen A5.1 und A5.2.
 %>> sB = std(xB) sB =  9.0410
 %>> sB2 = var(xB) sB2 =  81.739
 $$
-\bar U_\mathrm{B}  = 194.364 \; \mathrm{mV}, s_\mathrm{B}  =   9.045 \; \mathrm{mV},
-\bar U_\mathrm{W}  = 180.871 \; \mathrm{mV}, s_\mathrm{W}  =  11.547 \; \mathrm{mV}
+\bar U_\mathrm{B} \, = \, \frac{1}{J_\mathrm{B}}\sum\limits_{j=1}^{J_\mathrm{B}}  U_{\mathrm{B},j}
+\, = \, 194.364 \; \mathrm{mV},
+\quad
+ s_\mathrm{B}  = \sqrt{\frac{1}{J_\mathrm{B}-1}\sum\limits_{j=1}^{J_\mathrm{B}}} \, = \,
+ 9.045 \; \mathrm{mV}
 $$
+mit $J_\mathrm{B} = 11$ und
+$$
+\bar U_\mathrm{W} \, =  \, \frac{1}{J_\mathrm{W}}\sum\limits_{j=1}^{J_\mathrm{W}}  U_{\mathrm{W},j}
+\, = \, 180.871 \; \mathrm{mV}, \quad s_\mathrm{W}  =  11.547 \; \mathrm{mV}
+$$
+mit $J_\mathrm{B} = 7$.
 
 \item[c)] Bestimmen Sie die Sensitivitäten $c_\mathrm{d}$, $c_\mathrm{W}$, $c_\mathrm{B}$ durch Ausführen der
 partiellen Ableitung.
@@ -122,14 +137,32 @@ partiellen Ableitung.
 %(%o5)                               - ----
 %                                        2
 %                                      UB
+\begin{equation}
+c_\mathrm{d} \; = \; \left. \frac{U_\mathrm{W}}{U_\mathrm{B}} \right|_{\bar U_\mathrm{B}, \bar U_\mathrm{W}} \qquad
+c_\mathrm{W} \; = \; \left. \frac{d}{U_\mathrm{B}} \right|_{\bar U_\mathrm{B}, \bar d}
+\label{AufgPartiellLinear}
+\end{equation}
+
 $$
-c_\mathrm{d} \; = \; \frac{\partial d_\mathrm{W}}{\partial d} \; = \; \frac{U_\mathrm{W}}{U_\mathrm{B}} \; =  \; 0.9306
+c_\mathrm{d} \; = \; \frac{\partial d_\mathrm{W}}{\partial d}
+\; = \; \frac{\partial}{\partial d} \frac{d}{U_\mathrm{B}} \, U_\mathrm{W}
+\; = \; \frac{U_\mathrm{W}}{U_\mathrm{B}} \; =  \; 0.9306
 $$
+weil $\frac{U_\mathrm{W}}{U_\mathrm{B}}$ bezüglich der Ableitung nach $d$ Konstanten sind und die Ableitung von $d$
+nach $d$ Eins ist. Entsprechend ist der Faktor $\frac{d}{U_\mathrm{B}}$ bzgl der Ableitung nach $U_\mathrm{W}$ eine
+Konstante und $U_\mathrm{W}$ nach $U_\mathrm{W}$ abgeleitet gleich Eins.
 $$
 c_\mathrm{W} \; = \; \frac{\partial d_\mathrm{W}}{\partial U_\mathrm{W}} \; = \; \frac{d}{U_\mathrm{B}} \; = \;  0.0257 \; \frac{\mathrm{\mu m}}{\mathrm{mV}}
 $$
 $$
-c_\mathrm{B} \; = \; \frac{\partial d_\mathrm{W}}{\partial U_\mathrm{W}} \; = \; -\frac{d U_\mathrm{W}}{U_\mathrm{B}^2} \; = \;  -0.0239 \; \mathrm{\mu m}
+c_\mathrm{B} \; = \; \frac{\partial d_\mathrm{W}}{\partial U_\mathrm{B}}
+\; = \; \frac{\partial}{\partial U_\mathrm{B}} \frac{d}{U_\mathrm{B}} \, U_\mathrm{W}
+\; = \; d \, U_\mathrm{W} \, \frac{\partial}{\partial U_\mathrm{B}} \frac{1}{U_\mathrm{B}}
+\; = \; -\frac{d U_\mathrm{W}}{U_\mathrm{B}^2} \; = \;  -0.0239 \; \mathrm{\mu m}
+$$
+weil $d \, U_\mathrm{W}$ bzgl der Ableitung nach $U_\mathrm{B}$ eine Konstante und
+$$
+ \frac{\partial}{\partial U_\mathrm{B}} U_\mathrm{B}^{-1} = -U_\mathrm{B}^{-2}
 $$
 \item[d)] Berechnen Sie die kombinierte empirische Standardabweichung $s_{d,\mathrm{W}}$.
 %>> cd = xWbar/xBbar cd =  0.93048
@@ -148,15 +181,32 @@ $$
 \item[f)] Berechnen Sie den Erweiterungsfaktor $k$, der
  hier das t-Quantil für ein zweiseitiges Vertrauensniveau
  von $1-\alpha = 0.95\%$ ist.
-% k=tinv(0.975,nueff) k =  2.1784
+
+Berechnet mit Gnu-Octave:
+\begin{verbatim}
+ k=tinv(0.975,nueff) k =  2.1784
+\end{verbatim}
 $$
 k = t_{0.975,12.04} = 2.178
 $$
+Für Ablesen aus der Quantilatabelle wird die effektive Anzahl der Freiheitsgrade abgerundet auf $\nu_\mathrm{eff} \, = \, 12$
+und aus der Tabelle abgelesen:
+
+\begin{center}
+\includegraphics[width=95mm]{07_vorlesung/media/aufg_quantilaustabelle.png}
+\end{center}
+
+so dass dann folgender Wert verwendet wird
+$$
+k = t_{0.975,12.04} = 2.179
+$$
+
 \item[g)] Bestimmen Sie das vollständige Messergebnis.
 % dW = d*xWbar/xBbar  dW =  4.6496
 % k*s =  0.80083
 % d_W = 4.6496 \pm 0.80083
 $$
-d_\mathrm{W} \; = \; \frac{d \, \bar U_\mathrm{B}}{\bar U_\mathrm{W}} \;  \pm \; k \, s_{d,\mathrm{W}}  =   (4.6501 \, \pm \, 0.8002) \; \mathrm{\mu m}
+d_\mathrm{W} \; = \; \frac{d \, \bar U_\mathrm{B}}{\bar U_\mathrm{W}} \;  \pm \; k \, s_{d,\mathrm{W}}  =   (4.65 \, \pm \, 0.80) \; \mathrm{\mu m}
 $$
+Durch Rundung können die hinteren Nachkommastellen bei Verwendung des Taschenrechners und des Quantiltabellenwertes etwas anders aussehen.
 \end{itemize}
