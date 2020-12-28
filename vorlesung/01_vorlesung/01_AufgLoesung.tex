@@ -1,0 +1,170 @@
+\section{Lösung zur Aufgabe aus Vorl 1}
+\subsection{Lösung zum Beispiel zur Methode der der kleinsten Quadrate}
+aus Abschnitt \ref{Kap1LMSbeispiel}
+
+Zu Bestimmen ist ein Ohmscher Widerstand $R$ sowie eine Offsetspannung $U_0$ bei gegebenen Werten einer
+Präzisionsstromquelle und eines Voltmeters:
+
+\begin{center}
+\begin{tabular}{l||c|c|c|c|c|c|c|c|c}
+\hline\hline
+ $I$ in mA &    4.0 &     6.0 &     8.0 &    10.0 &    12.0 &    14.0 &    16.0 &    18.0 &    20.0\\
+\hline
+ $U$ in mV &    62.5 &    51.5 &    96.0 &   140.2 &   138.9 &   195.1 &   225.8 &   207.8 &   223.7 \\
+\hline\hline
+\end{tabular}
+\end{center}
+
+Es wird angenommen, dass die Stromstärken ohne Streuung vorliegen (als Regressoren) und die Spannungen normalverteilt
+streuen (als Regressanden), so dass
+\begin{equation*}
+\min_{R, U_0} \; \sum_{i = 1}^J \, \left(U_i \, - \, R \, I_i  \, - \,  U_0\right)^2
+\end{equation*}
+
+\begin{itemize}
+\item[(a)] Berechnen Sie den Korrelationskoeffizienten $\rho(I, U)$
+
+$$
+\rho = \frac{\mathrm{Cov}(U,I)}{\sqrt{\mathrm{Var}(U)} \, \sqrt{\mathrm{Var}(I)}}
+$$
+Für die Ko-Varianzen werden die Mittelwerte gebraucht und die Anzahl der Wertepaare $J = 9$
+$$
+\bar U = \frac{1}{J} \sum\limits_{j=1}^J  U_j =
+$$
+$$
+=  (62.5 +   51.5 +   96.0 + 140.2 + 138.9 + 195.1 + 225.8 + 207.8 + 223.7)/9 = 149.06 \, \mathrm{m V}
+$$
+$$
+\bar I = \frac{1}{J} \sum\limits_{j=1}^J I_j =
+$$
+$$
+= (4.0 +  6.0 + 8.0 + 10.0 + 12.0 + 14.0 + 16.0 + 18.0 + 20.0)/9 = 12  \, \mathrm{m A}
+$$
+
+$$
+\mathrm{Cov}(U,I) = \frac{1}{J-1} \sum\limits_{j=1}^J (U_i - \bar U) (I_i - \bar I) =
+$$
+$$
+= \frac{1}{8}\left( (62.5 - 149.06) (4-12) + \dots + (223.7 - 149.06) (20 - 12) \right)
+= 357.05 \, \mathrm{m V} \cdot \mathrm{m A}
+$$
+$$
+\mathrm{Var}(U) = \frac{1}{J-1} \sum\limits_{j=1}^J (U_i - \bar U)^2 = 4629.7 \, (\mathrm{m V})^2
+$$
+$$
+\sqrt{\mathrm{Var}(U)} = 68.042 \, \mathrm{m V}
+$$
+$$
+\mathrm{Var}(I) = \frac{1}{J-1} \sum\limits_{j=1}^J (I_i - \bar I)^2 = 30 \, (\mathrm{m A})^2
+$$
+$$
+\sqrt{\mathrm{Var}(I)} = 5.4772 \, \mathrm{m A}
+$$
+also
+$$
+\rho = \frac{357.05}{68.042 \cdot 5.4772} = 0.958
+$$
+\item[(b)] Lösen Sie das Gleichungssystem
+\begin{equation*}
+\left(\begin{array}{c}
+\frac{\partial}{\partial R}\\
+\frac{\partial}{\partial U_0}
+\end{array}\right)
+\, \sum_{i = 1}^J \, \left(U_i \, - \, R \, I_i  \, - \,  U_0\right)^2 \; = \;
+\left(\begin{array}{c}
+0\\
+0
+\end{array}\right)
+\end{equation*}
+d.h.
+$$
+\begin{array}{ccc}
+\sum_i 2 (U_i - R I_i - U_0) \cdot (-I_i) & = & 0 \\
+\sum_i \underbrace{2 (U_i - R I_i - U_0)}_{\text{aeussere Abl.}} \cdot
+ \underbrace{(-1)}_{\text{innere Abl.}} & = & 0
+\end{array}
+$$
+d.h.
+$$
+\begin{array}{ccc}
+\sum_i U_i I_i & = & \sum_i I_i^2 R \; + \;  \sum_i I_i U_0 \\
+\sum_i U_i & = & \sum_i I_i R \; + \;  \sum_i U_0
+\end{array}
+$$
+mit $\sum_i U_0 = U_0 \sum_i 1 = J U_0$
+\begin{equation*}
+\left(\begin{array}{cc}
+\sum_i I_i^2 & \sum_i I_i\\
+\sum_i I_i & J
+\end{array}\right)
+\left(\begin{array}{c}
+R\\
+U_0
+\end{array}\right)
+ \; = \;
+\left(\begin{array}{c}
+\sum_i U_i I_i\\
+\sum_i U_i
+\end{array}\right)
+\end{equation*}
+Lösen des Gleichungssystems
+\begin{equation*}
+\left(\begin{array}{c}
+R\\
+U_0
+\end{array}\right)
+ \; = \;
+ \left(\begin{array}{cc}
+ \sum_i I_i^2 & \sum_i I_i\\
+ \sum_i I_i & J
+ \end{array}\right)^{-1}
+\left(\begin{array}{c}
+\sum_i U_i I_i\\
+\sum_i U_i
+\end{array}\right)
+\end{equation*}
+Für die Inverse einer $2 \time 2$-Matrix gilt
+$$
+\left(\begin{array}{cc}
+a & b\\
+c & d
+\end{array}\right)^{-1} = \frac{1}{ad - cb}
+\left(\begin{array}{cc}
+d & -b\\
+-c & a
+\end{array}\right)
+$$
+so dass
+$$
+\left(\begin{array}{c}
+R\\
+U_0
+\end{array}\right)
+ \; = \;
+ \frac{1}{J (\sum_i I_i^2) - \left( \sum_i I_i \right)^2}
+ \left(\begin{array}{cc}
+ J & -\sum_i I_i\\
+ -\sum_i I_i & \sum_i I_i^2
+ \end{array}\right)^{-1}
+\left(\begin{array}{c}
+\sum_i U_i I_i\\
+\sum_i U_i
+\end{array}\right)
+$$
+\item[(c)] Berechnen Sie die aus der Lösung des Gleichungssystems aus (b) gewonnen Schätzwerte
+für $R$ und $U_0$.
+
+$$
+R = \frac{J(\sum_i U_i I_i) - (\sum_i U_i)(\sum_i I_i)}
+{J (\sum_i I_i^2) - \left( \sum_i I_i \right)^2} =
+\frac{2.5708 \cdot 10^4 \, \mathrm{m V} \cdot \mathrm{m A}}
+{2160 \, (\mathrm{m A})^2} = 11.9 \, \frac{\mathrm{V}}{\mathrm{A}} = 11.9 \, \Omega
+$$
+$$
+U_0 = \frac{(\sum_i I_i^2)(\sum_i U_i) - (\sum_i I_i)(\sum_i U_i I_i)}
+{J (\sum_i I_i^2) - \left( \sum_i I_i \right)^2} =
+\frac{1.3469 \cdot 10^4 \, (\mathrm{m A})^2 \cdot \mathrm{m V}}
+{2160 \, (\mathrm{m A})^2} = 6.24 \, \mathrm{m V}
+$$
+
+\end{itemize}
