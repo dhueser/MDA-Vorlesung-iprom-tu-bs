@@ -64,7 +64,7 @@ end
 
 \textbf{\large Lösung zu Aufgabe 2}
 
-Gegeben seien zwei Stichproben
+Gegeben seien zwei \textsl{gepoolte} Stichproben
 
 Stichprobe 1:
 
@@ -132,3 +132,22 @@ $$
 Ergebnis:
 T liegt zwischen den Quantilen $2.180 < 9.53 < 17.535$, also $H_0$ annehmen
 \end{itemize}
+
+\textsl{Anmeerkung:} Die Stichproben sind gepoolt, weil Ihre Varianzen mit einem  Vertrauensniveau
+von $95 \%$ übereinstimmen:
+
+Fischertest:
+\begin{verbatim}
+>> T = var(x1)/var(x2)
+T =  1.6285
+>> Flinks = finv(alpha/2, length(x2)-1, length(x1)-1)
+Flinks =  0.19792
+>> Frechts = finv(1-alpha/2, length(x2)-1, length(x1)-1)
+Frechts =  8.9796
+\end{verbatim}
+da der Wert der Prüfgröße mit $T = 1.629$ zwischen den Werten der Quantile liegt
+$$
+0.198 = F_{\alpha/2,\nu_2,\nu_1} \; \leq \; T = 1.629
+\; \leq \; F_{1-\alpha/2,\nu_2,\nu_1} =  8.980
+$$
+akzeptieren wir die Nullhypothese, dass die Varianzen übereinstimmen.
