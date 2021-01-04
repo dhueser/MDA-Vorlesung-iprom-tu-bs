@@ -1509,7 +1509,7 @@ mit $\Phi(z) = \frac{1}{2} \left(1 + \mathrm{erf}\left(\frac{z}{\sqrt{2}}\right)
 \begin{equation}
 	\mathrm{erf}(z)= \frac{2}{\sqrt{\pi}}\int\limits_{0}^{z} \exp (-t^2)\mathrm{d}t
 \end{equation}
-Die Standardnormalverteilung $\mathcal{N}(\mu=0,\sigma^2=1)$ haben wir mit $\Phi(z)$ bezeichnet. Sie wird wie folgt:
+Die Standardnormalverteilung $\mathcal{N}(\mu=0,\sigma^2=1)$ haben wir mit $\Phi(z)$ bezeichnet. Sie ist wie folgt gegeben:
 \begin{equation}
 	\Phi(z)= \frac{1}{\sqrt{2\pi}}\int\limits_{-\infty}^{z} \exp (-t^2)\mathrm{d}t
 \end{equation}
@@ -1628,17 +1628,17 @@ Ein negativer Sicherheitsabstand verkleinert das Produzentenrisiko und erhöht d
 den Grenzfall \glqq geteiltes Risiko\grqq.
 
 Neben den spezifischen Risiken werden im \cite{JCGM106} auch die globalen Risiken definiert. Sie geben bspw. die mittlere Wahrscheinlichkeit der Fehleinschätzung basierend auf einem Messprozess an oder die mittlere Wahrscheinlichkeit einer Fehlbewertung über eine große Anzahl durchgeführter Messungen oder die mittlere Wahrscheinlichkeit der Fehlbewertung durch eine zukünftige Messung an. Das globale Risiko ist wichtig für die Planung und hat globale Auswirkungen. Man unterscheidet auch hier zwischen globalem Konsumentenrisiko und globalem Produzentenrisiko.
-Gegeben sei das Priorwissen $p_0(y)$ über die Messgröße $Y$ sowie die durchgeführte Messung mit den Messwerten $X_1,\ldots , X_J$. Die durchgeführte Messung wird durch die Wahrscheinlichkeitsdichtefunktion $p(x|y)$ beschrieben. Mit Hilfe des Bayes-Theorems ergibt sich die PDF der Posterior proportional zu $p_0(y)\cdot p(x|y)$. Für das \textbf{globale Konsumentenrisiko} $R_\mathrm{c}$  wird über das Akzeptanzintervall $A$ und über den
+Gegeben sei das Priorwissen $p_0(y)$ über die Messgröße $Y$ sowie die durchgeführte Messung mit den Messwerten $X_1,\ldots , X_J$. Die durchgeführte Messung wird durch die Wahrscheinlichkeitsdichtefunktion $p(x|y)$ beschrieben. Mit Hilfe des Bayes-Theorems ergibt sich die PDF der Posterior proportional zu $p_0(y)\cdot p(x|y)$. Für das \textbf{globale Konsumentenrisiko} $R_\mathrm{C}$  wird über das Akzeptanzintervall $A$ und über den
 Bereich außerhalb des Toleranzintervalls $\tilde C$ integriert:
 \begin{equation}
-	R_\mathrm{c} =  \int_{\tilde C} \int_{A} \; p_0(y) \cdot p(x|y) \;\mathrm{d}x\; \mathrm{d}y.
+	R_\mathrm{C} =  \int_{\tilde C} \int_{A} \; p_0(y) \cdot p(x|y) \;\mathrm{d}x\; \mathrm{d}y.
 	\label{eq:globalesKonsumentenrisiko}
 \end{equation}
 
-Für das \textbf{globale Produzentenrisiko} $R_\mathrm{p}$ wird über den Bereich außerhalb des Akzeptanzintervalls $\tilde A$ und über das Toleranzintervall $C$ integriert
+Für das \textbf{globale Produzentenrisiko} $R_\mathrm{P}$ wird über den Bereich außerhalb des Akzeptanzintervalls $\tilde A$ und über das Toleranzintervall $C$ integriert
 
 \begin{equation}
-	R_\mathrm{p} =  \int_{C} \int_{\tilde A} \; p_0(y) \cdot p(x|y) \; \mathrm{d}x\; \mathrm{d}y.
+	R_\mathrm{P} =  \int_{C} \int_{\tilde A} \; p_0(y) \cdot p(x|y) \; \mathrm{d}x\; \mathrm{d}y.
 		\label{eq:globalesProduzentenrisiko}
 \end{equation}
 
@@ -1787,12 +1787,12 @@ Im Vergleich zu den $10 \, \%$ Ausschuss liefert
 \begin{itemize}
 \item das globale Konsumentenrisiko, Gl.(\ref{eq:globalesKonsumentenrisiko}),
 \begin{equation}
-	R_\mathrm{c} =  \int_{\tilde C} \int_{A} \; p_0(y) \; p(x|y) \;\mathrm{d}x\; \mathrm{d}y
+	R_\mathrm{C} =  \int_{\tilde C} \int_{A} \; p_0(y) \; p(x|y) \;\mathrm{d}x\; \mathrm{d}y
 	\label{eq:globalesKonsumentenrisiko_Aufg}
 \end{equation}
 d.h.
 $$
-R_\mathrm{c} =  \int\limits_{-\infty}^{T_\mathrm{L}} \, \mathrm{d}y\; p_0(y) \;
+R_\mathrm{C} =  \int\limits_{-\infty}^{T_\mathrm{L}} \, \mathrm{d}y\; p_0(y) \;
  \int\limits_{A_\mathrm{L}}^{A_\mathrm{U}} \mathrm{d}x \; p(x|y) \; + \;
  \int\limits_{T_\mathrm{U}}^{\infty} \, \mathrm{d}y\; p_0(y) \;
   \int\limits_{A_\mathrm{L}}^{A_\mathrm{U}} \mathrm{d}x \; p(x|y)
@@ -1806,7 +1806,7 @@ mit
 \end{equation}
 und nach Einsetzen der Zahlenwerte
 $$
- R_\mathrm{c} = \int\limits_{-\infty}^{T_\mathrm{L}} \, \mathrm{d}y\;
+ R_\mathrm{C} = \int\limits_{-\infty}^{T_\mathrm{L}} \, \mathrm{d}y\;
  \frac{1}{\sqrt{2 \pi} \cdot 0.12}
  e^{-\frac{1}{2}\left(\frac{y - 1500}{0.12}\right)^2}
  \int\limits_{A_\mathrm{L}}^{A_\mathrm{U}} \mathrm{d}x \;
@@ -1825,7 +1825,7 @@ $$
 $$
 \item Das globale Produzentenrisiko berechnet sich mit Gl.(\ref{eq:globalesProduzentenrisiko}) zu
 \begin{equation}
-	R_\mathrm{p} =  \int_{C} \int_{\tilde A} \; p_0(y) \; p(x|y) \; \mathrm{d}x\; \mathrm{d}y
+	R_\mathrm{P} =  \int_{C} \int_{\tilde A} \; p_0(y) \; p(x|y) \; \mathrm{d}x\; \mathrm{d}y
   \label{eq:globalesProduzentenrisiko_Aufg}
 \end{equation}
 $$
@@ -1849,6 +1849,199 @@ Durch diese Maßnahme wurde das Konsumentenrisko reduziert, jedoch gelangen eben
 dass es schlussendlich ein Abwägen ist zwischen niedrigem Konsumentenrisiko und
 Anzahl der Widerstände, die auf den Markt gebracht werden können.
 
+Matlab/Octave-Code zur numerischen Berechnung des Konsumenten- und Produktionsrisikos:
+
+\begin{lstlisting}[style=Matlab]
+function konform_beispiel()
+step = 0.001;
+
+% ----
+y0 = 1500;
+s0 = 0.12;
+T_L = 1499.80;
+T_U = 1500.20;
+A_L = 1499.82;
+A_U = 1500.18;
+s1 = (T_U - T_L) / (2 * 1.96)
+mininf = T_L - 3*s0;
+maxinf = T_U + 3*s0;
+
+%  s0 = s1;
+y = [T_L:step:T_U];
+prior = step * exp(-0.5*((y - y0) / s0).^2) / (s0 * sqrt(2*pi));
+p_c = sum(prior)
+
+% inspection device - instrument uncertainty
+s_insp = 0.04;
+
+
+yall = [mininf:step:maxinf];
+resistor_distri = exp(-0.5*((yall - y0) / s0).^2) / (s0 * sqrt(2*pi));
+p_TL = exp(-0.5*((T_L - y0) / s0).^2) / (s0 * sqrt(2*pi));
+p_TU = exp(-0.5*((T_U - y0) / s0).^2) / (s0 * sqrt(2*pi));
+p_AL = exp(-0.5*((A_L - y0) / s0).^2) / (s0 * sqrt(2*pi));
+p_AU = exp(-0.5*((A_U - y0) / s0).^2) / (s0 * sqrt(2*pi));
+
+x1 = T_U + 0.03;
+x = [x1-5*s_insp:step:x1+5*s_insp];
+p_insp = (exp(-0.5*((x - x1) / s_insp).^2) / (s_insp * sqrt(2*pi))) * ...
+(exp(-0.5*((x1 - y0) / s0).^2) / (s0 * sqrt(2*pi)));
+hlp = (1 / (s_insp * sqrt(2*pi))) * ...
+(exp(-0.5*((x1 - y0) / s0).^2) / (s0 * sqrt(2*pi)));
+hlpAU = (exp(-0.5*((A_U - x1) / s_insp).^2) / (s_insp * sqrt(2*pi))) * ...
+(exp(-0.5*((x1 - y0) / s0).^2) / (s0 * sqrt(2*pi)));
+figure(301);
+hold on;
+#  area(y, prior/step);
+plot(yall, resistor_distri, 'k-');
+plot(y, prior/step, 'r--', 'linewidth', 2);
+plot([T_L T_L], [0 p_TL], 'r-');
+plot([T_U T_U], [0 p_TU], 'r-');
+plot([A_L A_L], [0 p_AL], 'k--');
+plot([A_U A_U], [0 hlpAU], 'k--');
+plot(x, p_insp, 'b-', 'linewidth', 2);
+plot([x1 x1], [0, hlp], 'b-')
+grid on;
+xlabel('R / Ohm', 'fontsize', 14);
+ylabel('p / (1/Ohm)', 'fontsize', 14);
+set(gca, 'fontsize', 12);
+hold off;
+print(301, 'Konsumentenrisiko_x0p03.svg', '-dsvg');
+%
+% ---
+% --- producer risk:
+x_L = [mininf:step:A_L]'; %'
+x_U = [A_U:step:maxinf]'; %'
+
+figure(102);
+plot(x_L, exp(-0.5 * ((x_L - T_L) / s_insp).^2) / (s_insp * sqrt(2*pi)))
+n_y = length(y);
+n_xL = length(x_L);
+n_xU = length(x_U);
+likeli_L = exp(-0.5 * ((x_L * ones(1,n_y) - ones(n_xL,1) * y) / s_insp).^2) ...
+* step / (s_insp * sqrt(2*pi));
+likeli_U = exp(-0.5 * ((x_U * ones(1,n_y) - ones(n_xU,1) * y) / s_insp).^2) ...
+* step / (s_insp * sqrt(2*pi));
+
+posterior_L = (ones(n_xL,1)*prior) .* likeli_L;
+posterior_U = (ones(n_xU,1)*prior) .* likeli_U;
+sum_L = sum(posterior_L(:))
+sum_U = sum(posterior_U(:))
+sum_L + sum_U
+
+%-------
+% consumer risk
+
+x = [A_L:step:A_U]'; %'
+y_L = [mininf:step:T_L];
+y_U = [T_U:step:maxinf];
+n_x = length(x);
+n_yL = length(y_L);
+n_yU = length(y_U);
+prior_L = step * ones(n_x,1) * exp(-0.5*((y_L - y0) / s0).^2) / (s0 * sqrt(2*pi));
+prior_U = step * ones(n_x,1) * exp(-0.5*((y_U - y0) / s0).^2) / (s0 * sqrt(2*pi));
+likeli_L = exp(-0.5 * ((x * ones(1,n_yL) - ones(n_x,1) * y_L) / s_insp).^2) ...
+* step / (s_insp * sqrt(2*pi));
+likeli_U = exp(-0.5 * ((x * ones(1,n_yU) - ones(n_x,1) * y_U) / s_insp).^2) ...
+* step / (s_insp * sqrt(2*pi));
+posterior_L = prior_L .* likeli_L;
+posterior_U = prior_U .* likeli_U;
+sum_L = sum(posterior_L(:))
+sum_U = sum(posterior_U(:))
+sum_L + sum_U
+end
+
+\end{lstlisting}
+
+Der dazugehörige Python-Code sieht wie folgt aus: 
+\begin{lstlisting}[style=Matlab]
+	import numpy as np
+	import matplotlib.pyplot as plt
+	
+	flagpltconsumer = 0
+	savethefig = 1
+	
+	gaussian = lambda x, mu, sigm : \
+	np.exp(-0.5*((x - mu) / sigm)**2) / (sigm * np.sqrt(2*np.pi))
+	
+	step = 0.001
+	# ----
+	y0 = 1500
+	s0 = 0.12
+	T_L = 1499.80
+	T_U = 1500.20
+	A_L = 1499.82
+	A_U = 1500.18
+	s1 = (T_U - T_L) / (2 * 1.96)
+	mininf = T_L - 3*s0
+	maxinf = T_U + 3*s0
+	
+	#  s0 = s1;
+	y = np.arange(T_L, T_U+step, step)
+	prior = gaussian(y, y0, s0)
+	
+	# inspection device - instrument uncertainty
+	s_insp = 0.04
+	
+	
+	yall = np.arange(mininf,maxinf+step,step)
+	resistor_distri = gaussian(yall, y0, s0)
+	p_T = gaussian(np.array([T_L, T_U]), y0, s0)
+	p_A = gaussian(np.array([A_L, A_U]), y0, s0)
+	
+	if (flagpltconsumer == 1):
+	x1 = T_U + 0.03
+	x = np.arange(x1-5*s_insp,step+x1+5*s_insp,step)
+	xconsumerrisk = np.arange(x1-5*s_insp,step+A_U, step)
+	p_consumerrisk = gaussian(xconsumerrisk, x1, s_insp) * gaussian(x1, y0, s0)
+	else:
+	x1 = A_U - 0.03
+	x = np.arange(x1-5*s_insp,step+x1+5*s_insp,step)
+	xproducerrisk = np.arange(A_U, step+x1+5*s_insp,step)
+	p_producerrisk = gaussian(xproducerrisk, x1, s_insp) * gaussian(x1, y0, s0)
+	
+	print(x1)
+	
+	p_insp = gaussian(x, x1, s_insp) * gaussian(x1, y0, s0)
+	p_x1 = gaussian(x1, x1, s_insp) * gaussian(x1, y0, s0)
+	p_AU = gaussian(A_U, x1, s_insp) * gaussian(x1, y0, s0)
+	
+	plt.figure(301);
+	plt.fill_between(y, np.zeros(len(y)),\
+	prior, color='yellow', alpha=0.4)
+	plt.plot(yall, resistor_distri, 'k-', label='prior '+r'$p(y)$')
+	plt.plot([T_L, T_L], [0, p_T[0]], 'r-')
+	plt.plot([T_U, T_U], [0, p_T[1]], 'r-')
+	plt.plot([A_L, A_L], [0, p_A[0]], 'k--')
+	plt.plot([A_U, A_U], [0, p_AU], 'k--')
+	plt.plot(x, p_insp, 'b-', label='posterior '+r'$p(y) \cdot p(x|y=x_1)$')
+	
+	if (flagpltconsumer == 1):
+	plt.fill_between(xconsumerrisk, np.zeros(len(xconsumerrisk)),\
+	p_consumerrisk, color='red', alpha=0.3)
+	else:
+	plt.fill_between(xproducerrisk, np.zeros(len(xproducerrisk)),\
+	p_producerrisk, color='red', alpha=0.3)
+	plt.plot([x1, x1], [0, p_x1], 'b-')
+	plt.grid()
+	plt.xlim(-0.5+1.5e3, 0.5+1.5e3)
+	
+	if (flagpltconsumer == 1):
+	plt.ylim(0, 6)
+	else:
+	plt.ylim(0, 16)
+	
+	plt.xlabel(r'$R \; / \; \Omega$')
+	plt.ylabel(r'$p \; / \; \frac{1}{\Omega}$')
+	plt.legend()
+	
+	if (savethefig == 1):
+	if (flagpltconsumer == 1):
+	plt.savefig('Konsumentenrisiko_x0p03.svg')
+	else:
+	plt.savefig('Produzentenrisiko_x0p03.svg')
+	plt.show()
+\end{lstlisting}
 %\bibliography{$BIBLIO/math}
 %\bibliographystyle{unsrt}
 %\bibliography{$BIBLIO/math}
