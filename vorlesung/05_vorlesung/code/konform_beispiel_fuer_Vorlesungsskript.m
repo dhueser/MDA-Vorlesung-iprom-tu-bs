@@ -33,8 +33,8 @@ function konform_beispiel()
      (exp(-0.5*((x1 - y0) / s0).^2) / (s0 * sqrt(2*pi)));
 
 % producer risk R_P:
-  x_L = [mininf:step:A_L]'; %'
-  x_U = [A_U:step:maxinf]'; %'
+  x_L = [mininf:step:A_L]'; 
+  x_U = [A_U:step:maxinf]';
   n_y = length(y);
   n_xL = length(x_L);
   n_xU = length(x_U);
