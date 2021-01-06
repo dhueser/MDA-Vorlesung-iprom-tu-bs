@@ -16,21 +16,6 @@ function konform_beispiel()
 
 % inspection device - instrument uncertainty
   s_insp = 0.04;
-  yall = [mininf:step:maxinf];
-  resistor_distri = exp(-0.5*((yall - y0) / s0).^2) / (s0 * sqrt(2*pi));
-  p_TL = exp(-0.5*((T_L - y0) / s0).^2) / (s0 * sqrt(2*pi));
-  p_TU = exp(-0.5*((T_U - y0) / s0).^2) / (s0 * sqrt(2*pi));
-  p_AL = exp(-0.5*((A_L - y0) / s0).^2) / (s0 * sqrt(2*pi));
-  p_AU = exp(-0.5*((A_U - y0) / s0).^2) / (s0 * sqrt(2*pi));
-
-  x1 = T_U + 0.03;
-  x = [x1-5*s_insp:step:x1+5*s_insp];
-  p_insp = (exp(-0.5*((x - x1) / s_insp).^2) / (s_insp * sqrt(2*pi))) * ...
-     (exp(-0.5*((x1 - y0) / s0).^2) / (s0 * sqrt(2*pi)));
-  hlp = (1 / (s_insp * sqrt(2*pi))) * ...
-     (exp(-0.5*((x1 - y0) / s0).^2) / (s0 * sqrt(2*pi)));
-  hlpAU = (exp(-0.5*((A_U - x1) / s_insp).^2) / (s_insp * sqrt(2*pi))) * ...
-     (exp(-0.5*((x1 - y0) / s0).^2) / (s0 * sqrt(2*pi)));
 
 % producer risk R_P:
   x_L = [mininf:step:A_L]'; 
