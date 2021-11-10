@@ -427,6 +427,204 @@ Zur Maximierung der in Gl.~(\ref{LikelihoodKov2}) gegebenen
 \boldsymbol{\Sigma}(X_{1,j},\dots,X_{N,j},\mathbf{p})^{-1} \, \vec \varepsilon(X_{1,j},\dots,X_{N,j},\mathbf{p})_j \right\} .
 \end{equation}
 
+\section{Vollständiges Messergebnis einer normalverteilten Messgröße}
+
+Zu einem \textsl{Messergebnis} gehört jeweils ein Intervall, das ein Maß für die Unsicherheit
+des Wertes/ der Werte der Messgröße ist, siehe [VIM 2.9]
+
+\begin{quote}
+\textbf{Messergebnis}
+
+Menge von Größenwerten, die einer Messgröße zugewiesen sind, zusammen mit jeglicher
+verfügbarer relevanter Information
+
+ANMERKUNG 1 Ein \textsl{Messergebnis} enthält im Allgemeinen \glqq relevante Information\grqq ~über
+die Menge der Größenwerte, von denen einige repräsentativer für die Messgröße sein können als andere.
+Dies kann in Form einer Wahrscheinlichkeitsdichtefunktion ausgedrückt werden.
+
+ANMERKUNG 2 Ein \textsl{Messergebnis} wird im Allgemeinen
+als ein einziger Messwert und eine \textsl{Messunsicherheit}
+ausgedrückt. Wird die Messunsicherheit für einige
+Zwecke als vernachlässigbar angesehen, kann das
+Messergebnis als ein einziger Messwert ausgedrückt
+werden. In vielen Bereichen ist dies die übliche Art, ein
+Messergebnis auszudrücken.
+
+ANMERKUNG 3 In der traditionellen Literatur und in der
+vorhergehenden Ausgabe des VIM war das Messergebnis
+als ein Wert definiert, der einer Messgröße zugewiesen
+ist, und so erklärt, dass er eine Anzeige oder ein
+unkorrigiertes oder ein korrigiertes Ergebnis bedeutet, je
+nach Kontext.
+\end{quote}
+
+Mit der in Anmerkung~1 angesprochenen Wahrscheinlichkeitsdichteverteilung $p: X \mapsto p(X)$
+kann beispielsweise  eine Gaußverteilung gemeint sein, mit der sich das Streuverhalten
+der betrachteten Messgröße beschreibbar ist. Sie gibt die Information darüber, wie groß die
+Wahrscheinlichkeit dafür ist, dass eine einzelne Beobachtung innerhalb eines gewissen
+Intervalls $[x_1, x_2]$ liegt. Das Intervall $[x_1, x_2]$ wird im Rahmen der frequentistischen
+Betrachtungsweise \textsl{Vertrauensintervall} und im Rahmen der bayesischen Betrachtungsweise
+\textsl{Credible interval}, was auf Deutsch \textsl{Glaubwürdigkeitsintervall} heißt, genannt.
+In der Metrologie wird ein gemeinsamer Begriff für beide Betrachtungsweisen verwendet:
+\textsl{Überdeckungsintervall}.
+Die Wahrscheinlichkeit $\alpha$, dass eine Einzelbeobachtung außerhalb des Überdeckungsintervalls liegt,
+heißt \textsl{Signifikanzniveau}. Die Die Wahrscheinlichkeit $1 - \alpha$, dass eine Einzelbeobachtung
+innerhalb des Überdeckungsintervalls liegt, heißt \textsl{Vertrauensniveau}.
+
+Das Überdeckungsintervall gibt den Bereich an, in dem ein Ereignis mit
+Wahrscheinlichkeit $1-\alpha$ beobachtet wird bzw.\ die Messgröße einen Wert in diesem Bereich
+annimmt, das heißt
+\begin{equation}
+\int\limits_{x_1}^{x_2} p(X) \, \operatorname{d} X \; = \; 1 - \alpha .
+\label{eq:vertrauensniveau}
+\end{equation}
+Eine Wahrscheinlichkeitsdichteverteilung $p(X)$
+wird immer so normiert, dass ihre Fläche $1$ ist:
+\begin{equation}
+\int\limits_{-\infty}^\infty p(X) \, \operatorname{d} X \; = \; 1
+\end{equation}
+Das heißt mit anderen Worten:
+Unsere Größe nimmt mit Wahrscheinlichkeit $1$ irgend einen beliebigen
+Wert zwischen minus und plus Unendlich an.
+
+Das vollständige Messergebnis setzt sich zusammen aus dem Erwartungswert
+\begin{equation}
+E(X) \; = \; \int\limits_{-\infty}^\infty \, X  p(X) \, \operatorname{d} X
+\end{equation}
+und dem Über\-deck\-ungs\-intervall, das sich durch Umkehrung von Gl.~(\ref{eq:vertrauensniveau})
+herleiten lässt, also aus der Umkehrfunktion $P^{-1}$ der kumulativen Verteilung das
+\begin{equation}
+[P^{-1}(\frac{\alpha}{2}), P^{-1}(1-\frac{\alpha}{2})] .
+\end{equation}
+
+Man kann zur Berechnung eines Überdeckungsintervalls
+rechenzeiteffizient auf vorhandene tabellierte Werte für
+die Umkehrfunktion der Normalverteilung zurück greifen, wenn
+folgendes der Fall ist:
+\begin{itemize}
+\item Über die reinen Beobachtungen $X_{1,j}$ hinaus liegen keine
+Informationen vor, also keine vorherigen Ergebnisse zu den zu
+schätzenden Modellparameter (kein \textsl{Prior})
+und keine weiteren beeinflussenden Verteilungen.
+\item Es kann davon ausgegangen werden, dass die
+einzelnen Beobachtungswerte um das Modell
+normalverteilt streuen.
+\end{itemize}
+Vertrauensintervalle können mit Hilfe
+tabellierter Werte von Integrationsgrenzen zu ausgesuchten Ver\-trauens\-niveaus
+der Normalverteilung berechnet werden. Eine solche Integrationsgrenze wird \textsl{Quantil}
+genannt. Die Tabellen beziehen sich auf normierte Zufallsgrößen.
+Für die Gaußverteilung normieren wir die Zufallsgröße, so dass der
+Erwartungswert $\mu = 0$ ist und die Varianz $\sigma^2 = 1$, d.h.
+$Z$ ist \textsl{standardnormalverteilt}
+\begin{equation}
+Z \; \sim \; \mathcal{N}(0,1) .
+\label{standardNormalverteilt}
+\end{equation}
+Die Wahrscheinlichkeitsdichtefunktion $p(Z)$ ist die \textsl{Standard}normalverteilung
+\begin{equation}
+p(Z) \; = \; \frac{1}{\sqrt{2 \pi}} \, e^{-\frac{1}{2} Z^2}
+\qquad \textrm{mit} \qquad Z \; = \; \frac{X - \mu}{\sigma} .
+\end{equation}
+
+Die in den Formelsammlungen und Tabellenwerken aufgelisteten Grenzen sind
+als obere Integrationsgrenze definiert
+\begin{equation}
+\int\limits_{-\infty}^{z_\alpha} p(Z) \mathrm{d} Z \; = \; \alpha .
+\label{WahrscheinlichkeitQuantil}
+\end{equation}
+In Abb.~\ref{normVertQuantil} wird dies anhand des Quantils $z_\alpha = 0.5244$
+zu $\alpha = 0.7$ also $70 \%$ Wahrscheinlichkeit beispielhaft gezeigt.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=79mm]{05_vorlesung/media/normpdfQuantil.pdf}
+\hspace{5mm}
+\includegraphics[width=81mm]{05_vorlesung/media/normcdfQuantil.pdf}
+\caption{\label{normVertQuantil} Quantil $z_\alpha = 0.5244$ und Wahrscheinlichkeit
+$\alpha = 0.7$ der Standard\-normalverteilung.}
+\end{center}
+\end{figure}
+
+Dies lesen wir so:
+\begin{quote}
+Die Ereignisse Werte zu $Z$ zu beobachten, die kleiner sind als $z_\alpha$, können
+mit einer Wahrscheinlichkeit von $\alpha$ eintreten.
+\end{quote}
+Die in den Tabellenwerken gelisteten Wahrscheinlichkeiten $\alpha$ werden
+aus der Integration der Wahrscheinlichkeitsdichte der normierten Zufallsgröße
+von minus Unendlich bis zu einer endlichen oberen Integrationsgrenze $z_\alpha$
+gewonnen.
+Die zu einem Wert eines Quantils gehörende Wahrscheinlichkeit wird durch den tiefgestellten
+Index bei $z_\alpha$ gekennzeichnet, in unserem Beispiel aus Abb.~\ref{normVertQuantil}
+ist dies dann
+$$
+z_{0.7} \; = \; 0.5244
+$$
+Als weiteres Beispiel betrachten wir die Frage, wie hoch die Wahrscheinlichkeit ist,
+Werte zu beobachten, die in den Ausläufern einer Verteilungsdichte liegen.
+Die Ausläufer werden im Englischen
+als \textsl{Tails} (Schwänze) bezeichnet. Dies sollen Beobachtungen zu der normierten
+Zufallsgröße $Z$ mit Werten, die zum einen kleiner oder gleich $-1.960$ sind, sein
+$$
+z_{0.025} \; = \; -1.960
+$$
+und zum anderen, die Beobachtungen mit Werten größer oder gleich $1.960$, also die
+in dem rechten Ausläufer (\textsl{Tail}) der Standardnormalverteilung liegen.
+Die Wahrscheinlichkeit für Beobachtungen im linken \textsl{Tail} ist
+\begin{equation*}
+\int\limits_{-\infty}^{-1.960} p(Z) \mathrm{d} Z \; = \; 0.025 .
+\end{equation*}
+
+Aufgrund der Symmetrie der Standardnormalverteilung ist die Wahrscheinlichkeit für das Liegen von
+Werten im rechten \textsl{Tail} ebenfalls $0.025$. Wir rechnen also zusammen, dass mit
+einer Wahrscheinlichkeit von $0.05 = 0.025+0.025$ Werte in den beiden \textsl{Tails} außerhalb
+des Intervalls $[-1.960, 1.960]$ liegen können. Somit ist die Wahrscheinlichkeit, dass sie
+innerhalb des Intervalls liegen $1 - 0.05 = 0.95$
+\begin{equation}
+\int\limits_{-1.96}^{1.96} \, p(Z) \, \operatorname{d} Z \; = \; 0.95
+\end{equation}
+was uns zeigt, wie wir die Tabellen zu verwenden haben.
+Wenn wir ein zweiseitiges Intervall betrachten wollen, wie hier zu einem Vertrauensniveau
+von $95 \%$, so müssen wir im Tabellenwerk nach dem Quantil, das für $97.5 \%$ gelistet
+ist, schauen
+$$
+z_{0.975} \; = \; 1.960
+$$
+weil
+$$
+0.95 \; = \;
+\underbrace{\int\limits_{-\infty}^{z_{0.975}} \, p(Z) \, \operatorname{d} Z}_{0.975} \; - \;
+\underbrace{\int\limits_{-\infty}^{z_{0.025}} \, p(Z) \, \operatorname{d} Z}_{0.025}
+$$
+Aufgrund der Achssymmetrie der Normalverteilung gilt
+$$
+z_{\frac{1}{2}\alpha} = -z_{1-\frac{1}{2}\alpha} .
+$$
+Da sich die Quantile zum jeweiligen Vertrauensniveau $1-\alpha$ auf die normierte Zufallsgröße
+beziehen, muss für die Berechnung des Vertrauensintervalls zurückgerechnet werden
+\begin{equation}
+Z \; = \; \frac{X - \mu}{\sigma} \qquad \Leftrightarrow \qquad X \; = \; \mu + Z \sigma
+\end{equation}
+also
+\begin{equation}
+[z_{\frac{1}{2}\alpha}, z_{1-\frac{1}{2}\alpha}] =
+[-z_{1-\frac{1}{2}\alpha}, z_{1-\frac{1}{2}\alpha}]
+ \qquad \Leftrightarrow  \qquad
+[\mu \, - \, z_{1-\frac{1}{2}\alpha} \, \sigma, \mu \, + \, z_{1-\frac{1}{2}\alpha} \, \sigma]
+\end{equation}
+Mit $\alpha$ sind die $5 \%$ Signifikanzniveau und mit $1-\alpha$ die $95 \%$ Vertrauensniveau gemeint.
+
+Die Likelihood wird maximal für
+\begin{equation}
+y \; = \; \frac{1}{J} \sum_{j=1}^J X_{1,j} ,
+\end{equation}
+wobei $y$ der Schätzwert für den Modellparameter $Y$ ist.
+Der Schätzwert $s^2$ für die Varianz $\sigma^2$ wird berechnet mit
+\begin{equation}
+s^2 \; = \; \frac{1}{J-1} \sum_{j=1}^J (X_{1,j} - y)^2 .
+\end{equation}
+
 \section{Konzept der bayesischen Verfahren zum Lösen inverser Probleme}
 \label{bayeskonzept}
 
@@ -652,43 +850,23 @@ y_1 \; = \; \int\limits_{-\infty}^\infty \, y \, p(y | \{X_{1,1}, \dots, X_{1,J}
 wobei wir $y_1$ mit Index $1$ schreiben, um anzuzeigen, dass dies die Revision der Schätzung des
 Modellparameters $\mu \approx Y$ gegenüber vorheriger Kenntnis mit Schätzwert $y_0$ ist.
 
-Zu einem \textsl{Messergebnis} gehört jeweils ein Intervall, das ein Maß für die Unsicherheit
-des Wertes/ der Werte der Messgröße ist, siehe [VIM 2.9]
+Wir rufen uns die Definition des vollständigen Messergebnisses in Erinnerung, das aus
+dem Schätzwert einer Messgröße und den beigeordneten Informationen, die entweder
+direkt die Wahrscheinlichkeitsdichteverteilung sein kann oder aber, im Falle einer
+symmetrischen Verteilung, deren Breite und das Vertrauensniveau.
 
-\begin{quote}
-\textbf{Messergebnis}
-
-Menge von Größenwerten, die einer Messgröße zugewiesen sind, zusammen mit jeglicher
-verfügbarer relevanter Information
-
-ANMERKUNG 1 Ein \textsl{Messergebnis} enthält im Allgemeinen \glqq relevante Information\grqq ~über
-die Menge der Größenwerte, von denen einige repräsentativer für die Messgröße sein können als andere.
-Dies kann in Form einer Wahrscheinlichkeitsdichtefunktion ausgedrückt werden.
-
-ANMERKUNG 2 Ein \textsl{Messergebnis} wird im Allgemeinen
-als ein einziger Messwert und eine \textsl{Messunsicherheit}
-ausgedrückt. Wird die Messunsicherheit für einige
-Zwecke als vernachlässigbar angesehen, kann das
-Messergebnis als ein einziger Messwert ausgedrückt
-werden. In vielen Bereichen ist dies die übliche Art, ein
-Messergebnis auszudrücken.
-
-ANMERKUNG 3 In der traditionellen Literatur und in der
-vorhergehenden Ausgabe des VIM war das Messergebnis
-als ein Wert definiert, der einer Messgröße zugewiesen
-ist, und so erklärt, dass er eine Anzeige oder ein
-unkorrigiertes oder ein korrigiertes Ergebnis bedeutet, je
-nach Kontext.
-\end{quote}
-
-Mit der in Anmerkung~1 angesprochenen Wahrscheinlichkeitsdichtefunktion sind Verteilungen wie
-die in den Gln.~(\ref{Likelihood2}) und (\ref{LikelihoodKov2}) vorgestellen Likelihoods oder
+Die als beigeordnete Information gegebene Wahrscheinlichkeitsdichteverteilungen sind
+die in den Gln. (\ref{Likelihood2}) und (\ref{LikelihoodKov2}) vorgestellen Likelihoods oder
 der in Gl.~(\ref{RandverteilungPosterior}) vorgestellten Posterior
-mit $p(y | \{X_{1,1}, \dots, X_{1,J}\}, y_0, s_0)$ gemeint. Die Likelihood wird
+mit gemeint:
+$$
+p(y | \{X_{1,1}, \dots, X_{1,J}\}, y_0, s_0)
+$$
+Die Likelihood wird
 für kleine Stich\-proben\-um\-fänge ($N < 100$) anstelle durch eine Gaußverteilung durch eine Verteilung
 repräsentiert, deren Charakteristik im Kurvenverlauf
 überhöhter und mit länger auslaufenden Rändern ist. Sie wird $t$-Verteilung genannt.
-Wir werden später in der 5.\ Vorlesung auf diesen Verteilungtyp zurück kommen.
+Wir werden später in Kapitel \ref{wahrscheinlichHyp} auf diesen Verteilungtyp zurück kommen.
 
 Allgemein betrachten wir für beide Fälle eine Wahrscheinlichkeitsdichtefunktion $p \! : y \mapsto p(y)$.
 Der Definitionsbereich für $y$ reicht von minus bis plus Unendlich. Von Interesse ist der Kernbereich

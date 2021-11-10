@@ -284,6 +284,7 @@ genannt wird:
 \left. \frac{\partial \varepsilon_J}{\partial P_1}\right|_{\mathbf{p}_\kappa} & \dots & \left. \frac{\partial \varepsilon_J}{\partial P_M}\right|_{\mathbf{p}_\kappa}
 \end{array}\right) ,\; \textrm{bzw.} \; J_{jm}^{(\kappa)}= \left. \frac{\partial \epsilon_j}{\partial p_m}\right|_{\mathbf{p}_\kappa}
 \;\textrm{mit} \; j=1\ldots J; \;\; m=1\ldots M.
+\label{eq:JakobimatrixDefinition}
 \end{equation}
 Der hochgestellte und in Klammern gesetzte Index $\kappa$
 an dem Symbol für die \textsl{Jacobimatrix}, soll bedeuten,
@@ -1167,20 +1168,70 @@ und mit Dämpfungs- bzw.\ Marquardtparameter
 \label{ZielfunktionalGradTaylorResiDaempfW}
 \end{equation}
 
+\section{Unsicherheit der geschätzten Modellparameter}
+Bei der Behandlung der linearen Regression in Kapitel \ref{KapitellinReg} wurde auch die Bestimmung der Unsicherheit
+der Regressionsparameter, die die Modellparameter dieser speziellen Art linearer Modelle darstellen und die
+indirekten Messgrößen sind, dargelegt. Die Quadrate $u^2(\theta_i)$ der Standardunsicherheiten $u(\theta_i)$ sind
+die Varianzen der indirekten Messgrößen $\theta_i$, also die Hauptdiagonalelement der Kovarianzmatrix
+Gl.~(\ref{UnsicherheitRegressparams}). Um ein Zurückblättern oder Zurückscrollen zu vermeiden, werden die
+Lösungsgleichung Gl.~(\ref{eq:schaetzwerte_fuer_theta}) des Regressionsproblems und die dazugehörige
+Kovarianzmatrix Gl.~(\ref{UnsicherheitRegressparams}) hier nochmal aufgeführt
+\begin{equation*}
+\boldsymbol{\hat \theta} \; = \;
+\left( \mathbf{X}^\mathsf{T}  \, \mathbf{X} \right)^{-1} \mathbf{X}^\mathsf{T} \, \mathbf{Y}
+\qquad
+\boldsymbol{\hat \Sigma}_{\boldsymbol{\theta}} \; = \; \hat \sigma_{\varepsilon}^2
+\left( \mathbf{X}^\mathsf{T}  \, \mathbf{X} \right)^{-1}
+\end{equation*}
+Die Regressormatrix $\mathbf{X}$, deren Spalten die Regressoren darstellen. Diese sind gemäß Gl.~(\ref{eq:partielleAblRegressoren}) die Gradienten der Residuen, bzw.\ die Spalten mit den
+partiellen Ableitungen, d.h.\ sie ist also die Jakobimatrix Gl.~(\ref{eq:JakobimatrixDefinition})
+zur Modellgleichung (\ref{eq:Kap2ModellglmitResiduenlinearReg}) und der Kostenfunktion
+Gl.~(\ref{eq:Kap2KostenfktlinearReg}).
+
+So wie wir die Kovarianzmatrix der Regressionskoeffizienten Gl.~(\ref{eq:COVRegressionsparameter})
+berechnet haben, wird auch die Kovarianzmatrix der Modellparameter bestimmt:
+\begin{center}
+\setlength{\extrarowheight}{1.2em}
+\begin{tabular}{ccc}
+Parameter $\boldsymbol{\hat \theta}$ bzw. $\mathbf{p}$ & Kovarianz $\boldsymbol{\hat \Sigma}$ & Unsicherheit $u = \hat \sigma$\\
+\multicolumn{3}{l}{Regressionsrechnung:  }\\
+$ \boldsymbol{\hat \theta} \; = \;
+\left( \mathbf{X}^\mathsf{T}  \, \mathbf{X} \right)^{-1} \mathbf{X}^\mathsf{T} \, \mathbf{Y}$
+&
+$\boldsymbol{\hat \Sigma}_{\boldsymbol{\theta}} \; = \;
+\left( \mathbf{X}^\mathsf{T}  \, \mathbf{X} \right)^{-1} \;
+\hat \sigma_{\varepsilon}^2$ &
+$\hat \sigma_l \; = \;
+\sqrt{\boldsymbol{e}_l^\mathsf{T} \, \left( \mathbf{X}^\mathsf{T}  \, \mathbf{X} \right)^{-1} \, \boldsymbol{e}_l  \; \hat \sigma_{\varepsilon}^2}$
+\\
+%
+\multicolumn{3}{l}{Allgemeiner:}\\
+$\Delta \mathbf{p} \; = \;
+- \left( \mathbf{J}^\mathsf{T}  \, \mathbf{J} \right)^{-1} \mathbf{J}^\mathsf{T} \, \boldsymbol{\varepsilon}(\mathbf{p})$
+&
+$\boldsymbol{\hat \Sigma}_{\mathbf{p}} \; = \;
+\left( \mathbf{J}^\mathsf{T}  \, \mathbf{J} \right)^{-1} \;
+\hat \sigma_{\varepsilon}^2$ &
+$\hat \sigma_l \; = \;
+\sqrt{\boldsymbol{e}_l^\mathsf{T} \, \left( \mathbf{J}^\mathsf{T}  \, \mathbf{J} \right)^{-1} \, \boldsymbol{e}_l  \; \hat \sigma_{\varepsilon}^2}$
+
+\end{tabular}
+\end{center}
+
 
 \section{Robuste Schätzverfahren}
 \label{robustEstimation}
-Wir haben nun eine Kostenfunktion $Q$ mit Gewichtsfaktoren kennengelernt, Gl.~(\ref{ZielfunktionalJmitW2}),
+Mit Gl.~(\ref{ZielfunktionalJmitW2}) haben wir eine Kostenfunktion $Q$ mit Gewichtsfaktoren $w_j$ kennengelernt,
 bei der die Gewichte die Kehrwerte der Varianzen sind $w_j = \frac{1}{\sigma_j^2}$, die sich eigentlich
 aus der Abweichung der Beobachtungen vom Modell ergeben. Wenn kein {\`a} priori Wissen über
 diese Varianzen vorliegt, aber bekannt ist, dass die Verteilung der
 Residuen aller Beobachtungen nicht gauß\-ver\-teilt ist, soll das Problem dennoch mit der
 Maximum-Likelihood-Methode gelöst werden. Es kommt vor, dass einzelne Beobachtungen
 sehr weit von der Erwartung entfernt sind. Man sagt, dass sie signifikant abweichen. Die Gaußverteilung erlaubt dieses auch, denn sie hat einen Definitionsbereich für die Residuen $\varepsilon$,
-der von minus Unendlich bis plus Unendlich geht, ihre Ausläufer auch \textsl{Tails} genannt,
+der von minus Unendlich bis plus Unendlich geht. Ihre Ausläufer, auch \textsl{Tails} genannt,
 sind unbegrenzt. Die Wahrscheinlichkeit ist aber sehr gering, kleiner als $5~\%$, dass der Betrag der
 Residuen $\varepsilon$ einen Wert annimmt, der größer als
-$1.65 \, \sigma$ ist, aber er kann auftreten. Liegen deutlich mehr als $5~\%$
+$1.64 \, \sigma$ ist, aber er kann auftreten. Liegen deutlich mehr als $5~\%$
 der Beobachtungen außerhalb eines Vertrauensintervalls von beispielsweise $[-3 \sigma, 3 \sigma]$,
 dann ist dies ein Indiz dafür sein, dass das Modell unzureichend ist. Es kann sein, dass es auch nicht
 um ein vollständigeres Modell geht, sondern darum, nur die zum betrachteten Modell passenden Beobachtungen

@@ -39,6 +39,7 @@ In einfacheren Worten können wir sagen:
 \begin{quote}
 Die Summe einer großen Anzahl von unabhängigen Zufallsgrößen folgt
 asymptotisch einer stabilen Verteilung.
+\label{zentralesGrenzwerttheorem}
 \end{quote}
 Bei endlicher und positiver Varianz der Zufallsgrößen ist ihre Summe annähernd
 normalverteilt, was die Sonderstellung der Normalverteilung erklärt.
@@ -249,26 +250,49 @@ Hypothesentests in Python (\href{https://mybinder.org/v2/gh/dhueser/MDA-Vorlesun
 
 \section{Wahrscheinlichkeitsdichtefunktionen und ihre Parameter}
 
-Bei vielen beobachteten Stichproben, die signifikant von dem Modell, das besagt, dass sie zu genau einer
-normalverteilten Grundgesamtheit gehören, abweichen, handelt
-es sich um Beobachtungen aus Prozessen, denen mehrere überlagerte stochastische Anteile
-zugrunde liegen. Bei dem in Abb.~\ref{biasExample} illustrierten Beispiel waren dies
-zwei normalverteilte Grundgesamtheiten mit verschiedenen Erwartungswerten $\mu_1$ und
-$\mu_2$ und mit unterschiedlichen Varianzen $\sigma^2_1$ und $\sigma^2_2$.
+Für eine Bewertung von gemessenen Werten einer Größe, d.h.\ von Beobachtungen, werden
+statistische Modelle zugrunde gelegt. Ein statistisches Modell zu beobachtbaren Größen
+umfasst die Vorstellung von Zufallsgrößen und der Verteilung ihrer Beobachtungswerte.
+Bisher haben wir uns mit Zufallsgrößen befasst, die kontinuierlich sind und die Werte von
+minus Unendlich bis plus unendlich einnehmen können. Die Streuung solcher Messgrößen haben
+wir dazu als normalverteilt betrachtet; denn wie wir bereits zu Beginn dieses Kapitels betont
+haben ist die Normalverteilung die grundlegende Verteilungsdichtefunktion zur Beschreibung
+zufälliger Prozesse. Es sei in diesem Zusammenhang an das zentrale Grenzwerttheorem in
+siehe Abschnitt \ref{zentralesGrenzwerttheorem} erinnert.
 
-Für eine Bewertung von gemessenen Werten einer Größe, d.h.\ von Beobachtungen, werden statistische
-Modelle zugrunde gelegt. Ein statistisches Modell zu beobachtbaren Größen umfasst die
-Vorstellung von Zufallsgrößen und der Verteilung ihrer Beobachtungswerte.
-Wahrscheinlichkeitsdichtefunktionen werden parametrisiert über ihre statistischen Momente.
-Diese charakterisieren den Kurvenverlauf der Funktion hinsichtlich ihrer Lage, Breite,
-Symmetrie und so weiter.
+Für das Hintergrundverständnis der Behandlung von Stichproben mit einer relativ kleinen Anzahl $J$ von
+Beobachtungen werden hier kurz die Binominalverteilung, die Poissonverteilung und die Gammaverteilung erläutert.
+
+Zufallsereignisse \footnote{\textsl{Ereignis} ist der in der Statistik verwendete
+allgemeinere Begriff, der im Speziellen hier eine Beobachtung, also das Annehmen eines Wertes einer
+Messgröße/ einer physikalischen Größe, ist. Ein Ereignis kann auch die Augenzahl eines geworfenen Würfels
+oder Farbe und Zahl einer gelandeten Kugel im Roulette sein}, die keineswegs einen kontinuierlichen
+Wertebereich haben (nicht mittels reeler Zahlen beschreibbar sind), sondern diskrete Werte wie bei
+Würfeln, Roulettescheiben oder Kartenspielen, verteilen sich anders und nicht gemäß einer Gaußverteilung.
+
+Bevor wir die unterschiedlichen Verteilungsdichtefunktionen betrachten, führen wir die Parameter ein,
+mit denen Verteilungsdichtefunktionen charakterisiert werden.
+Für das Verständnis dafür, wie Zufallsereignisse streuen, wie sie sich verteilen, interessiert,
+\begin{itemize}
+\item um welchen
+Wert sie sich häufen, also welcher Wert der ist, der am ehesten zu erwarten ist oder in dessen Nähre die Werte
+erwartet werden. Das ist der \textsl{Erwartungswert}.
+\item Der Parameter, der ein Maß dafür ist wie weit beobachtete Werte einer Zufallsgröße auseinander liegen, also wie stark die Zufallsgröße streut, ist die \textsl{Varianz}.
+\item Oft interessiert noch, ob die streuenden Beobachtungen sich asymmetrisch weiter zu Werten, die kleiner
+oder die größer als der Erwartungswert sind, verteilen. Das Maß dafür ist die \textsl{Schiefe} einer Verteilung.
+\end{itemize}
+
+Diese die Wahrscheinlichkeitsdichteverteilungen charakterisierenden Parameter sind die
+sogenannten \textsl{statistischen Momente}.
 
 Der \textsl{Erwartungswert einer Zufallsgröße} $X$ ist das erste statistische Moment
 der Verteilungsdichte $p$ ihrer Grundgesamtheit
 \begin{equation}
 \mathrm{E}(X) \; = \; \int\limits_{-\infty}^{\infty} \, X \, p(X) \, \mathrm{d} X \; =: \; \mu^{(1)}(X)
 \end{equation}
-das ihren Schwerpunkt angibt.
+das ihren Schwerpunkt, also die Lage der Zufallsgröße, angibt. Deshalb wird das erste
+statistische Moment auch \textsl{Lageparameter} (engl.\ \textsl{location parameter}) genannt.
+
 Der Erwartungswert der \textsl{Varianz}
 einer Zufallsgröße $X$ entspricht dem zweiten statistischen Moment
 der Verteilungsdichte $p$.
@@ -285,7 +309,10 @@ deren Wurzel
 \begin{equation}
 \sigma \; = \; \sqrt{\operatorname{Var}(X)}
 \end{equation}
-ein Maß für die Breite von $p$ darstellt.
+ein Maß für die Breite von $p$ darstellt. Wird die Zufallsgröße auf die Streubreite ihrer
+Verteilung normiert, wird sie dimensionslos. Deshalb wird die Breite auch als \textsl{Skalenparameter}
+(engl.\ \textsl{scale parameter}) eingesetzt.
+
 Die Schiefe einer Verteilungsdichte wird durch das dritte statistische Moment
 \begin{equation}
 \int\limits_{-\infty}^{\infty} \, X^3 \, p(X) \, \mathrm{d} X \; =: \; \mu^{(3)}(X)
@@ -312,6 +339,139 @@ Varianz normiert
 \end{equation}
 wird. Das vierte statistische Moment der normierten Zufallsgröße heißt
 \textsl{Kurtosis}.
+
+% ---------------------------------------------------
+
+Der Beschreibung von binärwertigen Zufallsereignissen dient die \textbf{Binominalverteilung}.
+Dabei ist mit binärwertigem Zufallsereignis ist gemeint, das es nur zwei mögliche
+Beobachtungen/ Entscheidungen angenommen werden können, also entweder \textsl{ja} oder \textsl{nein},
+bzw.\ \textsl{gut} oder \textsl{schlecht},
+bzw.\ \textsl{wahr} oder \textsl{falsch}. Die Binominalverteilung beschreibt die Anzahl der
+\textsl{ja}-Stimmen, bzw.\ in der Qualitätssicherung die Anzahl der \textsl{guten} Teile.
+Die Anzahl \textsl{guter} Beobachtungen/ Ereignisse wird auch \textsl{Erfolgswahrscheinlichkeit}
+$p$ genannt. Hier bedeutet das $p$ ohne Index Wahrscheinlichkeit $p \in [0,1]$,
+also ist Platzhalter für einen Wert einer Wahrscheinlichkeit und keine Funktion.
+Die Funktion für die binomiale Wahrscheinlichkeitsverteilung schreiben wir mit dem Index $\mathrm{B}$ für
+Binomial oder für Bernoulli, weil es sich bei solchen Prozessen um Bernoulli-Prozesse handelt.
+\begin{equation}
+p_\mathrm{B}(k, p, J) \; = \;
+\left\{ \begin{array}{ll}
+\binom{J}{k} p^k \left(1 - p\right)^{J - k} & \text{falls} \; k \in \{0, 1, \dots, J\}\\
+0 & \text{sonst}
+\end{array}\right.
+\end{equation}
+wobei $J$ die Gesamtzahl der Beobachtungen / Ziehungen/ Versuche ist und $k$ die Anzahl der
+erfolgreichen Ziehungen. Also wenn $J$ Teile geprüft wurden, dann ist $k$ die Anzahl der Teile,
+die gut waren.
+
+$\binom{J}{k}$ ist der Binomialkoeffizient, der folgendes bedeutet:
+$$
+\binom{J}{k} \; = \; \frac{J}{1} \cdot \frac{J-1}{2} \cdot
+  \dots \cdot \frac{J- (k-1)}{k} \; = \;
+  \frac{J!}{k! \cdot (J - k)!}
+$$
+für $k = 0$ gilt $\binom{J}{k} = 1$
+
+% -----------------
+
+Wenn die Gesamtzahl $J$ der Ereignisse sehr, sehr groß ist und auch entsprechend die Anzahl $k$,
+konvergiert die Binomialverteilung gegen eine Verteilung, die \textbf{Poissonverteilung} genannt wird.
+Wir stellen uns also vor, dass der Zeitraum, in dem produzierte Teile auf gut/schlecht geprüft werden im
+Vergleich zum Durchsatz bei der Teileprüfung so groß ist, dass $J \cdot p$ als Erwartungswert und Varianz
+verwendet werden kann. Dann wird nicht mehr das Ereignis "Bauteil ist gut" oder "Bauteil ist schlecht"
+als Zufallsereignis, sondern die Anzahl $k$ von den $J$ in einem Zeitraum geprüften Bauteile als
+Zufallszahl bzw.\ Zufallsgröße $X$ betrachtet. Die Wahrscheinlichkeitsverteilung, die die Zufallsgröße
+\glqq Anzahl $k = X$ von in einem Zeitraum als Gut geprüfte Teile\grqq beschreibt, ist also die Poissonverteilung.
+
+Weitere typische Beispiele für poissonverteilte Häufigkeiten sind
+\begin{itemize}
+\item die Anzahl $X$ von $\alpha$-Teilchen, die von einer radioaktiven Probe pro Sekunde (also in einem Zeitinervall
+von einer Sekunde) emittieren;
+\item die Anzahl $X$ von Mutationen, die in einer DNA-Sequenz vorkommen;
+\item die Anzahl $X$ Fahrgäste, die in einem ausgewählten Zeitintervall, zB. zwischen 6 und 9 Uhr vormittags, eine gewisse Buslinie nutzen.
+\end{itemize}
+
+Die \textbf{Poissonverteilung}  $p_\mathrm{P}$ (der Index $\mathrm{P}$ steht für Poisson) wird also für die Beschreibung
+der Häufigkeit $X$ für das Eintreten eines Ereignisses in einem gewissen Bereich  eingesetzt.
+Der Bereich ist oftmals ein Zeitbereich bzw.\ Zeitintervall, muss es aber nicht sein.
+
+Bei der Anzahl von Teilchen, Mutationen oder Fahrgästen handelt es sich jeweils um eine
+diskrete Zufallsgröße mit einem Wertebereich von positiven, diskreten Werten einschließlich der Null,
+also eine Zufallsgröße $X \in I\!\!N_0$, d.h.\ mit natürlichen Zahlenwerten $X = 0, 1, 2, 3, \dots$.
+
+Die Poissonverteilung sieht wie folgt aus
+\begin{equation}
+p_\mathrm{P}(X, \lambda) \; = \; \frac{\lambda^X}{X!} \, e^{-\lambda}
+\end{equation}
+siehe https://www.itl.nist.gov/div898/handbook/eda/section3/eda366j.htm
+
+Dabei bedeutet das Ausrufezeichen die mathematische Operation Fakultät mit
+$$
+X! = \prod\limits_{j=1}^{X} X = 1 \cdot 2 \cdot \dots \cdot X
+$$
+also wenn  beispielsweise $X = 3$ dann ist $3! = 1 \cdot 2 \cdot 3 = 6$.
+Ferner wird definiert, dass $0! = 1$.
+Der Parameter $\lambda$
+\begin{itemize}
+\item beschreibt die bei einer Beobachtung erwartete Wahrscheinlichkeit bzw.\ die
+Häufigkeit, wie oft der beobachtete diskrete Wert vorkommt. Er ist eine
+positive von Null verschiedene, reelle Zahl, d.h.\ $\lambda \in I\!\!R_{> 0}$;
+\item bestimmt den Erwartungswert und die Varianz von $p_\mathrm{P}(X, \lambda)$.
+\end{itemize}
+Der Erwartungswert $\lambda$ ist der Lageparameter der Verteilung.
+Im Fall der Poissonverteilung es er gleichzeitig auch der Skalenparameter.
+% ----------
+
+Bei Wahrscheinlichkeitsdichteverteilungen deren Lage- und Skalenparameter
+voneinander verschieden sind, wie wir es bei der Gaußverteilung kennen, werden die
+Symbole $\mu$ für den Lageparameter verwendet und $\beta$ für den Skalenparameter.
+Im Falle der Gaußverteilung ist $\beta = \sigma$.
+
+Die Poissonverteilung ist eindeutig durch einen Parameter charakterisiert, der sowohl
+die Lage als auch die Skalierung bestimmt, die Gaußverteilung durch zwei Parameter, die
+Lage und die Skalierung. Allgemein gibt es aber Verteilungen, die darüber hinaus einen
+weiteren Parameter brauchen, der ihre Form charakterisiert, also nicht nur die Breite als
+reine Skalierung, sondern höhere statistische Momente, die das Maß für höhere Ableitungen
+wie die Krümmung etc.\ bestimmen.
+
+% ----------
+Die Poissonverteilung beschreibt diskrete Zufallsgrößen $X = k \in I \!\! N_0$. Wenn wir den Übergang
+zu kontinuierlichen, d.h.\ reellwertigen, Zufallsgrößen $X \in I \!\! R$ machen, dann geht die
+Poissonverteilung in die \textbf{Gammaverteilung} über.
+\begin{equation}
+p_\Gamma(X, \mu, \beta, \gamma) \; = \; \frac{\left(\frac{X - \mu}{\beta}\right)^{\gamma-1}}{\beta \, \Gamma(\gamma)}
+ \, e^{-\left(\frac{X - \mu}{\beta}\right)}
+ \quad \text{f\"ur} \quad X \geq \mu \quad \text{und} \quad \beta, \gamma > 0
+\label{Gammaverteilung}
+\end{equation}
+wobei $\gamma$ der \textsl{Formparameter} (engl.\ \textsl{shape parameter}) ist und mit der Gammafunktion
+$$
+\Gamma(\gamma) \, = \, \int\limits_{0}^{\infty} t^{\gamma - 1} \, e^{-t} \, \mathrm{d}t
+$$
+siehe https://www.itl.nist.gov/div898/handbook/eda/section3/eda366b.htm
+
+Für positive, ganzahlige Argumente $n \in I \!\! N$ ist die Gammafunktion gleich der Fakultät
+$$
+\Gamma(n) \, = \, (n - 1)!
+$$
+Die Varianzen von normalverteilten Zufallsgrößen sind selber wiederum
+Zufallsgrößen $Q = \left(\frac{X - \mu}{\sigma}\right)^2$,
+und zwar solche die positiv und reellwertig sind und die dieser Art Verteilungsdichte,
+also der Gammaverteilung mit diskretem halbzahligem Formparameter $\gamma = \frac{\nu}{2}$ folgen.
+In Gleichung (\ref{Gammaverteilung}) setzen wir anstelle der normierten
+Zufallsgröße $\left(\frac{X - \mu}{\beta}\right)$ die normierte Zufallsgröße
+$\frac{1}{2} Q = \frac{1}{2} \left(\frac{X - \mu}{\sigma}\right)^2$ ein, so dass
+\begin{equation}
+p_\mathrm{\chi^2}(X, \mu, \sigma, \nu) \; = \;
+\frac{\left(\frac{X - \mu}{\sigma}\right)^{2 (\frac{\nu}{2} - 1) }}{2^{\frac{\nu}{2}} \, \Gamma(\frac{\nu}{2})}\,
+ e^{-\frac{1}{2} \, \left(\frac{X - \mu}{\sigma}\right)^2}
+ \; = \; \frac{Q^{\frac{\nu}{2} - 1} \,
+  e^{-\frac{Q}{2}}}{2^{\frac{\nu}{2}} \, \Gamma(\frac{\nu}{2})}
+\label{Chi2pdfgamma}
+\end{equation}
+wobei $\nu$ die Anzahl der Freiheitsgrade, also der Stichprobenumfang abzüglich der Anzahl der
+Modellparameter ist.
+
 
 % ======
 
@@ -348,180 +508,20 @@ wird. Das vierte statistische Moment der normierten Zufallsgröße heißt
 %  \, - \, \frac{1}{2} \,  \left(\frac{X_2-\mu_2}{\sigma_2}\right)^2}
 %\end{equation}
 
-% 6. Nov. 2017
-
-\section{Vertrauensintervall und t-Verteilung}
-
-Wir hatten bereits in Kapitel \ref{KonzepteinverseProbleme} angesprochen, wie
-\textsl{Vertrauensintervall} $[x_1, x_2]$, Wahrscheinlichkeistdichtefunktion $p$,
-\textsl{Signifikanzniveau} $\alpha$ und \textsl{Vertrauensniveau} $1-\alpha$ zusammen hängen.
-Das Vertrauensintervall gibt den Bereich an, in dem ein Ereignis mit
-Wahrscheinlichkeit $1-\alpha$ beobachtet wird bzw.\ die Messgröße einen Wert in diesem Bereich
-annimmt, also
-\begin{equation}
-\int\limits_{x_1}^{x_2} p(X) \, \operatorname{d} X \; = \; 1 - \alpha .
-\end{equation}
-Eine Wahrscheinlichkeitsdichteverteilung $p(X)$
-wird immer so normiert, dass ihre Fläche $1$ ist:
-\begin{equation}
-\int\limits_{-\infty}^\infty p(X) \, \operatorname{d} X \; = \; 1
-\end{equation}
-Das heißt mit anderen Worten:
-Unsere Größe nimmt mit Wahrscheinlichkeit $1$ irgend einen beliebigen
-Wert zwischen minus und plus Unendlich an.
-
-Auch hatten wir in Kapitel \ref{KonzepteinverseProbleme} durchgenommen, wie man aus unterschiedlichen vorliegenden
-Informationen eine Wahrscheinlichkeitsdichteverteilung berechnet, um den
-Erwartungswert
-\begin{equation}
-E(X) \; = \; \int\limits_{-\infty}^\infty \, X  p(X) \, \operatorname{d} X
-\end{equation}
-zu bestimmen und um aus der Umkehrfunktion $P^{-1}$ der kumulativen Verteilung
-das Über\-deck\-ungs\-intervall
-\begin{equation}
-[P^{-1}(\frac{\alpha}{2}), P^{-1}(1-\frac{\alpha}{2})]
-\end{equation}
-zu ermitteln.
-
-Man kann zur Berechnung eines Überdeckungsintervalls
-rechenzeiteffizient auf vorhandene tabellierte Werte für
-die Umkehrfunktion der Normalverteilung zurück greifen, wenn
-folgendes der Fall ist:
-\begin{itemize}
-\item Über die reinen Beobachtungen $X_{1,j}$ hinaus liegen keine
-Informationen vor, also keine vorherigen Ergebnisse zu den zu
-schätzenden Modellparameter (kein \textsl{Prior})
-und keine weiteren beeinflussenden Verteilungen.
-\item Es kann davon ausgegangen werden, dass die
-einzelnen Beobachtungswerte um das Modell
-normalverteilt streuen.
-\end{itemize}
-Für kleine
-Stichprobenumfänge wird eine der Normalverteilung ähnliche Verteilung
-herangezogen, die je kleiner der Stichprobenumfang ist, um so stärker ausgeprägte
-Ausläufer (\textsl{Tails}) hat, die $t$-Verteilung. Diese werden wir im Laufe
-dieses Kapitels beleuchten.
-
-Zunächst erörtern wir die Berechnung der Vertrauensintervalle auf Basis
-tabellierter Werte von Integrationsgrenzen zu ausgesuchten Ver\-trauens\-niveaus
-der Normalverteilung. Eine solche Integrationsgrenze wird \textsl{Quantil}
-genannt. Die Tabellen beziehen sich auf normierte Zufallsgrößen.
-Für die Gaußverteilung normieren wir die Zufallsgröße, so dass der
-Erwartungswert $\mu = 0$ ist und die Varianz $\sigma^2 = 1$, d.h.
-$Z$ ist \textsl{standardnormalverteilt}
-\begin{equation}
-Z \; \sim \; \mathcal{N}(0,1) .
-\label{standardNormalverteilt}
-\end{equation}
-Die Wahrscheinlichkeitsdichtefunktion $p(Z)$ ist die \textsl{Standard}normalverteilung
-\begin{equation}
-p(Z) \; = \; \frac{1}{\sqrt{2 \pi}} \, e^{-\frac{1}{2} Z^2}
-\qquad \textrm{mit} \qquad Z \; = \; \frac{X - \mu}{\sigma} .
-\end{equation}
-
-Die in den Formelsammlungen und Tabellenwerken aufgelisteten Grenzen sind
-als obere Integrationsgrenze definiert
-\begin{equation}
-\int\limits_{-\infty}^{z_\alpha} p(Z) \mathrm{d} Z \; = \; \alpha .
-\label{WahrscheinlichkeitQuantil}
-\end{equation}
-In Abb.~\ref{normVertQuantil} wird dies anhand des Quantils $z_\alpha = 0.5244$
-zu $\alpha = 0.7$ also $70 \%$ Wahrscheinlichkeit beispielhaft gezeigt.
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=79mm]{05_vorlesung/media/normpdfQuantil.pdf}
-\hspace{5mm}
-\includegraphics[width=81mm]{05_vorlesung/media/normcdfQuantil.pdf}
-\caption{\label{normVertQuantil} Quantil $z_\alpha = 0.5244$ und Wahrscheinlichkeit
-$\alpha = 0.7$ der Standard\-normalverteilung.}
-\end{center}
-\end{figure}
-
-Dies lesen wir so:
-\begin{quote}
-Die Ereignisse Werte zu $Z$ zu beobachten, die kleiner sind als $z_\alpha$, können
-mit einer Wahrscheinlichkeit von $\alpha$ eintreten.
-\end{quote}
-Die in den Tabellenwerken gelisteten Wahrscheinlichkeiten $\alpha$ werden
-aus der Integration der Wahrscheinlichkeitsdichte der normierten Zufallsgröße
-von minus Unendlich bis zu einer endlichen oberen Integrationsgrenze $z_\alpha$
-gewonnen.
-Die zu einem Wert eines Quantils gehörende Wahrscheinlichkeit wird durch den tiefgestellten
-Index bei $z_\alpha$ gekennzeichnet, in unserem Beispiel aus Abb.~\ref{normVertQuantil}
-ist dies dann
-$$
-z_{0.7} \; = \; 0.5244
-$$
-Als weiteres Beispiel betrachten wir die Frage, wie hoch die Wahrscheinlichkeit ist,
-Werte zu beobachten, die in den Ausläufern einer Verteilungsdichte liegen.
-Die Ausläufer werden im Englischen
-als \textsl{Tails} (Schwänze) bezeichnet. Dies sollen Beobachtungen zu der normierten
-Zufallsgröße $Z$ mit Werten, die zum einen kleiner oder gleich $-1.960$ sind, sein
-$$
-z_{0.025} \; = \; -1.960
-$$
-und zum anderen, die Beobachtungen mit Werten größer oder gleich $1.960$, also die
-in dem rechten Ausläufer (\textsl{Tail}) der Standardnormalverteilung liegen.
-Die Wahrscheinlichkeit für Beobachtungen im linken \textsl{Tail} ist
-\begin{equation*}
-\int\limits_{-\infty}^{-1.960} p(Z) \mathrm{d} Z \; = \; 0.025 .
-\end{equation*}
-
-Aufgrund der Symmetrie der Standardnormalverteilung ist die Wahrscheinlichkeit für das Liegen von
-Werten im rechten \textsl{Tail} ebenfalls $0.025$. Wir rechnen also zusammen, dass mit
-einer Wahrscheinlichkeit von $0.05 = 0.025+0.025$ Werte in den beiden \textsl{Tails} außerhalb
-des Intervalls $[-1.960, 1.960]$ liegen können. Somit ist die Wahrscheinlichkeit, dass sie
-innerhalb des Intervalls liegen $1 - 0.05 = 0.95$
-\begin{equation}
-\int\limits_{-1.96}^{1.96} \, p(Z) \, \operatorname{d} Z \; = \; 0.95
-\end{equation}
-was uns zeigt, wie wir die Tabellen zu verwenden haben.
-Wenn wir ein zweiseitiges Intervall betrachten wollen, wie hier zu einem Vertrauensniveau
-von $95 \%$, so müssen wir im Tabellenwerk nach dem Quantil, das für $97.5 \%$ gelistet
-ist, schauen
-$$
-z_{0.975} \; = \; 1.960
-$$
-weil
-$$
-0.95 \; = \;
-\underbrace{\int\limits_{-\infty}^{z_{0.975}} \, p(Z) \, \operatorname{d} Z}_{0.975} \; - \;
-\underbrace{\int\limits_{-\infty}^{z_{0.025}} \, p(Z) \, \operatorname{d} Z}_{0.025}
-$$
-Aufgrund der Achssymmetrie der Normalverteilung gilt
-$$
-z_{\frac{1}{2}\alpha} = -z_{1-\frac{1}{2}\alpha} .
-$$
-Da sich die Quantile zum jeweiligen Vertrauensniveau $1-\alpha$ auf die normierte Zufallsgröße
-beziehen, muss für die Berechnung des Vertrauensintervalls zurückgerechnet werden
-\begin{equation}
-Z \; = \; \frac{X - \mu}{\sigma} \qquad \Leftrightarrow \qquad X \; = \; \mu + Z \sigma
-\end{equation}
-also
-\begin{equation}
-[z_{\frac{1}{2}\alpha}, z_{1-\frac{1}{2}\alpha}] =
-[-z_{1-\frac{1}{2}\alpha}, z_{1-\frac{1}{2}\alpha}]
- \qquad \Leftrightarrow  \qquad
-[\mu \, - \, z_{1-\frac{1}{2}\alpha} \, \sigma, \mu \, + \, z_{1-\frac{1}{2}\alpha} \, \sigma]
-\end{equation}
-Mit $\alpha$ sind die $5 \%$ Signifikanzniveau und mit $1-\alpha$ die $95 \%$ Vertrauensniveau gemeint.
-
-Die Likelihood wird maximal für
-\begin{equation}
-y \; = \; \frac{1}{J} \sum_{j=1}^J X_{1,j} ,
-\end{equation}
-wobei $y$ der Schätzwert für den Modellparameter $Y$ ist.
-Der Schätzwert $s^2$ für die Varianz $\sigma^2$ wird berechnet mit
-\begin{equation}
-s^2 \; = \; \frac{1}{J-1} \sum_{j=1}^J (X_{1,j} - y)^2 .
-\end{equation}
-
-Nachdem wir gesehen haben, wie wir für eine normalverteilte Zufallsgröße
-das Vertrauensintervall ermitteln können, wenden wir uns jetzt der Thematik zu,
-was passiert, wenn wir zu einer Zufallsgröße nur relativ wenige Beobachtungen haben.
 
 %------------------- kleine Stichprobenumfaenge -> Motivation t-Verteilung
+
+
+\section{Verteilung für kleine Stichproben: t-Verteilung}
+
+In der Praxis wird man vielfach damit konfrontiert, dass Prüfprozesse, also die Entnahme von
+Stichproben relativ aufwendig ist, so dass nur eine kleine Anzahl von Beobachtungen vorliegt.
+Was passiert dabei mit der Verteilung der Werte und wie aussagekräftig sind diese?
+
+Für kleine Stichprobenumfänge wird eine der Normalverteilung ähnliche Verteilung
+herangezogen, die je kleiner der Stichprobenumfang ist, um so stärker ausgeprägte
+Ausläufer (\textsl{Tails}) hat, die $t$-Verteilung.
+
 \begin{figure}
 \begin{center}
 \includegraphics[width=100mm]{05_vorlesung/media/learn_Student_t1samples.pdf}
@@ -631,13 +631,21 @@ dem Pseudonym Student. Die zugehörige Theorie wurde erst durch die
 Arbeiten von R. A. Fisher belegt, der die Verteilung \textsl{Student}-Verteilung (engl.\
 \textsl{Student's distribution}) nannte.
 
-Die $t$-Verteilung bezieht sich auf eine standardnormalverteilte Zufallsgröße $Z$ und sieht wie folgt aus
+Die t-Verteilung bezieht sich auf eine standardnormalverteilte Zufallsgröße $Z = \frac{X - \mu}{\sigma}$,
+deren Schätzwert um so unsicherer ist, je kleiner der Stichprobenumfang ist. Die von Gosset aufgestellte
+Verteilungsdichte $p_\mathrm{t}$ filt für Größen $Z$ und $Q$ mit $Z \, \sim \, {\cal N}(0,1)$
+(sprich $Z$ normalverteilt) und mit $Q \, \sim \, \chi^2$ (sprich $Q$ $\chi^2$-verteilt, also
+vergeilt gemäß Gl.~(\ref{Chi2pdfgamma})), dann ist
+\begin{equation}
+\frac{Z}{\sqrt{\frac{1}{\nu} Q}} \quad \text{t-verteilt mit} \; \nu \; \text{Freiheitsgraden.}
+\end{equation}
+Die t-Verteilung sieht wie folgt aus
 \begin{equation}
 p_\mathrm{t}(Z,\nu) \; = \;
 {\frac {\Gamma \left({\frac {\nu+1}{2}}\right)}{{\sqrt {\nu \pi }} \;
 \Gamma \left({\frac {\nu}{2}}\right)}} \, \left(1+{\frac {Z^2}{\nu}}\right)^{-{\frac {\nu+1}{2}}} ,
 \end{equation}
-wobei $\nu$ die Anzahl der Freiheitsgrade ist (was für den Fall, dass $Z$
+mit $\nu$ für die Anzahl der Freiheitsgrade (was für den Fall, dass $Z$
 die Summe der Stichprobenelemente darstellt, um den Mittelwert der Stichprobe mit Umfang $J$
 zu repräsentieren, dann $\nu = J-1$ ist), und wobei
 die Gamma-Funktion für natürliche Zahlen $\nu \, \in I \!\! N$ dividiert durch Zwei
@@ -1047,11 +1055,11 @@ Dann ist die Summe der Quadrate der Beobachtungen $Q$
 \begin{equation}
 Q \; = \; \sum_{j=1}^J \, Z_j^2
 \end{equation}
-gemäß folgender Wahrscheinlichkeitsdichtefunktion verteilt
+gemäß der zuvor, Gl.~(\ref{Chi2pdfgamma}), bereits eingeführten Wahrscheinlichkeitsdichtefunktion verteilt
 \begin{equation}
 p_\mathrm{\chi^2}(Q, \nu) \; = \; \frac{Q^{\frac{\nu}{2} - 1} \,
  e^{-\frac{Q}{2}}}{2^{\frac{\nu}{2}} \, \Gamma(\frac{\nu}{2})} \qquad Q > 0
-\label{Chi2pdf}
+ \label{Chi2pdf}
 \end{equation}
 mit $\nu$ für die Anzahl der Freiheitsgrade und $\Gamma$ für die
 im Abschnitt zuvor als Gl.~(\ref{GammaHalfInt}) angegebenen Gammafunktion.
@@ -1449,7 +1457,7 @@ Als Ergänzung (\textsl{Supplement}) zum \glqq Guide of Uncertainty\grqq ~gibt e
 \textsl{Evaluation of measurement data - The role of measurement uncertainty in conformity assessment},
 das darlegt, wie Konformitätsbewertungen vorzunehem sind.
 \begin{verbatim}
-	https://www.bipm.org/utils/common/documents/jcgm/JCGM_106_2012_E.pdf
+	https://www.bipm.org/documents/20126/2071204/JCGM_106_2012_E.pdf
 \end{verbatim}
 Dort heißt es in Paragraph 7.1.1
 \begin{quote}

@@ -124,6 +124,7 @@ Unter Berücksichtigung der Streuung der Beobachtungen $Y_j$ des Regressanden is
 \begin{equation}
 Y_j = f(X_j) \equiv p_m = \theta _m X_j^m + \theta _{m-1} X_j^{m - 1} + \cdots +
 \theta _1 X_j + \theta _0 + \varepsilon_j
+\label{eq:Kap2ModellglmitResiduenlinearReg}
 \end{equation}
 
 Für die Schätzung der Polynomkoeffizienten setzen wir den Polynomansatz in die
@@ -131,6 +132,7 @@ Minimumbedingung Gl.~(\ref{eq:Minimimierung-kleinster-Fehlerquadrate}) ein:
 \begin{equation}
 Q = Q(\theta _m ,\theta _{m - 1} ,\ldots ,\theta _1 ,\theta _0 ) =
 \sum\limits_{j = 1}^J {(Y_j - p_m (X_j ))^2 \to } \,\,\min
+\label{eq:Kap2KostenfktlinearReg}
 \end{equation}
 
 Die Schätzwerte der Koeffizienten $\hat{\theta}_k$, für die die Kostenfunktion $Q$ ein Minimum annimmt, sind
@@ -689,6 +691,7 @@ D.~h. wir bilden die 1. Ableitung und setzen diese gleich Null:
 Die partiellen Ableitungen lassen sich aus Gl.(\ref{eq:A1_Residuen}) bestimmen:
 \begin{equation}
 \frac{\partial \varepsilon_j}{\partial \theta_k}=-X_{jk}
+\label{eq:partielleAblRegressoren}
 \end{equation}
 Somit erhalten wir:
 \begin{equation}
@@ -712,13 +715,13 @@ Die Normalgleichung kann dann in Matrixform geschrieben werden:
 Wir erhalten auch über diese Herleitung die Gl.(\ref{eq:schaetzwerte_fuer_theta}),
 deren Lösung uns die optimalen Fitparameter $\hat{\boldsymbol{\theta}}$ liefert.
 
-Als nächstes ermitteln wir, um das \textbf{vollständige
-	Messergebnis} zu erhalten, auch die Schätz\-werte der Kovarianzen. Die
-Hauptdiagonale der Kovarianzmatrix sind die Varianzen.
+Als nächstes ermitteln wir, um das \textbf{vollständige	Messergebnis} zu erhalten,
+auch die Schätz\-werte der Kovarianzen. Die Hauptdiagonale der Kovarianzmatrix sind die Varianzen.
 \begin{equation}
 \operatorname {Cov}( \boldsymbol{\theta},\boldsymbol{\theta} ) \; = \;
 \operatorname {Cov}
 \left(\left( \mathbf{X}^\mathsf{T}  \, \mathbf{X} \right)^{-1} \mathbf{X}^\mathsf{T} \, \mathbf{Y}, \left( \mathbf{X}^\mathsf{T}  \, \mathbf{X} \right)^{-1} \mathbf{X}^\mathsf{T} \, \mathbf{Y}\right)
+\label{eq:COVRegressionsparameter}
 \end{equation}
 %mit Gl.~(\ref{CovarianzKonstMatrix}) ist dies
 das ist
@@ -734,6 +737,7 @@ bekommen wir die empirische Kovarianzmatrix
 \boldsymbol{\hat \Sigma}_{\boldsymbol{\theta}} \; = \;
 \hat \sigma_{\varepsilon}^2
 \left( \mathbf{X}^\mathsf{T}  \, \mathbf{X} \right)^{-1} \mathbf{X}^\mathsf{T} \, \left( \left( \mathbf{X}^\mathsf{T}  \, \mathbf{X} \right)^{-1} \mathbf{X}^\mathsf{T} \right)^\mathsf{T}
+\label{linRegempirKovarianz}
 \end{equation}
 mit
 $$
