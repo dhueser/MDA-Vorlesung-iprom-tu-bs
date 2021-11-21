@@ -30,8 +30,22 @@ Wahrscheinlichkeitsdichteverteilung eine Normalverteilung ist
 \begin{equation}
 p(X) \; = \; \frac{1}{\sqrt{2 \pi} \, \sigma} \, e^{-\frac{1}{2}\left(\frac{X - \mu}{\sigma}\right)^2}.
 \end{equation}
-Verteilungen wie die Poisson-Verteilung und die Binominal-Verteilung gehen für
-unendlich viele Beobachtungen oder Stichprobenentnahmen in die Gaußverteilung über.
+Je nach Art eines Zufallsprozesses folgt die entsprechende Zufallsgröße aber auch einer ganz
+anderen Art von Verteilungsfunktion. Ist die Zufallsgröße beispielsweise die Anzahl der
+guten Bauteile bei der gut/schlecht-Prüfung in der Qualtitätssicherung, so ist die
+Binomialverteilung möglicherweise die Verteilungsfunktion, mit der die Wahrscheinlichkeit hierfür
+zu beschreiben ist. Ein anderes Beispiel ist die Anzahl der in einem Zeitintervall von
+einer Millisekunde mit Zählrohr detektierter Gammaquanten, bei dem die Wahrscheinlichkeitsverteilung
+für die Anzahl Gammaquanten mit einer Poissonverteilung beschrieben werden kann.
+Wird das Zeitintervall vergrößert oder werden viele derartige Messungen durchgeführt und
+dann über mehrere Zeitintervalle integriert, so dass die Anzahl der Gammaquanten entsprechend
+vergrößert wird, nähert sich die Poissonverteilung der Gaußverteilung an.
+
+Je nach Prozess bedeuten viele Messkampagnen oder viele Stichprobenentnahmen,
+deren Ergebnisse anschließend addiert werden oder höhere Integrationszeiten die
+Summation vieler unabhängiger, identisch verteilter Zufallsgrößen. Eine Summe von sehr
+vielen unabhängigen identisch verteilten Zufallsgrößen mit endlicher Varianz
+ist approximativ normalverteilt.
 
 In der Wahrscheinlichkeitstheorie wird diese Tatsache exakt formuliert und ist der
 \textsl{zentrale Grenzwertsatz} (engl.\ \textsl{central limit theorem}) CLT.
@@ -44,13 +58,10 @@ asymptotisch einer stabilen Verteilung.
 Bei endlicher und positiver Varianz der Zufallsgrößen ist ihre Summe annähernd
 normalverteilt, was die Sonderstellung der Normalverteilung erklärt.
 
-Hierzu wird das Ziehen eines Wertes (das Machen einer Beobachtung / das Eintreten eines
-Ereignisses) als Zufallsgröße interpretiert.
-Damit betrachten wir eine Stichprobe als Folge von Zufallsgrößen. Sind die Elemente
-einer Stichprobe Zufallsgrößen, die
-\textsl{unabhängig und identisch verteilt} (Abkürzung: u.i.v.) sind, so ist auch ihre Summe
-eine Zufallsgröße, die normalverteilt ist, wenn der Stichprobenumfang beliebig groß ist,
-also gegen Unendlich konvergiert. In der englischsprachigen Literatur ist
+Betrachten wir eine Stichprobe als Folge von Zufallsgrößen und sind die Elemente
+der betrachteten Stichprobe Zufallsgrößen, die \textsl{unabhängig und identisch verteilt} (Abkürzung: u.i.v.)
+sind, so ist auch ihre Summe eine Zufallsgröße, die normalverteilt ist.
+In der englischsprachigen Literatur ist
 \textsl{unabhängig und identisch verteilt} unter dem Begriff
 \textsl{independent and identically distributed}, kurz i.i.d., zu finden.
 
@@ -258,21 +269,41 @@ minus Unendlich bis plus unendlich einnehmen können. Die Streuung solcher Messg
 wir dazu als normalverteilt betrachtet; denn wie wir bereits zu Beginn dieses Kapitels betont
 haben ist die Normalverteilung die grundlegende Verteilungsdichtefunktion zur Beschreibung
 zufälliger Prozesse. Es sei in diesem Zusammenhang an das zentrale Grenzwerttheorem in
-siehe Abschnitt \ref{zentralesGrenzwerttheorem} erinnert.
+Abschnitt \ref{zentralesGrenzwerttheorem} erinnert.
 
 Für das Hintergrundverständnis der Behandlung von Stichproben mit einer relativ kleinen Anzahl $J$ von
-Beobachtungen werden hier kurz die Binominalverteilung, die Poissonverteilung und die Gammaverteilung erläutert.
+Beobachtungen werden hier kurz die Binominalverteilung, die Poissonverteilung, die Gammaverteilung
+und die $\chi^2$-Verteilung eingeführt.
 
-Zufallsereignisse \footnote{\textsl{Ereignis} ist der in der Statistik verwendete
+Zufallsgrößen sind nicht immer gaußverteilt.
+Wir haben bisher reellwerte Messgrößen als Zufallsgröße betrachtet, die direkt das Zufallereignis darstellen.
+Ein Zufallsereignis\footnote{\textsl{Ereignis}
+% --
+ ist der in der Statistik verwendete
 allgemeinere Begriff, der im Speziellen hier eine Beobachtung, also das Annehmen eines Wertes einer
-Messgröße/ einer physikalischen Größe, ist. Ein Ereignis kann auch die Augenzahl eines geworfenen Würfels
-oder Farbe und Zahl einer gelandeten Kugel im Roulette sein}, die keineswegs einen kontinuierlichen
-Wertebereich haben (nicht mittels reeler Zahlen beschreibbar sind), sondern diskrete Werte wie bei
-Würfeln, Roulettescheiben oder Kartenspielen, verteilen sich anders und nicht gemäß einer Gaußverteilung.
+Messgröße/ einer physikalischen Größe, ist.  Ein Ereignis kann auch die Augenzahl eines
+geworfenen Würfels oder Farbe und Zahl einer gelandeten Kugel im Roulette sein.}
+% --
+kann aber auch gezählt werden. Die gewonnene Anzahl wird dabei als die Zufallsgröße, deren
+Wahrscheinlichkeit untersucht wird, betrachtet. Dabei wird die Häufigkeit oder Anzahl des
+Auftretens bestimmter Ereignisse in spezifizierten Zeitabschnitten oder an bestimmten Orten
+als Zufallsgröße $X$ analysiert. Dies kann beispielsweise die Anzahl von Gammaquanten in einem Zählrohr
+pro Zeitintervall sein. Bei diesem Beispiel kann die Verteilung der Wahrscheinlichkeit $p(X)$, dass $X$
+Gammaquanten innerhalb von $100 \, \mathrm{ms}$ vom Zählrohr detektiert werden,
+als Poissonverteilung angenommen werden.
 
-Bevor wir die unterschiedlichen Verteilungsdichtefunktionen betrachten, führen wir die Parameter ein,
-mit denen Verteilungsdichtefunktionen charakterisiert werden.
-Für das Verständnis dafür, wie Zufallsereignisse streuen, wie sie sich verteilen, interessiert,
+Wir unterscheiden, ob eine Zufallsgröße reellwertig, d.h.\ $X \in I \!\! R$,
+oder ob sie positive, ganze Zahlenwerte einnehmen, also $X \in I \!\! N_0$.
+
+Für die Beschreibung der Wahrscheinlichkeitsdichtverteilung von (Ko-)Varianzen, die nur positive
+Zahlenwerte annehmen, d.h.\ $X \in I \!\! R_{> 0}$,
+werden wir eine schiefsymmetrische Verteilung kennen lernen, die $\chi^2$-Verteilung.
+
+Bevor wir auf die unterschiedlichen Verteilungsdichtefunktionen, Binominalverteilung,
+Poissonverteilung, Gammaverteilung und $\chi^2$-Verteilung,
+genauer eingehen, führen wir die Parameter ein, mit denen
+Verteilungsdichtefunktionen charakterisiert werden.
+Für das Verständnis dafür, wie Zufallsgrößen streuen, wie sie sich verteilen, interessiert,
 \begin{itemize}
 \item um welchen
 Wert sie sich häufen, also welcher Wert der ist, der am ehesten zu erwarten ist oder in dessen Nähre die Werte
@@ -325,6 +356,9 @@ Varianz normiert
 \end{equation}
 wird. Das dritte statistische Moment der normierten Zufallsgröße heißt
 \textsl{Skewness}.
+So sind beispielsweise die Poissonverteilung, die die Verteilung ganzzahlenwertige Zufallsgrößen beschreibt,
+und die $\chi^2$-Verteilung, die die Verteilung positiver reellwertige Zufallsgrößen beschreibt,
+schiefsymmetrisch.
 
 Ein Maß für die Überhöhung oder Abflachung relativ zur Normalverteilung wird durch
 das vierte statistische Moment
@@ -341,9 +375,10 @@ wird. Das vierte statistische Moment der normierten Zufallsgröße heißt
 \textsl{Kurtosis}.
 
 % ---------------------------------------------------
+Im folgenden sei nun konkretisiert, wie die bereits genannten Verteilungsfunktionen definiert sind.
 
 Der Beschreibung von binärwertigen Zufallsereignissen dient die \textbf{Binominalverteilung}.
-Dabei ist mit binärwertigem Zufallsereignis ist gemeint, das es nur zwei mögliche
+Dabei ist mit binärwertigem Zufallsereignis gemeint, dass es nur zwei mögliche
 Beobachtungen/ Entscheidungen angenommen werden können, also entweder \textsl{ja} oder \textsl{nein},
 bzw.\ \textsl{gut} oder \textsl{schlecht},
 bzw.\ \textsl{wahr} oder \textsl{falsch}. Die Binominalverteilung beschreibt die Anzahl der
@@ -377,22 +412,25 @@ für $k = 0$ gilt $\binom{J}{k} = 1$
 Wenn die Gesamtzahl $J$ der Ereignisse sehr, sehr groß ist und auch entsprechend die Anzahl $k$,
 konvergiert die Binomialverteilung gegen eine Verteilung, die \textbf{Poissonverteilung} genannt wird.
 Wir stellen uns also vor, dass der Zeitraum, in dem produzierte Teile auf gut/schlecht geprüft werden im
-Vergleich zum Durchsatz bei der Teileprüfung so groß ist, dass $J \cdot p$ als Erwartungswert und Varianz
-verwendet werden kann. Dann wird nicht mehr das Ereignis "Bauteil ist gut" oder "Bauteil ist schlecht"
-als Zufallsereignis, sondern die Anzahl $k$ von den $J$ in einem Zeitraum geprüften Bauteile als
+Vergleich zum Durchsatz bei der Teileprüfung so groß ist, dass $\lambda = J \cdot p$ als Erwartungswert und Varianz
+verwendet werden kann. Dann wird nicht mehr das Ereignis \glqq Bauteil ist gut\grqq ~oder \glqq Bauteil ist schlecht\grqq
+~als Zufallsereignis, sondern die Anzahl $k$ von den $J$ in einem Zeitraum geprüften Bauteile als
 Zufallszahl bzw.\ Zufallsgröße $X$ betrachtet. Die Wahrscheinlichkeitsverteilung, die die Zufallsgröße
-\glqq Anzahl $k = X$ von in einem Zeitraum als Gut geprüfte Teile\grqq beschreibt, ist also die Poissonverteilung.
+\glqq Anzahl $k = X$ von in einem Zeitraum als Gut geprüfter Teile\grqq ~beschreibt, ist also die Poissonverteilung.
 
-Weitere typische Beispiele für poissonverteilte Häufigkeiten sind
+Weitere typische Beispiele für poissonverteilte Zufallsgrößen sind
 \begin{itemize}
 \item die Anzahl $X$ von $\alpha$-Teilchen, die von einer radioaktiven Probe pro Sekunde (also in einem Zeitinervall
 von einer Sekunde) emittieren;
 \item die Anzahl $X$ von Mutationen, die in einer DNA-Sequenz vorkommen;
-\item die Anzahl $X$ Fahrgäste, die in einem ausgewählten Zeitintervall, zB. zwischen 6 und 9 Uhr vormittags, eine gewisse Buslinie nutzen.
+\item die Anzahl $X$ der Fahrgäste, die in einem ausgewählten Zeitintervall, zB. zwischen 6 und 9 Uhr vormittags, eine gewisse Buslinie nutzen;
+\item die Anzahl $X$ der Streuprozesse pro Streckenabschnitt, die ein Teilchen beim Propagieren durch Materie entlang seines Weges erfährt.
+%/home/hueser01/Documents/12-Ioni_EDX-Spectra_e-transport/lit-read_Nov2021/Mendis-2019-An_inelastic_multislice_simulation_method_incorporating_plasmon_energy_losses-hilite.pdf
+
 \end{itemize}
 
 Die \textbf{Poissonverteilung}  $p_\mathrm{P}$ (der Index $\mathrm{P}$ steht für Poisson) wird also für die Beschreibung
-der Häufigkeit $X$ für das Eintreten eines Ereignisses in einem gewissen Bereich  eingesetzt.
+der Anzahl (Häufigkeit) $X$ für das Eintreten eines Ereignisses in einem gewissen Bereich  eingesetzt.
 Der Bereich ist oftmals ein Zeitbereich bzw.\ Zeitintervall, muss es aber nicht sein.
 
 Bei der Anzahl von Teilchen, Mutationen oder Fahrgästen handelt es sich jeweils um eine
@@ -407,7 +445,7 @@ siehe https://www.itl.nist.gov/div898/handbook/eda/section3/eda366j.htm
 
 Dabei bedeutet das Ausrufezeichen die mathematische Operation Fakultät mit
 $$
-X! = \prod\limits_{j=1}^{X} X = 1 \cdot 2 \cdot \dots \cdot X
+X! = \prod\limits_{j=1}^{X} X = 1 \cdot 2 \cdot \ldots \cdot X
 $$
 also wenn  beispielsweise $X = 3$ dann ist $3! = 1 \cdot 2 \cdot 3 = 6$.
 Ferner wird definiert, dass $0! = 1$.
@@ -419,7 +457,7 @@ positive von Null verschiedene, reelle Zahl, d.h.\ $\lambda \in I\!\!R_{> 0}$;
 \item bestimmt den Erwartungswert und die Varianz von $p_\mathrm{P}(X, \lambda)$.
 \end{itemize}
 Der Erwartungswert $\lambda$ ist der Lageparameter der Verteilung.
-Im Fall der Poissonverteilung es er gleichzeitig auch der Skalenparameter.
+Im Fall der Poissonverteilung ist er gleichzeitig auch der Skalenparameter.
 % ----------
 
 Bei Wahrscheinlichkeitsdichteverteilungen deren Lage- und Skalenparameter
@@ -455,7 +493,8 @@ $$
 \Gamma(n) \, = \, (n - 1)!
 $$
 Die Varianzen von normalverteilten Zufallsgrößen sind selber wiederum
-Zufallsgrößen $Q = \left(\frac{X - \mu}{\sigma}\right)^2$,
+Zufallsgrößen $Q = \left(\frac{X - \mu}{\sigma}\right)^2$ bzw.\
+$Q = \sum\limits_j \left(\frac{X_j - \mu}{\sigma}\right)^2$,
 und zwar solche die positiv und reellwertig sind und die dieser Art Verteilungsdichte,
 also der Gammaverteilung mit diskretem halbzahligem Formparameter $\gamma = \frac{\nu}{2}$ folgen.
 In Gleichung (\ref{Gammaverteilung}) setzen wir anstelle der normierten
@@ -612,13 +651,13 @@ Verteilung flacher ist als eine Standardnormalverteilung. Das bedeutet, dass ihr
 ausgeprägter sind.
 Eine Verteilungsdichtefunktion, die der Gaußverteilung ähnlich ist, aber unter
 Berücksichtigung des begrenzten Stichprobenumfangs entsprechend ausgeprägtere Tails hat,
-ist die im folgenden dargestellte \textsl{Student-t}-Verteilung, kurz auch
-einfach $t$-Verteilung genannt.
+ist die im folgenden dargestellte \textsl{Student-t}-Verteilung genannt, kurz auch
+einfach $t$-Verteilung.
 
 %==================
 
 %-----------------
-Diese Wahrscheinlichkeitsdichteverteilung wurde anfang des 20. Jahrhunderts von
+Diese Wahrscheinlichkeitsdichteverteilung wurde Anfang des 20. Jahrhunderts von
 William Sealy Gosset entwickelt. Sie wird der
 Tatsache gerecht, dass die Varianz zunimmt mit kleiner werdendem Stichprobenumfang.
 Gosset veröffentlichte 1908 erstmals zu dem Thema während er als Chemiker für die Guinness-Brauerei
@@ -631,15 +670,15 @@ dem Pseudonym Student. Die zugehörige Theorie wurde erst durch die
 Arbeiten von R. A. Fisher belegt, der die Verteilung \textsl{Student}-Verteilung (engl.\
 \textsl{Student's distribution}) nannte.
 
-Die t-Verteilung bezieht sich auf eine standardnormalverteilte Zufallsgröße $Z = \frac{X - \mu}{\sigma}$,
+Die $t$-Verteilung bezieht sich auf eine standardnormalverteilte Zufallsgröße $Z = \frac{X - \mu}{\sigma}$,
 deren Schätzwert um so unsicherer ist, je kleiner der Stichprobenumfang ist. Die von Gosset aufgestellte
-Verteilungsdichte $p_\mathrm{t}$ filt für Größen $Z$ und $Q$ mit $Z \, \sim \, {\cal N}(0,1)$
-(sprich $Z$ normalverteilt) und mit $Q \, \sim \, \chi^2$ (sprich $Q$ $\chi^2$-verteilt, also
-vergeilt gemäß Gl.~(\ref{Chi2pdfgamma})), dann ist
+Verteilungsdichte $p_\mathrm{t}$ gilt für Größen $Z$ und $Q$ mit $Z \, \sim \, {\cal N}(0,1)$
+(sprich $Z$ normalverteilt) und mit $Q \, \sim \, \chi^2$ (sprich $Q$ $\chi^2$-verteilt) also
+verteilt gemäß Gl.~(\ref{Chi2pdfgamma})), dann ist
 \begin{equation}
 \frac{Z}{\sqrt{\frac{1}{\nu} Q}} \quad \text{t-verteilt mit} \; \nu \; \text{Freiheitsgraden.}
 \end{equation}
-Die t-Verteilung sieht wie folgt aus
+Die $t$-Verteilung sieht wie folgt aus
 \begin{equation}
 p_\mathrm{t}(Z,\nu) \; = \;
 {\frac {\Gamma \left({\frac {\nu+1}{2}}\right)}{{\sqrt {\nu \pi }} \;
@@ -648,7 +687,7 @@ p_\mathrm{t}(Z,\nu) \; = \;
 mit $\nu$ für die Anzahl der Freiheitsgrade (was für den Fall, dass $Z$
 die Summe der Stichprobenelemente darstellt, um den Mittelwert der Stichprobe mit Umfang $J$
 zu repräsentieren, dann $\nu = J-1$ ist), und wobei
-die Gamma-Funktion für natürliche Zahlen $\nu \, \in I \!\! N$ dividiert durch Zwei
+die Gammafunktion für natürliche Zahlen $\nu \, \in I \!\! N$ dividiert durch Zwei
 wie folgt definiert ist:
 \begin{equation}
 \Gamma \left({\frac{\nu}{2}}\right) \; = \;
@@ -683,8 +722,8 @@ und eine größere Kurtosis aus der \textsl{Student-t}-Verteilung:
 \hline
 Verteilung & $\sigma$ & Kurt\\
 \hline
-Gauß &   4.88 &  2.99 \\
-Student-t &  5.86 &  3.59 \\
+Gauß-/ Normalverteilung &   4.88 &  2.99 \\
+Student-$t$-Verteilung &  5.86 &  3.59 \\
 \hline
 \end{tabular}
 \end{center}
@@ -895,6 +934,7 @@ und damit zu einer anderen Grundgesamtheit gehört.
 Der Test auf Vergleich des Erwartungswerts einer Stichprobe, der Einstichproben-\textsl{t}-Test,
 wird wie folgt formuliert:
 \begin{center}
+\setlength{\extrarowheight}{.5em}
 \begin{tabular}{c|cl}
 $H_0$ & $\mu_1 = \mu_0$ & die Stichprobe hat den gleichen Erwartungswert wie die Grundgesamtheit\\
 \hline
@@ -940,10 +980,11 @@ F-Test bei Test der Varianzen zweier Stichproben.
 
 Der Test auf Erwartungswerte, der \textsl{t}-Test, wird wie folgt formuliert:
 \begin{center}
+\setlength{\extrarowheight}{.5em}
 \begin{tabular}{c|cl}
 $H_0$ & $\mu_1 = \mu_2$ & beide Stichproben haben den gleichen Erwartungswert\\
 \hline
-$H_\mathrm{a}$ & $\mu_1 \neq \mu_2$ & beide Stichproben haben unterschiedliche Erwartungswerte und\\
+$H_\mathrm{a}$ & $\mu_1 \neq \mu_2$ & die Stichproben haben unterschiedliche Erwartungswerte und\\
  & & gehören somit unterschiedlichen Grundgesamtheiten an
 \end{tabular}
 \end{center}
@@ -1103,7 +1144,7 @@ für $J = 9$  (\textsl{links}) und $J = 20$ (\textsl{rechts}).}
 \end{figure}
 
 Abb.~\ref{ch2beispiele} zeigt zwei Beispiele für die Verteilungsdichte der Varianzen, zum einen
-für $J = 9$ und zum anderen für $J = 20$. Mit
+für $J = 9$ und zum anderen für $J = 20$. Mit der Matla/Gnu-Octave-Funktion \texttt{understandchi2}
 %\lstset{language=Matlab}
 \begin{lstlisting}[style=Matlab]
 function understandchi2()
@@ -1319,10 +1360,10 @@ weiblich & $347$ & $3.84$ & $5.86$
 \end{center}
 
 mit $J_i$ für die Stichprobenumfänge und $s_i$ für die Standardabweichung mit $i = 1,2$.
-Die Standardabweichung zur Nutzungsdauer $t$ beträgt bei den Männern $t_1 = 5.48$  Stunden/Woche
-mit einer Streuung von
+Die $t$ beträgt bei den Männern $t_1 = 5.48$  Stunden/Woche
+mit einer Standardabweichung von
 $s_1 = 7.80$ Stunden/Woche und bei den Frauen
-$t_1 = 3.84$  Stunden/Woche mit einer Streuung von $s_2 = 5.86$ Stunden/Woche.
+$t_1 = 3.84$  Stunden/Woche mit einer Standardabweichung von $s_2 = 5.86$ Stunden/Woche.
 Der F-Test überprüft, ob der Unterschied der Varianzen $s_1^2$ und $s_2^2$ signifikant ist.
 Im vorliegenden Beispiel beträgt der Nennerfreiheitsgrad $\nu_1 = J_1 - 1 = 305-1 = 304$ und der
 Zählerfreiheitsgrad $\nu_2 = J_2 - 1 = 347-1 = 346$.
@@ -1380,18 +1421,18 @@ Den Hypothesentests, die wir uns angesehen haben, ist gemeinsam, dass
 aufgestellt wurde,
 \item ein Signifikanzniveau $\alpha$ spezifiziert wurde,
 \item eine Stichprobe mit einer Anzahl Freiheitsgrade $\nu$
-genommen wurde und
+genommen wurde (oder zwei Stichproben mit ihren jeweiligen Freiheitsgradanzahlen) und
 \item anhand der vorher aufgestellten Entscheidungsregeln (Vergleich einer
 Prüfgröße mit dem Quantil einer Wahrscheinlichkeitsdichteverteilung)
 die Hypothese verworfen oder angenommen wurde.
 \end{enumerate}
 In der Entscheidungsregel werden durch Vorgabe eines Signifikanzniveaus Verwerfungsbereich
 und Annahmebereich festgelegt. Das Signifikanzniveau ist dabei Komplementärwahrscheinlichkeit
-(Gegenwahrscheinlichkeit) zum Vertrauensniveau, das ist die Wahrscheinlichkeit dafür
+(Gegenwahrscheinlichkeit) zum Vertrauensniveau. Das ist die Wahrscheinlichkeit dafür
 wie sicher die Hypothese ist.
 
 Die Wahrscheinlichkeit, mit einem Hypothesentest eine falsche
-Entscheidung zu treffen wird in zwei Klassen von Fehlern aufgeteilt, den
+Entscheidung zu treffen, wird in zwei Klassen von Fehlern aufgeteilt, den
 $\alpha$-Fehler oder den $\beta$-Fehler
 
 \begin{center}
@@ -1455,7 +1496,7 @@ werden Messergebnis und Toleranzvorgabe verglichen.
 
 Als Ergänzung (\textsl{Supplement}) zum \glqq Guide of Uncertainty\grqq ~gibt es das Dokument
 \textsl{Evaluation of measurement data - The role of measurement uncertainty in conformity assessment},
-das darlegt, wie Konformitätsbewertungen vorzunehem sind.
+das darlegt, wie Konformitätsbewertungen vorzunehmen sind.
 \begin{verbatim}
 	https://www.bipm.org/documents/20126/2071204/JCGM_106_2012_E.pdf
 \end{verbatim}
