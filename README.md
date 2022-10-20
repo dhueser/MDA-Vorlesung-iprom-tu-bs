@@ -1,15 +1,15 @@
 # Vorlesung _Messdatenauswertung und Messunsicherheit am iprom_ der TU Braunschweig
 ## Einleitung
-Diese Vorlesung ist ein Modul des Studiengangs _Messtechnik und Analytik_ im Fachbereich Maschinenbau der TU Braunschweig.
+Diese Vorlesung ist ein Modul des Studiengangs _Metrologie und Messtechnik_ im Fachbereich Maschinenbau der TU Braunschweig.
 
 Der Modulverantwortliche ist Prof. Dr.-Ing Rainer Tutsch, Leiter des Instituts für Produktionsmesstechnik. Die Vorlesung wird gehalten von Mitarbeitern der Physikalisch-Technischen Bundesanstalt, die das nationale Metrologie-Institut zur Wahrung der SI-Einheiten und verantworlich für das gesetzliche Messwesen in Deutschland ist:
 - Dr. habil. Dorothee Hüser (Hauptverantwortliche)
 - Dr.-Ing. Gerd Ehret
 - Dr. rer. nat. Wolfgang Schmid
 
-## [Vorlesungsskript](https://github.com/dhueser/MDA-Vorlesung-iprom-tu-bs/releases/latest/download/MDA_iprom_TUbraunschweig.pdf)
-- Das pdf-File des jeweils aktuellen Vorlesungsskriptes steht zum Download [hier](https://github.com/dhueser/MDA-Vorlesung-iprom-tu-bs/releases/latest/download/MDA_iprom_TUbraunschweig.pdf) zur Verfügung.
-- Das Skript wird laufend überarbeitet.
+## [Vorlesungsskript](https://github.com/dhueser/MDA-Vorlesung-iprom-tu-bs/releases)
+- Das pdf-File des jeweils aktuellen Vorlesungsskriptes liegt innerhalb des zip bzw. des tar.gz-Archivs.
+- Das Skript wird laufend überarbeitet, zuletzt wurde es am 5. Dez 2021 ge&auml;ndert und liegt unter dem Datenamen `MDA_iprom_TUbraunschweig_v2021-12-05.pdf` hier im Hauptverzeichnis [MDA_iprom_TUbraunschweig_v2021-12-05.pdf](MDA_iprom_TUbraunschweig_v2021-12-05.pdf).
 - Wer Vorschläge zur Verbesserung hat, ist herzlich eingeladen, die LaTeXquellen des gesamten Skripts zu clonen und Änderungen in einem separaten Branch in das github-Repository zu laden und einen pull Request zu setzen. [Tutorial](https://help.github.com/en/articles/setting-guidelines-for-repository-contributors); [Beispiel](https://github.com/tensorflow/tensorflow/blob/master/CONTRIBUTING.md)
 
 ## Inhalt
@@ -26,24 +26,6 @@ Das Modul gibt einen umfangreichen Überblick über die Grundlagen der Messdaten
 ### Monte-Carlo-Methoden
 ### Infrastrukturen der Metrologie
 ### Normen und Richtlinien                             
-
-## WS 2020/21
-
-| Nr.  | Datum      | Dozent                                  | Thema                                               |
-| ---- | ---------- | --------------------------------------- | --------------------------------------------------- |
-| 1    | 2020-10-19 | Dr. habil. Dorothee Hüser               | Einführung: Messtechnik und Statistik               |
-| 2    | 2020-10-26 | Dr.-Ing. Gerd Ehret                     | Lineare Regression                                  |
-| 3    | 2020-11-02 | Dr.-Ing. Gerd Ehret                     | Optimierung nichtlinearer Modelle                   |
-| 4    | 2020-11-09 | Dr. habil. Dorothee Hüser               | Konzepte der Statistik für die Messdatenanalyse     |
-| 5    | 2020-11-16 | Dr. habil. Dorothee Hüser               | Wahrscheinlichkeiten und Hypothesentests            |
-| 6    | 2020-11-23 | Dr.-Ing. Gerd Ehret                     | Auswertung von Mess- und Ringvergleichen            |
-| 7    | 2020-11-30 | Dr. habil. Dorothee Hüser               | Messunsicherheitsfortpflanzung bei linearen Modelle |
-| 8    | 2020-12-07 | Dr.-Ing. Gerd Ehret                     | Bayes-Statistik                                     |
-| 9    | 2020-12-14 | Dr. Wolfgang Schmid                     | Beispiele zur Messunsicherheitsfortpflanzung nach GUM |
-| 10   | 2020-01-11 | Dr.-Ing. Gerd Ehret                     | 1. Konformitätsbewertung (GUM - JCGM 106:2012), 2. Monte-Carlo Methoden I |
-| 11   | 2020-01-18 | Dr. Wolfgang Schmid                     | Monte Carlo Methoden II, Beispiele zu Monte-Carlo-Methoden nach GUM-S1  |
-| 12   | 2020-01-25 | Dr.-Ing. Gerd Ehret/Dr. Wolfgang Schmid | Infrastrukturen der Metrologie und ISO 17025: (1.) Internationale: BIPM, EURAMET; (2.) nationale: DAkkS, Kalibrierlabore |
-| 13   | 2020-02-03 | Dr. Rolf Kumme                          | Normen und Richtlinien                              | 14   | nach Vereinb.| Dr. Rolf Kumme | Exkursion |
 
 # Interaktive Code-Beispiele
 
