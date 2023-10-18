@@ -1,0 +1,299 @@
+\section{Konzepte der Messunsicherheitsfortpflanzung (M.U.F.)}
+
+% 1 Fortpflanzung für lineare Modelle
+% 2 Überdeckungsintervall
+% 3 Kombinierte Standardabweichung
+%   (Sattherthwaite)
+% 4 Erweiterungsfaktor
+
+In der Messtechnik geht es darum, indirekte Messgrößen über Beobachtungen von direkten
+Messgrößen und über ein Schätzverfahren auf Basis eines Modells zu ermitteln.
+In der ersten Vorlesung hatten wir dazu hervorgehoben, dass zu dem Modell zum einen
+die mathematische Beschreibung des physikalischen Sachverhaltes gehört und zum anderen
+die statistische Beschreibung von nicht deterministischem Verhalten.
+Das nichtdeterministische Verhalten eines Systems wird in vielen Fällen
+von nicht vorhersehbaren, kleinen Störeinflüssen und Auflösungsbegrenzungen
+beim Beobachtungsvorgang verursacht. Es gibt aber auch Prozesse, bei denen
+der physikalische Vorgang, der zu untersuchen ist, selber stochastischen Charakter hat,
+wie beispielsweise bei radioaktiven Zerfällen, Streuprozessen atomarer Vorgänge oder bei
+biologischen Prozessen. Das nicht deterministische Verhalten, die
+Stochastik, eines Prozesses wird mittels entsprechender Wahrscheinlichkeitsverteilungen modelliert.
+
+Ein Messergebnis einer Größe $X$ wird deshalb statistisch mit Wahrscheinlichkeitsverteilungen ausgedrückt
+\begin{itemize}
+\item in Form einer Wahrscheinlichkeitsdichteverteilung
+$$
+p(X)
+$$
+oder
+\item in Form der statistischen Momente, Erwartungswert $x$ und Varianz (bzw.\ deren Wurzel $\sigma_X$),
+einer Wahrscheinlichkeitsdichteverteilung, zusammen mit einer Wahrscheinlichkeit $1-\alpha$
+bzw.\ einem Quantil $k$
+$$
+x = \int X \, p(X) \operatorname d X, \quad
+\sigma_X = \sqrt{\int (X-x)^2 \, p(X) \operatorname d X}, \quad k = P^{-1}(1-\alpha/2).
+$$
+\end{itemize}
+Dreh- und Angelpunkt bei der Quantifizierung von Messgrößen ist die Vorgehensweise, wie ein
+Mess\-er\-gebnis durch Modellbildung, Parameterschätzung und Bestimmung der Wahrscheinlichkeitsdichtefunktion
+der Parameter gewonnen wird. Ein Messergebnis einer Größe $Y$ oder eines Größenvektors
+$\mathbf{Y}$, die bzw.\ der \textsl{explizit} oder \textsl{implizit} von direkten
+Messgrößen $\mathbf{X}$ abhängt, soll ausgedrückt werden durch eine
+Wahrscheinlichkeitsdichteverteilung $p(Y)$ bzw.\ durch den entsprechenden Erwartungswert $y$ und
+die Wurzel aus der Varianz $\sigma_Y$ mit einem Quantil $k$, dem Erweiterungsfaktor, für
+eine spezifizierte Wahrscheinlichkeit $1-\alpha$.
+
+Wir kategorisieren die Modelle für indirekte Messgrößen
+danach, ob sie univariat oder multivariat und ob sie explizit oder implizit sind:
+
+\begin{center}
+{\setlength{\extrarowheight}{4pt}%
+\begin{tabular}{l||c|c|}
+\arraycolsep=4pt\def\arraystretch{2}
+ & univariat: $1$ indirekte Größe & multivariat: $M>1$ indirekte Größen \\[4pt]
+\hline\hline
+explizit & $Y = f(\mathbf{X})$ & $\mathbf{Y} = \vec f(\mathbf{X})$\\[4pt]
+\hline
+implizit & $f(Y,\mathbf{X})=0$ & $f(\mathbf{Y},\mathbf{X})=0$ oder
+ $\vec f(\mathbf{Y},\mathbf{X})=0$\\[4pt]
+\hline
+\end{tabular}}
+\end{center}
+
+mit $\mathbf{X} = (X_1,\dots,X_N)^\mathsf{T}$ und $\mathbf{Y} = (Y_1,\dots,Y_M)^\mathsf{T}$.
+
+Bei der linearen Regression beispielsweise haben wir, wie wir es in der zweiten Vorlesung
+gelernt haben, die Regressoren und Regressanden als
+\begin{enumerate}
+\item gemeinsam ausgelesene (z.B.\ durch Triggerung zugeordnete) Beobachtungstupel
+\begin{equation}
+\boldsymbol (Y_{\mathrm{Regr}, j}, \mathbf{X}_j) \; = \; (Y_{\mathrm{Regr}, j}, X_{1,j}, \dots, X_{M,j})
+\end{equation}
+vorliegen mit $j = 1,\dots, J$ und $J$ für den Stichprobenumfang, so dass gemäß einem
+zeitlichen Ablauf eine Veränderung aller Größen vorliegen kann,
+\item ansonsten können die direkten Messgrößen in voneinander unabhängigen Experimenten
+und damit im allgemeinen auch mit verschiedenen Stichprobenumfängen gewonnen werden.
+\end{enumerate}
+
+Der erstere Fall repräsentiert als direkte Größen
+sowohl die Regressoren $\mathbf{X}$ als auch die Regressanden $Y_{\mathrm{Regr}}$
+und als indirekte Messgrößen, die Modellparameter $\boldsymbol \theta \equiv \boldsymbol Y$.
+Hier handelt es sich also hinsichtlich der Unsicherheitsfortpflanzung um ein
+implizites, multivariates Problem, auch bei der univariaten, linearen Regression.
+\begin{equation}
+0 = f(\mathbf{Y},\mathbf{X}) \equiv f(\boldsymbol \theta,\mathbf{X})
+= Y_{\mathrm{Regr}} - \sum_{i=1}^{M} \theta_i \, X_i
+\label{implizitMultivariatRegre}
+\end{equation}
+Das \glqq Multivariate\grqq ~für die Unsicherheitsberechnung betrifft die indirekten
+Messgrößen $\boldsymbol \theta \equiv \boldsymbol Y$, das \glqq Univariate\grqq ~für die
+Regression betrifft den Regressanden $Y_{\mathrm{Regr}}$.
+
+Fall Zwei kann im allgemeinen so geartet sein, dass jede der direkten Größen in jeweils unabhängigen
+Messvorgängen gewonnen wird, bei denen im allgemeinen unterschiedliche Stichprobenumfänge $J_i, J_k$ vorliegen
+können und dann keine paarweise Zuordnung der einzelnen Beobachtungswerte $X_{i,j}$ zu $X_{k,l}$ für
+$i \neq k$ vorliegt.
+
+Bei dem expliziten, univariaten Fall
+\begin{equation}
+Y = f(\mathbf{X})
+\label{explizitUnivariat}
+\end{equation}
+können die direkten Messgrößen als unkorrelierte unterschiedliche Stichproben vorliegen (Fall 2)
+oder auch als gemeinsam getriggerte Tupel
+\begin{equation}
+\boldsymbol X_j \; = \; (X_{1,j}, \dots, X_{N,j})
+\end{equation}
+wie in Fall 1, aber dann nicht mit Regressionskoeffizienten als Modellparameter, sondern
+mit der indirekten Größe explizit als Funktion von $(X_{1}, \dots, X_{N})$ gemäß
+Gl.~(\ref{explizitUnivariat}).
+
+
+Für eine internationale Vergleichbarkeit und den internationalen Handel ist es erforderlich,
+dass die Verfahren zur Bestimmung von Messergebnissen möglichst einheitlich sind.
+Für das gesetzliche Messwesen ist deshalb die international übereingekommene Richtlinie
+zur Bestimmung von Messunsicherheiten bindend.
+Die internationale Richtlinie zur Berechnung von Messunsicherheiten umfasst mehrere
+Dokumente:
+\begin{itemize}
+\item JCGM 100:2008 GUM 1995 with minor corrections \textsl{Evaluation of measurement
+data - Guide to the expression of uncertainty in measurement} \cite{GUM95}; oftmals einfach mit \glqq GUM\grqq ~bezeichnet,
+betrifft univariate und explizite Modelle,
+  \begin{itemize}
+  \item die linear sind
+  \begin{equation}
+  Y = f(\mathbf{X}) = \sum_{i=1}^N c_i X_i
+  \label{univarLinear}
+  \end{equation}
+  oder für die eine Linearisierung zulässig ist
+  \begin{equation}
+  Y = f(\mathbf{X})
+  = \left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}} +
+    \sum_{i=1}^N \underbrace{\left. \frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}}}_{c_i} \Delta X_i
+  \label{univarTaylorLin}
+  \end{equation}
+  \item die Zufallsgrößen betreffen, deren Streuung (\textsl{dispersion}) normalverteilt oder
+  $t$-verteilt ist.
+  \end{itemize}
+Die indirekte Messgröße $Y$ ist damit Linearkombination der direkten Messgrößen $X_i$, d.h.
+$Y = \sum c_i X_i$, so dass für die Varianz $\operatorname{Var}(Y) = \operatorname{Var}(\sum c_i X_i)$
+gemäß Gl.~(\ref{univarLinearFortpflanzungKap1}) aus Abschnitt \ref{Kap1Kovarianzen} gilt
+\begin{equation}
+\operatorname{Var}(Y) = \sum_{i=1}^N \sum_{k=1}^N  c_i c_k \operatorname{Cov}(X_i, X_k)
+\label{univarLinearFortpflanzung}
+\end{equation}
+Da sich viele physikalische Zusammenhänge für definierte Bereiche linearisieren lassen,
+findet Gl.~(\ref{univarLinearFortpflanzung}) in großen Teilen der Messdatenanalyse
+Anwendung und ist in der Literatur als das \textsl{Gesetz zur Fortpflanzung von Messunsicherheiten}
+bekannt.
+
+\item JCGM 101:2008 \textsl{Evaluation of measurement
+data - Supplement 1 to the Guide to the expression of
+uncertainty in measurement - Propagation of distributions using a Monte Carlo method} \cite{GUMS1};
+kurz mit \glqq GUM - supplement 1\grqq ~bezeichnet, betrifft
+explizite und implizite, univariate Modelle,
+  \begin{itemize}
+  \item die sich nicht einfach linearisieren lassen
+  \item und/oder die sich nicht in einer geschlossenen analytischen Form darstellen lassen.
+  \end{itemize}
+Hier wird zu jeder direkten Messgröße eine Wahrscheinlichkeitsdichteverteilung vorgegeben.
+Gemäß den jeweiligen Verteilungen wird eine große Stichprobe (ein großes \textsl{Sample})
+$$
+\mathbf{x}_1 = (x_{1,1},\dots,x_{N,1})^\mathsf{T}, \dots, \mathbf{x}_J = (x_{1,J},\dots,x_{N,J})^\mathsf{T}
+$$
+für die direkten Größen $\mathbf{X}$ per Zufallszahlengenerator erzeugt. Diese wird in das Modell $f$ gesteckt,
+um eine Stichprobe
+\begin{equation}
+y_1 = f(x_{1,1},\dots,x_{N,1}), \dots, y_J = f(x_{1,J},\dots,x_{N,J})
+\end{equation}
+der indirekten Größe $Y$ zu gewinnen. Das Histogramm der Stichprobe der indirekten Größe liefert somit die
+Wahrscheinlichkeitsdichteverteilung. Aus der sortierten Stichprobe nach der Art wie wir sie
+für den Kolmogoroff-Smirnow-Test berechnet haben, gewinnen wir die kumulierte Wahrscheinlichkeitsverteilung
+aus deren inverser Funktion das Überdeckungsintervall gewonnen werden kann.\\
+$\rightarrow$ Dieses Verfahren wird Kapitel~\ref{montecarloMU} dargelegt.
+\item JCGM 102:2011 \textsl{Evaluation of measurement data – Supplement 2 to the
+Guide to the expression of uncertainty in measurement - Extension to any number of output quantities}
+liefert die Verallgemeinerung der beiden Richtliniendokumente JCGM 100 und JCGM 101 für den multivariaten
+Fall mit mehreren $M>1$ indirekten Größen, also einem Größenvektor $\mathbf{Y}$.
+Hier wird dargelegt, wie man die Unsicherheit
+  \begin{itemize}
+  \item bei linearen oder linearisierbaren Modellen
+    mittels der Berechnung der Kovarianzen (in der Art wie wir es
+    in Kapitel~\ref{KapitellinReg} für die lineare Regression kennen gelernt haben)
+  \item oder im Fall der nicht linearisierbaren und/oder komplexeren (oftmals impliziten) Modelle
+    via Monte-Carlo-Berechnungen analog zu GUM-supplement 1
+  \begin{equation}
+  \mathbf{y}_1 = \vec f(x_{1,1},\dots,x_{N,1}), \dots, \mathbf{y}_J = \vec f(x_{1,J},\dots,x_{N,J})
+  \end{equation}
+  \item sowie für alle Fälle, ob uni- oder multivariat, ob explizit oder implizit, ob analytisch
+    oder via Monte-Carlo-Verfahren unter Einbeziehung von {\`a} priori-Information mittels
+    bayesischer Methoden\\
+    $\rightarrow$ Kapitel~\ref{bayesMU}
+  \end{itemize}
+ermittelt.
+\item JCGM 103 CD 2018-10-04 \textsl{Guide to the expression of uncertainty in measurement
+- Developing and using measurement models} behandelt in umfassender Weise die Problematik der
+Modellentwicklung. Es gibt den Bereich physikalischer, deterministischer Prozesse,
+den Bereich der nicht-deterministischen, physikalischen oder biologischen oder soziologischen
+Prozesse. Ferner gibt es den Bereich der statistischen Modelle, die dazu dienen, nicht-deterministische
+Anteile von Prozessen zu behandeln. Das JCGM 103 Dokument soll diese Dinge konzeptionell
+für die Metrologie beleuchten. Es ist bisher ein Entwurf; das Kürzel CD steht für \textsl{committee draft}.
+\item JCGM 104:2009 \textsl{Guide to the expression of uncertainty in measurement
+- An introduction to the Guide to the expression of
+uncertainty in measurement and related documents} liefert die Konzepte und Hintergründe zur
+Unsicherheitsbestimmung. Dieses Dokument soll ein Verständnis für die Konzepte der
+Wahrscheinlichkeitsdichteverteilungen im Zusammenhang mit der Bestimmung von Messunsicherheiten liefern.
+\item JCGM 106:2012 \textsl{Evaluation of measurement data - The role of
+measurement uncertainty in conformity assessment}. Im Rahmen der Vorlesungen zu Hypothesentests und
+Ringvergleichen haben wir bereits gelernt, dass Messergebnisse zu vergleichen sind, und wie dies
+gehandhabt wird. In der Qualitätssicherung ist die zentrale Aufgabe, gefertigte Bauteile mit den
+vorgegebenen Daten der technischen Konstruktionszeichnung zu vergleichen hinsichtlich der Übereinstimmung,
+also der Einhaltung von Toleranzgrenzen. Dies wird Konformitätsbewertung genannt und wird im
+JCGM 106-Dokument behandelt.
+\end{itemize}
+
+Das historisch älteste Dokument JCGM~100 gilt für explizite, univariate, skalare und
+gauß- oder $t$-verteilte indirekte Messgrößen mit linearem oder linearisierbarem Modell für die
+Abhängigkeit der indirekten Messgröße von den direkten Messgrößen. Es wurde zunächst erweitert durch das JCGM~101. Die
+in JCGM~101 spezifizierte Monte-Carlo-Methode ermöglicht es, dass man nicht auf die Bestimmung der Unsicherheit
+expliziter, univarter indirekter Messgrößen mit linearisierbarem Modell begrenzt ist.
+Es bietet die Möglichkeit auch die Unsicherheit für implizite, multivariate Messgrößen,
+deren direkte Eingangsgrößen beliebig verteilt sein können zu ermitteln. Die Verteilung der
+Größen können eine von Null verschiedene Skewness aufweisen. Sie können sogar die Form einer
+U-Verteilung haben, was beispielsweise bei direkten Größen, die durch Vibrationen beeinflusst
+werden, vorkommen kann. Die Größen können irgendwelchen Verteilungen gehorchen, so dass die
+Wahrscheinlichkeitsverteilungen der indirekten Messgrößen entsprechend einen
+irgendwie gearteten Verlauf aufweisen können.
+
+Die nächste Erweiterung liefert dann das JCGM~102-Dokument, das eine vollständige Verallgemeinerung
+darstellt. Demgemäß werden auch Verfahren betrachtet, die die Berücksichtigung der Unsicherheit des Modells an sich
+zulassen (die indirekte Messgröße aufgrund von Mangel an Information als Zufallsgröße behandelt)
+sowie die Behandlung von vorherigen Informationen über die indirekten Messgrößen (Bayesische Statistik).
+
+Die Dokumente JCGM 100, 101, 102, 104 und 106 sind über die Webseiten des
+\textsl{Bureau International des Poids et Mesure}, abgekürzt BIPM,
+\begin{verbatim}
+https://www.bipm.org/en/publications/guides
+\end{verbatim}
+erhältlich.
+
+Die wesentlichen Komponenten der Messunsicherheit sind
+\begin{itemize}
+\item die Begrenztheit des Messvorgangs bedingt durch
+  \begin{itemize}
+  \item endliche Auflösung der Geräte,
+  \item Messbereichsgrenzen,
+  \item Störeinflüsse von außerhalb und innerhalb der Geräte,
+  \item subjektive Komponenten durch den Operateur,
+  \end{itemize}
+\item die Begrenztheit der Modellbildung bedingt durch
+  \begin{itemize}
+  \item Vereinfachungen (Parsimonie = \glqq Sparsamkeit\grqq)
+    und Grenzen durch Rechenkapazität zeitlich (Rechenzeit/Rechenleistung)
+    und kostenmäßig (Speicherkapazität und Maschinengenauigkeit,
+    numerische Stabilität, numerische Zuverlässigkeit),
+  \item Vereinfachungen mangels Kenntniss über quantitative Details
+    zu Einflussgrößen
+    oder genaueren Details der Physik innerhalb des
+    betreffenden physikalischen Effektes,
+  \item mangels Informationen zu genaueren Werten von Einflussgrößen der
+    physikalischen Prozesse.
+  \end{itemize}
+\end{itemize}
+
+Bei der Schätzung von Modellparametern (Quantifizierung der indirekten Messgrößen)
+spielt vielfach die numerische Zuverlässigkeit des Optimierungsalgorithmus eine
+wichtige Rolle. Wenn wir das Kosten\-funktions\-beispiel der Abbn.~\ref{LSoptiExample1NM} und \ref{LSoptiExample1Grad}
+mit dem der Abb.~\ref{LSoptiExample1NM} in Kapitel~\ref{LSoptiExample1SinusRQS} vergleichen,
+erkennen wir, dass die Modellparameter bei Abb.~\ref{LSoptiExample1NM} und \ref{LSoptiExample1Grad}
+in etwa die gleiche Skalierung aufweisen, während die in Abb.~\ref{LSoptiExample1NM} stark unterschiedlich sind. In Abb.~\ref{LSoptiExample1NM} und \ref{LSoptiExample1Grad} sehen wir eine schöne, runde
+Kuhle und in Abb.~\ref{LSoptiExample1Grad} einen schmalen Graben. Im letzteren ist das Modell mit seinen
+Parametern nicht so gut konditioniert, so dass das Minimum nicht klar erkennbar ist.
+Nicht so gut konditionierte Modelle führen eine größere Unsicherheit bei der Schätzung
+seiner Parameter mit sich.
+
+Für die Wahl des Modellansatzes gilt es nicht nur den physikalischen Zusammenhang
+geeignet wieder zugeben, sondern auch das Verhalten der Gleitkommaarithmetik zu
+berücksichtigen. Wenn zwei sehr große Zahlen voneinander zu subtrahieren sind, muss
+berücksichtigt werden, wie hoch die Maschinengenauigkeit ist, also wie groß die
+Mantisse ist. Werden die Zahlen so groß, dass die relevanten Nachkommastellen, die
+nach Subtraktion gewonnen werden sollen, nicht vorhanden sind, liefert der Algorithmus
+kein brauchbares Ergebnis.
+\begin{quote}
+Doing floating point operations is like moving piles of sand: every
+time you move a pile, you lose a little sand and pick up a little dirt!
+\end{quote}
+Ein Algorithmus ist deshalb derart zu implementieren, dass hohe Potenzen oder
+vielfache Multiplikationen vor Additionen oder Subtraktionen zu vermeiden, zu umgehen
+sind. Dazu gehört es, zu überlegen, wie man das Modell formuliert, beispielsweise
+ob man Polynome in der einfachen Darstellung, als Legendre oder als Tschebycheff-Polynome
+definiert. Dazu gehört auch, zu prüfen, ob man und wie man ein Modell zunächst in einer
+einfacheren Approximation aufbaut und erforderlichenfalls Effekte höherer Ordnung in
+einem nächsten Schritt hinzufügt.
+
+Ein Modell ist so zu wählen, dass es der entsprechenden Anwendung gerecht wird
+hinsichtlich der Anforderungen an Kosten vs.\ Genauigkeit. Wie gut ein Modell einen
+physikalischen Sachverhalt beschreibt, wird in der Modellunsicherheit ausgedrückt.
+Ein kleines Beispiel hatten wir in Kapitel~\ref{KapitellinReg} gesehen, in der ein Vergleich
+zwischen einer Regressiongeraden und einem Polynom 6.\ Grades gemacht wurde, siehe
+dort das in Abb.~\ref{fig:LineareRegressionMoeglFits} dargestellte Beispiel.

@@ -117,33 +117,61 @@ iprom, TU Braunschweig}
 \chapter{Wahrscheinlichkeiten und Hypothesentests}
 \label{wahrscheinlichHyp}
 \include{05_vorlesung/05_Wahrscheinlichkeiten_Hypothesen}
+
+
+
+% hueser01@n16751:~/Documents/3-Lehre/MDA_Vorlesung_github/MDA-Vorlesung-iprom-tu-bs/vorlesung$ git mv 07_vorlesung 09_vorlesung
+% hueser01@n16751:~/Documents/3-Lehre/MDA_Vorlesung_github/MDA-Vorlesung-iprom-tu-bs/vorlesung$ git mv 06_vorlesung 07_vorlesung
+% hueser01@n16751:~/Documents/3-Lehre/MDA_Vorlesung_github/MDA-Vorlesung-iprom-tu-bs/vorlesung$ git mv 12_vorlesung 12_vorlesung_tmp
+% hueser01@n16751:~/Documents/3-Lehre/MDA_Vorlesung_github/MDA-Vorlesung-iprom-tu-bs/vorlesung$ git mv 08_vorlesung 12_vorlesung_GUMS2
+% hueser01@n16751:~/Documents/3-Lehre/MDA_Vorlesung_github/MDA-Vorlesung-iprom-tu-bs/vorlesung$ git mv 12_vorlesung_tmp 08_vorlesung
+% hueser01@n16751:~/Documents/3-Lehre/MDA_Vorlesung_github/MDA-Vorlesung-iprom-tu-bs/vorlesung$ git mv 10_vorlesung 11_vorlesung_GUMS1
+% hueser01@n16751:~/Documents/3-Lehre/MDA_Vorlesung_github/MDA-Vorlesung-iprom-tu-bs/vorlesung$ cd 09_vorlesung/
+% hueser01@n16751:~/Documents/3-Lehre/MDA_Vorlesung_github/MDA-Vorlesung-iprom-tu-bs/vorlesung/09_vorlesung$ ls
+% 07_Aufg_MU_Loesung.tex  07_Messunsicherheitsfortpflanzung_Teil1.tex  07_Numerik_fuer_MU.tex  code  media
+% hueser01@n16751:~/Documents/3-Lehre/MDA_Vorlesung_github/MDA-Vorlesung-iprom-tu-bs/vorlesung/09_vorlesung$ git mv 07_Messunsicherheitsfortpflanzung_Teil1.tex 09_Konzepte_der_MUfortpfl.tex
+% hueser01@n16751:~/Documents/3-Lehre/MDA_Vorlesung_github/MDA-Vorlesung-iprom-tu-bs/vorlesung/09_vorlesung$ git mv 07_Numerik_fuer_MU.tex 09_Numerik_fuer_MU.tex
+% hueser01@n16751:~/Documents/3-Lehre/MDA_Vorlesung_github/MDA-Vorlesung-iprom-tu-bs/vorlesung/09_vorlesung$
+% hueser01@n16751:~/Documents/3-Lehre/MDA_Vorlesung_github/MDA-Vorlesung-iprom-tu-bs/vorlesung/07_vorlesung$ git mv 06_Mess_und_Ringvergleiche.tex 07_Mess_und_Ringvergleiche.tex
+% hueser01@n16751:~/Documents/3-Lehre/MDA_Vorlesung_github/MDA-Vorlesung-iprom-tu-bs/vorlesung/08_vorlesung$ git mv 12_Infrastrukturen_der_Metrologie.tex 08_Infrastrukturen_der_Metrologie.tex
+% hueser01@n16751:~/Documents/3-Lehre/MDA_Vorlesung_github/MDA-Vorlesung-iprom-tu-bs/vorlesung/11_vorlesung_GUMS1$ git mv 10_MonteCarloMethoden.tex 11_MonteCarloMethoden.tex
+% hueser01@n16751:~/Documents/3-Lehre/MDA_Vorlesung_github/MDA-Vorlesung-iprom-tu-bs/vorlesung/12_vorlesung_GUMS2$ git mv 08_Bayes_Statistik.tex 12_Bayes_Statistik.tex
+%
+\chapter{Konformitätsbewertung}
+\include{06_vorlesung/06_Konformitaetsbewertung}
 %
 \chapter{Auswertung von Mess- und Ringvergleichen}
-\include{06_vorlesung/06_Mess_und_Ringvergleiche}
+\include{07_vorlesung/07_Mess_und_Ringvergleiche}
 %
-\chapter{Messunsicherheitsfortpflanzung bei linearen Modellen}
+\chapter{Infrastrukturen der Metrologie}
+\include{08_vorlesung/08_Infrastrukturen_der_Metrologie}
+%
+\chapter{Messunsicherheitsfortpflanzung: Konzepte und Methoden}
 \label{unsicherheitsfortpfLin}
-\include{07_vorlesung/07_Messunsicherheitsfortpflanzung_Teil1}
+\include{09_vorlesung/09_Konzepte_der_MUfortpfl}
 %
-\chapter{Numerische Werkzeuge für Messunsicherheitsberechnungen}
-\include{07_vorlesung/07_Numerik_fuer_MU}
+\section{Numerische Werkzeuge für Messunsicherheitsberechnungen}
+\include{09_vorlesung/09_Numerik_fuer_MU}
 %
-\chapter{Messunsicherheitsberechnung mit bayesischer Statistik}
-\label{bayesMU}
-\include{08_vorlesung/08_Bayes_Statistik}
+
+\chapter{Messunsicherheitsberechnungen von linearisierbaren, expliziten Modellen}
+\label{linearisierbareMUfortpf}
+\include{10_vorlesung_GUM/10_MUfortpflanzung_lin}
 
 \chapter{Monte-Carlo Methoden für Messunsicherheitsberechnungen}
 \label{montecarloMU}
-\include{10_vorlesung/10_MonteCarloMethoden}
-
-\chapter{Infrastrukturen der Metrologie}
-\include{12_vorlesung/12_Infrastrukturen_der_Metrologie}
+\include{11_vorlesung_GUMS1/11_MonteCarloMethoden}
+%
+\chapter{Messunsicherheitsberechnung mit bayesischer Statistik}
+\label{bayesMU}
+\include{12_vorlesung_GUMS2/12_Bayes_Statistik}
+\include{12_vorlesung_GUMS2/12_Vergleich_klassisch_vs_Bayes}
 
 \chapter{Anhang: Quantiltabellen}
 \label{quantiltabellen}
 \section{Quantile der Normalverteilung}
 \begin{center}
- \includegraphics[width=150mm]{08_vorlesung/media/NV_Quantile.jpg}
+ \includegraphics[width=190mm]{05_vorlesung/media/NV_Quantile.pdf}
 \end{center}
 \input{05_vorlesung/05_Quantiltabellen}
 
@@ -151,7 +179,7 @@ iprom, TU Braunschweig}
 \include{01_vorlesung/01_AufgLoesung}
 \include{02_vorlesung/Loesung_LinRegression}
 \include{05_vorlesung/05_Loesungen}
-\include{07_vorlesung/07_Aufg_MU_Loesung}
+\include{09_vorlesung/09_Aufg_MU_Loesung}
 \begin{flushleft}
 \begin{thebibliography}{------}
     \bibitem[Cox02]{Cox02} M.G. Cox: The evaluation of key comparison data, Metrologia 39, 589-595 (2002)
