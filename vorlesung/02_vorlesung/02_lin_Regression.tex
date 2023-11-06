@@ -1,6 +1,7 @@
 
 \section{Die Idee der linearen Regression}
 \label{RegressionsIdee}
+% 
 Ziel der Regression ist es, den funktionalen Zusammenhang $Y =
 f(X_{1} ,X_{2} ,...,X_{N} )$ zwischen den
 Eingangs-Messgrößen $X_{i}$ (Regressor) und der Ausgangsgröße $Y$
@@ -1102,7 +1103,7 @@ Die empirische Varianz auf Grund des Modells beschreibt die
 Streuung der Y-Werte auf der Regressionsgeraden in Bezug zum
 Mittelwert $\bar{Y}$, d.~h.
 \begin{equation}
-s_{\mathrm{M}}^2 = \frac{1}{J - 1}\sum\limits_{j = 1}^n {(\hat{\theta}_0 + \hat{\theta}_1 X_j - \bar
+s_{\mathrm{M}}^2 = \frac{1}{J - 1}\sum\limits_{j = 1}^J {(\hat{\theta}_0 + \hat{\theta}_1 X_j - \bar
 	{Y})^2}
 \end{equation}
 Die Differenz zwischen $Y_j$ und $\hat{\theta}_0 + \hat{\theta}_1 X_j $ bleiben im
@@ -1114,8 +1115,56 @@ s_{\mathrm{R}}^2 = \frac{1}{J - 1}\sum\limits_{j = 1}^J {(Y_j - (\hat{\theta}_0
 Man kann nun folgendes Bemerkenswerte zeigen:
 \begin{equation}
 s_{\mathrm{T}}^2 = s_{\mathrm{M}}^2 + s_{\mathrm{R}}^2
+\label{eq:totEmpVarianz}
 \end{equation}
-Das Bestimmtheitsma{\ss} ist definiert als das Verh\"{a}ltnis von
+Beweis von Gl.(\ref{eq:totEmpVarianz}): 
+\begin{align}
+	s_T^2 & = \frac{1}{J-1}\sum\limits_{j = 1}^J {(Y_j - \bar {Y})^2} \\
+		&  =  \frac{1}{J-1}\sum\limits_{j = 1}^J {\left[(Y_j-\hat Y_j)+(\hat{Y_j}-\bar{Y})       \right]^2}\\ 
+		& = \frac{1}{J-1}\left[\sum\limits_{j = 1}^J (Y_j-\hat Y_j)^2 + \sum\limits_{j = 1}^J (\hat Y_j-\bar Y_j)^2 +2 \cdot \sum\limits_{j = 1}^J (Y_j-\hat Y_j)(\hat Y_j - \bar Y)  \right]  \\
+		& = s_R^2 + s_M^2 + \frac{1}{J-1} \cdot 2 \cdot \sum\limits_{j = 1}^J (Y_j-\hat Y_j)(\hat Y_j - \bar Y)
+\end{align}
+Es ist jetzt noch zu zeigen, dass
+\begin{equation}
+	\sum\limits_{j = 1}^J (Y_j-\hat Y_j)(\hat Y_j - \bar Y) \overset{!}{=} 0
+\end{equation}
+Für Punkte $\hat Y_j$ auf der Geraden gilt: 
+\begin{equation}
+	\hat Y_j = \hat \theta_0 + \hat \theta_1 X_j
+\end{equation}
+Der y-Abschnitt $\hat \theta_0$ bei der Regressionsgeraden kann  wie folgt berechnet werden (Hinweis: Schwerpunkt $(\bar X | \bar Y)$ liegt auf der Regressionsgeraden): 
+\begin{equation}
+	\hat \theta_0 = \bar Y - \hat \theta_1 \bar X
+\end{equation}
+Daraus folgt: 
+\begin{equation}
+	\hat Y_j = \bar Y - \hat \theta_1 \bar X + \hat \theta_1 X_j
+\end{equation}
+Diese Gleichung etwas umstellen und sowohl links als auch rechts $Y_j$ addieren, ergibt: 
+\begin{equation}
+ Y_j - \hat Y_j = (Y_j - \bar Y)- \hat \theta_1(X_j-\bar X)
+ \label{eq:1_Beweis_totale_empirische_Varianz}
+\end{equation}
+Zudem gilt: 
+\begin{equation}
+	(\hat Y_j- \bar Y) = \hat \theta_1 (X_j-\bar X)
+	 \label{eq:2_Beweis_totale_empirische_Varianz}
+\end{equation}
+Gl.(\ref{eq:1_Beweis_totale_empirische_Varianz}) und Gl.(\ref{eq:2_Beweis_totale_empirische_Varianz}) eingesetzt, ergibt: 
+\begin{align}
+\sum\limits_{j = 1}^J (Y_j-\hat Y_j)(\hat Y_j - \bar Y) & = 
+\hat \theta_1 \sum\limits_{j = 1}^J  \left[\left((Y_j-\bar Y)- \hat \theta_1 (X_j-\bar X)\right) (X_j - \bar X)\right] \\
+&= \hat \theta_1 \left[ \sum\limits_{j = 1}^J (Y_j-\bar Y)(X_j-\bar X) - \hat \theta_1 \sum\limits_{j = 1}^J  (X_j-\bar X)^2  \right]
+& = 0
+\end{align}
+Da für das hintere $\hat \theta_1$ kann folgendes eingesetzt werden: 
+\[
+\hat \theta_1 = \frac{s_{XY}}{s_X^2} = \frac{\sum\limits_{j = 1}^J (X_j-\bar X)(Y_j - \bar Y)}{\sum\limits_{j = 1}^J (X_j-\bar X)^2}
+\]
+Damit wäre Gl.(\ref{eq:totEmpVarianz}) bewiesen. \\
+% \nonumber
+
+Das \textbf{Bestimmtheitsma{\ss}} ist definiert als das Verh\"{a}ltnis von
 empirischer Varianz des Modells zu der totalen Varianz:
 \[
 \rho_{XY}^2 = \frac{s_{\mathrm{M}}^2}{s_{\mathrm{T}}^2} = \frac{\sum\limits_{j = 1}^J {(\hat{\theta}_0 + \hat{\theta}_1 X_j - \bar {Y})^2} }{\sum\limits_{j = 1}^J {(Y_j - \bar{Y})^2} }
@@ -1434,13 +1483,19 @@ Die Regressandenmatrix $\boldsymbol Y$ lautet:
 	\right)
 \end{equation}
 Die gesuchten Modellparameter sind:
+% \[
+% \boldsymbol\theta = \left(
+% \begin{array}{cc}
+%	\theta_0 \\
+%	\theta_1 \\
+%    \theta_2 \\
+%     \theta_3 \\
+% \end{array}
+% \right)
+% \]
+
 \[
-\boldsymbol\theta = \left(
-\begin{array}{cc}
-	\theta_0 \\
-	\theta_1 \\
-\end{array}
-\right)
+\boldsymbol\theta = \left(\theta_0, \theta_1, \theta_2,\theta_3 \right)^T
 \]
 Die optimalen Parameter $\boldsymbol{\hat \theta}$ ergeben sich durch Lösen
 des folgenden Gleichungssystems, siehe Gl.(\ref{eq_Bestimmung_von_hat_theta})
@@ -1451,7 +1506,7 @@ des folgenden Gleichungssystems, siehe Gl.(\ref{eq_Bestimmung_von_hat_theta})
 
 Als Ergebnis für die Schätzparameter erhalten wir dann:
 \[\hat{\boldsymbol\theta} =
-(0.1900, \;\; 0.2286,\;\; -0.0214, \;\; -0.0000) \]
+(0.1900, \;\; 0.2286,\;\; -0.0214, \;\; -0.0000)^T \]
 Für das Qualitätsmaß ergibt sich:
 \[\mathrm{Q} = 5.7143e-04 \]
 Für die Streuung der Residuen ergibt sich:
