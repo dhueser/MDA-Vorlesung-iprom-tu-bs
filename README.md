@@ -8,7 +8,7 @@ Der Modulverantwortliche ist Prof. Dr.-Ing Rainer Tutsch, Leiter des Instituts f
 
 ## [Vorlesungsskript](https://github.com/dhueser/MDA-Vorlesung-iprom-tu-bs/releases)
 - Das pdf-File des jeweils aktuellen Vorlesungsskriptes liegt innerhalb des zip bzw. des tar.gz-Archivs.
-- Das Skript wird laufend überarbeitet, zuletzt wurde es am 5. Dez 2021 ge&auml;ndert und liegt unter dem Datenamen `MDA_iprom_TUbraunschweig_v2021-12-05.pdf` hier im Hauptverzeichnis [MDA_iprom_TUbraunschweig_v2021-12-05.pdf](MDA_iprom_TUbraunschweig_v2021-12-05.pdf). Ab dem WS 2023/24 wird das Skript neu gegliedert und die Nummerierung der Kapitel mit den Vorlesungen in Einklang gebracht.
+- Das Skript wird laufend überarbeitet, zuletzt wurde es am 4. Dez 2023 ge&auml;ndert und liegt unter dem Datenamen `MDA_iprom_TUbraunschweig_v2023-12-04.pdf` hier im Hauptverzeichnis [MDA_iprom_TUbraunschweig_v2023-12-04.pdf](MDA_iprom_TUbraunschweig_v2023-12-04.pdf). Ab dem WS 2023/24 wurde das Skript neu gegliedert und die Nummerierung der Kapitel mit den Vorlesungen in Einklang gebracht.
 - Wer Vorschläge zur Verbesserung hat, ist herzlich eingeladen, die LaTeXquellen des gesamten Skripts zu clonen und Änderungen in einem separaten Branch in das github-Repository zu laden und einen pull Request zu setzen. [Tutorial](https://help.github.com/en/articles/setting-guidelines-for-repository-contributors); [Beispiel](https://github.com/tensorflow/tensorflow/blob/master/CONTRIBUTING.md)
 
 ## Inhalt

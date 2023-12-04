@@ -6,7 +6,7 @@ Wahrscheinlichkeitsdichteverteilung. Für die Fertigung werden in den Konstrukti
 von Bauteilen die Toleranzgrenzen eingetragen, innerhalb derer die Merkmale des Werkstücks liegen müssen. Wie nun
 bewertet man nach Fertigstellung des Werkstücks, ob ein Merkmal innerhalb einer Toleranzvorgabe liegt? Ein Merkmal
 wird durch einen Messvorgang geprüft. Der Messvorgang liefert ein Ergebnis: Einen Zahlenwert für das Merkmal und
-ein Überdeckungsintervall zusammen mit einem Vertrauensniveau. Anstelle von Überdeckungsintervall und Vertrauensniveau
+ein Über\-deckungs\-intervall zusammen mit einem Vertrauensniveau. Anstelle von Überdeckungsintervall und Vertrauensniveau
 kann auch direkt eine Wahrscheinlichkeitsdichteverteilung angegeben werden, ist aber sehr unüblich in der industriellen
 Praxis. Für die Bewertung, ob das gefertigte Werkstück mit der Vorgabe der Konstruktion übereinstimmt, ob es konform ist,
 werden Messergebnis und Toleranzvorgabe verglichen.
@@ -24,17 +24,17 @@ Dort heißt es in Paragraph 7.1.1
 	interval. Knowledge of $Y$ is conveyed by a probability density function $p(y|{X_1,\dots,X_J})$
 	so that a statement of conformity is always an inference,
 	with some probability of being true. Denoting the set of permissible (conforming) values
-	$Y$ by $C$, the conformance probability, denoted by $p_\mathrm{c}$, is given by
+	$Y$ by $C$, the conformance probability, denoted by $P_\mathrm{c}$, is given by
 	\begin{equation}
-		p_\mathrm{c} = P(Y \in C | {X_1,\dots,X_J}) = \int\limits_C p(y|{X_1,\dots,X_J}) \mathrm{d}y.
+		P_\mathrm{c} = P(Y \in C | {X_1,\dots,X_J}) = \int\limits_C p(y|{X_1,\dots,X_J}) \mathrm{d}y.
 	\end{equation}
 \end{quote}
 Im Originaldokument werden Sie eine etwas andere Schreibweise für die Bezeichner in der Formel vorfinden.
 Hier ist es so aufgeschrieben, wie es zu der Notation innerhalb dieses Vorlesungsskriptes, insbesondere
-zu Kapitel \ref{KonzepteinverseProbleme}, passt.
+zu Kapitel~\ref{konzepteStatistik}, passt.
 Für die Toleranz wird in der Richtlinie zur Konformitätsbewertung zur Wahrung der Allgemeingültigkeit
-eine Menge $C$ angegeben. Falls die Größe $Y$ eine skalarwertige Größe wie bei dem Beispiel, anhand dessen
-wir in Kapitel \ref{KonzepteinverseProbleme} das Prinzip der bayesischen Statistik illustriert haben,
+eine Menge $C$ angegeben. Falls die Größe $Y$ eine skalarwertige Größe ist wie bei dem Beispiel, anhand dessen
+wir in Kapitel~\ref{konzepteStatistik} das Prinzip der bayesischen Statistik illustriert haben,
 so steht $C$ für ein Intervall $C = [T_\mathrm{L}, T_\mathrm{U}]$ im Falle der zweiseitigen
 Grenzen, $C = [-\infty, T_\mathrm{U}]$ für den Fall, dass es eine Obergrenze gibt,
 $C = [T_\mathrm{L}, \infty]$, dass es eine Untergrenze gibt. Dabei sollen der Index L für \glqq lower
@@ -42,18 +42,18 @@ limit\grqq ~und der Index U für \glqq upper limit\grqq ~stehen. Der Bezeichner 
 Normung das üblicherweise für Toleranzgrenzen verwendete Symbol und bedeutet an dieser
 Stelle nicht Testgröße! Er unterscheidet sich von den Testgrößen durch seine Indizes.
 
-Die Wahrscheinlichkeit $p_\mathrm{c}$, dass die Beobachtungen ${X_1,\dots,X_J}$ innerhalb des Toleranzintervalls
+Die Wahrscheinlichkeit $P_\mathrm{c}$, dass die Beobachtungen ${X_1,\dots,X_J}$ innerhalb des Toleranzintervalls
 $C = [T_\mathrm{L}, T_\mathrm{U}]$ liegen, ist
 \begin{equation}
-	p_\mathrm{c} =  \int\limits_{T_\mathrm{L}}^{T_\mathrm{U}} p(y|{X_1,\dots,X_J}) \mathrm{d}y.
+	P_\mathrm{c} =  \int\limits_{T_\mathrm{L}}^{T_\mathrm{U}} p(y|{X_1,\dots,X_J}) \mathrm{d}y.
 \end{equation}
 Für den Fall, dass von einer normalverteilten Stichprobe ausgegangen werden kann und dass eine Einzelgröße
-vorliegt, wird auch der Stichprobe ${X_1,\dots,X_J}$ der Schätzer $\bar y$ aus einfacher Mittelwertbildung
-gewonnen ($\bar y = \frac{1}{J} \sum\limits_{j=1}^J X_j$) und die Varianz als empirische Varianz $s$ aus
+vorliegt, wird aus der Stichprobe $\{X_1,\dots,X_J\}$ der Schätzer $\bar y$ aus einfacher Mittelwertbildung
+gewonnen ($\bar y = \frac{1}{J} \sum\limits_{j=1}^J X_j$) und die Varianz als empirische Varianz
 $s^2 = \frac{1}{J-1}\sum\limits_{j=1}^J (X_j - \bar y)^2$ berechnet
 und für die Wahrscheinlichkeitsdichte $p$ die Gaußverteilung verwendet
 \begin{equation}
-	p_\mathrm{c} = \frac{1}{\sqrt{2 \pi} s} \int\limits_{T_\mathrm{L}}^{T_\mathrm{U}}
+	P_\mathrm{c} = \frac{1}{\sqrt{2 \pi} s} \int\limits_{T_\mathrm{L}}^{T_\mathrm{U}}
 	e^{-\frac{1}{2}\left(\frac{y - \bar y}{s}\right)^2} \mathrm{d}y .
 		\label{eq:Konformitaetswahrscheinlichkeit}
 \end{equation}
@@ -63,28 +63,32 @@ $z_\mathrm{U} = \frac{T_\mathrm{U} - \bar y}{s}$, so dass die Tabellenwerke für
 standardnormalverteilte Gaußfunktion oder die Bibliotheksfunktion
 für die gauß'sche Fehlerfunktion (\textsl{error function}) wie folgt verwendet werden kann:
 \begin{equation}
-	p_\mathrm{c} = \frac{1}{\sqrt{2 \pi}} \int\limits_{-\infty}^{z_\mathrm{U}}
+	P_\mathrm{c} = \frac{1}{\sqrt{2 \pi}} \int\limits_{-\infty}^{z_\mathrm{U}}
 	e^{-\frac{1}{2} z^2} \mathrm{d}z -
 	\frac{1}{\sqrt{2 \pi}} \int\limits_{-\infty}^{z_\mathrm{L}} e^{-\frac{1}{2} z^2} \mathrm{d}z
 \end{equation}
 d.h.
 \begin{equation}
-	p_\mathrm{c} = \Phi(z_\mathrm{U}) - \Phi(z_\mathrm{L})
+	P_\mathrm{c} = \Phi(z_\mathrm{U}) - \Phi(z_\mathrm{L})
 \end{equation}
 mit $\Phi(z) = \frac{1}{2} \left(1 + \mathrm{erf}\left(\frac{z}{\sqrt{2}}\right) \right)$. Die Fehlerfunktion ist definiert als
 \begin{equation}
-	\mathrm{erf}(z)= \frac{2}{\sqrt{\pi}}\int\limits_{0}^{z} \exp (-t^2)\mathrm{d}t
+	\mathrm{erf}(z)= \frac{2}{\sqrt{\pi}}\int\limits_{0}^{z} e^{-t^2}\mathrm{d}t
 \end{equation}
 Die Standardnormalverteilung $\mathcal{N}(\mu=0,\sigma^2=1)$ haben wir mit $\Phi(z)$ bezeichnet. Sie ist wie folgt gegeben:
 \begin{equation}
-	\Phi(z)= \frac{1}{\sqrt{2\pi}}\int\limits_{-\infty}^{z} \exp (-t^2)\mathrm{d}t
+	\Phi(z)= \frac{1}{\sqrt{2\pi}}\int\limits_{-\infty}^{z} e^{- \frac{1}{2} t^2}\mathrm{d}t
 \end{equation}
 Mit Hilfe der Toleranzintervalle unterscheidet man zwischen Werten, die mit
 Vorgaben beispielsweise der Konstruktion konform sind, und nicht konformen Werten.
-Im Toleranzintervall liegen die konformen Werte. Außerhalb des Toleranzintervalls liegen die nicht konformen Werte. Man kann prinzipiell drei Fälle unterscheiden: (a) einseitiges Toleranzintervall mit einer unteren (engl.\ \textsl{lower}) Toleranzgrenze $T_\mathrm{L}$; (b) einseitiges Toleranzintervall mit einer oberen (engl. \textsl{upper}) Toleranzgrenze $T_\mathrm{U}$; (c) zweiseitiges Toleranzintervall mit einer unteren und einer oberen Toleranzgrenze. Die Differenz $T_\mathrm{U} - T_\mathrm{L}$ bezeichnet man als Toleranz.
+Im Toleranzintervall liegen die konformen Werte. Außerhalb des Toleranzintervalls liegen die nicht konformen Werte. Man kann prinzipiell drei Fälle unterscheiden:
+\begin{itemize}
+\item[(a)] einseitiges Toleranzintervall mit einer unteren (engl.\ \textsl{lower}) Toleranzgrenze $T_\mathrm{L}$;
+\item[(b)] einseitiges Toleranzintervall mit einer oberen (engl. \textsl{upper}) Toleranzgrenze $T_\mathrm{U}$; \item[(c)] zweiseitiges Toleranzintervall mit einer unteren und einer oberen Toleranzgrenze. Die Differenz $T_\mathrm{U} - T_\mathrm{L}$ bezeichnet man als Toleranz.
+\end{itemize}
 In Abb.~\ref{fig:Toleranzintervalle} sind diese drei Fälle dargestellt.
 
-\begin{figure}[!htp]
+\begin{figure} %[!htp]
 	\begin{center}
 		\includegraphics[width=130mm]{05_vorlesung/media/Toleranzintervalle.png}
 		\caption{\label{fig:Toleranzintervalle}	Toleranzintervalle} (a) einseitiges Toleranzband mit unterer Toleranzgrenze, (b) einseitiges Toleranzintervall mit oberer Toleranzgrenze (c) zweiseitiges Toleranzintervall
@@ -92,16 +96,16 @@ In Abb.~\ref{fig:Toleranzintervalle} sind diese drei Fälle dargestellt.
 \end{figure}
 
 \textbf{Beispiel: Geschwindigkeitsmessung} \\
-\textsl{Aufgabe:} Berechnen Sie die Konformitätswahrscheinlichkeit $p_\mathrm{c}$ bei einer
+\textsl{Aufgabe:} Berechnen Sie die Konformitätswahrscheinlichkeit $P_\mathrm{c}$ bei einer
 Geschwindigkeitsmessung. Die zulässige Geschwindigkeit sei 50~km/h. Der gemessene Wert des Autos liegt bei 52~km/h. Die Geschwindigkeitsmessung sei normalverteilt mit einer Standardunsicherheit $u_y= 1~\mathrm{km/h}$. Berechnen Sie die Konformitätswahrscheinlichkeit
-$p_\mathrm{c}$, d.h. die Wahrscheinlichkeit, dass das Auto innerhalb der zugelassenen Geschwindigkeit gefahren ist. \\
+$P_\mathrm{c}$, d.h. die Wahrscheinlichkeit, dass das Auto innerhalb der zugelassenen Geschwindigkeit gefahren ist. \\
 \textsl{Lösung:} \\
 Geschwindigkeitsbegrenzung: $T_\mathrm{U} = 50~\textrm{km/h}$\\
 Gemessener Wert: $\bar y = 52~\textrm{km/h}$ \\
 Standardmessunsicherheit: $u_y = 1~\textrm{km/h} $ \\
 Die Konformitätswahrscheinlichkeit ergibt sich dann zu:
 \[
-p_\mathrm{c} = \Phi \left( \frac{T_\mathrm{U}-\bar y}{u_y}\right) = \Phi(-2) = 0.023
+P_\mathrm{c} = \Phi \left( \frac{T_\mathrm{U}-\bar y}{u_y}\right) = \Phi(-2) = 0.023
 \]
 Der gemessene Wert von 52~km/h liegt mit einer Wahrscheinlichkeit von 2,3~\% innerhalb des To\-le\-ranz\-inter\-valls, siehe Abb.~\ref{fig:LoesungGeschwindigekeitsmessung}
 \begin{figure}[!htp]
@@ -113,12 +117,12 @@ Der gemessene Wert von 52~km/h liegt mit einer Wahrscheinlichkeit von 2,3~\% inn
 
 \section{Konformitätswahrscheinlichkeit und Risiko}
 Die wahrscheinlichkeitsbasierte Betrachtung der Konformität ermöglicht die \textsl{Quantifizierung des Risikos einer Fehlbewertung}. Werden beispielsweise bei der Produktion von Widerständen die Widerstandswerte gemessen, so kann ein Toleranzintervall $[T_\mathrm{L}, T_\mathrm{U}]$ definiert werden, in denen die Widerstände noch ok sind und somit auf den Markt gebracht werden. Für den Fall eines einseitigen Toleranzintervalls ist dies in Abb.~\ref{fig:Produktion_Widerstaende} schematisch
-dargestellt. Das Risiko einer Fehlbewertung ist dann gegeben durch $1- p_\mathrm{c}$.\\
+dargestellt. Das Risiko einer Fehlbewertung ist dann gegeben durch $1- P_\mathrm{c}$.\\
 
 \begin{figure}[!htp]
 	\begin{center}
 		\includegraphics[width=80mm]{05_vorlesung/media/Fehlbewertung.png}
-		\caption{\label{fig:Produktion_Widerstaende} Beispiel einer Messung bei einseitigem Toleranzintervall. Der schraffierte Bereich zeigt die Konformitätswahrscheinlichkeit $p_\mathrm{c}$. Das Risiko einer Fehlbewertung ist gegeben durch $1- p_\mathrm{c}$}
+		\caption{\label{fig:Produktion_Widerstaende} Beispiel einer Messung bei einseitigem Toleranzintervall. Der schraffierte Bereich zeigt die Konformitätswahrscheinlichkeit $P_\mathrm{c}$. Das Risiko einer Fehlbewertung ist gegeben durch $1- P_\mathrm{c}$}
 	\end{center}
 \end{figure}
 
@@ -187,8 +191,8 @@ Dies findet bspw. Anwendung bei der Geschwindigkeitsüberwachung im Straßenverk
 entspricht der juristischen Entscheidungsregel \glqq in dubio pro reo\grqq ~(lat.\ für \glqq im Zweifel für
 den Angeklagten\grqq).
 
-Mit Hilfe der Konformitätswahrscheinlichkeiten $p_\mathrm{c}$ können das \textbf{spezifische Konsumentenrisiko} und das \textbf{spezifische Produzentenrisiko} berechnet werden. Unter dem spezifischen Konsumentenrisiko versteht man die Wahrscheinlichkeit, dass ein einzelner akzeptierter Gegenstand oder ein Produkt angenommen / akzeptiert wird, obwohl er/es nicht konform ist, d.h. nicht innerhalb der Toleranzgrenzen liegt (siehe oben, Fall (b)). Das spezifische Konsumentenrisiko berechnet sich zu $1-p_\mathrm{c}$. Das spezifische Produzentenrisiko ist definiert als die Wahrscheinlichkeit, dass ein einzelner abgelehnter Gegenstand oder ein Produkt konform gewesen wäre. Die Wahrscheinlichkeit, dass ein abgelehnter Gegenstand/Produkt doch konform gewesen wäre, entspricht der Konformitätswahrscheinlichkeit $p_\mathrm{c}$.
-Die beiden spezifischen Risiken hängen u.a.\ vom Messwert und Sicherheitsabstand ab. Die
+Mit Hilfe der Konformitätswahrscheinlichkeiten $P_\mathrm{c}$ können das \textbf{spezifische Konsumentenrisiko} und das \textbf{spezifische Produzentenrisiko} berechnet werden. Unter dem spezifischen Konsumentenrisiko versteht man die Wahrscheinlichkeit, dass ein einzelner akzeptierter Gegenstand oder ein Produkt angenommen / akzeptiert wird, obwohl er/es nicht konform ist, d.h. nicht innerhalb der Toleranzgrenzen liegt (siehe oben, Fall (b)). Das spezifische Konsumentenrisiko berechnet sich zu $1-P_\mathrm{c}$. Das spezifische Produzentenrisiko ist definiert als die Wahrscheinlichkeit, dass ein einzelner abgelehnter Gegenstand oder ein Produkt konform gewesen wäre. Die Wahrscheinlichkeit, dass ein abgelehnter Gegenstand/Produkt doch konform gewesen wäre, entspricht der Konformitätswahrscheinlichkeit $P_\mathrm{c}$.
+Die beiden spezifischen Risiken hängen u.a.vom Messwert und Sicherheitsabstand ab. Die
 Risiken sind maximal, wenn der Messwert $\bar y = A_\textrm{U}$ ist. Ein positiver Sicherheitsabstand beeinflusst die beiden Risiken in komplementärer Weise. Ein positiver Sicherheitsabstand verkleinert das Konsumentenrisiko und erhöht das Produzentenrisiko.
 Ein negativer Sicherheitsabstand verkleinert das Produzentenrisiko und erhöht das Konsumentenrisiko. Für den Fall  \glqq kein Sicherheitsabstand\grqq ~haben wir wieder
 den Grenzfall \glqq geteiltes Risiko\grqq.
@@ -331,9 +335,9 @@ Wahrscheinlichkeit heißt \textbf{globales Produzentenrisiko}.
 
 Dieses Beispiel zeigt, dass der Aufwand lohnt, in einen Qualitätssicherungsprozess zu investieren.
 
-Die Konformitätswahrscheinlichkeit $p_\mathrm{c}$, Gl.~(\ref{eq:Konformitaetswahrscheinlichkeit}), liegt in diesem Beispiel bei
+Die Konformitätswahrscheinlichkeit $P_\mathrm{c}$, Gl.~(\ref{eq:Konformitaetswahrscheinlichkeit}), liegt in diesem Beispiel bei
 \[
-	p_\mathrm{c} = \frac{1}{\sqrt{2 \pi} s} \int\limits_{T_\mathrm{L}}^{T_\mathrm{U}}
+	P_\mathrm{c} = \frac{1}{\sqrt{2 \pi} s} \int\limits_{T_\mathrm{L}}^{T_\mathrm{U}}
 e^{-\frac{1}{2}\left(\frac{y - \bar y}{s}\right)^2} \mathrm{d}y  =
 \frac{1}{\sqrt{2 \pi} \cdot 0.12} \int\limits_{T_\mathrm{L}=1499.80}^{T_\mathrm{U}=1500.20}
 e^{-\frac{1}{2}\left(\frac{y - 1500}{0.12}\right)^2} \mathrm{d}y  \approx 0.905
@@ -347,7 +351,7 @@ Konsumentenrisiko zu reduzieren:
 \[
 A_\mathrm{L} = 1499.82~\Omega \quad \textrm{und} \quad A_\mathrm{U} = 1500.18~\Omega
 \]
-Das Sicherheitsband beträgt $w = (1500.20-1500.18)~\Omega = 0.02~\Omega = 0.25 U$
+Das Sicherheitsband beträgt $w = (1500.20-1500.18)~\Omega = 0.02~\Omega = 0.25\cdot U$
 
 Im Vergleich zu den $10 \, \%$ Ausschuss liefert
 \begin{itemize}
@@ -435,15 +439,15 @@ Matlab/Octave-Code zur numerischen Berechnung des Konsumenten- und Produktionsri
 
   y = [A_L:step:A_U];
   prior = step * gaussian(y, y0, s0);
-  p_c = sum(prior);
+  P_c = sum(prior);
   printf('spezifisches Konsumentenrisiko bzgl A ..................: %3.0f %c\n', ...
-    100 - 100*p_c, perc);
+    100 - 100*P_c, perc);
 
   y = [T_L:step:T_U];
   prior = step * gaussian(y, y0, s0);
-  p_c = sum(prior);
+  P_c = sum(prior);
   printf('spezifisches Konsumentenrisiko bzgl T Gl (21) in JCGM106: %3.0f %c\n', ...
-    100 - 100*p_c, perc);
+    100 - 100*P_c, perc);
 
 % inspection device - instrument uncertainty
   s_insp = 0.04;
@@ -486,3 +490,225 @@ Matlab/Octave-Code zur numerischen Berechnung des Konsumenten- und Produktionsri
 end
 
 \end{lstlisting}
+\section{ISO 17025, Entscheidungsregeln für die Konformitätsbewertung}
+Die Norm ISO/IEC 17025:2017 (Allgemeine Anforderungen an die Kompetenz von Prüf- und Kalibrierlaboratorien) fordert
+Entscheidungsregeln (engl. decision rules) für Konformitätsaussagen. In Kapitel 3.7 der Norm ist der Begriff \textbf{Entscheidungsregel} definiert: \textbf{Regel, die beschreibt, wie die Messunsicherheit berücksichtigt wird, wenn Aussagen zur Konformität mit einer festgelegten Anforderung getätigt werden}. In Kapitel 7.8.6.1 steht dann:\textit{ Wenn eine Aussage zur Konformität zu einer Spezifikation oder Norm gemacht wird, muss das Laboratorium die angewandte Entscheidungsregel dokumentieren. Dabei ist das Risiko (z.B. eine falsche Annahme, eine falsche Zurückweisung oder falsche statistische Annahmen), das mit der angewandten Entscheidungsregel verbunden ist, zu berücksichtigen und die Entscheidungsregel anzuwenden}. \\
+Somit muss eine Konformitätsbewertung das \textbf{Risiko berücksichtigen und Messunsicherheiten miteinbeziehen}. 
+Wie wir bereits gesehen haben, muss bei der Konfirmitätsbewertung eine Entscheidung getroffen werden, ob das Produkt die Anforderungen (Toleranzintervalle) unter Berücksichtigung der MU erfüllt.\\ 
+Abb.~\ref{fig:konform3Faelle} zeigt drei mögliche Situationen von Messergebnissen und deren Unsicherheiten innerhalb eines Konformitätsintervalls, auf die eine Entscheidungsregel angewendet werden muss. In Abb.~\ref{fig:konform3Faelle} können wir feststellen, dass der Fall A als konform zu bewerten ist, der Fall C als nicht konform zu bewerten ist. Im Fall B haben wir jedoch eine undefinierte Situation, die ein formales Kriterium (Entscheidungsregel) benötigt, um über die Konformität zu entscheiden.
+\begin{figure}
+	\begin{center}
+		\includegraphics[width=120mm]{06_vorlesung/media/Konform_3_Faelle.png}
+		\caption{Konformitätsbewertung - 3 verschiedene Fälle, Fall A: Produkt ist als konform zu bewerten, Fall B: Produkt kann je nach Messung innerhalb oder außerhalb der Toleranz liegen, benötigt eine  Entscheidungsregel,  Fall C: Produkt ist als nicht konform zu bewerten}
+		\label{fig:konform3Faelle}
+	\end{center}
+\end{figure}
+
+Entsprechend dem JCGM 106 Dokument unterscheidet man bei der Risikobewertung Fehler Typ I und Typ II.
+Bei der Durchführung der Konformitätsbewertung gibt es Wahrscheinlichkeiten in Bezug auf zwei Arten von Fehlentscheidungen, eine für den Produzenten Typ I oder $\alpha$ und eine für den Verbraucher Typ II oder mit $\beta$ gekennzeichnet, die als prozentuales Risiko definiert sind.  
+In diesem Rahmen kann die Entscheidungsmatrix wie folgt ausgedrückt werden:
+\begin{equation}
+P = \left[ \begin{array}{cc}
+	(1-\alpha)& \alpha \\ \beta & (1-\beta)
+\end{array} 
+\right]
+\end{equation}
+
+Die Wahrscheinlichkeiten richtiger Entscheidungen stehen in den Diagonalelementen $(1 - \alpha)$ und 
+$(1 - \beta)$ und die Risiken falscher Entscheidungen in den Off-Diagonalelementen $\alpha$ und 
+$\beta$ zu finden sind. Diese Fehler sind auch als Fehler vom Typ I ($\alpha$) und Typ II ($\beta$) benannt, was bedeutet, dass konforme Produkte fälschlicherweise zurückgewiesen (Produzentenrisiko) oder nicht konforme Produkte fälschlicherweise akzeptiert werden (Konsumentenrisiko). Die Tabelle \ref{tab:conformTable} zeigt eine mögliche Darstellung dieser Fehler, ihre Wahrscheinlichkeiten und ihre Beziehung zur Entscheidung. $H_0$ ist die Nullhypothese, die aufgestellt wird. 
+\begin{table} 
+	\caption{Konformitätswahrscheinlichkeiten in Bezug auf eine richtige oder falsche Entscheidung, Typ-I-Fehler $(\alpha)$ ist das Produzentenrisiko und Typ-II-Fehler ($\beta$) ist das Konsumentenrisiko}
+	\label{tab:conformTable}
+	\begin{center}
+	\renewcommand{\arraystretch}{1.3}
+	\begin{tabular}{|c|c|c|} \hline
+	& \multicolumn{2}{c|}{Entscheidung} \\ \hline
+		& Annahme von H0 & Rückweisung von H0 \\ \hline
+		$H_0$ (wahr) & korrekte Entscheidung & Typ I  Fehler ($\alpha$) \\ \hline
+		$H_0$ (falsch) & Typ II Fehler $(\beta)$ & korrekte Entscheidung \\ \hline
+	\end{tabular}
+	\end{center}
+\end{table}
+\begin{figure}[!htb]
+	\begin{center}
+	\includegraphics[width=140mm]{06_vorlesung/media/Toleranzband_KonsumerRisiko.png}
+	\caption{Beispiel für Bereiche, die für ein Toleranzintervall definiert wurden, um das Konsumentenrisiko $\beta$ zu minimieren}
+		\label{fig:Toleranz_Konsumentenrisiko}
+		\end{center}
+\end{figure}
+\begin{figure}[!htb]
+	\begin{center}
+		\includegraphics[width=140mm]{06_vorlesung/media/Toleranzband_ProduzentenRisiko.png}
+	\caption{Beispiel für Bereiche, die für ein Toleranzintervall definiert wurden, um das Produzentenrisiko $\alpha$ zu minimieren}
+		\label{fig:Toleranz_Produzentenrisiko}
+		\end{center}
+\end{figure}
+Abb.~\ref{fig:Toleranz_Konsumentenrisiko} ist ein Beispiel für ein Akzeptanzintervall, das definiert wurde, um das Konsumentenrisiko ($\beta$) zu minimieren. In anderen Fällen ist es wichtig, das Produzentenrisiko ($\alpha$) zu minimieren, z.B. auch bei Gerichtsverfahren wegen Verletzung von Grenzwerten (siehe Beispiel mit der Geschwindigkeitsmessung). Dieser Ansatz ist in Abb.~\ref{fig:Toleranz_Produzentenrisiko} dargestellt. Während im ersten Fall die Sicherheitsgrenzen innerhalb der Toleranzintervalls liegen, befinden sie sich im zweiten Fall die Sicherheitsgrenzen außerhalb des Toleranzintervalls. In Abb.~\ref{fig:Toleranz_Konsumentenrisiko} liegt der Schwerpunkt also auf einer hohen Sicherheit der korrekten Annahme (überwachte Annahme) und in Abb.~\ref{fig:Toleranz_Produzentenrisiko} auf einer hohen Sicherheit der korrekten Ablehnung (überwachte Rückweisung).
+
+In den Fällen, in denen Sicherheitsbänder verwendet werden, die besonders für Messergebnisse mit fester Unsicherheit geeignet sind, besteht eine einfache Strategie zur Festlegung einer Entscheidungsregel darin, die Messergebnisse mit den Grenzwerten des Akzeptanzintervalls zu vergleichen, wobei sie als konform (akzeptiert) gelten, wenn der gemessene Wert innerhalb dieser Akzeptanzintervalls liegt, und andernfalls als nicht konform (abgelehnt).
+Wenn die Messergebnisse variable Werte der Unsicherheit aufweisen können, wird ein anderer Ansatz ohne Berücksichtigung von Sicherheitsbändern empfohlen, der idealerweise auf der Definition eines Hypothesentests als Unterstützung für die Entscheidungsregel basiert.
+Im folgenden stellen wir Entscheidungsregel vor. Voraussetzung hier bei allen Regeln ist, dass die Messung normalverteilt ist.  
+
+\textbf{(i) Entscheidungsregel für die Konformitätsbewertung mit einer einzigen oberen Toleranzgrenze $T_U$ und ohne ein Sicherheitsband} \\
+\begin{figure}[!htb]	
+	\begin{center}
+		\includegraphics[width=100mm]{06_vorlesung/media/Einzelne_Obere_Toleranz.png}
+		\caption{Beispiel mit einer oberen Toleranzgrenze}
+		\label{fig:Beispiel_Toleranz_obere_Grenze}
+	\end{center}
+\end{figure}
+Gegeben sei eine einzige obere Toleranzgrenze $T_U$, der Erwartungswert der Messung $\bar y$ mit einer Standardmessunsicherheit $u_y$. \\ 
+Die \textbf{Entscheidungsregel} kann dann wie folgt lauten \\ (Hinweis: $(1-\alpha):$ Vertrauensniveau, $\alpha:$ Signifikanzniveau) \\
+\hspace*{2em} Annahme, wenn die Hypothese 
+$H_0: \; P(y \le T_U) \ge (1 - \alpha)$ wahr ist. \newline
+\hspace*{2em} Rückweisung, wenn die Hypothese $H_0$ falsch ist, d.~h.  $P(y \le T_U) < (1 - \alpha)$ \newline
+\hspace*{2em} Bestimmung der Konformitätswahrscheinlichkeit: $P_C = P(y \le T_U) =  
+\Phi \left(\frac{T_U - \bar y}{u_y}\right) $ \newline
+Beispiel:\\
+Gegeben ist der Erwartungswert der Messung mit $\bar y=2.7~\mathrm{mm}$ und einer Standardunsicherheit von $u_y= 0.2~\mathrm{mm}$. Als einzelne obere Toleranzgrenze sei $T_U = 3.0~\mathrm{mm}$. Es soll eine Konformitätswahrscheinlichkeit $(1-\alpha)$ von mindestens $0.95 = 95\%$ erreicht werden, bzw. der Typ I Fehler $\alpha$ soll kleiner als $5\%$ sein. \\
+Lösung: \\
+Nullhypothese lautet: $ H_0: \; P(y\le 3.0~\mathrm{mm}) \ge 0.95$ ist wahr \\
+\[P_C = P(y \le T_U) =  
+\Phi \left(\frac{T_U - \bar y}{u_y}\right)
+\]
+\[P_C =   \Phi \left(\frac{3.0 - 2.7}{0.2}\right) = \Phi(1.5) \approx 0.933 < 0.95 
+\]
+Die Hypothese $H_0$ ist falsch und damit lautet die Entscheidung auf Nicht-Konformität.\\
+\textbf{(ii) Entscheidungsregel für die Konformitätsbewertung mit einer einzigen unteren Toleranzgrenze $T_L$ und ohne ein Sicherheitsband} \\[2ex]
+\begin{figure}[!htb]
+	\begin{center}
+		\includegraphics[width=100mm]{06_vorlesung/media/Einzelne_Untere_Toleranz.png}
+		\caption{Beispiel mit einer unteren Toleranzgrenze}
+		\label{fig:Beispiel_Toleranz_untere_Toleranzgrenze}
+	\end{center}
+\end{figure}
+Gegeben ist eine einzelne untere Toleranzgrenze $T_L$, der Schätzwert der Messung $\bar y$ in Kombination mit einer Standardmessunsicherheit $u_y$. Eine Entscheidungsregel mit dem Signifikanzniveau $\alpha$ lautet wie folgt:\\
+\hspace*{2em} Annahme, wenn die Hypothese 
+$H_0: \; P(y \ge T_L) \ge (1 - \alpha)$  wahr ist. \newline
+\hspace*{2em} Rückweisung, wenn die Hypothese $H_0$ falsch ist, d.~h.  $P(y \ge T_L) < (1 - \alpha)$ \newline
+\hspace*{2em} Testgröße: $P_C = P(y \ge T_L) =  1- P(y \le T_L) = 
+1- \Phi \left(\frac{T_L - \bar y}{u_y}\right) = \Phi \left(\frac{\bar y-T_L}{u_y}\right)$ \newline
+Beispiel:\\
+Gegeben ist ein Schätzwert der Messung $\bar y=0.012~\mathrm{g}$ mit einer Standardunsicherheit von $u_y=0.001~\mathrm{g}$ und 
+eine einzelne untere Toleranzgrenze $T_L=0.010 \mathrm{g}$. Es soll auf eine Konformität $(1-\alpha)=0.99$ geprüft werden, d.h. der Typ I Fehler $\alpha$ sollte kleiner als 
+$1\%$ \\
+Lösung:\\
+Annahme, wenn die Hypothese 
+$H_0: \; P(y \ge 0.010~\mathrm{g}) \ge 0.99$  wahr ist. \newline
+Die Konformitätswahrscheinlichkeit ergibt sich dann zu: 
+\[P_C = \Phi \left(\frac{\bar y-T_L}{u_y}\right) = \Phi \left(\frac{0.012-0.010}{0.001}\right) = 
+ \Phi(2.0) \approx 0.977 < 0.99 
+\]
+Die Hypothese $H_0$ ist falsch und somit ist das Produkt nicht konform. \\
+\textbf{(iii) Entscheidungsregel für die Konformitätsbewertung mit einer einzigen  Toleranzgrenze $T_L$ und einem Sicherheitsband $w$} \\
+In diesem Fall kann die Messung $\bar y \pm u_y$ mit dem Sicherheitsband bzw. Akzeptanzintervall verknüpft werden, siehe Abb.~\ref{fig:Sicherheitsband_Entscheidungsregel_oebere_Toleranz}. \\
+ \begin{figure}[!htb]
+ 	\begin{center}
+ 		% Figure austauschen
+ 		\includegraphics[width=100mm]{06_vorlesung/media/Toleranzband_Sicherheitsband.png}
+ 		\caption{Sicherheitsband zwischen Akzeptanzgrenze $A_U$ und Toleranzgrenze $T_U$}
+ 		\label{fig:Sicherheitsband_Entscheidungsregel_oebere_Toleranz}
+ 	\end{center}
+ \end{figure}
+Für den Fall einer einzelnen oberen Toleranzgrenze $T_U$ bei gegebener Standardunsicherheit $u_y$ und einer Wahrscheinlichkeit vom Typ I Fehler $(\alpha)$, kann die untere Grenze des Sicherheitsbandes (=obere Akzeptanzgrenze) $A_U$ berechnet werden. Unter der Verwendung der Normalverteilung ergibt sich: \\
+\[
+\Phi\left(\frac{T_U-A_U}{u_y}\right) = 1-\alpha
+\]
+\[
+\left(\frac{T_U-A_U}{u_y}\right) = \Phi^{-1}(1-\alpha)
+\]
+\[
+A_U = T_U - u_y \cdot [\Phi^{-1}(1-\alpha)]
+\]
+Beispiel: \\
+Gegeben ist ein Schätzwert der Messung $\bar y=18.9^{\circ}\mathrm{C}$ mit einer Standardunsicherheit von $u_y=0.3^{\circ}\mathrm{C}$, eine obere Toleranzgrenze $T_U = 20.0^{\circ}\mathrm{C}$. Es soll eine Konformität $(1-\alpha)$ von 0.95 erreicht werden, d.h. der Fehler vom Typ I $(\alpha)$ soll kleiner als 5\% sein. Berechne die obere Akzeptanzgrenze $A_U$ \\
+Lösung: \\
+\[
+A_U = T_U - u_y \cdot [\Phi^{-1}(1-\alpha)] = 20 -0.3 \cdot [\Phi^{-1}(0.95)] = 20 - 0.3\cdot 1.64 \approx 19.5^{\circ}\mathrm{C}
+\]
+Ist Schätzwert der Messung $\bar y$ größer als $A_U$, so ist das Produkt nicht konform.\\
+In der Praxis wird das Sicherheitsband häufig mit der Breite der erweiterten Messunsicherheit $U_{95}$ gewählt. Für das obige Beispiel wäre das dann: 
+\[
+U_y(k_{95}) = k_{95} \cdot u_y = 2.00  \cdot 0.3 ^{\circ}\mathrm{C} = 0.6^{\circ}\mathrm{C}
+\]
+Damit ergibt sich die Akzeptanzgrenze zu (siehe Abbildung)
+\[
+A_U = T_U -U_y(k_{95}) = 20.0 ^{\circ}\mathrm{C} - 0.6 ^{\circ}\mathrm{C} = 19.4 ^{\circ}\mathrm{C}
+\] 
+\begin{figure}[!htb]	
+	\begin{center}
+		% Figure austauschen
+		\includegraphics[width=100mm]{06_vorlesung/media/Sicherheitsband_Ueberwachte_Annahme.png}
+		\caption{Sicherheitsband mit einer Breite von $w=U_{95}$ für den Fall der überwachten Annahme.}
+		\label{fig:Sicherheitsband_Breite_2sigma}
+	\end{center}
+\end{figure}
+Im Fall der überwachten Rückweisung berechnet sich die obere Akzeptanzgrenze $A_U$ dann zu:
+\[
+A_U = T_U + u_y \cdot [\Phi^{-1}(1-\alpha)]
+\]
+\begin{figure}[!htb]	
+	\begin{center}
+		\includegraphics[width=100mm]{06_vorlesung/media/Sicherheitsband_Ueberwachte_Rueckweisung.png}
+		\caption{Sicherheitsband mit einer Breite von $w=U_{95}$ bei einer überwachten Rückweisung}
+		\label{fig:Sicherheitsband_Breite_2sigma_Rueckweisung}
+	\end{center}
+\end{figure}
+
+Beispiel: \\
+Zur Überwachung von Geschwindigkeitsbegrenzungen kann die Geschwindigkeit eines Fahrzeugs mit einem Doppler-Radar gemessen werden. Diese Messung kann mit einer relativen Standardunsicherheit u(v)/v von 2~\% im Bereich von 50 km/h bis 150 km/h durchgeführt werden.
+Die Höchstgeschwindigkeit auf einer Autobahn sei auf 100~km/h festgelegt werden. Aufgrund des Grundsatzes ``in dubio pro reo'' (lateinisch ``im Zweifelsfall für den Angeklagten'') wird ein Vertrauensniveau von $(1- \alpha) = 0.999$ gefordert. Berechne die obere Akzeptanzgrenze $A_U$. \\
+Lösung:\\[-1ex]
+\[
+A_U = 100 + 2\cdot [\Phi^{-1}(0.999)] = 100 + 2\cdot 3.09 \approx 107~ \mathrm{km/h} 
+\]
+Das Sicherheitsband beträgt $[100~\mathrm{km/h} \le v \le 107~\mathrm{km/h}]$. Liegt der gemessene Wert bei 107~km/h oder darüber, beträgt die Wahrscheinlichkeit, dass die Höchstgeschwindigkeit überschritten wurde, mindestens $99.9~\%$. \\
+\textbf{(iv) Entscheidungsregel für die Konformitätsbewertung mit Toleranzintervall ohne Sicherheitsband $w$} \\
+Gegeben ist ein Toleranzintervall mit einer unteren Grenze $T_L$ und mit einer oberen Grenze $T_U$, der Schätzwert der Messung $\bar y$ mit einer Standardunsicherheit $u_y$. Eine Entscheidungsregel sollte die Konformitätswahrscheinlichkeit $P_C$ unter der Annahme einer Fehlerwahrscheinlichkeit vom Typ I $(\alpha)$ definieren.
+\begin{figure}[!htb]
+	\begin{center}
+		% Figure austauschen
+		\includegraphics[width=140mm]{06_vorlesung/media/Toleranzband_Beispiel.png}
+		\caption{Beispiel eines Toleranzbandes}
+		\label{fig:Beispiel_Toleranzintervall}
+	\end{center}
+\end{figure}
+Entscheidungsregel: \\
+\hspace*{1em}Annahme, wenn die Hypothese 
+$H_0: \; P(T_L \le y \le T_U) \ge (1 - \alpha)$  wahr ist. \newline
+\hspace*{1em}Rückweisung, wenn die Hypothese $H_0$ falsch ist, d.~h.  $P(T_L \le y \le T_U) < (1 - \alpha)$ \newline
+\hspace*{1em} Bestimmung der Konformitätswahrscheinlichkeit: $P_C = P(T_L \le y \le T_U) =  \Phi \left(\frac{T_U - \bar y}{u_y}\right) - \Phi \left(\frac{T_L - \bar y}{u_y}\right)$ \\[2ex]
+Beispiel: \\
+Gegeben ist der Schätzwert der Messung $\bar y = 23.5~\mathrm{kN}$ verbunden mit einer Standardunsicherheit von $u_y = 0.5~\mathrm{kN}$, ein Toleranzintervall von $[20~\mathrm{kN}, 25~\mathrm{kN}]$ und ein Konformitätsvertrauensniveau $(1 - \alpha)$ von 0,95 (95\%), bzw. ein Signifikanzniveau eines Typ-I-Fehlers $\alpha = 0.05 (5\%)$ erreicht werden. \\
+Lösung: \\
+Es wird folgende Annahme getroffen:\\
+Akzeptanz, wenn die Hypothese $H_0:\; P(22 \le y \le 25) \ge 0.95$ wahr ist.\\
+Die Konformitätswahrscheinlichkeit $P_C$ ergibt sich zu: \\
+\[
+P_C = P(T_L \le y \le T_U) =  \Phi \left(\frac{T_U - \bar y}{u_y}\right) - \Phi \left(\frac{T_L - \bar y}{u_y}\right)
+\]
+\[
+P_C = \Phi \left(\frac{25 - 23.5}{0.5}\right) - \Phi \left(\frac{22 - 23.5}{0.5}\right) = \Phi(3.0) - \Phi(-3.0) = 0.9987 - 0.0013 \approx 0.997
+\]
+Da die Konformitätswahrscheinlichkeit mit 99.7~\% größer als die geforderten 95~\%. Damit ist die Entscheidung konform.\\[4ex]
+\textbf{(v) Entscheidungsregel für die Konformitätsbewertung mit Toleranzintervall und Sicherheitsband $w$} \\
+Die auf ein Toleranzintervall angewandte Konformitätsbewertung kann für den Fall mit 
+Sicherheitsbänder angepasst werden.
+Für ein Vertrauensniveau $(1-\alpha)$ können wir den Fehler $\alpha$ je zur Hälfte $(\alpha/2)$ auf links und rechts aufteilen. Ein allgemeiner Ansatz für eine überwachte Annahme lautet: 
+\[
+A_U = T_U - U_y  \quad \mathrm{und} \quad A_L = T_L + U_y
+\]
+mit $U_y$ ist die erweiterte MU der Messung.
+\begin{figure}[!htb]	
+	\begin{center}
+		\includegraphics[width=140mm]{06_vorlesung/media/Toleranzband_mit_Sicherheitsband.png}
+		\caption{Beispiel eines Toleranzbandes mit Sicherheitsband $w$ im Falle der überwachten Annahme}
+		\label{fig:Beispiel_Toleranzintervall_mit_Sicherheitsband}
+	\end{center}
+\end{figure}
+
+Für die überwachte Ablehnung können die Akzeptanzgrenzen wie folgt berechnet werden:
+\[
+A_U = T_U + U_y  \quad \mathrm{und} \quad A_L = T_L - U_y
+\]
