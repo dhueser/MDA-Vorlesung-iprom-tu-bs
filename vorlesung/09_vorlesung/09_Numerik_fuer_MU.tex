@@ -1,5 +1,7 @@
+\section{Numerische Werkzeuge für Messunsicherheitsberechnungen}
 
-\section{Numerische Integrationsverfahren}
+\subsection{Numerische Integrationsverfahren}
+\label{numerischeIntegration}
 Sei $p$ eine Funktion $p \! : Y \rightarrow p(Y)$, die numerisch über ein
 Intervall $[y_1, y_2]$ integriert werden soll.
 \begin{equation}
@@ -157,7 +159,7 @@ voneinander unabhängig. Die Regionen werden auch Gruppen oder Schichten genannt
 Ein nach diesem Verfahren gebildetes Sample heißt \textsl{geschichtete Zufallsstichprobe}
 oder \textsl{stratifizierte Zufallsstichprobe} (engl.\ \textsl{stratified Sample}).
 
-\section{Zufallszahlen und Wahrscheinlichkeitsverteilungen}
+\subsection{Zufallszahlen und Wahrscheinlichkeitsverteilungen}
 Die Thematik des Samplings nach Methoden, bei denen Zufallszahlen verwendet werden, ist ein
 weites Feld in der Statistik. Große Bedeutung haben zufallszahlenbasierte Integrationsmethoden,
 die auf Erkenntnissen aus der Thermodynamik, d.h.\ der statistischen Physik beruhen.
@@ -250,7 +252,7 @@ Z = scipy.stats.t.ppf(R[0], nu)
 \end{lstlisting}
 
 \section{Monte-Carlo-Verfahren gemäß GUM-supplement~1 JCGM 101}
-
+\label{VorschauMCVerfahren}
 In Kapitel~\ref{montecarloMU} werden wir das Monte-Carlo-Verfahren gemäß GUM-supplement~1 JCGM 101
 erläutern, bei dem wie oben bereits erwähnt,
 gemäß den jeweiligen Ver\-teil\-ungen der unterschiedlichen direkten Messgrößen
@@ -271,7 +273,7 @@ $$
 $$
 berechnet.
 
-Dieses Verfahren entspricht gemäß \cite{Wue08} in etwa den Berechnungen wie
+Dieses Verfahren entspricht gemäß \cite{Wue08} und GUM S1 in etwa den Berechnungen wie
 in Gl.~(\ref{PosteriorSensor}), nämlich wenn wir für die Standardabweichung $\sigma_\mathrm{winzig}$
 den Grenzübergang $\sigma_\mathrm{winzig} \rightarrow 0$ machen, sodass die zu integrierende
 Verteilung in die folgende übergeht:
@@ -293,7 +295,7 @@ Im folgenden werden wir den Grenzübergang der Wahrscheinlichkeitsdichte für da
 \lim_{\sigma \rightarrow 0} \left\{ e^{-\frac{1}{2} \left(\frac{Y-f(\mathbf{X})}{\sigma}\right)^2} \right\}
 = \delta\left(Y \; - \;f(\mathbf{X})\right)
 \end{equation}
-in eine dirac'sche Distribution als \textsl{scharfen Modellprior} bezeichnen.
+in eine dirac'sche Distribution als \textsl{scharfen Modellprior} bezeichnen. 
 
 Für univariate, explizite Modellfunktionen und für normalverteilte Größen $X_i$ sieht die
 Posterior mit \textsl{scharfem Modellprior} dann wie folgt aus
@@ -310,6 +312,15 @@ e^{-\frac{1}{2} \left(\frac{ X_i - X_{i,j} }{s_i} \right)^2} \right)
 \label{PosteriorFall4allgemeiner}
 \end{equation}
 
+Die Posteriorverteilung, also die Wahrscheinlichkeitsdichteverteilung der indirekten Messgröße ist dann das Integral:
+\begin{small}
+\begin{equation}
+p(Y) = \int\limits_{-\infty}^{\infty} \dots \int\limits_{-\infty}^{\infty} \,
+p(Y, X_\mathrm{1}, \dots, X_\mathrm{N} | (X_{1,1}, \dots, X_{1,J_1}), \dots, (X_{K,1}, \dots, X_{K,J_1}),
+ \bar x_{K+1}, s_\mathrm{K+1}, \dots, \bar x_{N}, s_\mathrm{N}) \, \mathrm{d}X_1 \dots \mathrm{d} X_\mathrm{N}
+\end{equation}
+\end{small}
+Der Ansatz mit scharfen Modellprior und ohne Ergebnisse vorheriger Messkampagnen ist der aus GUM-S1, siehe Gl.~(\ref{eq:probCombinationGeneral}) in Kapitel \ref{montecarloMU}. In Kapitel \ref{montecarloMU} die Grundidee des GUM-S1 ausführlich behandelt.
 
 Wir hatten bereits angesprochen, dass die Monte-Carlo-Verfahren auch insbesondere
 für Messaufgaben eingesetzt werden, bei denen mindestens ein Teil der direkten Messgrößen nicht normalverteilt ist.

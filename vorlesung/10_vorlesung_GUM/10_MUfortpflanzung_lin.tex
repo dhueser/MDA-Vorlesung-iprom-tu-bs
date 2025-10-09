@@ -1,7 +1,4 @@
-
-
 \section{M.U.F. für univariate, explizite indirekte Größe, linear von direkten Größen abhängig}
-
 
 In der ersten Vorlesung, in Abschnitt \ref{Kap1Kovarianzen}, wurden die Varianz und Kovarianz
 von Zufallsgrößen eingeführt. In dem Zusammenhang haben wir die Rechenregeln für Erwartungswerte,
@@ -111,8 +108,7 @@ Alternativ, insbesondere im GUM - JCGM 100, gibt es die Schreibweise mit $u$ ans
 Standardabweichungen $\sigma$ als Kürzel für \textsl{uncertainty} oder \textsl{Unsicherheit},
 und heißt in diesem Zusammenhang \textsl{Standardunsicherheit} (engl.\ \textsl{standard uncertainty}).
 Dabei können je nach Anwendung mit den Standardabweichungen $\sigma$ Standardabweichungen je einer
-Einzelstichprobe sein, oder - was häufiger vorkommt - Standardabweichungen der Mittelwerte der Stichproben
-zu den jeweiligen Messgrößen:
+Einzelstichprobe gemeint sein, oder - was häufiger vorkommt - die Standardabweichungen der Mittelwerte der Stichproben zu den jeweiligen Messgrößen verstanden werden:
 
 \begin{equation}
 {\begin{aligned}
@@ -643,12 +639,133 @@ gleich der \textsl{erweiterten Messunsicherheit} der Größe $Y$. Die
 \textsl{erweiterte Messunsicherheit} kann das Produkt aus
 Erweiterungsfaktor und empirischer Standardabweichung sein.
 
-Während mit \textsl{kleinem} Buchstaben $u$ die Standardabweichungen bezeichnet werden,
+Während mit \textsl{kleinem} Buchstaben $u$ die Standardunsicherheiten bezeichnet werden,
 werden mit \textsl{großem} Buchstaben $U$ die erweiterten Unsicherheiten geschrieben. Die
 erweiterten Unsicherheiten sind das Produkt aus
 dem Erweiterungsfaktor $k$, der in der klassischen Statistik das $t$-Quantil ist,
-und der Unsicherheit $u$.
+und der Standardunsicherheit $u$.
 
+\section{Beispiel: Beugung am Spalt im Fernfeld}
+\label{BeugungSpaltGUM0}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=106mm, angle = 0]{10_vorlesung_GUM/media/fraunhoferdiffr_singleslit-DE_ohne.pdf}
+  \caption{\label{fig:AnschauungsbeispielSpalt} Einfaches Anschauungsbeispiel, das auf der Beugung am Spalt im Fernfeld, also in Fraunhofernäherung, beruht.}
+\end{center}
+\end{figure}
+Im folgenden wird die Messunsicherheitsfortpflanzung anhand der \textsl{Beugung am Spalt im Fernfeld}, wie sie in Abb.\ \ref{fig:AnschauungsbeispielSpalt} skizziert wird, verdeutlicht.
+Im Fernfeld, also in der Fraunhofernäherung, gilt für den Interferenzeffekt durch die Beugung am Spalt, also die Überlagerung der sich im Spalt bildenden Huygen'schen Elementarwellen, folgender Zusammenhang:
+\begin{equation}
+\text{Gangunterschied:} \quad \Delta = \frac{d}{2} \sin(\theta)
+\quad \hookrightarrow \; \text{Phasenbeziehung:} \;
+\varphi = \frac{2 \pi}{\lambda} \Delta 
+\end{equation}
+mit $\lambda =$ Wellenlänge des Lichts. 
+
+Die Lichtwellen werden linear superponiert, was bedeutet, dass über alle Elementarwellen integriert wird. Für einen senkrecht zur Bildebene unendlich ausgedehnten Spalt mit der Breite $d$ ist die Lösung des Integrals
+\begin{equation}
+I \, = \, I_0 \; \frac{\sin(\varphi)^2}{\varphi^2} \quad \text{und} \quad
+x = L \tan(\theta) \; \hookrightarrow \; \theta = \arctan\left(\frac{x}{L}\right)
+\label{eq:spaltfunktion}
+\end{equation}
+
+Die Intensität $I$ des Lichtes auf den Detektorelementen ist proportional zum Grauwert $g(x)$.
+
+Die Minima der Intensitätsverteilung entstehen an den Stellen destruktiver Interferenz
+\begin{equation}
+\Delta_\mathrm{min} = n \frac{\lambda}{2} \quad n \in I\!\!N_{>0}
+\end{equation}
+Für die Minima erster Ordnung gilt
+\begin{equation}
+\frac{d}{2} \sin(\theta_\mathrm{min}) = \frac{\lambda}{2}
+\; \hookrightarrow \;
+\frac{d}{2} \sin(\arctan\left(\frac{x_\mathrm{min}}{L}\right)) = \frac{\lambda}{2},
+\end{equation}
+so dass für die Spaltbreite gilt
+\begin{equation}
+ d = \frac{\lambda}{\sin(\arctan\left(\frac{x_\mathrm{min}}{L}\right))}
+\approx \frac{\lambda L}{x_\mathrm{min}}
+\label{eq:modellspaltbreite}
+\end{equation}
+
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=75mm, angle = 0]{10_vorlesung_GUM/media/slit_det_L4000_d5p75_labeled.pdf} \hspace{5mm}
+\includegraphics[width=82mm, angle = 0]{10_vorlesung_GUM/media/slit_sensitivity.pdf}
+\caption{\label{fig:BeugungsbildSpalt} \textit{Links:} Intensitätsverteilung der Beugung am Spalt im Fernfeld; \textit{rechts:} Steigung der Tangente an der Modellfunktion für die Spaltbreite, siehe Gl.\ \ref{eq:modellspaltbreite}.}
+\end{center}
+\end{figure}
+
+Die direkten Messgrößen sind der Abstand $L$ zwischen dem Messobjekt, dem Spalt, dessen Breite zu bestimmen ist, die Wellenlänge des beleuchtenden Lichts $\lambda$, die Positionen $x$ und Grauwerte $g(x)$ der Detektorelemente (pixel).
+
+Die Verteilung der Grauwerte $g(x)$ als Funktion der Positionen auf dem Detektor stellt das Beugungsbild dar, das im Fernfeld mit Gl.\ (\ref{eq:spaltfunktion}) modelliert wird. Die zu diesem Teilproblem indirekte Messgröße ist die Position $x_\mathrm{min}$ des ersten Minimums, bzw.\ dessen Abstand vom Hauptmaximum. 
+
+Für die diskreten Detektorelemente wird die Grauwertverteilung gemessen $g\!: i \Delta x \mapsto g(i \Delta x)$, mit $\Delta x$ für den Abstand der Detektorelemente und $i$ deren Nummern. Die Minimumsposition $x_\mathrm{min}$ wird mithilfe eines Regressionspolynoms, Kap.\ \ref{KapitellinReg}, in der unmittelbaren Umgebung des Minimums bestimmt.
+
+Aus der Optimierungsrechnung wird der Schätzwert für $x_\mathrm{min}$ zusammen mit dessen Standardunsicherheit $u(x_\mathrm{min})$ gewonnen. Für den nächsten Schritt stellt $x_\mathrm{min}$ die direkte Messgröße dar. Modelle, die in dieser oder ähnlicher Weise mehrstufig sind, hier zweistufig mit der ersten Stufe mit $x_\mathrm{min}$ als indirekte Messgröße und in der zweiten Stufe als direkte Messgröße werden \textsl{Mehrstufenmessmodelle}, engl.\ \textsl{multistage measurement model}, genannt.
+
+\begin{small}
+\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{lcl}
+\textbf{Messgröße} & & \textbf{Unsicherheit}  $u$\\
+\hline
+Abstand Spalt - Objektiv: $L$ & $\hookrightarrow$ & {\`a} priori Wissen bzgl.\ Messaufbau: $u(L)$\\
+Lichtwellenlänge: $\lambda$ & $\hookrightarrow$ & {\`a} priori Wissen über Lichtwellen: $u(\lambda)$\\
+Positionen der Detektorlemente: $x$ & $\hookrightarrow$& {\`a} priori über den Detektor: $u(x)$\\
+Grauwerte: $g(x)$  & $\hookrightarrow$& {\`a} priori knowledge über den Detektor: $u(g)$\\
+\hline
+Minimum, erste Ordnung $x_\mathrm{min}$: & $\hookrightarrow$& Fortpflanzung von $u(x)$ und $u(g)$\\
+\textcolor{red}{\textbf{implicite}} Abhängigkeit von $x$, $g$ & & Ermitteln der Minimumsposition $\min\{g(x)\}$: $u(x_\mathrm{min})$\\
+\hline
+Spaltbreite $d$ & $\hookrightarrow$& Fortpflanzung von $u(x_\mathrm{min})$, $u(L)$, und $u(\lambda)$: $u(d)$\\
+\textcolor{red}{\textbf{explicite}} Abhängigkeit von $x_\mathrm{min}$, $L$, und $\lambda$ & & \\
+\hline
+\end{tabular}
+\end{small}
+
+Alternativ zu diesem zweistufigen Ansatz ließe sich die Spaltbreite $d$ auch direkt durch die Anpassung der gesamten Sincfunktion Gl.\ (\ref{eq:spaltfunktion}) mithilfe einer nichtlinearen Optimierung gemäß Kap.\ \ref{nonlinOpti} durchführen. Dies wäre in der heutigen Zeit der leistungsfähigen Rechentechnik der übliche Weg. Wir haben hier aber die kleine Modellfunktion $d \approx \frac{\lambda L}{x_\mathrm{min}}$ ausgesucht, um eine einfache Gleichung zu haben, anhand derer sich die Unsicherheitsfortpflanzung veranschaulichen lässt.
+
+Es werden nun die Sensitivitäten der indirekten Messgröße Spaltbreite $d$, also wie empfindlich die Spaltbreite $d$ auf Veränderungen der direkten Messgrößen reagiert, betrachtet: Der Gradient (Steigungsvektor der Tangentialhyperebene) an der Stelle der geschätzten Werte $\hat x_\mathrm{min}$, $\hat L$, und $\hat \lambda$ 
+$$
+\left(\begin{array}{c} c_{x_\mathrm{min}}\\ c_L\\ c_\lambda \end{array} \right) \, = \,
+\left( \left. \frac{\partial}{\partial x_\mathrm{min}} d(x_\mathrm{min}, L, \lambda) \right|_{(\hat x_\mathrm{min},\hat L,\hat \lambda)}, \;
+ \left. \frac{\partial}{\partial L} d(x_\mathrm{min}, L, \lambda) \right|_{(\hat x_\mathrm{min},\hat L,\hat \lambda)}, \;
+ \left. \frac{\partial}{\partial \lambda} d(x_\mathrm{min}, L, \lambda) \right|_{(\hat x_\mathrm{min},\hat L,\hat \lambda)} \right)^{\mathsf{T}}
+$$
+drückt aus, wie sich $d$ ändert, wenn sich $x_\mathrm{min}$, $L$, und $\lambda$ verändern.
+Die Spaltbreite $d$ hängt linear von der Wellenlänge $\lambda$ ab, so dass die Ableitung $\frac{\partial}{\partial \lambda} d(x_\mathrm{min}, L, \lambda)$ von $\lambda$ unabhängig ist.
+Im Falle des ganz einfachen Modells $d \approx \frac{\lambda L}{x_\mathrm{min}}$ ist die Spaltbreite $d$ ebenfalls nur linear von dem Abstand $L$ zwischen Spalt und Objektiv abhängig. Damit gilt auch für diese Ableitung $\frac{\partial}{\partial L} d(x_\mathrm{min}, L, \lambda)$, dass sie von $L$ unabhängig ist. Der funktionale Zusammenhang zwischen $d(x_\mathrm{min}, L, \lambda)$ und $x_\mathrm{min}$ ist nicht linear, sondern hyperbolisch, aber linearisierbar, wenn $u(x_\mathrm{min}) \underset{\sim}{<} \Delta x$, wobei $\Delta x$ der Abstand der Detektorelemente ist.
+
+Es wird angenommen, dass die direkten Messgrößen sich nicht gegenseitig beeinflussen, keine Korrelationen aufweisen. Damit gilt für die kombinierte Unsicherheit
+$$
+u(d) = \sqrt{ \left(c_L u(L)\right)^2 + \left(c_\lambda u(\lambda)\right)^2 + \left(c_{x_\mathrm{min}} u(x_\mathrm{min})\right)^2 }.
+$$
+Ein Zahlenbeispiel zeigt die Beiträge an der Unsicherheit der Spaltbreite $d$ aus den verschiedenen direkten Messgrößen. In der Metrologie wird dies üblicherweise in tabellarischer Form notiert und als \textsl{Unsicherheitsbudget} bezeichnet.
+\begin{center}
+\renewcommand{\arraystretch}{2.0}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+{\scriptsize Messgröße} & {\scriptsize Schätzwert} & {\scriptsize Standardunsicherheit} & {\scriptsize Sensitivität} & {$|c \, u|$ in $\mathrm{\mu m}$}\\
+\hline\hline
+$L$: & $\bar L = 4000 \, \mathrm{\mu m}$ & $u(L) = 20 \,  \mathrm{\mu m}$ & $c_L = \left. \frac{\partial}{\partial L} d \right|_{\bar L, \bar \lambda, \bar x_\mathrm{min}} = \frac{\bar \lambda}{\bar x_\mathrm{min}} = 0.0014238$ & $0.02858$\\
+\hline
+$\lambda$: & $\bar \lambda = 0.550 \,  \mathrm{\mu m}$ & $u(\lambda) = 0.002 \,  \mathrm{\mu m}$ &  $c_\lambda = \left. \frac{\partial}{\partial L} d \right|_{\bar L, \bar \lambda, \bar x_\mathrm{min}} = \frac{\bar L}{\bar x_\mathrm{min}} = 10.35465$ & $0.02071$\\
+\hline
+$x_\mathrm{min}$: & $\bar x_\mathrm{min} = 386.3 \,  \mathrm{\mu m}$ & $u(x_\mathrm{min}) = 5.9 \,  \mathrm{\mu m}$ &{\tiny $c_{x_\mathrm{min}} = \left. \frac{\partial}{\partial x_\mathrm{min}} d \right|_{\bar L, \bar \lambda, \bar x_\mathrm{min}} = -\frac{\bar \lambda \, \bar L}{\bar x_\mathrm{min}^2} = -0.01474257$} & $0.08698$\\
+\hline
+\end{tabular}
+\end{center}
+$$
+\hookrightarrow \: \bar d \approx \frac{\bar \lambda \bar L}{\bar x_\mathrm{min}} = 5.695 \,  \mathrm{\mu m}
+\quad \text{und} \quad
+u(d) = 0.094 \,  \mathrm{\mu m}
+$$
+also
+$$
+d = (5.695 \, \pm \, 0.187) \,  \mathrm{\mu m} \quad \text{für} \; k = 2
+$$
 
 \section{Aufgabe zum Selbststudium}
 \label{AufgVor7}
