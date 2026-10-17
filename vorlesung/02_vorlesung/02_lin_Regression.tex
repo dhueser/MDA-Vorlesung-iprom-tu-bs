@@ -1,7 +1,12 @@
 \section{Die Idee der linearen Regression}
 \label{RegressionsIdee}
 %
-Regression beschreibt den Zusammenhang zwischen vorgegebenen Eingangsgrößen und einer beobachteten Ausgangsgröße. In der Schreibweise dieses Kapitels heißen die Eingangsgrößen \textbf{Regressoren} und die Ausgangsgröße \textbf{Regressand}. Die Eingangsgrößen sind die unabhängigen Größen, die Ausgangsgröße is die abhängige Größe.
+
+Regression beschreibt den Zusammenhang zwischen vorgegebenen Eingangsgrößen und einer beobachteten Ausgangsgröße. In der Schreibweise dieses Kapitels heißen die Eingangsgrößen \textbf{Regressoren} und die Ausgangsgröße \textbf{Regressand}. Die Eingangsgrößen sind die unabhängigen Größen, die Ausgangsgröße ist die abhängige Größe.
+
+In einem \textsl{Regressionsmodell} geht es um den statistischen Zusammenhang zwischen den betrachteten Größen wird angenommen, bei der lineare Regression insbesondere um den linearen Zusammenhang, der über den Korrelationskoeffizientencharakterisiert wird.
+
+Andere Methoden zur Beschreibung von Messmodellen und ihren Parametern sind historisch parallel dazu entwickelt worden, so die Optimierungsrechnung im Allgemeinen, die en Kriterium aufstellt, nach dem das Modell an Beobachtungswerte (Messdaten) angepasst wird. Solch ein Kriterium, das wir \textsl{Kostenfunktion} nennen, verwendet auch die Regressionsrechnung. Historisch haben die beiden Richtungen etwas unterschiedliche Wege genommen.
 
 Für $J$ Beobachtungen schreiben wir allgemein
 \begin{equation}
@@ -31,7 +36,7 @@ Y_j = f(X_j) + \varepsilon_j \quad \mathrm{mit} \quad j = 1,2,\ldots,J .
 
 Für die klassische lineare Regression nehmen wir an:
 \begin{itemize}
-\item Die Regressoren (unabhängigen Größen) $X$ bzw. $X_i$ werden vorgegeben. Ihre Werte gelten im Modell als genau bekannt (engl.\ \textsl{exactly known values}) und werden nicht als Zufallsgrößen behandelt.
+\item Die Regressoren (unabhängigen Größen) $X$ bzw. $X_i$ werden \emph{vorgegeben}. Ihre Werte gelten im Modell als genau bekannt (engl.\ \textsl{exactly known values}) und werden nicht als Zufallsgrößen \emph{behandelt}. Es wird ihnen in der Weise wie wir hier die Regression behandeln keine Unsicherheit zugeordnet.
 \item Der Regressand (die abhängige Größe) $Y$ streut. Die Residuen sind \textbf{unabhängig und identisch verteilt} mit Erwartungswert Null und konstanter Varianz:
 \begin{equation}
 \varepsilon_j \; \overset{u.i.v.}{\sim} \; \mathcal{N}(0,\sigma_{\varepsilon}^2) .
@@ -779,6 +784,407 @@ gewonnen
 \end{equation}
 In Kapitel \ref{wahrscheinlichHyp} werden wir dann sehen, wie man mit Hilfe der Varianzen bzw. Standardabweichungen Vertrauensintervalle für die geschätzten Modellparameter bestimmt.
 Die Herleitung ist im Anhang aufgeschrieben.
+
+
+\section{Unsicherheitsband der Regressionsgeraden}
+\label{sec:unsicherheitsband_regressionsgerade}
+
+Die Methode der kleinsten Quadrate liefert Schätzwerte für den
+Achsenabschnitt und die Steigung einer Geraden. Da diese Schätzwerte von
+den Beobachtungswerten abhängen, würden wiederholte Messreihen im
+Allgemeinen zu unterschiedlichen angepassten Geraden führen. Die
+Unsicherheit der Parameterschätzung überträgt sich daher auf den
+geschätzten Verlauf der Geraden. Im Folgenden wird hergeleitet, wie sich
+diese Unsicherheit für einen vorgegebenen Regressorwert berechnen lässt.
+
+\subsection{Beobachtungsmodell und geschätzte Gerade}
+
+Wir betrachten das lineare Beobachtungsmodell
+\begin{equation}
+  Y_j = \theta_0+\theta_1 x_j+E_j,
+  \qquad j=1,\ldots,J.
+  \label{eq:band_beobachtungsmodell}
+\end{equation}
+Die Regressorwerte $x_j$ werden als fest und genau bekannt behandelt.
+Die Modellparameter $\theta_0$ und $\theta_1$ sind fest, aber unbekannt.
+Für die zufälligen Abweichungen nehmen wir zunächst an, dass
+\begin{equation}
+  \operatorname{E}(E_j)=0,\qquad
+  \operatorname{Var}(E_j)=\sigma_E^2,\qquad
+  \operatorname{Cov}(E_j,E_k)=0\quad(j\ne k).
+  \label{eq:band_momentannahmen}
+\end{equation}
+Diese Annahmen genügen für die nachfolgende Berechnung der Varianzen
+und Kovarianzen. Für die spätere Konstruktion von Konfidenzintervallen
+mithilfe der $t$-Verteilung wird zusätzlich ein normalverteiltes
+Beobachtungsmodell vorausgesetzt:
+\begin{equation}
+  E_j\overset{\mathrm{u.i.v.}}{\sim}
+  \mathcal{N}(0,\sigma_E^2).
+  \label{eq:band_normalmodell}
+\end{equation}
+Ferner benötigen wir $J>2$ und mindestens zwei unterschiedliche
+Regressorwerte.
+
+Der Erwartungswert des Regressanden bei einem vorgegebenen Wert $x$
+ist
+\begin{equation}
+  \mu(x)=\theta_0+\theta_1 x.
+\end{equation}
+Aus den Beobachtungswerten $y_j$ werden die Parameterschätzwerte
+$\widehat{\theta}_0$ und $\widehat{\theta}_1$ berechnet. Die angepasste
+Gerade lautet damit
+\begin{equation}
+  \widehat{y}(x)
+  =\widehat{\theta}_0+\widehat{\theta}_1 x.
+  \label{eq:band_geschaetzte_gerade}
+\end{equation}
+Sie schätzt den mittleren Verlauf $\mu(x)$, also den Erwartungswert
+möglicher Beobachtungen bei festem $x$.
+
+Für die Unterscheidung zwischen Zufallsgrößen und berechneten
+Zahlenwerten bezeichnen wir die Parameterschätzer im Folgenden mit
+$\widehat{\Theta}_0$ und $\widehat{\Theta}_1$. Ihre aus einer konkreten
+Messreihe berechneten Werte sind
+$\widehat{\theta}_0$ und $\widehat{\theta}_1$. Entsprechend ist
+\begin{equation}
+  \widehat{Y}(x)
+  =\widehat{\Theta}_0+\widehat{\Theta}_1 x
+\end{equation}
+der zu $\widehat{y}(x)$ gehörende Schätzer. Seine Streuung bei
+wiederholten Messreihen beschreibt die Unsicherheit der geschätzten
+Geraden an der Stelle $x$.
+
+\subsection{Fortpflanzung der Parameterunsicherheit}
+
+Für eine lineare Kombination von Zufallsgrößen mit konstanten
+Koeffizienten gilt
+\begin{equation}
+  \operatorname{Var}\left(\sum_{i=1}^{N}c_i Z_i\right)
+  =
+  \sum_{i=1}^{N}c_i^2\operatorname{Var}(Z_i)
+  +2\sum_{i=1}^{N-1}\sum_{k=i+1}^{N}
+    c_i c_k\operatorname{Cov}(Z_i,Z_k).
+  \label{eq:band_varianz_linearkombination}
+\end{equation}
+Diese Beziehung gilt exakt; für eine lineare Kombination ist keine
+Taylor-Approximation erforderlich.
+
+Für die geschätzte Gerade setzen wir
+$Z_1=\widehat{\Theta}_0$, $c_1=1$,
+$Z_2=\widehat{\Theta}_1$ und $c_2=x$ ein.
+Dabei ist $x$ ein fest gewählter Auswertewert, der auch zwischen den
+verwendeten Regressorwerten liegen kann. Es folgt
+\begin{equation}
+  \operatorname{Var}\bigl(\widehat{Y}(x)\bigr)
+  =
+  \operatorname{Var}(\widehat{\Theta}_0)
+  +x^2\operatorname{Var}(\widehat{\Theta}_1)
+  +2x\operatorname{Cov}
+    (\widehat{\Theta}_0,\widehat{\Theta}_1).
+  \label{eq:band_parameterfortpflanzung}
+\end{equation}
+Die Kovarianz muss berücksichtigt werden, weil Achsenabschnitt und
+Steigung aus denselben Beobachtungswerten geschätzt werden und ihre
+Schätzer im Allgemeinen korreliert sind.
+
+Mit den Abkürzungen
+\begin{equation}
+  \overline{x}=\frac{1}{J}\sum_{j=1}^{J}x_j,
+  \qquad
+  S_{xx}=\sum_{j=1}^{J}(x_j-\overline{x})^2
+\end{equation}
+lauten die Varianzen und die Kovarianz der
+Kleinste-Quadrate-Schätzer
+\begin{align}
+  \operatorname{Var}(\widehat{\Theta}_0)
+  &=\sigma_E^2
+    \left(\frac{1}{J}+\frac{\overline{x}^{\,2}}{S_{xx}}\right),
+  \label{eq:band_var_achsenabschnitt}\\
+  \operatorname{Var}(\widehat{\Theta}_1)
+  &=\frac{\sigma_E^2}{S_{xx}},
+  \label{eq:band_var_steigung}\\
+  \operatorname{Cov}(\widehat{\Theta}_0,\widehat{\Theta}_1)
+  &=-\frac{\sigma_E^2\overline{x}}{S_{xx}}.
+  \label{eq:band_cov_parameter}
+\end{align}
+Die erste Beziehung kann auch als
+\begin{equation}
+  \operatorname{Var}(\widehat{\Theta}_0)
+  =\sigma_E^2\,
+    \frac{\sum_{j=1}^{J}x_j^2}{J S_{xx}}
+\end{equation}
+geschrieben werden. Beide Formen sind wegen
+\begin{equation}
+  \sum_{j=1}^{J}x_j^2
+  =S_{xx}+J\overline{x}^{\,2}
+\end{equation}
+gleichwertig.
+
+Einsetzen in Gleichung~\eqref{eq:band_parameterfortpflanzung}
+und Zusammenfassen ergibt
+\begin{align}
+  \operatorname{Var}\bigl(\widehat{Y}(x)\bigr)
+  &=
+  \sigma_E^2\left(
+    \frac{1}{J}
+    +\frac{\overline{x}^{\,2}}{S_{xx}}
+    +\frac{x^2}{S_{xx}}
+    -\frac{2x\overline{x}}{S_{xx}}
+  \right)
+  \notag\\
+  &=
+  \sigma_E^2\left(
+    \frac{1}{J}
+    +\frac{(x-\overline{x})^2}{S_{xx}}
+  \right).
+  \label{eq:band_varianz_gerade}
+\end{align}
+
+\subsection{Geschätzte Standardunsicherheit und Verlauf des Bandes}
+
+In der Regel ist die Varianz $\sigma_E^2$ unbekannt. Sie wird aus den
+angepassten Residuen
+\begin{equation}
+  \widehat{\varepsilon}_j
+  =y_j-\widehat{\theta}_0-\widehat{\theta}_1 x_j
+\end{equation}
+geschätzt:
+\begin{equation}
+  s_E^2=\widehat{\sigma}_E^2
+  =\frac{1}{J-2}
+    \sum_{j=1}^{J}\widehat{\varepsilon}_j^{\,2}.
+  \label{eq:band_residualvarianz}
+\end{equation}
+Der Nenner $J-2$ berücksichtigt, dass aus den $J$ Beobachtungen zwei
+Modellparameter geschätzt wurden.
+
+Ersetzt man $\sigma_E^2$ in
+Gleichung~\eqref{eq:band_varianz_gerade} durch $s_E^2$, erhält man
+eine \emph{Schätzung} der Varianz von $\widehat{Y}(x)$.
+Die Quadratwurzel daraus ist der geschätzte Standardfehler des
+geschätzten mittleren Verlaufs. Wir bezeichnen ihn hier als
+Standardunsicherheit von $\widehat{y}(x)$:
+\begin{equation}
+  u\bigl(\widehat{y}(x)\bigr)
+  =
+  s_E\sqrt{
+    \frac{1}{J}+\frac{(x-\overline{x})^2}{S_{xx}}
+  }.
+  \label{eq:band_standardunsicherheit}
+\end{equation}
+Die beiden Kurven
+\begin{equation}
+  \widehat{y}(x)\pm u\bigl(\widehat{y}(x)\bigr)
+  \label{eq:band_einfache_standardunsicherheit}
+\end{equation}
+begrenzen ein Band mit der Halbbreite einer Standardunsicherheit.
+Die Schreibweise bezeichnet die beiden Bandgrenzen; die geschätzte
+Gerade selbst bleibt durch
+Gleichung~\eqref{eq:band_geschaetzte_gerade} gegeben.
+
+Das Band ist bei $x=\overline{x}$ am schmalsten. Dort gilt
+\begin{equation}
+  u\bigl(\widehat{y}(\overline{x})\bigr)
+  =\frac{s_E}{\sqrt{J}}.
+\end{equation}
+Mit wachsendem Abstand von $\overline{x}$ nimmt die Unsicherheit zu.
+Eine größere Streuung der vorgegebenen Regressorwerte, also ein
+größeres $S_{xx}$, verringert bei sonst gleichen Bedingungen den
+Beitrag der Steigungsunsicherheit.
+
+\subsection{Punktweise Konfidenzintervalle}
+
+Unter dem normalverteilten Beobachtungsmodell aus
+Gleichung~\eqref{eq:band_normalmodell} folgt für jedes fest gewählte
+$x$ die Größe
+\begin{equation}
+  T(x)=
+  \frac{\widehat{Y}(x)-\mu(x)}
+       {\widehat{\sigma}_E
+        \sqrt{\frac{1}{J}+\frac{(x-\overline{x})^2}{S_{xx}}}}
+  \sim t_{J-2}.
+  \label{eq:band_t_statistik}
+\end{equation}
+Hier bezeichnet $\widehat{\sigma}_E$ den aus den zufälligen
+Beobachtungen berechneten Schätzer, dessen beobachteter Wert $s_E$
+ist. Die $t$-Verteilung und ihre Quantile werden in der Vorlesung
+über Konfidenzintervalle und Hypothesentests näher behandelt.
+
+Mit dem Quantil $t_{J-2,\,1-\alpha/2}$ erhält man das zweiseitige
+Konfidenzintervall für $\mu(x)$ zum Vertrauensniveau $1-\alpha$:
+\begin{equation}
+  \left[
+    \widehat{y}(x)
+    -t_{J-2,\,1-\alpha/2}\,
+      u\bigl(\widehat{y}(x)\bigr),
+    \quad
+    \widehat{y}(x)
+    +t_{J-2,\,1-\alpha/2}\,
+      u\bigl(\widehat{y}(x)\bigr)
+  \right].
+  \label{eq:band_punktweises_konfidenzintervall}
+\end{equation}
+Bei $J=11$ Beobachtungen sind $\nu=J-2=9$ Freiheitsgrade vorhanden.
+Für ein Vertrauensniveau von $95\,\%$ gilt
+$t_{9,\,0{,}975}\approx2{,}262$. Die Intervallgrenzen lauten dann
+\begin{equation}
+  \widehat{\theta}_0+\widehat{\theta}_1 x
+  \ \pm\
+  2{,}262\,s_E
+  \sqrt{\frac{1}{11}+\frac{(x-\overline{x})^2}{S_{xx}}}.
+  \label{eq:band_konfidenzintervall_beispiel}
+\end{equation}
+
+Das Vertrauensniveau beschreibt die Überdeckung bei wiederholter
+Anwendung des Verfahrens: Für jedes vorab fest gewählte $x$ enthalten
+$95\,\%$ der so gebildeten Intervalle den festen, unbekannten
+Erwartungswert $\mu(x)$. Daraus folgt keine Wahrscheinlichkeit von
+$95\,\%$ dafür, dass $\mu(x)$ in einem bereits berechneten
+frequentistischen Konfidenzintervall liegt.
+
+\begin{figure}
+\begin{center}
+	\includegraphics[width=0.7\linewidth]{02_vorlesung/media/geradenbeispiel.pdf}
+\end{center}
+\caption{\label{fig:unsicherheitsband} Darstellung einer Regressionsgeraden mit Unsicherheitsband. Dabei stehen die Bezeichnungen A und B in der Achsbeschriftung für enstprechende physikalische Einheiten.}
+\end{figure}
+
+Werden diese Intervalle für viele Werte von $x$ eingezeichnet,
+entsteht ein Band aus \emph{punktweisen} Konfidenzintervallen.
+
+Die grüne Gerade in Abb.~\ref{fig:unsicherheitsband}
+schätzt den Erwartungswert des Regressanden für jeden
+vorgegebenen Regressorwert $x$. Die grün gestrichelten
+Kurven begrenzen ein Band mit der Halbbreite einer
+Standardunsicherheit.
+
+Die roten strichpunktierten Kurven zeigen die Grenzen
+der punktweisen $95$-\%-Konfidenzintervalle für diesen
+Erwartungswert. Das Vertrauensniveau gilt jeweils für
+eine vorab fest gewählte Stelle $x$. Es bezieht sich
+weder auf die gleichzeitige Überdeckung der gesamten
+unbekannten Geraden noch auf die Vorhersage einer
+neuen einzelnen Beobachtung.
+
+Es ist kein simultanes $95$-\%-Konfidenzband für die gesamte Gerade:
+Die gemeinsame Überdeckung des gesamten Verlaufs erfordert einen
+anderen Erweiterungsfaktor. Auch das Band aus
+Gleichung~\eqref{eq:band_einfache_standardunsicherheit} hat bei
+geschätzter Varianz nicht allgemein ein punktweises Vertrauensniveau
+von etwa $68\,\%$; seine genaue Überdeckung ergibt sich aus der
+$t$-Verteilung mit $J-2$ Freiheitsgraden.
+
+\subsection{Abgrenzung zur Vorhersage einer neuen Beobachtung}
+
+Bisher haben wir untersucht, wie genau sich der Erwartungswert
+\[
+  \mu(x)=\theta_0+\theta_1 x
+\]
+aus den vorliegenden Messdaten bestimmen lässt. Das zugehörige
+Konfidenzintervall beschreibt die Unsicherheit, mit der die angepasste
+Gerade diesen Erwartungswert an einer fest gewählten Stelle $x$
+schätzt.
+
+Eine andere Frage lautet: In welchem Bereich ist eine neue einzelne
+Beobachtung bei diesem $x$ zu erwarten? Diese Beobachtung wird durch
+\begin{equation}
+  Y_{\mathrm{neu}}(x)=\mu(x)+E_{\mathrm{neu}}
+\end{equation}
+beschrieben. Die neue zufällige Abweichung $E_{\mathrm{neu}}$ hat
+wie die Abweichungen der bisherigen Beobachtungen den Erwartungswert
+null und die Varianz $\sigma_E^2$. Sie wird als unabhängig von den
+bisherigen Beobachtungen angenommen.
+
+Bei der Vorhersage einer neuen Beobachtung müssen somit zwei
+Beiträge berücksichtigt werden:
+\begin{itemize}
+  \item Die angepasste Gerade schätzt den unbekannten Erwartungswert
+        $\mu(x)$ mit einer Unsicherheit.
+  \item Die neue Beobachtung streut zusätzlich um diesen
+        Erwartungswert.
+\end{itemize}
+
+Um beide Beiträge zusammenzuführen, betrachten wir die Differenz
+zwischen der neuen Beobachtung und ihrer Vorhersage durch die
+angepasste Gerade:
+\begin{equation}
+  Y_{\mathrm{neu}}(x)-\widehat{Y}(x)
+  =
+  E_{\mathrm{neu}}
+  -\bigl(\widehat{Y}(x)-\mu(x)\bigr).
+  \label{eq:band_vorhersageabweichung}
+\end{equation}
+Dabei bezeichnet $\widehat{Y}(x)$ den aus den zufälligen
+Beobachtungen berechneten Schätzer; sein Wert für die vorliegende
+Messreihe ist $\widehat{y}(x)$.
+
+Weil $E_{\mathrm{neu}}$ von den bisherigen Beobachtungen unabhängig
+ist, ist diese neue Abweichung auch unabhängig von der daraus
+berechneten Größe $\widehat{Y}(x)$. Deshalb addieren sich die
+Varianzen der beiden Beiträge. Das Minuszeichen in
+Gleichung~\eqref{eq:band_vorhersageabweichung} ändert daran nichts,
+weil der zugehörige Faktor bei der Varianzberechnung quadriert wird:
+\begin{align}
+  \operatorname{Var}\bigl(
+    Y_{\mathrm{neu}}(x)-\widehat{Y}(x)
+  \bigr)
+  &=
+  \operatorname{Var}(E_{\mathrm{neu}})
+  +\operatorname{Var}\bigl(\widehat{Y}(x)\bigr)
+  \notag\\
+  &=
+  \sigma_E^2
+  +\sigma_E^2
+    \left(
+      \frac{1}{J}
+      +\frac{(x-\overline{x})^2}{S_{xx}}
+    \right)
+  \notag\\
+  &=
+  \sigma_E^2
+    \left(
+      1+\frac{1}{J}
+      +\frac{(x-\overline{x})^2}{S_{xx}}
+    \right).
+  \label{eq:band_varianz_vorhersage}
+\end{align}
+Die zusätzliche $1$ entsteht also durch das Ausklammern von
+$\sigma_E^2$. Sie steht für die Streuung der neuen einzelnen
+Beobachtung. Die beiden anderen Terme beschreiben weiterhin
+die Unsicherheit der geschätzten Erwartungswertgeraden.
+
+Die unbekannte Standardabweichung $\sigma_E$ wird durch den aus
+den angepassten Residuen berechneten Wert $s_E$ geschätzt.
+Unter dem vorausgesetzten normalverteilten Beobachtungsmodell
+ergibt sich das zweiseitige Vorhersageintervall zum
+Vorhersageniveau $1-\alpha$:
+\begin{equation}
+  \widehat{y}(x)
+  \ \pm\
+  t_{J-2,\,1-\alpha/2}\,s_E
+  \sqrt{
+    1+\frac{1}{J}+\frac{(x-\overline{x})^2}{S_{xx}}
+  }.
+  \label{eq:band_vorhersageintervall}
+\end{equation}
+Bei wiederholter Durchführung der gesamten Messreihe mit jeweils
+einer unabhängigen neuen Beobachtung enthalten die so berechneten
+Intervalle diese neue Beobachtung mit der Wahrscheinlichkeit
+$1-\alpha$.
+
+Das Vorhersageintervall ist breiter als das Konfidenzintervall
+für den Erwartungswert. Selbst wenn der Erwartungswert praktisch
+genau bekannt wäre, würde eine neue einzelne Beobachtung weiterhin
+mit der Standardabweichung $\sigma_E$ um ihn streuen.
+
+Alle angegebenen Unsicherheiten und Intervalle gelten unter dem
+vorausgesetzten Beobachtungsmodell. Eine Abweichung des tatsächlichen
+mittleren Zusammenhangs von der Geraden wird durch diese Formeln
+nicht zusätzlich erfasst. Dies ist insbesondere bei einer
+Extrapolation über den untersuchten Regressorbereich hinaus zu
+beachten.
+
 
 \section{Das Bestimmtheitsmaß und der empirische Korrelationskoeffizient}
 Die G\"{u}te des gew\"{a}hlten linearen Ansatzes kann mit dem
