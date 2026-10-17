@@ -3,151 +3,213 @@
 
 \textbf{\large Hilfestellung Aufgabe 1}
 
-Ein Gnu-Octave/Matlab Skript für KS-Tests verschiedener Stichproben
-kann beispielsweise so aussehen:
-\begin{verbatim}
-function learn_KS(flagnew)
-  N1 = 2000; mu1 = 23; s1 = 3;
-  N2 = 450; mu2 = 35; s2 = 5;
-  if (flagnew==1)
-    x1 = s1*randn(N1,1) + mu1;
-    x2 = s2*randn(N2,1) + mu2;
-    save 'learn_robust.dat' x1 x2
-  else
-    load('learn_robust.dat');
-  end
-  x = [x1; x2];
-  KStest(x1, 10);
-  KStest(x2, 20);
-  KStest(x, 0);
-  di = abs(x - mean(x));
-  medd = median(di);
-  iuse = find( di < medd );
-  for itest = 1:4
-    KStest(x(iuse), itest);
-    di = abs(x(iuse) - mean(x));
-    medd = median(di);
-    iuse2 = find( di < medd );
-    iuse = iuse(iuse2);
-  end
-end
-function KStest(x, iplt)
-  alpha = 0.05;
-  Ntot = length(x)
-  [xsort, isort] = sort(x, 'ascend');
-  h = [1:Ntot]'/Ntot;
-  xbar = mean(x)
-  sbar = std(x)
-  g = normcdf( xsort, xbar, sbar);
-  K = sqrt(-0.5*log(alpha/2))/sqrt(Ntot);
-  figure(3000+iplt);
-  plot( xsort, h, 'k-;{\fontsize{14}empirisches Histogramm};', ...
-        xsort, g, 'r-;{\fontsize{14}Vert. aus Mittelw./ empir. Var.};');
-  xlabel('X', 'fontsize', 14);
-  ylabel('Wahrscheinlichkeitsdichte', 'fontsize', 12);
-  title(['Stichprobenumfang: ' num2str(Ntot)], 'fontsize', 14);
-  grid on;
-  legend(gca, 'location', 'northwest');
-  set(gca, 'fontsize', 14, 'linewidth', 2);
-%
-  figure(3100+iplt);
-  plot( xsort, abs(g - h), 'b.;{\fontsize{14}abs. Diff.};', ...
-        [xsort(1); xsort(Ntot)], [K; K], 'r-;{\fontsize{14}K_{\alpha,J}};');
-  xlabel('X', 'fontsize', 14);
-  ylabel('abs. Differenz d. Wahrscheinlichkeitsdichte', 'fontsize', 12);
-  title(['Stichprobenumfang J = ' num2str(Ntot)], 'fontsize', 14);
-  legend(gca, 'location', 'northwest');
-  grid on;
-  set(gca, 'fontsize', 14, 'linewidth', 2);
-end
-\end{verbatim}
+Die Lösung der Aufgabe ist die Implementierung folgender Berechnungen
+\begin{itemize}
+\item Erzeugung einer normalverteilten Stichprobe
+\item Berechnung von Mittelwert, empirischer Standardabweichung und relativen Häufigkeiten
+\item Berechnung der KS-Prüfgröße $D$
+\item Lilliefors-Grenzwert
+  $$
+  c_{0.05,J_1}^{\mathrm L} \; \approx \; \frac{0.886}{\sqrt{J_1}}, \qquad J_1 = 200
+  $$
+\item Erzeugung der zweiten Stichprobe mit $\mu_2=35$, $s_2=5$
+\item Durchführung des Einstichproben-KS-Tests für das vereinigte Array unter Vorgabe 
+der Parameter $\mu_1 = 23$ und $s_1 = 3$
+\item Einstichproben-KS-Grenzwert 
+$$
+K_{0.05, J_2} \; \approx \; \sqrt{-\frac{1}{2 \, J_2} \, \ln(\frac{0.05}{2})}, \qquad J_2 = 31
+$$
+\item Grafische Vergleiche der empirischen und angepassten Verteilungsfunktion
+\end{itemize}
+
+Die Zufallszahlen werden mit einem festen Startwert erzeugt, sodass die Ergebnisse reproduzierbar sind. Benötigt werden \texttt{numpy}, \texttt{scipy} und \texttt{matplotlib}, die bei einer Neuinstallation von
+Python oder falls bisher nicht gebraucht mit folgendem Befehl in die Pythonumgebung eingebaut werden können
+
+\texttt{python -m pip install numpy scipy matplotlib}
+
+\vspace{3mm}
+
+\lstinputlisting[style=Python]{05_vorlesung/code/example_KSTestAufg1.py}
+
+\newpage
 
 \textbf{\large Lösung zu Aufgabe 2}
 
-Gegeben seien zwei \textsl{gepoolte} Stichproben
+Gegeben sind die Stichproben
+\begin{align*}
+X_1 &= (53,\,\,69,\,\,63,\,\,47,\,\,49,\,\,44,\,\,47,\,\,44,\,\,38),\\
+X_2 &= (21,\,\,33,\,\,19,\,\,39,\,\,7).
+\end{align*}
+Das Signifikanzniveau beträgt in allen Tests
+\[
+\alpha=0{,}05.
+\]
 
-Stichprobe 1:
+\begin{enumerate}
 
-\begin{tabular}{|c|c|c|c|c|}
-\hline
-21 & 33 & 19 & 39 & 7\\
-\hline
-\end{tabular}
 
-Stichprobe 2:
+\item[a)] \textbf{Mittelwerte und Standardabweichungen}
 
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
-\hline
-53 & 69 & 63 & 47 & 49 & 44 & 47 & 44 & 38\\
-\hline
-\end{tabular}
+Für die empirische Standardabweichung wird durch $J_i-1$ geteilt:
+\[
+s_i=\sqrt{\frac{1}{J_i-1}\sum_{j=1}^{J_i}
+(x_{i,j}-\overline{x}_i)^2}.
+\]
+Damit erhält man
+\[
+\begin{array}{c|c|c|c}
+\text{Stichprobe} & J_i & \overline{x}_i & s_i\\
+\midrule
+1 & 9 & 50{,}4444 & 9{,}8249\\
+2 & 5 & 23{,}8000 & 12{,}5379
+\end{array}
+\]
 
-\begin{itemize}
-\item[a)] Zu jeder der beiden Stichproben die Mittelwerte und Standardabweichungen:
+\item[b)] \textbf{F-Test auf gleiche Varianzen}
 
-Stichprobe 1: Mittelwert $\bar x_1 = $ (21 + 33 + 19 + 39 + 7)/5 = 23.8,
-Standardabweichung $s_1 = $ $\sqrt{((21-23.8)^2 + (33-23.8)^2 + (19-23.8)^2 + (39-23.8)^2 + (7-23.8)^2)/(5-1)}$ $= 12.54$
-
-Stichprobe 2: Mittelwert $\bar x_2 = 50.44$, Standardabweichung $s_2 = 9.83$
-
-\item[b)] Nullhypothese $H_0$: $\mu_1 = \mu_2$
-$$
-T \; = \; \frac{\bar x_1 \, - \, \bar x_2}{\sqrt{\bar s_1^2 + \bar s_2^2}}
-$$
-Varianzen der Mittelwerte:
-$$
-\bar s_1^2 = \frac{s_1^2}{5} = \frac{(12.54)^2}{5} = 31.44
+Wir prüfen
+\[
+H_0:\ \sigma_1^2=\sigma_2^2
+\qquad\text{gegen}\qquad
+H_1:\ \sigma_1^2\ne\sigma_2^2.
+\]
+Die Prüfgröße wird hier als Quotient in der vorgegebenen Reihenfolge
+der Stichproben gebildet:
+\[
+F=\frac{s_1^2}{s_2^2}.
+\]
+Unter $H_0$ gilt
+\[
+F\sim F_{\nu_1,\nu_2},
 \qquad
-\bar s_2^2 = \frac{s_2^2}{9} = \frac{(9.83)^2}{9} = 10.73
-$$
-damit
-$$
-T \; = \; \frac{23.8 \, - \, 50.44}{\sqrt{31.44 + 10.73}} = -4.10
-$$
-t-Quantil für Signifikanzniveau $\alpha = 0.05$ für zweiseitige Verteilung:
-$t_{1-\alpha/2,\nu} = t_{0.975,5+9-2} = 2.18$
+\nu_1=J_1-1=8,
+\qquad
+\nu_2=J_2-1=4.
+\]
+Mit den empirischen Varianzen ergibt sich
+\[
+s_1^2=96{,}5278,
+\qquad
+s_2^2=157{,}2000,
+\qquad
+F=0{,}6140.
+\]
+Der zweiseitige Annahmebereich lautet
+\[
+F_{\alpha/2;\,8,4}
+\leq F \leq
+F_{1-\alpha/2;\,8,4}.
+\]
+Numerisch ist dies
+\[
+0{,}1979\leq F\leq8{,}9796.
+\]
+Da der F-Wert im Annahmebereich liegt, werden die Varianzen als gleich angesehen.
+Damit werden die Stichproben für den folgenden Test gepoolt.
 
-Ergebnis: $|T| = 4.10 > 2.18$ also Nullhypothese ablehnen
+Als Pythoncode:
 
-\item[c)] Nullhypothese $H_0$: $s_2^2 = \sigma_0^2$ mit $\sigma_0 = 6$
-$$
-T \; = \; \nu \, \left( \frac{s_2}{\sigma_0} \right)^2
-$$
-mit $\nu = 9-1$ für Stichprobe 2
-$$
-T \; = \; 8 \, \left( \frac{9.83}{6} \right)^2 = 21.45
-$$
-$\chi^2$-Quantile für Signifikanzniveau $\alpha = 0.05$ sind
-$\chi^2_{\alpha/2,\nu} = \chi^2_{0.025,8} = 2.180$ und
-$\chi^2_{1-\alpha/2,\nu} = \chi^2_{0.975,8} = 17.535$
+\begin{lstlisting}[style=Python]
+# F-Test. 
+# F = s1^2 / s2^2, mit nu1=J1-1 und nu2=J2-1
+# J1 Stichprobenumfang zu s1
+f_value = variance1 / variance2
+f_df1 = J1 - 1
+f_df2 = J2 - 1
+f_lower = stats.f.ppf(alpha / 2, f_df1, f_df2)
+f_upper = stats.f.ppf(1 - alpha / 2, f_df1, f_df2)
+f_p_value = 2 * min(
+    stats.f.cdf(f_value, f_df1, f_df2),
+    stats.f.sf(f_value, f_df1, f_df2),
+)
+\end{lstlisting}
 
-Gilt $\chi^2_{\alpha/2,\nu} < T < \chi^2_{1-\alpha/2,\nu}$?
+\item[c)] \textbf{Test auf gleichen Erwartungswert}
 
-Ergebnis: $2.180 < 21.45$ aber $21.45$ ist nicht kleiner als $17.535$, also $H_0$ ablehnen
+Da der F-Test die Gleichheit der Varianzen nicht verworfen hat,
+verwenden wir den gepoolten Zweistichproben-t-Test. Die Hypothesen lauten
+\[
+H_0:\ \mu_1=\mu_2
+\qquad\text{gegen}\qquad
+H_1:\ \mu_1\ne\mu_2.
+\]
+Die gepoolte Varianz ist
+\[
+s_p^2=
+\frac{(J_1-1)s_1^2+(J_2-1)s_2^2}{J_1+J_2-2}
+=116{,}7519.
+\]
+Die Prüfgröße lautet
+\[
+t=\frac{\overline{x}_1-\overline{x}_2}
+{s_p\sqrt{1/J_1+1/J_2}}
+=4{,}4210.
+\]
+Unter $H_0$ ist diese Prüfgröße t-verteilt mit
+\[
+\nu=J_1+J_2-2=12
+\]
+Freiheitsgraden. Für den zweiseitigen Test wird das Quantil
+\[
+t_{1-\alpha/2;\,12}=2{,}1788
+\]
+verwendet. Da
+\[
+|t|=4{,}4210>2{,}1788,
+\]
+gilt:
+Die Nullhypothese gleicher Erwartungswerte wird verworfen.
 
-\item[d)] Nullhypothese $H_0$: $s_2^2 = \sigma_0^2$ mit $\sigma_0 = 9$
-$$
-T \; = \; 8 \, \left( \frac{9.83}{9} \right)^2 = 9.53
-$$
-Ergebnis:
-T liegt zwischen den Quantilen $2.180 < 9.53 < 17.535$, also $H_0$ annehmen
-\end{itemize}
+\item[d)] \textbf{Test der Standardabweichung mit $\sigma_0=6$}
 
-\textsl{Anmeerkung:} Die Stichproben sind gepoolt, weil Ihre Varianzen mit einem  Vertrauensniveau
-von $95 \%$ übereinstimmen:
+Für die zweite Stichprobe prüfen wir einseitig
+\[
+H_0:\ \sigma=\sigma_0=6
+\qquad\text{gegen}\qquad
+H_1:\ \sigma>6.
+\]
+Bei normalverteilten Beobachtungen gilt unter $H_0$
+\[
+Q=\frac{(J_2-1)s_2^2}{\sigma_0^2}
+\sim\chi^2_{J_2-1}.
+\]
+Es handelt sich daher um einen Chi-Quadrat-Test. Für den rechten Rand
+ist das Quantil
+\[
+\chi^2_{1-\alpha;\,4}=9{,}4877.
+\]
+Die Prüfgröße beträgt
+\[
+Q=\frac{4\cdot157{,}2000}{6^2}=17{,}4667.
+\]
+Da $Q>\chi^2_{1-\alpha;\,4}$, folgt:
+Die Nullhypothese wird verworfen.
+% Der zugehörige einseitige p-Wert beträgt ungefähr
+% \[
+% p=0{,}0016.
+% \]
 
-Fischertest:
-\begin{verbatim}
->> T = var(x1)/var(x2)
-T =  1.6285
->> Flinks = finv(alpha/2, length(x2)-1, length(x1)-1)
-Flinks =  0.19792
->> Frechts = finv(1-alpha/2, length(x2)-1, length(x1)-1)
-Frechts =  8.9796
-\end{verbatim}
-da der Wert der Prüfgröße mit $T = 1.629$ zwischen den Werten der Quantile liegt
-$$
-0.198 = F_{\alpha/2,\nu_2,\nu_1} \; \leq \; T = 1.629
-\; \leq \; F_{1-\alpha/2,\nu_2,\nu_1} =  8.980
-$$
-akzeptieren wir die Nullhypothese, dass die Varianzen übereinstimmen.
+\item[e)] \textbf{Test der Standardabweichung mit $\sigma_0=9$}
+
+Nun wird geprüft:
+\[
+H_0:\ \sigma=9
+\qquad\text{gegen}\qquad
+H_1:\ \sigma>9.
+\]
+Die Prüfgröße ist
+\[
+Q=\frac{4\cdot157{,}2000}{9^2}=7{,}7630.
+\]
+Das Quantil der $\chi^2$-Verteilung bleibt unverändert:
+\[
+\chi^2_{1-\alpha;\,4}=9{,}4877.
+\]
+Damit gilt:
+Die Nullhypothese wird nicht verworfen.
+% Der einseitige p-Wert beträgt ungefähr
+% \[
+% p=0{,}1007.
+% \]
+
+\end{enumerate}

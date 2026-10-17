@@ -207,7 +207,7 @@ durchgeführt wird, deren Rest als Ergebnis in die weiteren Berechnungsschritte 
 \includegraphics[width=160mm]{09_vorlesung/media/TransformRandomDistri.pdf}
 \caption{\label{pverteilteZufallszahlen} Eine gleichverteilte Größe wie beispielsweise
 eine Wahrscheinlichkeit $\alpha$ wird über die inverse Funktion $P^{-1}$ der
-kummulierten Wahrscheinlichkeitsverteilung $P$, also der aufintegrierten Verteilung
+kumulierten Wahrscheinlichkeitsverteilung $P$, also der aufintegrierten Verteilung
 der Wahrscheinlichkeitsdichte $p$, abgebildet auf die Größe $Y$, die dann $p$-verteilt ist.}
 \end{center}
 \end{figure}
@@ -230,7 +230,7 @@ a = np.random.randn(nrow, ncol)
 Mit \texttt{rand} werden gleichverteilte Zufallszahlen $R \in [0, 1)$ erzeugt.
 
 Wir können aber auch selber gleichverteilte Zufallszahlen abbilden auf eine andere Verteilung $p$,
-wenn wir die Umkehrfunktion der kumulierten Verteilung $P^{-1}$ dazu zur Verfügung haben.
+wenn wir die Umkehrfunktion der kumulierten Verteilung $P^{-1}$, auch \textsl{Quantilfunktion} genannt, dazu zur Verfügung haben.
 Sei $R = \{R_1, \dots, R_J\}$ ein Sample, eine Stichprobe, gleichverteilter Zufallszahlen mit
 $R \in [0,1)$, so ist die Menge der mit $P^{-1}$ transformierten Zufallszahlen
 $$
@@ -251,136 +251,3 @@ R = np.random.rand(1, Jz)
 Z = scipy.stats.t.ppf(R[0], nu)
 \end{lstlisting}
 
-\section{Monte-Carlo-Verfahren gemäß GUM-supplement~1 JCGM 101}
-\label{VorschauMCVerfahren}
-In Kapitel~\ref{montecarloMU} werden wir das Monte-Carlo-Verfahren gemäß GUM-supplement~1 JCGM 101
-erläutern, bei dem wie oben bereits erwähnt,
-gemäß den jeweiligen Ver\-teil\-ungen der unterschiedlichen direkten Messgrößen
-eine große Stichprobe (ein großes \textsl{Sample})
-$\mathbf{x}_1 = (x_{1,1},\dots,x_{N,1})^\mathsf{T}$, $\dots$, $\mathbf{x}_J = (x_{1,J},\dots,x_{N,J})^\mathsf{T}$
-für die direkten Größen $\mathbf{X}$ per Zufallszahlengenerator erzeugt
-wird. Diese wird in das Modell $f$ gesteckt,
-um eine Stichprobe
-\begin{equation}
-y_1 = f(x_{1,1},\dots,x_{N,1}), \dots, y_J = f(x_{1,J},\dots,x_{N,J})
-\end{equation}
-der indirekten Größe $Y$ zu gewinnen. Entweder wird aus der inversen Funktion der kumulierten
-Wahrscheinlichkeitsverteilung das Überdeckungsintervall gewonnen oder es werden aus dem Sample $y_1,\dots, y_J$
-der Erwartungswert $\bar y$ und die Standardabweichung $\sigma_Y$ gemäß
-$$
-\bar y = \frac{1}{J} \sum_{j=1}^{J} y_j \qquad
-\sigma_Y = \sqrt{\frac{1}{J-1} \sum_{j=1}^{J} (y_j - \bar y)^2}
-$$
-berechnet.
-
-Dieses Verfahren entspricht gemäß \cite{Wue08} und GUM S1 in etwa den Berechnungen wie
-in Gl.~(\ref{PosteriorSensor}), nämlich wenn wir für die Standardabweichung $\sigma_\mathrm{winzig}$
-den Grenzübergang $\sigma_\mathrm{winzig} \rightarrow 0$ machen, sodass die zu integrierende
-Verteilung in die folgende übergeht:
-\begin{equation}
-\arraycolsep=2.0pt\def\arraystretch{2.0}
-\begin{array}{l}
-p(Y, X_\mathrm{K}, X_\mathrm{M} | (X_{\mathrm{M},1}, \dots, X_{\mathrm{M},J}), K_0, s_\mathrm{K}) \propto \\
-\delta\left(Y \; - \; X_\mathrm{K} \, X_\mathrm{M}\right)
-\;  e^{-\frac{1}{2} \left(\frac{X_\mathrm{K} - K_0}{s_\mathrm{K}} \right)^2} \; \prod\limits_{j=1}^J  \,
-e^{-\frac{1}{2} \left(\frac{ X_\mathrm{M} - X_{\mathrm{M},j} }{s_\mathrm{M}} \right)^2}
-\end{array}
-\label{PosteriorFall4}
-\end{equation}
-Zu den Größen $X_\mathrm{K}$ und $X_\mathrm{M}$ werden dann zufällige
-Samples gewählt.
-
-Im folgenden werden wir den Grenzübergang der Wahrscheinlichkeitsdichte für das Modell
-\begin{equation}
-\lim_{\sigma \rightarrow 0} \left\{ e^{-\frac{1}{2} \left(\frac{Y-f(\mathbf{X})}{\sigma}\right)^2} \right\}
-= \delta\left(Y \; - \;f(\mathbf{X})\right)
-\end{equation}
-in eine dirac'sche Distribution als \textsl{scharfen Modellprior} bezeichnen. 
-
-Für univariate, explizite Modellfunktionen und für normalverteilte Größen $X_i$ sieht die
-Posterior mit \textsl{scharfem Modellprior} dann wie folgt aus
-\begin{equation}
-\arraycolsep=2.0pt\def\arraystretch{2.0}
-\begin{array}{l}
-p(Y, X_\mathrm{1}, \dots, X_\mathrm{N} | (X_{1,1}, \dots, X_{1,J_1}), ..., (X_{K,1}, \dots, X_{K,J_1}),
- \bar x_{K+1}, s_\mathrm{K+1}, \dots, \bar x_{N}, s_\mathrm{N}) \propto \\
-\delta\left(Y \; - \; f(X_1, \dots \, X_N)\right)
-\; \left( \prod\limits_{i=1}^K \, \prod\limits_{j=1}^{J_i}  \,
-e^{-\frac{1}{2} \left(\frac{ X_i - X_{i,j} }{s_i} \right)^2} \right)
-\;  \left( \prod\limits_{i=K+1}^N \,  e^{-\frac{1}{2} \left(\frac{X_i - \bar x_i}{s_i} \right)^2} \right) .
-\end{array}
-\label{PosteriorFall4allgemeiner}
-\end{equation}
-
-Die Posteriorverteilung, also die Wahrscheinlichkeitsdichteverteilung der indirekten Messgröße ist dann das Integral:
-\begin{small}
-\begin{equation}
-p(Y) = \int\limits_{-\infty}^{\infty} \dots \int\limits_{-\infty}^{\infty} \,
-p(Y, X_\mathrm{1}, \dots, X_\mathrm{N} | (X_{1,1}, \dots, X_{1,J_1}), \dots, (X_{K,1}, \dots, X_{K,J_1}),
- \bar x_{K+1}, s_\mathrm{K+1}, \dots, \bar x_{N}, s_\mathrm{N}) \, \mathrm{d}X_1 \dots \mathrm{d} X_\mathrm{N}
-\end{equation}
-\end{small}
-Der Ansatz mit scharfen Modellprior und ohne Ergebnisse vorheriger Messkampagnen ist der aus GUM-S1, siehe Gl.~(\ref{eq:probCombinationGeneral}) in Kapitel \ref{montecarloMU}. In Kapitel \ref{montecarloMU} die Grundidee des GUM-S1 ausführlich behandelt.
-
-Wir hatten bereits angesprochen, dass die Monte-Carlo-Verfahren auch insbesondere
-für Messaufgaben eingesetzt werden, bei denen mindestens ein Teil der direkten Messgrößen nicht normalverteilt ist.
-Dies kann vielfach sein, dass $t$-Verteilungen zu betrachten sind. Es kommen auch immer wieder Messaufbauten
-vor, bei denen die U-Verteilung eine Rolle spielt, also keine Glocke, sondern
-eine Verteilung, die ihre starken \textsl{Peaks} an den Rändern des Bereichs hat. Dies ist beispielsweise der
-Fall für Größen, deren Streuung durch Vibrationen verursacht wird. Die U-förmige Gestalt der Verteilung entspricht dann
-dem Quadrat eines Arkussinus.
-
-Anstelle der Gaußfunktionen in Gl.~(\ref{PosteriorFall4allgemeiner}) schreiben wir jetzt
-ganz allgemein $p_i$
-\begin{equation}
-\arraycolsep=2.0pt\def\arraystretch{2.0}
-\begin{array}{l}
-p(Y, X_\mathrm{1}, \dots, X_\mathrm{N} | (X_{1,1}, \dots, X_{1,J_1}), ..., (X_{K,1}, \dots, X_{K,J_1}), \,
- \theta_{K+1,1}, \dots, \theta_{N,M_K}) \propto \\
-\underbrace{\delta\left(Y \; - \; f(X_1, \dots \, X_N)\right)}_{\mathrm{scharfer~Modellprior}}
-\; \underbrace{ \left( \prod\limits_{i=1}^K \, \prod\limits_{j=1}^{J_i}  \, p_i (X_{i,j} | X_i) \right) }_{\mathrm{Likelihood}}
-\; \underbrace{ \left( \prod\limits_{i=K+1}^N \,  p_i (X_i | \theta_{i,1}, \dots, \theta_{i,M_i}) \right) }_{\mathrm{Prior}} .
-\end{array}
-\label{PosteriorFall4p}
-\end{equation}
-mit der Symmetrieeigenschaft $p(X_{i,j} | X_i) = p(X_i | X_{i,j}) \equiv l(X_i | X_{i,j})$.
-Dabei stellen $\theta_{K+1,1},$ $\dots,$ $\theta_{N,M_K}$ Parameter aus {\`a} priori Informationen dar,
-wie beipielsweise $\theta_{i,1} = \bar x_i$ und $\theta_{i,2} = s_i$.
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=90mm]{09_vorlesung/media/Zufallszahlen_abbilden_Verteilung.pdf}
-\caption{\label{ZufallszahlenAbbilden} Ein Sample gleichverteilter Zufallszahlen
-$\boldsymbol R = \{R_1, \dots, R_L\}$ wird über die inverse Funktion $P^{-1}$ der
-kumulierten Wahrscheinlichkeitsverteilung $P$ abgebildet auf ein
-Sample $\boldsymbol X = \{X_1, \dots, X_L\}$, deren Werte dann $p$-verteilt sind.}
-\end{center}
-\end{figure}
-Wie in Abb.~\ref{ZufallszahlenAbbilden} dargestellt wird zur Erzeugung jeder der Verteilungen
-$p_i (X_{i,j} | X_i)$ bzw.\ $p_i (X_i | \theta_{i,1},$ $\dots,$ $\theta_{i,M_i})$ der jeweiligen Größe
-$X_i$ je ein Sample gleichverteilter Zufallszahlen $\boldsymbol R_i =$ $\{R_{i,1},$ $\dots,$ $R_{i,L}\}$ generiert, das
-dann mit $P_i^{-1}$ abgebildet wird auf $\boldsymbol X_i = \{X_{i,1}, \dots, X_{i,L}\}$.
-Wir wissen, dass die $X_{i,j}$ beobachtete Werte der Größe sind, also Konstanten, die die Funktion
-$P_i^{-1}$ parametrisieren. Entsprechend sind auch die $\theta_{i,1}, \dots, \theta_{i,M_i}$ Konstanten, die
-die dazugehörige Funktion $P_i^{-1}$ parametrisieren. $\theta_{i,m}$ sind beispielsweise Mittelwert und
-Standardabweichung, oder andere Modellparameter, die aus Beobachtungen (Messdaten) gewonnen wurden.
-Zu jeder der Funktionsvariablen $X_i$ wird also wie soeben beschrieben jeweils ein Sample $p_i$-verteilter
-Zufallsgrößen generiert. Für die Samples wird jeweils derselbe Stichprobenumfang $L$ gebraucht, damit
-sich Tupel $(X_{1,l}, \dots, X_{N,l})$ mit $l = 1,\dots, L$ zusammenstellen lassen, aus denen über die
-Modellfunktion $f$ jeweils der Wert $Y_l$ für die indirekte Messgröße $Y$ berechnet wird
-\begin{equation}
-Y_l \; = \; f(X_{1,l}, \dots, X_{N,l})
-\end{equation}
-mit $L$ eine sehr große natürliche Zahl.
-
-Aus der Verteilung der Werte $Y_l$ lässt sich dann die Messunsicherheit bestimmen.
-Dieses Verfahren wird angewendet, wenn sich keine Sensitivitätskoeffizienten zu $f$
-berechnen lassen oder wenn die Sensitivitätskoeffizienten in der Nähe von Null liegen, weil
-$f$ in der Umgebung der Schätzwerte ganz flach ist, also ein Extremum oder Sattelpunkt hat.
-Das bedeutet, dass $f$ nicht linearisierbar ist.
-
-Insbesondere wird das Verfahren mit den großen Zufallszahlensamples dann angewendet, wenn es
-keine analytisch geschlossene Darstellung zu dem Modell $f$ gibt.
-Numerische Verfahren unter Anwendung von Zufallszahlen werden häufig in Anlehnung an den Zufall
-des Würfel- oder Roulettespiels Monte-Carlo-Verfahren genannt, so auch hier bei der Ermittlung
-von Messunsicherheiten.

@@ -1,901 +1,1882 @@
-\section{M.U.F. für univariate, explizite indirekte Größe, linear von direkten Größen abhängig}
+% Einzubindendes Vorlesungskapitel; benötigt amsmath, amssymb, array,
+% graphicx und hyperref. Die vorhandenen Abbildungspfade sind erhalten.
 
-In der ersten Vorlesung, in Abschnitt \ref{Kap1Kovarianzen}, wurden die Varianz und Kovarianz
-von Zufallsgrößen eingeführt. In dem Zusammenhang haben wir die Rechenregeln für Erwartungswerte,
-Summen, Produkte und Skalierungen dazu eingeführt. Auf Grundlage dieser Rechenregeln haben
-wir die Varianz einer Zufallsgröße, die Linearkombination von mehreren Zufallsgrößen $X_i$ ist,
-als Funktion der Kovarianzen der Zufallsgrößen $X_i$ bestimmt.
-Wir wiederholen hier noch mal kurz die Herleitung zu Gl.~(\ref{univarLinearFortpflanzungKap1})
-und damit also Gl.~(\ref{univarLinearFortpflanzung}) und zeigen,
-weshalb die Varianz einer indirekten Größe, die linear
-von den direkten Messgrößen gemäß Gl.~(\ref{univarLinear}) abhängt, Funktion der Kovarianzen
-und Varianzen der direkten Messgrößen ist.
+In Kapitel~\ref{unsicherheitsfortKonzepteMethoden} haben wir den gemeinsamen Rahmen des GUM und seiner Supplements
+kennengelernt. In diesem Kapitel betrachten wir ein explizites Messmodell
+$Y=f(\mathbf X)$ mit einer skalaren Ausgangsgröße $Y$ und einem
+Vektor von Eingangsgrößen $\mathbf X$. Wir leiten das Gesetz zur Fortpflanzung von Standardunsicherheiten her, untersuchen die Rolle von Korrelationen und
+bestimmen anschließend eine erweiterte Messunsicherheit.
 
+Da die Verwendung der Begriffe Schätzwert (\textsl{estimate}) einer Messgröße und Beobachtungswert nicht immer eindeutig ist, betrachten wir hier genauer, wie diese in den GUM-Dokumenten verstanden werden. Dort wird der beste verfügbare Schätzwert (\textsl{best estimate}) im Sinne eines Ergebnisses einer Messung und ihrer Auswertung spezifiziert mit \textsl{the result of the measurement is the best estimate of, attributable to, the value of the measurand}. Ein Schätzwert wird gemäß Abschnitt 3.1.2 des GUM (JCGM 100) für ein Messergebnis verwendet, dort heißt es
+
+\begin{quote}
+\textsl{In general, the result of a measurement is only an approximation or estimate of the value of the measurand and thus is complete only when accompanied by a statement of the uncertainty of that estimate.}
+\end{quote}
+
+Großbuchstaben bezeichnen die Größen im Wahrscheinlichkeitsmodell,
+Kleinbuchstaben ihre Schätzwerte. Ein Schätzwert $x_i$ kann ein
+Stichprobenmittelwert $\bar x_i$ sein oder aus anderen Informationen stammen.
+$u(x_i)$ ist die dem Schätzwert $x_i$ zugeordnete Standardunsicherheit; $u_{\mathrm c}(y)$ ist die kombinierte Standardunsicherheit der Ausgangsgröße. 
+
+Im statistischen Beobachtungsmodell wird der mögliche Ausgang der $k$-ten Einzelbeobachtung einer Größe durch eine Zufallsgröße\footnote{Zufallsgrößen werden in der Mathematik auch Zufallsvariablen genannt} $X_{i,k}$ beschrieben. Der tatsächlich erhaltene Größenwert ist eine Realisierung dieser Zufallsgröße und wird als Beobachtungswert (\textsl{observed value}) bezeichnet.
+
+Um Zufallsgröße und Realisierung eindeutig zu unterscheiden, bezeichnen wir in dieser Vorlesung den konkreten Beobachtungswert mit $x_{i,k}$.
+Der GUM verwendet hierfür in Abschnitt~4.1.1, Anmerkung~2, dagegen ebenfalls den Großbuchstaben $X_{i,k}$. Die Groß- und Kleinschreibung allein unterscheidet diese beiden Bedeutungen im GUM somit nicht durchgehend.
+
+Aus den Beobachtungswerten können Schätzwerte bestimmt werden, beispielsweise der Mittelwert $\bar x_i$ einer Messreihe. Ein Schätzwert $x_i$ kann jedoch auch aus einem Fitverfahren, einem Kalibrierschein oder anderen verfügbaren Informationen stammen. 
+
+In Abschnitt 4.1.1 vom GUM heißt es
+\begin{quote}
+In most cases, a measurand $Y$ is not measured directly, but is determined from $N$ other quantities $X_1, X_2, \dots, X_N$ through a functional relationship $f$:
+$$
+Y = f(X_1,X_2,\dots,X_N)
+$$
+\begin{itemize}
+\item[]NOTE 1 For economy of notation, in this Guide the same symbol is used for the physical quantity (the measurand) and for the random variable (see 4.2.1) that represents the possible outcome of an observation of that quantity. When it is stated that $X_i$ has a particular probability distribution, the symbol is used in the latter sense; it is assumed that the physical quantity itself can be characterized by an essentially unique value (see 1.2 and 3.1.3).
+\item[]NOTE 2 In a series of observations, the $k$-th observed value of $X_i$ is denoted by $X_{i,k}$; hence if $R$ denotes the resistance
+of a resistor, the $k$-th observed value of the resistance is denoted by $R_k$.
+\item[]NOTE 3 The estimate of $X_i$ (strictly speaking, of its expectation) is denoted by $x_i$.
+\end{itemize}
+\end{quote}
+
+GUM Supplement~2 (JCGM 102) erläutert in Abschnitt 4.1 ausdrücklich die unterschiedlichen Bedeutungen derselben Großbuchstaben und in den Abschnitten 4.9 und 4.10 die Verwendung der Kleinbuchstaben $x_i$ für einen Größenwert (\textsl{quantity value}), den wir in dieser Vorlesung als Wert einer Größe bezeichnen, und $\mathbf x$ für Schätzwerte der Eingangsgrößen (\textsl{estimates of the input quantities}) oder Schätzwertevektor der Eingangsgrößen.
+
+In Abschnitt 4.1.4 vom GUM (JCGM 100) wird deutlich dass, die Kleinbuchstaben für die Schätzwerte von Messgrößen verwendet werden, sowohl für indirekte Größen, die über ein Messmodell ermittelt werden ($y$ sind Ausgangsschätzwerte, \textsl{output estimates}), als auch für Eingangsgrößen:
+
+\begin{quote}
+An estimate of the measurand $Y$, denoted by $y$, is obtained from $Y = f(X_1,X_2,\dots,X_N)$ using \textsl{input estimates} $x_1, x_2, \dots, x_N$ for the values of the $N$ quantities $X_1, X_2, \dots, X_N$. Thus the \textsl{output estimate} $y$, which is the result of the measurement, is given by
+$$
+y = f(x_1,x_2,\dots,x_N)
+$$
+\end{quote}
+
+Wir betrachten den Fall, dass die Eingangsgrößen aus unterschiedlichen Messvorgängen ermittelt wurden. Es kann beispielsweise eine der Größen ein Mittelwert $\bar x_1$ aus einer Stichprobe von Einzelbeobachtungen und eine andere der Größen aus der Lösung eines inversen Problems $\hat x_2$ geschätzt worden sein, eine weitere eine Herstellerangabe $x_3$ aus einen Datenblatt sein. Diese Werte, alle als Schätzwerte (\textsl{estimator}) bezeichnet, werden entsprechend in die Modellgleichung eingesetzt, um den Schätzwert der Ausgangsgröße zu erhalten
+$$
+y = f(\bar x_1,\hat x_2, x_3).
+$$
+
+Dass als Schätzwerte nicht nur aus den Einzelbeobachtugnen eines aktuellen Prozesses von Messungen ermittelte Schätzwerte gemeint sind, wird im Abschnitt 4.3.1 vom GUM explizit gesagt:
+
+\begin{quote}
+For an estimate $x_i$ of an input quantity $X_i$ that has not been obtained from repeated observations, the associated estimated variance $u^2(x_i)$ or the standard uncertainty $u(x_i)$ is evaluated by scientific judgement based on all of the available information on the possible variability of $X_i$. The pool of information may include
+
+\begin{itemize}
+ \item previous measurement data;
+ \item experience with or general knowledge of the behaviour and properties of \item relevant materials and instruments;
+ \item manufacturer's specifications;
+ \item data provided in calibration and other certificates;
+ \item uncertainties assigned to reference data taken from handbooks.
+\end{itemize}
+\end{quote}
+
+\section{Exakte Fortpflanzung für lineare Modelle}
+
+Wir beginnen mit einem linearen Modell, das einen konstanten
+additiven Term enthalten kann:
 \begin{equation}
-\operatorname {Var}\left(Y\right) \; = \;
-\operatorname {Var}\left(\sum _{{i=1}}^{N}c_i X_{i}\right) \; = \;
-\sum _{{i,k=1}}^{N}\operatorname {Cov}(c_i X_{i}, c_k X_{k}),
+Y=c_0+\sum_{i=1}^N c_i X_i.
+\end{equation}
+Die Koeffizienten $c_i$ und $c_0$ sind hier feste, als bekannt behandelte
+Zahlen. Falls ein Koeffizient selbst unsicher ist, wird er als zusätzliche
+Eingangsgröße in das Modell aufgenommen; dann ist die Abhängigkeit von allen
+Eingangsgrößen im Allgemeinen nicht mehr linear.
+
+Mit $\mu_i=\operatorname E(X_i)$ ergibt sich
+\begin{equation}
+\mu_Y=\operatorname E(Y)=c_0+\sum_{i=1}^N c_i\mu_i,
+\qquad
+Y-\mu_Y=\sum_{i=1}^N c_i(X_i-\mu_i).
+\end{equation}
+Der konstante Term $c_0$ beeinflusst den Erwartungswert, aber nicht die
+Varianz. Wir quadrieren die Abweichung vom Erwartungswert und bilden deren
+Erwartungswert:
+\begin{equation}
+\begin{aligned}
+\operatorname{Var}(Y)
+&=\operatorname E\!\left(\left[\sum_{i=1}^N c_i(X_i-\mu_i)\right]^2\right)\\
+&=\sum_{i=1}^N\sum_{k=1}^N c_ic_k\,
+\operatorname E\bigl((X_i-\mu_i)(X_k-\mu_k)\bigr)\\
+&=\sum_{i=1}^N\sum_{k=1}^N c_ic_k\operatorname{Cov}(X_i,X_k).
+\end{aligned}
 \label{eq:VarianzSummeISTSummeKovarianz}
 \end{equation}
-Mit
-\begin{equation*}
-\operatorname {Var}\left(\sum _{{i=1}}^{N}c_i X_{i}\right) \; = \;
-\int\limits_{-\infty}^{\infty} \dots \int\limits_{-\infty}^{\infty}
-\, \left[ \left(\sum_{i=1}^N c_i X_i\right) \; - \; E(\sum_{i=1}^N c_i X_i) \right]^2 \, p(X_1, \dots, X_N)
-\, \operatorname{d}X_1 \dots \operatorname{d}X_N .
-\end{equation*}
-und
-$$
-\left(\sum_{i=1}^N c_i X_i \right) \; - \; E\left(\sum_{i=1}^N c_i X_i\right) \; = \;
-\left(\sum_{i=1}^N c_i X_i \right) \; - \; \sum_{i=1}^N c_i E(X_i)
-$$
-gilt
-\begin{equation}
-\operatorname {Var}\left(\sum _{{i=1}}^{N}c_i X_{i}\right) \; = \;
-\int\limits_{-\infty}^{\infty} \dots \int\limits_{-\infty}^{\infty}
-\, \left[ \sum_{i=1}^N \left(c_i X_i \; - \; E(c_i X_i)\right) \right]^2 \, p(X_1, \dots, X_N)
-\, \operatorname{d}X_1 \dots \operatorname{d}X_N .
-\end{equation}
-Mit Anwendung des Assoziativgesetzes gilt
-\begin{equation*}
-\operatorname {Var}\left(\sum _{{i=1}}^{N}c_i X_{i}\right) \; = \;
-\int\limits_{-\infty}^{\infty} \dots \int\limits_{-\infty}^{\infty}
-\, \sum_{i=1}^N \sum_{k=1}^N \, c_i \,  \left(X_i \; - \; E(X_i)\right) \;
-      c_k \, \left(X_k \; - \; E(X_k)\right) \, p(X_1, \dots, X_N)
-\, \operatorname{d}X_1 \dots \operatorname{d}X_N .
-\end{equation*}
-Durch Berechnung der Marginalverteilungen und weil $\int p(X_j) \, \operatorname{d}X_j = 1$
-für alle $j$, die weder $i$ noch $k$ sind erhalten wir
-\begin{equation}
-\operatorname {Var}\left(\sum _{{i=1}}^{N}c_i X_{i}\right) \; = \;
-\sum_{i=1}^N \sum_{k=1}^N  \;
-\int\limits_{-\infty}^{\infty} \int\limits_{-\infty}^{\infty}
-\, c_i \, \left(X_i \; - \; E(X_i)\right) \;
-     c_k \, \left(X_k \; - \; E(X_k)\right) \, p(X_i, X_k)
-\, \operatorname{d}X_i \operatorname{d}X_k .
-\end{equation}
-Der Term auf der rechten Seite ist genau die Kovarianz der beiden
-Größen $X_i$ und $X_k$.
+Diese Herleitung setzt nur voraus, dass die benötigten zweiten Momente
+existieren. Weder Normalverteilung noch Unabhängigkeit sind erforderlich.
+Für $i=k$ steht in der Summe die Varianz der Eingangsgröße. Für $i\ne k$
+stehen darin die Kovarianzen zweier verschiedener Eingangsgrößen.
 
-Mit der Definition der Kovarianz
-$$
-\operatorname {Cov}(X_{i},X_{k}) :=
-\int\limits_{-\infty}^{\infty} \int\limits_{-\infty}^{\infty}
-\, \left(X_i \; - \; E(X_i)\right) \;
-      \left(X_k \; - \; E(X_k)\right) \, p(X_i, X_k)
-\, \operatorname{d}X_i \operatorname{d}X_k
-$$
-erhalten wir das Fortpflanzungsgesetz in der Form, wie wir es aus Abschnitt \ref{Kap1Kovarianzen}
-Gl.~(\ref{univarLinearFortpflanzungKap1}) bereits kennen gelernt haben.
+Da $\operatorname{Cov}(X_i,X_k)=\operatorname{Cov}(X_k,X_i)$ gilt, können wir
+die Summe auch schreiben als
 \begin{equation}
-{\begin{aligned}
-\operatorname {Var}\left(Y\right) & =
-\operatorname {Var}\left(\sum _{{i=1}}^{N} \, c_i \, X_{i}\right) \\
- & = \sum _{i=1}^{N}\sum _{k=1}^{N}\operatorname {Cov}(c_i X_{i}, c_k X_{k})\\
- & = \sum _{{i=1}}^{N} \, c_i^2 \, \operatorname {Var}(X_{i})+
-     \sum _{{i,k=1,i\neq k}}^{N} \, c_i c_k \,  \operatorname {Cov}(X_{i},X_{k})\\
-& = \sum _{{i=1}}^{N} \, c_i^2 \operatorname {Var}(X_{i})+2\sum _{{i=1}}^{{N-1}}
-  \sum _{{k=i+1}}^{N} \, c_i c_k \operatorname {Cov}(X_{i},X_{k}).
-\end{aligned}}
+\operatorname{Var}(Y)=
+\sum_{i=1}^N c_i^2\operatorname{Var}(X_i)
++2\sum_{i=1}^{N-1}\sum_{k=i+1}^N
+c_ic_k\operatorname{Cov}(X_i,X_k).
 \label{univarLinearFortpflanzungKap7}
 \end{equation}
-Bei getrennter Betrachtung der beiden Terme mit den Varianzen $\operatorname {Var}(X_{i})$
-und mit den Kovarianzen $\operatorname {Cov}(X_{i},X_{k})$, also
-in der Notation $\sum \, c_i^2 \operatorname {Var}(X_{i})+2\sum
- \sum \, c_i c_k \operatorname {Cov}(X_{i},X_{k})$, wird deutlich, ob
-die direkten Messgrößen korrelieren oder nicht.
+Der Faktor~2 entsteht, weil jedes Paar verschiedener Größen in der
+Doppelsumme zweimal vorkommt.
 
-Es gibt Anwendungen, bei denen die Korrelationkoeffizienten, definiert in
-Abschnitt \ref{Kap1Kovarianzen} Gl.~(\ref{KorrelationskoeffizientKap1})
-$\rho_{i,k} = \frac{\operatorname {Cov}(X_{i},X_{k})}{\sqrt{\operatorname {Var}(X_{i}) \operatorname {Var}(X_{k})}}$,
-angegeben werden und die Standardabweichungen $\sigma_i = \sqrt{\operatorname {Var}(X_{i})}$, so dass
-das Unsicherheitsfortpflanzungsgesetz auch in dieser Form aufgeschrieben wird
+Wir übertragen die Beziehung auf die den Schätzwerten zugeordneten
+Standardunsicherheiten und Kovarianzen:
 \begin{equation}
-\operatorname {Var}\left(Y\right) = \sigma_Y^2  =
-\sum _{{i=1}}^{N} \, c_i^2 \sigma_i^2 \, + \, 2\sum _{{i=1}}^{{N-1}}
-  \sum _{{k=i+1}}^{N} \, c_i c_k \rho_{i,k} \sigma_i \sigma_k .
+\boxed{u_{\mathrm c}^2(y)=
+\sum_{i=1}^N c_i^2u^2(x_i)
++2\sum_{i=1}^{N-1}\sum_{k=i+1}^N c_ic_k\,u(x_i,x_k).}
+\label{UnsichFortpfl2}
+\end{equation}
+Dabei bezeichnet $x_i$ die Eingangsschätzwerte, die Mittelwerte aus einer Messreihe (Stichprobe, Einzelbeobachtungen) derselben Eingangsgröße sein können, oder einzelne Werte, die aus Kalibrierungen, Modellanpassungen, Herstellerangaben oder anderen verfügbaren Informationen bestimmt wurden.
+
+Mit den Korrelationskoeffizienten $\rho_{ik}$ wird daraus
+\begin{equation}
+u_{\mathrm c}^2(y)=
+\sum_{i=1}^N c_i^2u^2(x_i)
++2\sum_{i=1}^{N-1}\sum_{k=i+1}^N
+c_ic_k \rho_{ik}u(x_i)u(x_k).
 \label{FortpflaKorrStd}
 \end{equation}
+Der GUM unterscheidet auch bei dem Symbol für den Korrelationskoeffizienten zwischem dem für die eingesetzten Eingangsschätzwerte (Formelsymbol $r$ mit $r(x_i,x_k)$) und dem Symbol $\rho$ für die Größen $\rho(X_i,X_k)$, siehe Anhang C 3.6 in GUM \cite{GUM95}. In dieser Vorlesungsreihe verzichten wir auf das separate Symbol $r$, machen diese Unterscheidung nur über die Argumente $(x_i,x_k)$ im Unterschied zu $(X_i,X_k)$ und verwenden durchgängig nur $\rho$.
 
-Die aus dem Fortpflanzungsgesetz resultierende Messunsicherheit $\sigma_Y$ wird auch
-\textsl{kombinierte Standardabweichung} genannt.
+Mit $u(x_i,x_k)$, also $u$ mit \emph{zwei} Argumenten, bezeichnet eine Kovarianz und keine Standardunsicherheit. Ihre physikalische Dimension ist das Produkt der Dimensionen der beiden Eingangsgrößen:
+\begin{equation}
+\dim\bigl(u(x_i,x_k)\bigr)=\dim X_i\,\dim X_k.
+\end{equation}
+Entsprechend wird die Kovarianz in der Produkteinheit der beiden
+Eingangsgrößen angegeben. Beispielsweise hat die Kovarianz zweier
+Längen die Dimension $\mathsf L^2$ und bei Angabe der Längen in
+Metern die Einheit $\mathrm{m}^2$.
+Insbesondere gilt $u(x_i,x_i)=u^2(x_i)$.
 
-Oftmals, so auch im \textsl{Guide} für Messunsicherheit GUM - JCGM 100, wird anstelle der
-Bezeichnung $\rho_{i,k}$ die
-Bezeichnung $r(X_{i},X_{k})$ verwendet, meint aber dasselbe.
+Für unkorrelierte Eingangsgrößen verschwinden die Mischterme:
+\begin{equation}
+u_{\mathrm c}(y)=\sqrt{\sum_{i=1}^N[c_i u(x_i)]^2}.
+\label{eq:UnkorrelierteFortpflanzung}
+\end{equation}
+Die positive Quadratwurzel der kombinierten Varianz heißt
+\textsl{kombinierte Standardunsicherheit}. Diese Bezeichnung
+gilt sowohl mit als auch ohne Kovarianzbeiträge.
 
-Alternativ, insbesondere im GUM - JCGM 100, gibt es die Schreibweise mit $u$ anstelle der
-Standardabweichungen $\sigma$ als Kürzel für \textsl{uncertainty} oder \textsl{Unsicherheit},
-und heißt in diesem Zusammenhang \textsl{Standardunsicherheit} (engl.\ \textsl{standard uncertainty}).
-Dabei können je nach Anwendung mit den Standardabweichungen $\sigma$ Standardabweichungen je einer
-Einzelstichprobe gemeint sein, oder - was häufiger vorkommt - die Standardabweichungen der Mittelwerte der Stichproben zu den jeweiligen Messgrößen verstanden werden:
+Für unkorrelierte Eingangsgrößen verschwinden die Mischterme.
+Die Varianzen der mit den Sensitivitätskoeffizienten
+gewichteten Beiträge addieren sich dann. Daraus folgt
+die quadratische Addition der Standardunsicherheitsbeiträge.
+
+Zur Bestimmung der Messunsicherheit benötigen wir ein Messmodell.
+Bei der Modellbildung müssen wir beschreiben, wie die
+Eingangsgrößen auf die Ausgangsgröße wirken und welche
+physikalischen Zusammenhänge oder gemeinsamen Einflüsse
+zwischen den Eingangsgrößen bestehen. Relevante gemeinsame Einflüsse, 
+beispielsweise dieselbe Temperatur oder derselbe Referenzwert, müssen bei der
+Bestimmung der Messunsicherheit berücksichtigt werden.
+Sie sollten nach Möglichkeit ausdrücklich als gemeinsame
+Einflussgrößen in das Messmodell aufgenommen werden.
+Ihre Auswirkungen können jedoch auch durch entsprechend
+bestimmte Kovarianzen zwischen den Eingangsgrößen
+berücksichtigt werden.
+
+
+Auch bei einem linearen Messmodell können zwischen den
+Eingangsgrößen nichtlineare statistische Abhängigkeiten bestehen.
+Für die Varianzfortpflanzung eines linearen Modells genügen
+jedoch die Varianzen und Kovarianzen der Eingangsgrößen.
+Die Kovarianzen lassen sich, wie zuvor gezeigt, als Produkt
+des Korrelationskoeffizienten und der beiden
+Standardunsicherheiten ausdrücken.
+
+Korrelationen können beispielsweise entstehen, wenn mehrere
+Ergebnisse auf demselben Referenzwert beruhen oder durch dieselbe
+Temperaturänderung beeinflusst werden. Für zwei Eingangsgrößen
+und das Messmodell $Y=X_1-X_2$ lautet die Fortpflanzung
+\begin{equation}
+u_{\mathrm c}^2(y)
+=
+u^2(x_1)+u^2(x_2)
+-2\rho_{1,2}u(x_1)u(x_2).
+\end{equation}
+Bei positiver Korrelation ist die Standardunsicherheit der
+Differenz kleiner als bei einer Rechnung, die diese Korrelation
+vernachlässigt. Bei einer Summe $Y=X_1+X_2$ steht dagegen ein
+Pluszeichen vor dem Mischterm. Positive Korrelation führt dann
+zu einer größeren Standardunsicherheit als bei Vernachlässigung
+der Korrelation.
+
+Ein gemeinsamer additiver Einfluss $B$ lässt sich direkt
+modellieren:
+\begin{equation}
+X_1=A_1+B,\qquad X_2=A_2+B.
+\end{equation}
+Sind $A_1$, $A_2$ und $B$ unabhängig und existieren ihre
+Varianzen, gilt
+\begin{equation}
+\operatorname{Cov}(X_1,X_2)=\operatorname{Var}(B).
+\end{equation}
+In der Differenz
+\begin{equation}
+X_1-X_2=A_1-A_2
+\end{equation}
+fällt $B$ vollständig heraus. In der Summe
+\begin{equation}
+X_1+X_2=A_1+A_2+2B
+\end{equation}
+geht derselbe Einfluss dagegen mit dem Faktor $2$ ein;
+sein Varianzbeitrag beträgt daher $4\operatorname{Var}(B)$.
+
+Eine Modellierung mit gemeinsamen Einflussgrößen macht solche
+Zusammenhänge oft deutlicher als die bloße Vorgabe eines
+Korrelationskoeffizienten.
+
+Die Unsicherheitsfortpflanzung lässt sich in kompakter Weise in Matrixschreibweise formulieren. Diese Matrixschreibweise ist gleichwertig zur Summenform der Unsicherheitsfortpflanzung in Abschnitt~5.2.2,
+Gl.~(13), des GUM \cite{GUM95}. Die Kovarianzmatrix wird dort
+in Anmerkung~2 von Abschnitt 5.2.2 und in Anhang C.3.5 beschrieben. In Anhang C.3.5 wird sie mit dem Symbol $\mathbf V$ verwendet, während wir das Symbol $\mathbf U$ passend zu den Matrixelementen $u$ für die Kovarianzen und zu dem GUM Supplement~2 verwenden. Bevor Gl. (\ref{UnsichFortpfl2}) in Matrixschreibweise gezeigt wird, gehen wir zunächst genauer darauf ein, wie der GUM die Kovarianzen versteht.
+
+Für die Matrixschreibweise fassen wir die Eingangsschätzwerte im Spaltenvektor
+\begin{equation}
+\mathbf x=(x_1,\dots,x_N)^\mathsf T
+\end{equation}
+zusammen. Dieser Vektor enthält für jede Eingangsgröße den
+konkreten Wert, der in das Messmodell eingesetzt wird,
+beispielsweise einen Mittelwert aus einer Messreihe oder
+einen Wert aus einem Kalibrierschein.
+
+Für diese Eingangsschätzwerte bestimmen wir die
+Standardunsicherheiten und die Kovarianzen auf Grundlage
+der verfügbaren Informationen. Die Ergebnisse dieser
+Unsicherheitsbewertung fassen wir in der Matrix
+\begin{equation}
+\mathbf U_{\mathbf x}
+=
+\bigl(u(x_i,x_k)\bigr)_{i,k=1}^{N}
+\label{covmatrixGUMskalar}
+\end{equation}
+zusammen. Ihre Diagonale enthält die quadrierten
+Standardunsicherheiten $u^2(x_i)$; die übrigen Elemente
+enthalten die Kovarianzen. In einer konkreten Auswertung
+enthält diese Matrix somit die Zahlenwerte der Varianzen
+und Kovarianzen, die wir für die Unsicherheitsfortpflanzung
+verwenden. Sie können aus Messreihen berechnet, aus
+Kalibrierunterlagen übernommen oder anhand weiterer
+Informationen und Modellannahmen bestimmt worden sein.
+
+Unsere bisherige Schreibweise $\operatorname{Cov}(\mathbf X)$
+bezeichnet mathematisch die Kovarianzmatrix eines Zufallsvektors.
+Für die lineare Varianzfortpflanzung benötigen wir dessen
+Varianzen und Kovarianzen. Die vollständige gemeinsame
+Wahrscheinlichkeitsverteilung muss dafür \emph{nicht} bekannt sein.
+
+Die Matrix $\mathbf U_{\mathbf x}$ enthält die für die konkrete
+Auswertung verwendeten Werte der Varianzen und Kovarianzen.
+Die GUM-Schreibweise $\mathbf U_{\mathbf x}$ bezeichnet
+die für die Unsicherheitsfortpflanzung verwendete Matrix.
+
+Um den Unterschied zwischen der theoretischen Kovarianzmatrix
+der Beobachtung von Eingangsgrößen und ihrer Schätzung aus konkreten
+Messwerten zu verdeutlichen, betrachten wir folgendes
+Beispiel: \glqq Zwei Eingangsgrößen mit wiederholten
+Beobachtungen\grqq.
+
+Das Messmodell lautet
+\begin{equation}
+Y=\theta_1X_1+\theta_2X_2
+\label{eq:beispiellinearkombi}
+\end{equation}
+mit bekannten, festen Koeffizienten $\theta_1$ und $\theta_2$.
+Zu den beiden Eingangsgrößen liegen jeweils $J$ Beobachtungen vor:
+\begin{equation}
+\mathrm x_1=(x_{1 1},\dots,x_{1 J})^\mathsf T,
+\qquad
+\mathrm x_2=(x_{2 1},\dots,x_{2 J})^\mathsf T.
+\end{equation}
+Die beiden Beobachtungsvektoren enthalten die vollständigen
+Messreihen. Als Eingangsschätzwerte verwenden wir deren Mittelwerte:
+\begin{equation}
+x_1=\bar x_1,\qquad x_2=\bar x_2,
+\qquad
+\bar x_i=\frac{1}{J}\sum_{j=1}^{J}x_{i,j}.
+\end{equation}
+Der Vektor der Eingangsschätzwerte enthält daher nur zwei Werte:
+\begin{equation}
+\mathbf x=
+\begin{pmatrix}
+\bar x_1\\
+\bar x_2
+\end{pmatrix}.
+\end{equation}
+Der Ausgangsschätzwert ist
+\begin{equation}
+y=\theta_1\bar x_1+\theta_2\bar x_2.
+\end{equation}
+Wir unterscheiden dabei die theoretischen
+Varianzen und Kovarianzen der zufälligen Mittelwertschätzer
+von den aus den beobachteten Messdaten berechneten
+Schätzungen dieser Varianzen und Kovarianzen.
+
+Ferner nehmen wir an, dass jeweils $x_{1 j}$ und $x_{2 j}$ ein
+zusammengehöriges Beobachtungspaar bilden. Die Paare seien
+untereinander unabhängig und unter gleichen Messbedingungen
+aus derselben gemeinsamen Beobachtungsverteilung gewonnen.
+Innerhalb eines Paares können die beiden Beobachtungen
+korreliert sein.
+
+Die empirischen Varianzen und Kovarianzen der einzelnen
+Beobachtungen berechnen wir mit
+\begin{equation}
+s_{i k}
+=
+\frac{1}{J-1}
+\sum_{j=1}^{J}
+(x_{ij}-\bar x_i)(x_{kj}-\bar x_k),
+\qquad i,k\in\{1,2\}.
+\end{equation}
+Dabei sind $s_{1 1}$ und $s_{2 2}$ die empirischen Varianzen
+und $s_{1 2}=s_{2 1}$ die empirische Kovarianz.
+
+Für die Mittelwertschätzer ergeben sich dagegen folgende
+Schätzungen der Varianzen und der Kovarianz:
+\begin{equation}
+u^2(\bar x_1)=\frac{s_{1 1}}{J},
+\qquad
+u^2(\bar x_2)=\frac{s_{2 2}}{J},
+\qquad
+u(\bar x_1,\bar x_2)=\frac{s_{1 2}}{J}.
+\end{equation}
+Der Faktor $1/J$ entsteht, weil im Messmodell die Mittelwerte
+verwendet werden.
+Die entsprechende Schätzung der Kovarianz zweier Mittelwerte
+ist in Abschnitt~5.2.3 des GUM, Gl.~(17), angegeben
+\cite{GUM95}. Damit lautet die hier aus den Messreihen
+bestimmte Kovarianzmatrix
+\begin{equation}
+\boxed{
+\mathbf U_{\mathbf x}
+=
+\begin{pmatrix}
+u^2(\bar x_1)&u(\bar x_1,\bar x_2)\\
+u(\bar x_1,\bar x_2)&u^2(\bar x_2)
+\end{pmatrix}
+=
+\frac{1}{J}
+\begin{pmatrix}
+s_{1 1}&s_{1 2}\\
+s_{1 2}&s_{2 2}
+\end{pmatrix}.
+}
+\end{equation}
+
+In dem Beispiel, Gl.\ (\ref{eq:beispiellinearkombi}), bestimmen wir die Kovarianzmatrix
+gemäß der Typ-A-Einordnung aus den beobachteten Messreihen.
+Wir verwenden hierfür die empirisch geschätzte Kovarianzmatrix
+der Mittelwertschätzer:
+\begin{equation}
+\mathbf U_{\mathbf x}
+=
+\widehat{\operatorname{Cov}}
+\left(
+\begin{pmatrix}
+\bar X_1\\
+\bar X_2
+\end{pmatrix}
+\right),
+\qquad
+\bar X_i=\frac{1}{J}\sum_{j=1}^{J}X_{i,j}.
+\end{equation}
+Hier bezeichnet $X_{i j}$ eine \emph{mögliche} Beobachtung im
+statistischen Beobachtungsmodell; $x_{i j}$ ist ihr konkret (real) beobachteter
+Wert. Die Großbuchstaben $\bar X_i$ bezeichnen die zufälligen
+Mittelwertschätzwerte, die Klein\-buch\-staben $\bar x_i$ deren aus
+den Daten \emph{berechneten} Schätzwerte. Das Dach über
+$\operatorname{Cov}$ kennzeichnet die Schätzung der
+Kovarianzmatrix aus diesen Daten, d.h.\ die \textsl{empirische Kovarianzmatrix}.
+
+Mit den Sensitivitäten, die in unserem Beispiel gleich den konstanten Koeffizienten sind, $\mathbf c=(\theta_1,\theta_2)^\mathsf T$, ergibt sich somit zusammen mit den empirischen Varianzen und der empirischen Kovarianz für das Quadrat der kombinierten Unsicherheit
+\begin{equation}
+u_{\mathrm c}^2(y)
+=
+\frac{1
+}{J} \left(
+\theta_1^2s_{1 1}
++2\theta_1\theta_2s_{1 2}
++\theta_2^2s_{2 2}\right).
+\end{equation}
+
+Nachdem wir gesehen haben, wie der GUM die Kovarianzmatrizen definiert, können wir verstehen wie der GUM mit Supplement 2 die Unsicherheitsfortpflanzung in der Matrixschreibweise darstellt.
+
+Mit dem Spaltenvektor der Sensitivitätskoeffizienten
+$\mathbf c=(c_1,\dots,c_N)^\mathsf T$ lautet die
+Varianzfortpflanzung für das lineare Modell
+\begin{equation}
+\boxed{
+u_{\mathrm c}^2(y)
+=
+\mathbf c^\mathsf T\mathbf U_{\mathbf x}\mathbf c.
+}
+\label{eq:MUmatrixschreibweiseGUMskalar}
+\end{equation}
+
+Die Matrixform ist die skalare Form der in Supplement~2
+beschriebenen Kovarianzfortpflanzung. Für ein lineares Modell
+mit festen Koeffizienten gilt die Varianzbeziehung exakt.
+Bei einem linearisierten nichtlinearen Modell ist sie eine
+Näherung.
+
+GUM Supplement~2 liefert die Erweiterung für die Fortpflanzung auf mehrere Ausgangsgrößen, wofür die Matrixschreibweise ausdrücklich verwendet wird. Die in Gl.\ (\ref{eq:MUmatrixschreibweiseGUMskalar}) dargestellte Beziehung ist deren skalarer Spezialfall. GUM Supplement~2 verwendet den Zusatz $\mathbf x$ für Matrix $\mathbf U_{\mathbf x}$ um zu kennzeichnen, dass sie die Unsicherheitsbewertung der Beobachtungswerte der Eingangsgrößen enthält. Entsprechend bezeichnet $\mathbf U_{\mathbf y}$ die Matrix für die Ausgangsschätzwerte.
+
+Für ein explizites, multivariates Modell $\mathbf Y = \mathbf f(\mathbf X)$ werden die Kovarianzen gemäß GUM Supplement~2, Abschnitt 6.2, mit 
+\begin{equation}
+\mathbf Y = \mathbf C_{\mathbf x} \, \mathbf U_{\mathbf x} \, \mathbf C_{\mathbf x}^\mathsf{T} 
+\label{eq:MUfortpflmultiexplizit}
+\end{equation}
+fortgepflanzt, wobei $\mathbf C_{\mathbf x}$ die Sensitivitätsmatrix ist mit 
+\begin{equation}
+\mathbf C_{\mathbf x} = \left. \begin{pmatrix}
+\frac{\partial f_1}{\partial X_1} & \cdots & \frac{\partial f_1}{\partial X_N}\\
+\vdots & \ddots & \vdots\\
+\frac{\partial f_M}{\partial X_1} & \cdots & \frac{\partial f_M}{\partial X_N}
+\end{pmatrix} \right|_{\mathbf X = \mathbf x}
+\label{eq:sensitivitaetsmatrixCxf}
+\end{equation}
+
+Für ein implizites, multivariates Messmodell
+$\mathbf h(\mathbf Y,\mathbf X)=\mathbf 0$
+bestimmen wir zunächst die Ausgangsschätzwerte $\mathbf y$
+aus dem Gleichungssystem
+\begin{equation}
+\mathbf h(\mathbf y,\mathbf x)=\mathbf 0.
+\end{equation}
+
+Gemäß GUM Supplement~2, Abschnitt~6.3, erfolgt die
+Kovarianzfortpflanzung auf Grundlage der am Punkt
+$(\mathbf y,\mathbf x)$ linearisierten Modellbeziehung.
+Für diese gilt
+\begin{equation}
+\mathbf C_{\mathbf y}\mathbf U_{\mathbf y}
+\mathbf C_{\mathbf y}^{\mathsf T}
+=
+\mathbf C_{\mathbf x}\mathbf U_{\mathbf x}
+\mathbf C_{\mathbf x}^{\mathsf T}.
+\label{eq:MUfortpflmultiimplizit1}
+\end{equation}
+Die Sensitivitätsmatrizen werden beide am selben Punkt
+ausgewertet:
+\begin{equation}
+\mathbf C_{\mathbf x}
+ =
+\left.
+\begin{pmatrix}
+\frac{\partial h_1}{\partial X_1}
+& \cdots & \frac{\partial h_1}{\partial X_N}\\
+\vdots & \ddots & \vdots\\
+\frac{\partial h_M}{\partial X_1}
+& \cdots & \frac{\partial h_M}{\partial X_N}
+\end{pmatrix}
+\right|_{\mathbf Y=\mathbf y,\,\mathbf X=\mathbf x}
+\quad \text{und} \quad
+\mathbf C_{\mathbf y}
+ =
+\left.
+\begin{pmatrix}
+\frac{\partial h_1}{\partial Y_1}
+& \cdots & \frac{\partial h_1}{\partial Y_M}\\
+\vdots & \ddots & \vdots\\
+\frac{\partial h_M}{\partial Y_1}
+& \cdots & \frac{\partial h_M}{\partial Y_M}
+\end{pmatrix}
+\right|_{\mathbf Y=\mathbf y,\,\mathbf X=\mathbf x}.
+\label{eq:sensitivitaetsmatrixh}
+\end{equation}
+Dabei hat $\mathbf C_{\mathbf x}$ die Dimension $M\times N$
+und $\mathbf C_{\mathbf y}$ die Dimension $M\times M$.
+
+Ist $\mathbf C_{\mathbf y}$ invertierbar, lässt sich
+Gl.~(\ref{eq:MUfortpflmultiimplizit1}) nach
+$\mathbf U_{\mathbf y}$ auflösen:
+\begin{equation}
+\begin{aligned}
+\mathbf U_{\mathbf y}
+&=
+\mathbf C_{\mathbf y}^{-1}\mathbf C_{\mathbf x}
+\mathbf U_{\mathbf x}
+\mathbf C_{\mathbf x}^{\mathsf T}
+\bigl(\mathbf C_{\mathbf y}^{-1}\bigr)^{\mathsf T}
+\\
+&=
+\mathbf C\mathbf U_{\mathbf x}\mathbf C^{\mathsf T},
+\qquad
+\mathbf C=\mathbf C_{\mathbf y}^{-1}\mathbf C_{\mathbf x}.
+\end{aligned}
+\label{eq:MUfortpflmultiimplizit2}
+\end{equation}
+Hierbei verwenden wir
+\begin{equation}
+\mathbf C^{\mathsf T}
+=
+\bigl(\mathbf C_{\mathbf y}^{-1}\mathbf C_{\mathbf x}\bigr)^{\mathsf T}
+=
+\mathbf C_{\mathbf x}^{\mathsf T}
+\bigl(\mathbf C_{\mathbf y}^{-1}\bigr)^{\mathsf T}.
+\end{equation}
+
+Auch im multivariaten Fall gilt, dass bei nichtlinearen Modellgleichungen die so berechnete
+Kovarianzmatrix eine Näherung für diejenige des ursprünglichen
+Modells ist und nur für lineare Modellgleichungen mit festen Koeffizienten
+und gegebenenfalls konstanten additiven Termen exakt gilt.
+
+Eine Kovarianzmatrix muss positiv semidefinit sein. Das bedeutet,
+dass $\mathbf a^\mathsf T\mathbf U_{\mathbf x}\mathbf a\geq0$
+für jeden reellen Vektor $\mathbf a$ gilt. Damit kann auch die
+fortgepflanzte Varianz nicht negativ werden.
+Für mehr als zwei Eingangsgrößen genügt es nicht, beliebige
+Korrelationskoeffizienten einzeln im Bereich $[-1,1]$ zu wählen:
+Sie müssen zusammen eine gültige Korrelationsmatrix bilden.
+
+
+\section{Linearisierung eines nichtlinearen Modells}
+
+Für ein differenzierbares Modell $Y=f(\mathbf X)$ entwickeln
+wir die Modellfunktion um den Vektor der Beobachtungswerte
+$\mathbf x=(x_1,\dots,x_N)^\mathsf T$. Die Taylorentwicklung
+bis zum linearen Term lautet
+\begin{equation}
+Y=f(\mathbf X)
+=
+f(\mathbf x)
++\sum_{i=1}^N c_i(X_i-x_i)
++R(\mathbf X),
+\qquad
+c_i=
+\left.
+\frac{\partial f(\mathbf X)}{\partial X_i}
+\right|_{\mathbf X=\mathbf x}.
+\label{linearisiertesModellY}
+\end{equation}
+Die Beobachtungswerte $x_i$ legen somit den Entwicklungspunkt
+fest. Der Restterm $R(\mathbf X)$ beschreibt die Abweichung
+der vollständigen Modellfunktion von ihrer linearen Näherung.
+
+Die Sensitivitätskoeffizienten bilden den Spaltenvektor
+\begin{equation}
+\mathbf c
+=
+\left.\nabla f(\mathbf X)\right|_{\mathbf X=\mathbf x}
+=
+\left.
+\begin{pmatrix}
+\frac{\partial f(\mathbf X)}{\partial X_1}\\
+\vdots\\
+\frac{\partial f(\mathbf X)}{\partial X_N}
+\end{pmatrix}
+\right|_{\mathbf X=\mathbf x}.
+\end{equation}
+Dieser Vektor ist der Gradient der Modellfunktion am
+Entwicklungspunkt $\mathbf x$. Das Symbol $\nabla$ bezeichnet
+den Nablaoperator, der hier als Spaltenvektor der partiellen
+Ableitungsoperatoren geschrieben wird:
+\begin{equation}
+\nabla=
+\begin{pmatrix}
+\frac{\partial}{\partial X_1}\\
+\vdots\\
+\frac{\partial}{\partial X_N}
+\end{pmatrix}.
+\end{equation}
+
+Damit lässt sich der lineare Term als Produkt des
+Zeilenvektors $\mathbf c^\mathsf T$ mit dem Spaltenvektor
+$\mathbf X-\mathbf x$ ausdrücken:
+\begin{equation}
+\sum_{i=1}^N c_i(X_i-x_i)
+=
+\mathbf c^\mathsf T(\mathbf X-\mathbf x).
+\end{equation}
+Ist der Restterm $R(\mathbf X)$ im relevanten Unsicherheitsbereich
+vernachlässigbar, verwenden wir das linearisierte Modell
+\begin{equation}
+Y_{\mathrm{lin}}
+=
+f(\mathbf x)+\mathbf c^\mathsf T(\mathbf X-\mathbf x).
+\label{eq:linearisiertesModell}
+\end{equation}
+
+Jeder Sensitivitätskoeffizient $c_i$ beschreibt, wie stark sich
+die Ausgangsgröße bei einer kleinen Änderung der Eingangsgröße
+$X_i$ am Entwicklungspunkt verändert, während die übrigen
+Eingangsgrößen festgehalten werden. Seine physikalische
+Dimension ist
+\begin{equation}
+\dim c_i=\frac{\dim Y}{\dim X_i}.
+\end{equation}
+Die Produkte $c_i u(x_i)$ haben daher die Dimension der
+Ausgangsgröße und werden bei konsistenter Verwendung der
+Einheiten in deren Einheit angegeben.
+
+Wenn $x_i=\operatorname E(X_i)$ gilt, folgt
+\begin{equation}
+\operatorname E(Y_{\mathrm{lin}})=f(\mathbf x),\qquad
+\operatorname{Var}(Y_{\mathrm{lin}})=
+\sum_{i=1}^N\sum_{k=1}^N c_ic_k\operatorname{Cov}(X_i,X_k).
+\end{equation}
+Für das ursprüngliche nichtlineare Modell erhalten wir damit
+\begin{equation}
+y=f(\mathbf x)\approx\operatorname E(Y),\qquad
+u_{\mathrm c}^2(y)\approx\operatorname{Var}(Y)
+\approx\sum_{i=1}^N c_i^2u^2(x_i)
++2\sum_{i=1}^{N-1}\sum_{k=i+1}^N c_ic_k u(x_i,x_k).
+\label{UnsicherFortpflLinearisiert}
+\end{equation}
+Die Fortpflanzungsformel gilt exakt für das linearisierte Modell; ihre
+Anwendung auf das ursprüngliche Modell ist eine Näherung.
+
+Die im GUM verwendete Kurzschreibweise $\partial f/\partial x_i$ bezeichnet
+hier die partielle Ableitung der Modellfunktion, ausgewertet an den
+Eingangsschätzwerten. In diesem Skript schreiben wir die Auswertung
+explizit dazu, um Funktionsargument und Schätzwert zu unterscheiden.
+
+\paragraph{Beispiel: Produkt zweier Eingangsgrößen}
+
+Für
+\begin{equation}
+Y=X_1X_2
+\label{BeispielProdukt2Gr}
+\end{equation}
+sind die Sensitivitätskoeffizienten $c_1=x_2$ und $c_2=x_1$.
+Für unabhängige Eingangsgrößen folgt in erster Ordnung
+\begin{equation}
+y=x_1x_2,\qquad
+u_{\mathrm c}^2(y)=x_2^2u^2(x_1)+x_1^2u^2(x_2).
+\end{equation}
+Wenn $x_1,x_2\ne0$ sind, ist die relative Form
+\begin{equation}
+\left[\frac{u_{\mathrm c}(y)}{|y|}\right]^2=
+\left[\frac{u(x_1)}{|x_1|}\right]^2+
+\left[\frac{u(x_2)}{|x_2|}\right]^2.
+\end{equation}
+Werden die beiden Eingangsgrößen durch Mittelwerte aus unabhängigen
+Messreihen geschätzt, setzen wir deren Standardunsicherheiten
+$s_1/\sqrt{J_1}$ und $s_2/\sqrt{J_2}$ ein.
+
+Für das Produkt unabhängiger Größen lassen sich die Momente auch exakt
+berechnen. Mit $x_i=\operatorname E(X_i)$ gilt
+\begin{equation}
+\begin{aligned}
+\operatorname E(X_1X_2)&=x_1x_2,\\
+\operatorname{Var}(X_1X_2)&=
+ x_2^2u^2(x_1)+x_1^2u^2(x_2)+u^2(x_1)u^2(x_2).
+\end{aligned}
+\label{eq:ProduktvarianzExakt10}
+\end{equation}
+Die linearisierte Rechnung lässt den letzten Term weg. Dieser Vergleich
+zeigt unmittelbar, wann die Näherung für die Varianz ausreicht.
+Bei korrelierten Eingangsgrößen gilt außerdem
+$\operatorname E(X_1X_2)=x_1x_2+\operatorname{Cov}(X_1,X_2)$.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.64\linewidth]{10_vorlesung_GUM/media/understand_fehlerfort_1.pdf}
+\caption{Veranschaulichung einer gemeinsamen Streuung der Eingangsgrößen
+$X_1$ und $X_2$ und der daraus berechneten Ausgangsgröße $Y$.
+Die rote Ellipse und die blauen Strecken illustrieren die geometrische
+Darstellung der Streuung. Ohne Angabe ihrer Skalierung ist die Ellipse kein
+Überdeckungsbereich mit festgelegter Wahrscheinlichkeit.}
+\label{FortpfElliptisch}
+\end{figure}
+
+\section{Grenzen des Linearisierungsansatzes}
+
+Die lineare Unsicherheitsfortpflanzung ersetzt die Modellfunktion
+im relevanten Unsicherheitsbereich durch ihre Tangente
+beziehungsweise, bei mehreren Eingangsgrößen, durch ihre
+Tangentialebene. Bei einem gekrümmten Modell kann diese Näherung
+sowohl den Ausgangsschätzwert als auch die berechnete
+Standardunsicherheit beeinflussen.
+
+Setzen wir die Eingangsschätzwerte in das Messmodell ein,
+erhalten wir $y=f(\mathbf x)$. Wird dagegen die vollständige
+Eingangsverteilung fortgepflanzt und der Erwartungswert der
+Ausgangsgröße als Schätzwert verwendet, erhalten wir
+$y=\operatorname E[f(\mathbf X)]$.
+Bei einem nichtlinearen Modell müssen diese beiden Werte
+nicht übereinstimmen: Das Einsetzen der Erwartungswerte
+in die Modellfunktion und das Bilden des Erwartungswerts
+der Modellwerte sind unterschiedliche Rechenschritte.
+
+Um diesen Unterschied zu untersuchen, nehmen wir zunächst
+an, dass der Entwicklungspunkt dem Erwartungswertvektor
+der Eingangsgrößen entspricht:
+\begin{equation}
+\mathbf x=\operatorname E(\mathbf X).
+\end{equation}
+Für die Abweichungen $\Delta X_i=X_i-x_i$ gilt dann
+$\operatorname E(\Delta X_i)=0$.
+Die Taylorentwicklung bis zu den quadratischen Termen lautet
+\begin{equation}
+f(\mathbf X)\approx
+f(\mathbf x)
++\sum_{i=1}^N c_i\Delta X_i
++\frac12\sum_{i=1}^N\sum_{k=1}^N
+\left.
+\frac{\partial^2 f}{\partial X_i\partial X_k}
+\right|_{\mathbf X=\mathbf x}
+\Delta X_i\Delta X_k.
+\end{equation}
+
+Beim Bilden des Erwartungswerts verschwindet der lineare Term,
+weil die Abweichungen $\Delta X_i$ den Erwartungswert null haben.
+Die quadratischen Terme verschwinden dagegen im Allgemeinen
+nicht, denn
+\begin{equation}
+\operatorname E(\Delta X_i\Delta X_k)
+=
+\operatorname{Cov}(X_i,X_k).
+\end{equation}
+Ersetzen wir diese Kovarianzen durch die für die Auswertung
+bestimmten oder geschätzten Werte $u(x_i,x_k)$, erhalten wir
+\begin{equation}
+\operatorname E[f(\mathbf X)]
+\approx
+f(\mathbf x)
++\frac12\sum_{i=1}^N\sum_{k=1}^N
+\left.
+\frac{\partial^2 f}{\partial X_i\partial X_k}
+\right|_{\mathbf X=\mathbf x}
+u(x_i,x_k).
+\label{eq:ErwartungswertZweiteOrdnung10}
+\end{equation}
+Die zweiten Ableitungen beschreiben die Modellkrümmung.
+Zusammen mit den Varianzen und Kovarianzen bestimmen sie
+den hier berechneten Korrekturterm zum Erwartungswert.
+Die Näherung setzt voraus, dass die erforderlichen Momente
+existieren und der Erwartungswert des verbleibenden
+Taylorrestterms vernachlässigbar ist.
+
+Das in Abb.~\ref{fig:AnschauungsModellkruemmung} dargestellte Beispiel einer Parabel als Messmodell mit Eingangsschätzwert im Mini\-mum veranschaulicht, dass bei Tangentensteigung null gar keine Unsicherheit approximiert werden kann.
+
+Wir betrachten das Modell
+\begin{equation}
+Y=f(X)=X^2,
+\qquad
+X\sim\mathcal N(0,\sigma^2).
+\end{equation}
+Die Eingangsgröße hat den Erwartungswert $x=0$.
+
+\begin{figure} %[htbp]
+\centering
+\includegraphics[width=\linewidth]{10_vorlesung_GUM/media/verschwindende_sensitivitaet.pdf}
+\caption{Einfluss der Modellkrümmung auf den Erwartungswert einer Ausgangsgröße.}
+\label{fig:AnschauungsModellkruemmung}
+\end{figure}
+
+Setzen wir diesen Wert in das Modell ein, erhalten wir
+$f(0)=0$. Die erste Ableitung ist
+\begin{equation}
+f'(X)=2X,
+\qquad
+c=f'(0)=0.
+\end{equation}
+Die Tangente an die Parabel ist an diesem Punkt horizontal.
+Das linearisierte Modell lautet daher
+\begin{equation}
+Y_{\mathrm{lin}}=f(0)+c(X-0)=0.
+\end{equation}
+Es liefert für jeden Eingangswert denselben Ausgangswert null.
+Folglich ergibt die linearisierte Rechnung
+\begin{equation}
+y_{\mathrm{lin}}=0,
+\qquad
+u_{\mathrm c}(y_{\mathrm{lin}})=0.
+\end{equation}
+
+Die ursprüngliche Modellfunktion verhält sich jedoch anders:
+Sowohl positive als auch negative Eingangswerte werden durch
+das Quadrieren auf positive Ausgangswerte abgebildet.
+Obwohl die Eingangsverteilung symmetrisch um null liegt,
+liegen die Ausgangswerte somit auf der nichtnegativen
+Seite und sind nicht alle gleich null.
+
+Der Erwartungswert der Ausgangsgröße ist
+\begin{equation}
+\operatorname E(Y)
+=
+\operatorname E(X^2)
+=
+\sigma^2.
+\end{equation}
+Auch die Näherung zweiter Ordnung liefert hier dieses Ergebnis:
+Wegen $f''(X)=2$ ist der Korrekturterm
+$\tfrac12 f''(0)\sigma^2=\sigma^2$.
+Da das Modell selbst quadratisch ist, gibt es in diesem
+Beispiel keine weiteren Taylorterme.
+
+Für die Varianz der Ausgangsgröße benötigen wir zusätzlich
+das vierte Moment der Eingangsverteilung:
+\begin{equation}
+\operatorname{Var}(Y)
+=
+\operatorname E(X^4)
+-\bigl[\operatorname E(X^2)\bigr]^2.
+\end{equation}
+Für die hier verwendete Normalverteilung gilt
+$\operatorname E(X^4)=3\sigma^4$. Damit folgen
+\begin{equation}
+\operatorname{Var}(Y)=2\sigma^4,
+\qquad
+u_{\mathrm c}(y)=\sqrt{2}\,\sigma^2.
+\end{equation}
+
+Die verschwindende Sensitivität erster Ordnung bedeutet
+hier also lediglich, dass die Tangente keine Änderung
+des Ausgangswerts beschreibt. Die tatsächliche
+Modellfunktion besitzt jedoch eine Krümmung, durch die
+sowohl ein positiver Erwartungswert als auch eine
+von null verschiedene Streuung entstehen.
+
+\paragraph{Folgerungen für die Unsicherheitsfortpflanzung.}
+
+Das Beispiel zeigt, warum die erste Ableitung allein
+nicht immer ausreicht. Für die Berechnung der Varianz
+einer quadratischen Taylor-Näherung werden im Allgemeinen
+auch Momente dritter und vierter Ordnung benötigt.
+Die Varianzen und Kovarianzen der Eingangsgrößen allein
+genügen dafür im Allgemeinen nicht.
+
+Ob die Linearisierung ausreicht, muss deshalb anhand des
+Modellverlaufs und der Eingangsunsicherheit untersucht werden.
+Bei Unstetigkeiten oder in der Nähe einer Singularität muss
+darüber hinaus geprüft werden, ob das Modell im relevanten
+Unsicherheitsbereich anwendbar ist.
+
+Die Verteilungsfortpflanzung nach GUM Supplement~1 bietet einen
+anderen Rechenweg: Bei einer Monte-Carlo-Auswertung werden
+Eingangskombinationen aus den festgelegten Eingangsverteilungen
+gezogen und jeweils in die ursprüngliche Modellfunktion
+eingesetzt. Aus den so erhaltenen Ausgangswerten können
+Erwartungswert und Standardunsicherheit bestimmt werden,
+sofern diese Momente existieren. Die Modellfunktion wird
+dabei nicht durch ihre lineare Näherung ersetzt.
+
+\section{Von der Standardunsicherheit zum Überdeckungsintervall}
+\label{sec:Ueberdeckungsintervall10}
+
+Die Standardunsicherheit beschreibt eine Streuung. Für ein Intervall mit
+der Überdeckungs\-wahr\-schein\-lich\-keit $P=1-\alpha$ brauchen wir zusätzlich
+eine begründete Beschreibung der Ausgangsverteilung. Wenn die Verteilung der Ausgangsgröße ausreichend gut durch eine Normalverteilung angenähert werden kann, schreiben wir
+\begin{equation}
+[y-U,y+U],\qquad
+U=k\,u_{\mathrm c}(y),\qquad k=z_{1-\alpha/2},
+\label{eq:ErweiterteUnsicherheitNormal10}
+\end{equation}
+wobei $z_q$ das Quantil der Standardnormalverteilung ist.
+Für $P=0.95$ gilt $k\approx1.96$; $k=2$ entspricht bei einer
+Normalverteilung etwa $95.45\,\%$.
+
+Die Näherung mit normalverteilter Ausgangsgröße ist nur dann bei einer Summe vieler unabhängiger Beiträge angemessen, wenn kein einzelner nichtnormalverteilter Beitrag überwiegt und die weiteren Voraussetzungen des zentralen Grenzwertsatzes hinreichend erfüllt sind. Sie folgt nicht allein daraus, dass das Messmodell linear ist.
+
+Wird die Varianz aus einer begrenzten Anzahl normalverteilter
+Beobachtungen geschätzt, ist bei der Intervallbestimmung zusätzlich
+die Unsicherheit dieser Varianzschätzung zu berücksichtigen.
+Hierzu verwenden wir die Student-$t$-Verteilung, deren Ausläufer
+(\textsl{tails}) insbesondere bei kleinen Stichprobenumfängen stärker
+besetzt sind als die der Standardnormalverteilung.
+Wir betrachten zunächst eine einzelne Messreihe und anschließend
+die Kombination mehrerer Unsicherheitsbeiträge. Für diese werden
+unter geeigneten Voraussetzungen mithilfe der
+Welch-Satterthwaite-Näherung effektive Freiheitsgrade bestimmt.
+
+\paragraph{Eine einzelne Messreihe und das $t$-Quantil:}
+
+Wir betrachten $J$ unabhängige, identisch normalverteilte Beobachtungen
+mit festem, unbekanntem Mittelwert $\mu$ und unbekannter Varianz
+$\sigma^2$. Im statistischen Beobachtungsmodell werden die möglichen
+Einzelbeobachtungen durch die Zufallsgrößen $X_1,\dots,X_J$ beschrieben.
+Der daraus gebildete Stichprobenmittelwert $\overline X$ und die
+Stichprobenvarianz $S^2$ sind damit ebenfalls Zufallsgrößen.
+Sie dienen als Schätzer für $\mu$ beziehungsweise $\sigma^2$.
+Nach Einsetzen der beobachteten Werte $x_1,\dots,x_J$ erhalten wir
+die konkreten Schätzwerte $\bar x$ und $s^2$.
 
 \begin{equation}
-{\begin{aligned}
-u^2(Y) & = \sum\limits_{i=1}^{N} \, c_i^2 \operatorname {Var}(X_{i}) \; + \; 2 \, \sum _{{i=1}}^{{N-1}}
-  \sum\limits_{k=i+1}^{N} \, c_i \, c_k \operatorname {Cov}(X_{i},X_{k})\\
- & = \underbrace{\sum\limits_{i=1}^{N} \, c_i^2 \, u^2(X_i)}_{\mathrm{unkorrelierter~Fall}} \;  + \;
- \underbrace{2 \, \sum\limits_{i=1}^{{N-1}}
- \sum\limits_{k=i+1}^{N} \, c_i \, c_k \, \rho_{i,k} \, u(X_i) \, u(X_k)}_{\mathrm{Mischterme:~korrelierter~Fall}} .
-\end{aligned}}
-\label{UnsichFortpfl2}
+\overline X=\frac{1}{J}\sum_{j=1}^{J}X_j,
+\qquad
+S^2=\frac{1}{J-1}\sum_{j=1}^{J}(X_j-\overline X)^2.
+\end{equation}
+Für die Größe
+\begin{equation}
+Z=\frac{\overline X-\mu}{S/\sqrt J}
+\end{equation}
+gilt
+\begin{equation}
+Z\sim t_{J-1}.
+\end{equation}
+Entscheidend ist, dass im Nenner die Zufallsgröße $S$ steht,
+mit der die Standardabweichung $\sigma$ aus der Stichprobe
+geschätzt wird. Bei Division durch die wahre Standardabweichung
+$\sigma$ wäre die resultierende Größe dagegen standardnormalverteilt:
+\begin{equation}
+\frac{\overline X-\mu}{\sigma/\sqrt J}
+\sim\mathcal N(0,1).
+\end{equation}
+
+Nach der Datenerhebung liegen die berechneten Werte $\bar x$ und $s$
+vor. Das frequentistische Vertrauensintervall für $\mu$ lautet
+\begin{equation}
+\left[
+\bar x-t_{1-\alpha/2,J-1}\frac{s}{\sqrt J},
+\quad
+\bar x+t_{1-\alpha/2,J-1}\frac{s}{\sqrt J}
+\right].
+\end{equation}
+Dabei bezeichnet $t_{p,\nu}$ das Quantil der Student-$t$-Verteilung
+mit $\nu$ Freiheitsgraden. Bei kleinen Freiheitsgraden ist
+$t_{1-\alpha/2,\nu}$ größer als das entsprechende Quantil der Normalverteilung.
+Die Überdeckungswahrscheinlichkeit $1-\alpha$ bezieht sich auf
+das Verfahren: Bei wiederholter Durchführung enthalten die so
+konstruierten Intervalle den festen Mittelwert $\mu$ mit dieser
+Wahrscheinlichkeit. Dem Parameter $\mu$ wird dadurch selbst
+keine Wahrscheinlichkeitsverteilung zugeordnet.
+
+Für die spätere Verteilungsfortpflanzung müssen wir zwei Fragen
+unterscheiden: Wie stark streuen die möglichen Stichprobenmittelwerte
+bei wiederholter Messung? Und welche Verteilung beschreibt nach der
+Datenauswertung die Unsicherheit über den unbekannten Mittelwert?
+Dabei tritt der Ausdruck $s/\sqrt J$ in unterschiedlichen Rollen auf.
+
+\paragraph{Streuung der Stichprobenmittelwerte im Beobachtungsmodell.}
+
+Wir betrachten $J$ unabhängige, identisch normalverteilte
+Beobachtungen mit festem, unbekanntem Mittelwert $\mu$ und
+unbekannter Varianz $\sigma^2$:
+\begin{equation}
+X_j\sim\mathcal N(\mu,\sigma^2),
+\qquad j=1,\dots,J.
+\end{equation}
+Denken wir uns die gesamte Messreihe wiederholt durchgeführt,
+liefert jede Wiederholung einen anderen Stichprobenmittelwert.
+Die möglichen Mittelwerte werden durch die Zufallsgröße
+$\overline X$ beschrieben. Für sie gilt
+\begin{equation}
+\overline X=\frac{1}{J}\sum_{j=1}^{J}X_j,
+\qquad
+\overline X\sim
+\mathcal N\!\left(\mu,\frac{\sigma^2}{J}\right).
+\end{equation}
+Ihre tatsächliche Standardabweichung beträgt somit
+\begin{equation}
+\sqrt{\operatorname{Var}(\overline X)}
+=
+\frac{\sigma}{\sqrt J}.
+\end{equation}
+Diese Größe beschreibt die Streuung der möglichen
+Stichprobenmittelwerte um den festen Parameter $\mu$.
+
+Da $\sigma$ unbekannt ist, schätzen wir diese Standardabweichung
+aus den beobachteten Daten durch
+\begin{equation}
+u(\bar x)=\frac{s}{\sqrt J}.
+\end{equation}
+Dies ist die im klassischen GUM verwendete Standardunsicherheit
+des Mittelwerts.
+
+Die Verwendung von Student-$t$-Quantilen bei der Konstruktion
+eines Vertrauensintervalls ändert die Verteilung von $\overline X$
+nicht. Die Student-$t$-Verteilung betrifft dort den Quotienten
+\begin{equation}
+Z_{J-1}
+=
+\frac{\overline X-\mu}{S/\sqrt J}
+\sim t_{J-1},
+\end{equation}
+während $\overline X$ selbst weiterhin normalverteilt ist.
+Im Nenner steht die Zufallsgröße $S$, mit der die
+Standardabweichung $\sigma$ aus der Stichprobe geschätzt wird.
+
+\paragraph{Skalenparameter einer Student-$t$-Verteilung.}
+
+Bevor wir die zweite Fragestellung betrachten, unterscheiden
+wir den Skalenparameter einer Student-$t$-Verteilung von
+ihrer Standardabweichung. Dazu verwenden wir die allgemeine
+Darstellung
+\begin{equation}
+X=x+aZ_\nu,
+\qquad a>0,
+\end{equation}
+wobei $x$ ein fester Lageparameter und $a$ ein fester
+Skalenparameter ist. $Z_\nu$ bezeichnet eine Zufallsgröße
+mit zentraler Student-$t$-Verteilung mit $\nu$ Freiheitsgraden,
+also mit Lageparameter null und Skalen\-para\-meter eins.
+
+Der Faktor $a$ streckt alle Abstände vom Lageparameter $x$.
+Die Standardabweichung wird deshalb ebenfalls mit $a$
+multipliziert:
+\begin{equation}
+\sqrt{\operatorname{Var}(X)}
+=
+a\sqrt{\operatorname{Var}(Z_\nu)}.
+\end{equation}
+Der Skalenparameter $a$ wäre nur dann zugleich die
+Standardabweichung von $X$, wenn $Z_\nu$ die Standardabweichung
+eins hätte. Für die übliche Student-$t$-Verteilung gilt jedoch
+\begin{equation}
+\operatorname E(Z_\nu)=0
+\quad\text{für }\nu>1,
+\qquad
+\operatorname{Var}(Z_\nu)=\frac{\nu}{\nu-2}
+\quad\text{für }\nu>2.
+\end{equation}
+Für die verschobene und skalierte Größe $X$ folgt daraus
+\begin{equation}
+\operatorname E(X)=x
+\quad\text{für }\nu>1,
+\qquad
+\sqrt{\operatorname{Var}(X)}
+=
+a\sqrt{\frac{\nu}{\nu-2}}
+\quad\text{für }\nu>2.
+\label{eq:tSkalaStandardabweichung10}
+\end{equation}
+Der Skalenparameter $a$ hat dieselbe Einheit wie $X$,
+ist aber nicht deren Standardabweichung.
+Wir verwenden deshalb hier nicht die Bezeichnung
+\glqq standardisiert\grqq{} im Sinne einer Zufallsgröße
+mit Erwartungswert null und Varianz eins.
+
+\paragraph{Verteilungsbeschreibung nach der Datenauswertung.}
+
+Eine andere Fragestellung besteht \mbox{darin}, wie man
+\emph{nach} der Datenauswertung eine Wahrscheinlichkeitsverteilung
+festlegt, die das Wissen über den unbekannten Mittelwert $\mu$
+beschreibt. Nun liegen die beobachteten Daten und die daraus
+berechneten Werte $\bar x$ und $s$ als feste Zahlen vor.
+Eine solche Verteilung erhalten wir durch eine bayesische Auswertung.
+
+In einer bayesischen Auswertung beschreibt die Priorverteilung
+die Information über die unbekannten Parameter, \emph{bevor}
+die betrachteten Messdaten berücksichtigt werden.
+Sie muss nicht aus früheren Messungen stammen.
+Auch allgemeine Annahmen über mögliche Parameterwerte können
+durch eine Priorverteilung ausgedrückt werden.
+
+Eine sogenannte \textsl{nichtinformative Priorverteilung}
+wird mit dem Ziel gewählt, möglichst wenig zusätzliche Information
+über die Parameter einzubringen. Die Schlussfolgerungen sollen
+vor allem durch die Messdaten bestimmt werden.
+Die Bezeichnung bedeutet jedoch nicht, dass überhaupt keine
+Annahmen getroffen werden oder dass die Priorwahl ohne Einfluss
+auf das Ergebnis bleibt.
+
+Ein einfaches Beispiel ist eine konstante Priordichte innerhalb
+eines vorgegebenen Intervalls. Sie ordnet gleich breiten
+Teilintervallen dieselbe Wahrscheinlichkeit zu und bevorzugt
+innerhalb dieses Bereichs keine bestimmte Lage.
+Bereits die Wahl der Intervallgrenzen stellt allerdings
+eine Information dar. Außerdem ist eine konstante Dichte
+für einen positiven Parameter $\theta$ etwas anderes als
+eine konstante Dichte für $\log\theta$: Im ersten Fall werden
+gleich große additive Intervalle gleich behandelt, im zweiten
+Fall gleich große Verhältnisse.
+
+Eine allgemein eindeutige Priorverteilung, die völlige Unkenntnis
+ausdrückt, gibt es daher nicht. Nichtinformative Priorverteilungen
+werden nach bestimmten formalen Regeln konstruiert;
+die konkrete Wahl gehört zum statistischen Modell.
+
+Bei unserer normalverteilten Messreihe benötigen wir eine
+gemeinsame Priorverteilung für den unbekannten Mittelwert $\mu$
+und die unbekannte Varianz $\sigma^2$.
+Nach Berücksichtigung der Messdaten
+$\mathbf x=(x_1,\dots,x_J)^\mathsf T$ gilt nach dem Satz von Bayes
+\begin{equation}
+p(\mu,\sigma^2\mid\mathbf x)
+\propto
+L(\mu,\sigma^2;\mathbf x)\,p(\mu,\sigma^2).
+\end{equation}
+Die gemeinsame Posteriorverteilung entsteht somit aus dem Produkt
+der Likelihood und der gemeinsamen Priorverteilung.
+
+Interessieren wir uns für den unbekannten Mittelwert,
+integrieren wir anschließend über die möglichen Werte
+der unbekannten Varianz:
+\begin{equation}
+p(\mu\mid\mathbf x)
+=
+\int_0^\infty
+p(\mu,\sigma^2\mid\mathbf x)\,\mathrm d\sigma^2.
+\end{equation}
+Die Unsicherheit über die Varianz wird dabei mitberücksichtigt.
+
+\paragraph{Die Student-$t$-Verteilung in Supplement~1.}
+
+Mit der in GUM Supplement~1, Abschnitt~6.4.9, zugrunde gelegten
+nichtinformativen Priorwahl ergibt sich für den unbekannten
+Mittelwert eine verschobene und skalierte Student-$t$-Verteilung.
+
+Zur Unterscheidung von den Einzelbeobachtungen $X_j$ und dem
+Stichprobenmittelwert $\overline X$ bezeichnen wir die Zufallsgröße,
+die die Unsicherheit über den unbekannten Mittelwert $\mu$
+beschreibt, mit $X_\mu$. Ihre Darstellung lautet
+\begin{equation}
+X_\mu=\bar x+\frac{s}{\sqrt J}\,Z_{J-1}.
+\end{equation}
+Die Verteilung von $X_\mu$ beschreibt das Wissen über $\mu$
+nach Kenntnis der vorliegenden Daten. Sie ist weder die
+Verteilung einer Einzelbeobachtung noch die Verteilung
+der Stichprobenmittelwerte bei wiederholter Messung.
+Die Verteilung von $X_\mu$ beschreibt vielmehr das Wissen über
+den unbekannten Mittelwert nach Kenntnis der vorliegenden Daten.
+Die Werte $\bar x$ und $s$ sind in dieser Darstellung fest.
+
+Vergleichen wir dies mit der allgemeinen Darstellung
+$X=x+aZ_\nu$, erkennen wir die Zuordnung
+\begin{equation}
+x=\bar x,
+\qquad
+a=\frac{s}{\sqrt J},
+\qquad
+\nu=J-1.
+\end{equation}
+Der Ausdruck $s/\sqrt J$ ist hier also der
+\emph{Skalenparameter} der zugeordneten Student-$t$-Verteilung.
+Ihre \emph{Standardabweichung} hingegen beträgt dagegen
+\begin{equation}
+\sqrt{\operatorname{Var}(X_\mu)}
+=
+\frac{s}{\sqrt J}\sqrt{\frac{\nu}{\nu-2}}
+=
+\frac{s}{\sqrt J}\sqrt{\frac{J-1}{J-3}},
+\qquad J>3.
+\end{equation}
+Der Erwartungswert ist $\operatorname E(X_\mu)=\bar x$ für $J>2$.
+
+% Für einen einfachen Rahmen genügt \fbox mit einer \parbox, die den Zeilenumbruch ermöglicht.
+\begin{center}
+\fbox{%
+  \parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{%
+    \textbf{GUM Supplement~1 verwendet die Standardabweichung
+    dieser zugeordneten Verteilung als Standardunsicherheit
+    und weist in Abschnitt~6.4.9.4, Anmerkung~1, ausdrücklich
+    auf den Unterschied zum klassischen GUM hin.}%
+  }%
+}
+\end{center}
+
+\paragraph{Zahlenbeispiel mit fünf Beobachtungen.}
+
+Für eine Messreihe mit
+\begin{equation}
+J=5,
+\qquad
+s=2\,\Omega
+\end{equation}
+ergibt sich im klassischen Ansatz
+\begin{equation}
+u_{\mathrm{klassisch}}(\bar x)
+=
+\frac{s}{\sqrt J}
+=
+\frac{2}{\sqrt5}\,\Omega
+\approx0{,}894\,\Omega.
+\end{equation}
+Dies ist die aus der Messreihe geschätzte Standardabweichung
+der möglichen Stichprobenmittelwerte.
+
+Für die Verteilungsbeschreibung nach GUM Supplement~1 gilt dagegen
+\begin{equation}
+X_\mu=\bar x+\frac{2}{\sqrt5}\,\Omega\,Z_4.
+\end{equation}
+Diese Student-$t$-Verteilung hat den Skalenparameter
+$2/\sqrt5\,\Omega$, aber wegen
+\begin{equation}
+\operatorname{Var}(Z_4)=\frac{4}{4-2}=2
+\end{equation}
+die Standardabweichung
+\begin{equation}
+u_{\mathrm{GUM-S1}}(\bar x)
+=
+\sqrt{\operatorname{Var}(X_\mu)}
+=
+\frac{2}{\sqrt5}\sqrt2\,\Omega
+\approx1{,}265\,\Omega.
+\end{equation}
+
+Die beiden Zahlen beschreiben unterschiedliche statistische
+Betrachtungen. Im klassischen Ansatz wird aus den Daten
+geschätzt, wie stark die möglichen Stichprobenmittelwerte
+bei wiederholter Messung um den festen Parameter $\mu$ streuen.
+Im bayesischen Ansatz wird die Standardabweichung einer Verteilung
+bestimmt, die nach Kenntnis der Daten die Unsicherheit über
+$\mu$ beschreibt.
+
+Die Verteilung nach Supplement~1 ist somit ein Ergebnis
+aus dem Beobachtungsmodell, den Messdaten und der Priorwahl.
+Sie folgt nicht allein aus der Konstruktion des frequentistischen
+Vertrauensintervalls. Diese Unterscheidung wird bei der
+Verteilungsfortpflanzung in Kapitel~\ref{montecarloMU} relevant.
+
+\paragraph{Effektive Freiheitsgrade für die kombinierte Unsicherheit:}
+
+Bei mehreren unabhängig bewerteten Unsicherheitsbeiträgen ist deren
+Zuverlässigkeit im Allgemeinen verschieden. Die
+Welch--Satterthwaite-Näherung ordnet der kombinierten Standardunsicherheit
+eine \textsl{effektive Anzahl von Freiheitsgraden} zu.
+Für unkorrelierte Eingangsgrößen ist
+\begin{equation}
+\boxed{\nu_{\mathrm{eff}}=
+\frac{u_{\mathrm c}^4(y)}{
+\displaystyle\sum_{i=1}^N\frac{[c_i u(x_i)]^4}{\nu_i}}.}
+\label{EffectiveDFviele}
+\end{equation}
+Hier sind die $c_i$ als fest behandelt. $\nu_i$ charakterisiert die
+Bewertung des jeweiligen Varianzbeitrags, etwa $J_i-1$ bei einer
+unabhängigen Messreihe. Bei einem als hinreichend zuverlässig bekannten
+Typ-B-Beitrag kann $\nu_i\to\infty$ angesetzt werden. Ein Typ-B-Beitrag
+hat jedoch nicht allein aufgrund seiner Bezeichnung automatisch unendlich
+viele Freiheitsgrade.
+
+Unter den Voraussetzungen für die Approximation eine $t$-Verteilung anzusetzen wird
+\begin{equation}
+k\approx t_{1-\alpha/2,\nu_{\mathrm{eff}}},\qquad
+U=k\,u_{\mathrm c}(y).
+\label{vollstaendigesSatterthwaite}
+\end{equation}
+Die effektiven Freiheitsgrade sind kein neuer Stichprobenumfang und müssen
+nicht ganzzahlig sein. Für eine Tabelle kann konservativ auf die
+nächstkleinere ganze Zahl abgerundet werden; numerisch lässt sich das
+Quantil auch für nichtganzzahlige Freiheitsgrade berechnen.
+
+Die Formel für $\nu_{\mathrm{eff}}$ ist eine Näherung. Sie ist in dieser
+Form nicht allgemein für korrelierte Beiträge anwendbar und rechtfertigt
+auch bei großen effektiven Freiheitsgraden nicht automatisch eine
+Approximation, dass die Größen als normalverteilt angenommen werden. Dominiert beispielsweise ein rechteckverteilter
+Beitrag, kann die Form der Ausgangsverteilung weiterhin wesentlich von
+der Normalverteilung abweichen.
+
+\paragraph{Herleitung der Welch--Satterthwaite-Näherung}
+
+Die Idee besteht darin, die Unsicherheit der \emph{Varianzbewertung}
+selbst zu betrachten. Für eine normalverteilte Messreihe mit wahrer
+Varianz $\sigma_i^2$ und $\nu_i=J_i-1$ gilt
+\begin{equation}
+Q_i=\frac{\nu_i S_i^2}{\sigma_i^2}\sim\chi^2_{\nu_i}.
+\end{equation}
+Für diese Verteilung gilt
+\begin{equation}
+\operatorname E(Q_i)=\nu_i,
+\label{ErwartungswertQ}
+\end{equation}
+\begin{equation}
+\operatorname{Var}(Q_i)=2\nu_i.
+\label{VarianzQ}
+\end{equation}
+Daraus folgen
+\begin{equation}
+\operatorname E(S_i^2)=\sigma_i^2,\qquad
+\operatorname{Var}(S_i^2)=\frac{2\sigma_i^4}{\nu_i}.
+\end{equation}
+Die Großbuchstaben $S_i^2$ kennzeichnen hier den Varianzschätzer vor der
+Datenerhebung; $s_i^2$ ist der aus den beobachteten Daten berechnete
+Schätzwert.
+
+Für die Varianzbewertung eines Mittelwerts ist
+$V_i=S_i^2/J_i$ mit Erwartungswert $v_i=\sigma_i^2/J_i$. Auch hierfür ist
+$\operatorname{Var}(V_i)=2v_i^2/\nu_i$.
+Sind die $V_i$ unabhängig und ist $V=\sum_i c_i^2V_i$, gilt
+\begin{equation}
+\operatorname{Var}(V)=\sum_{i=1}^N c_i^4\operatorname{Var}(V_i)
+=2\sum_{i=1}^N\frac{c_i^4v_i^2}{\nu_i}.
+\label{VarianzvarianzSumme}
+\end{equation}
+Wir approximieren $V$ durch eine skalierte $\chi^2$-Verteilung mit
+Erwartungswert $v=\sum_i c_i^2v_i$ und wählen deren Freiheitsgrade so,
+dass die Varianz übereinstimmt:
+\begin{equation}
+\frac{2v^2}{\nu_{\mathrm{eff}}}
+=2\sum_{i=1}^N\frac{c_i^4v_i^2}{\nu_i}.
+\label{Satterthwaite}
+\end{equation}
+Nach Kürzen des Faktors~2 und Ersetzen der unbekannten $v_i$ durch die
+bewerteten Varianzen $u^2(x_i)$ ergibt sich
+Gl.~(\ref{EffectiveDFviele}). Für zwei Beiträge ist dies
+\begin{equation}
+\nu_{\mathrm{eff}}=
+\frac{u_{\mathrm c}^4(y)}{
+[c_1u(x_1)]^4/\nu_1+[c_2u(x_2)]^4/\nu_2}.
+\label{EffectiveDFfuer2}
+\end{equation}
+
+\paragraph{Überdeckungsintervall und Erweiterungsfaktor
+der zugeordneten Student-$t$-Verteilung.}
+
+Für die Bestimmung eines Überdeckungsintervalls müssen wir beachten,
+dass sich die üblichen Student-$t$-Quantile auf eine Verteilung
+mit Skalenparameter eins beziehen.
+Wir bezeichnen den aus der Messreihe berechneten Ausdruck
+$s/\sqrt J$ im Folgenden kurz mit
+\begin{equation}
+\bar s=\frac{s}{\sqrt J}.
+\end{equation}
+Die nach Supplement~1 zugeordnete Verteilung lautet damit
+\begin{equation}
+X_\mu=\bar x+\bar s\,Z_\nu,
+\qquad \nu=J-1.
+\end{equation}
+Dabei ist $\bar s$ der Skalenparameter dieser Verteilung.
+
+Für die zentrale Student-$t$-Verteilung gilt
+\begin{equation}
+\Pr\!\left(
+-t_{1-\alpha/2,\nu}
+\leq Z_\nu
+\leq t_{1-\alpha/2,\nu}
+\right)
+=1-\alpha.
+\end{equation}
+Durch Multiplikation mit dem positiven Skalenparameter $\bar s$
+und Addition des Lageparameters $\bar x$ erhalten wir daher
+das Überdeckungsintervall
+\begin{equation}
+\boxed{
+\left[
+\bar x-t_{1-\alpha/2,\nu}\bar s,
+\quad
+\bar x+t_{1-\alpha/2,\nu}\bar s
+\right].
+}
+\end{equation}
+Seine Halbbreite beträgt
+\begin{equation}
+U=t_{1-\alpha/2,\nu}\bar s.
+\end{equation}
+Die stärker besetzten Ausläufer der Student-$t$-Verteilung
+sind bereits im Quantil berücksichtigt.
+Der Faktor $\sqrt{\nu/(\nu-2)}$ wird deshalb bei dieser
+Intervallberechnung nicht zusätzlich angebracht, siehe Abschnitt \ref{sec:tVerteilung}.
+
+Dieser Faktor wird benötigt, wenn wir aus dem Skalenparameter
+die Standardabweichung der zugeordneten Verteilung bestimmen:
+\begin{equation}
+u_{\mathrm{S1}}(\bar x)
+=
+\sqrt{\operatorname{Var}(X_\mu)}
+=
+\bar s\sqrt{\frac{\nu}{\nu-2}},
+\qquad \nu>2.
+\end{equation}
+Möchten wir die Intervallhalbbreite als Produkt eines
+Erweiterungsfaktors und dieser Standardunsicherheit schreiben,
+müssen wir entsprechend umrechnen:
+\begin{equation}
+\bar s
+=
+u_{\mathrm{S1}}(\bar x)
+\sqrt{\frac{\nu-2}{\nu}}.
+\end{equation}
+Damit ergibt sich
+\begin{equation}
+U
+=
+t_{1-\alpha/2,\nu}\bar s
+=
+k_{\mathrm{S1}}\,u_{\mathrm{S1}}(\bar x)
 \end{equation}
 mit
 \begin{equation}
-\operatorname{Cov}(X_i, X_i) \; \equiv \; \operatorname{Var}(X_i)
-\; \equiv \; \sigma^2_i \; \equiv \;  u^2(X_i)
-\end{equation}
-und
-\begin{equation}
-\operatorname{Cov}(X_i, X_k) \; \equiv \;
-\sigma_{i,k} \; \equiv \; u(X_i,X_k)
-\end{equation}
-Hier sind keine Tippfehler bezüglich der Quadrate, es gilt tatsächlich $u^2(X_i) = u(X_i,X_i)$ für die Varianzen
-sowie $\sigma^2(X_i) = \sigma(X_i,X_i)$ für die Kovarianzen.
-
-Im JCGM 100-Dokument des \textsl{Guide} für Messunsicherheit GUM in Absatz 5.2.4
-werden als typische Ursachen für die Korrelation von Eingangsgrößen  folgende aufgeführt:
-\begin{itemize}
-\item Verwendung desselben Normals (Prüfkörpers) oder Messgeräts;
-\item Verwendung mehrerer Normale, die in derselben Vorrichtung kalibriert
-wurden (z.B. gestückelte Masse-Normale bei der Kalibrierung einer Waage);
-\item Verwendung des gleichen Referenzwertes;
-\item Eine Eingangsgröße hängt direkt von einer weiteren ab
-(z.B. Luftdruck von Um\-geb\-ungs\-tem\-pe\-ra\-tur);
-\item Zwei oder mehr Eingangsgrößen sind von
-demselben Effekt beeinflusst
-(z.B. Stromstärke und Spannung in einem Messkreis, so dass beide
-von Schwankungen der Stromquelle beeinflusst werden).
-\end{itemize}
-
-Bei gemeinsam aufgenommenen Tupeln direkter Messgrößen (z.B.\ Stromstärke und Spannung in
-einem Messkreis), die miteinander korreliert sein können, sieht die Kovarianz aufgrund
-der Zuordnung mit gemeinsamer Beobachtung (Ziehung) jeweils eines Tupels $\mathrm{X}_j$ wie folgt aus:
-$$
-\operatorname{Cov}(X_i, X_k) \, = \,
-\frac{1}{J-1} \sum_{j=1}^J (X_{i,j} - \bar x_i) (X_{k,j} - \bar x_k)
- \quad \mathrm{und~mit}
-\quad  \bar x_i \, = \, \frac{1}{J} \sum_{j=1}^J X_{i,j}
-$$
-für $i,k = 1,\dots, N$.
-
-Bei den aufgelisteten Fällen, bei denen es keine direkte Zuordnung von Beobachtungen
-der verschiedenen direkten Messgrößen gibt, wie es bei der Verwendung desselben Normals oder
-Messgeräts sein kann, erfordert die Abschätzung eines Korrelationskoeffizienten
-$\rho$ oder $r$ eine geeignete Modellbildung.
-
-
-\section{M.U.F. für univariate, explizite indirekte Größe, Abhängigkeit von direkten Größen linearisierbar}
-
-Zunächst beleuchten wir ein Beispiel, bei dem ein Modellparameter $Y$ berechnet wird,
-der sich aus dem Produkt zweier direkter
-Messgrößen $X_1$ und $X_2$ ergibt. Wir beschäftigen uns mit dem Fall, dass
-die beiden direkten Größen nicht von einander abhängen. Sie sollen zwei unterschiedlichen
-und unabhängigen Grundgesamtheiten angehören, d.h.\ unkorreliert sein.
-
-Das Modell sei
-\begin{equation}
-Y \; = \; X_1 \, X_2
-\label{BeispielProdukt2Gr}
-\end{equation}
-und es wurden zu jeder der beiden direkten Größen zu unterschiedlichen Zeiten unterschiedlich
-große Stichproben gezogen.
-
-Die naheliegende Vorgehensweise ist nun, die Mittelwerte der beiden Stichproben zu berechnen und
-diese miteinander zu multiplizieren
-\begin{equation}
-y \; = \; \left(\frac{1}{J_1} \sum_{j=1}^{J_1} X_{1,j}\right) \,
-          \left(\frac{1}{J_2} \sum_{j=1}^{J_2} X_{2,j}\right) .
-\end{equation}
-Für die Berechnung der kombinierten Standardabweichung von $Y$ bestimmen wir
-die Standardabweichungen $s_i$ der beiden Stichproben $i = 1,2$ zu den Größen $X_1$ und $X_2$:
-\begin{equation}
-s_i \; = \; \sqrt{ \frac{1}{J_i - 1} \sum_{k=1}^{J_i}
- \left( X_{i,k} \; - \; \frac{1}{J_i} \sum_{j=1}^{J_i} X_{i,j}\right)^2 }
-\end{equation}
-Wir betrachten die Empfindlichkeit der Modellfunktion, wie stark die Größe $Y$ auf
-Abweichungen/ Veränderungen der Größen $X_1$ und $X_2$ reagiert.
-In diesem Beispiel ist es sehr einfach, wenn die Größe $X_1$ um $\Delta X_1$ verschoben wird
-\begin{equation}
-Y + \Delta Y \; = \; (X_1 + \Delta X_1) \, X_2 \; = \; X_1\, X_2 + \Delta X_1 \, X_2
-\end{equation}
-dann ist
-\begin{equation}
-\Delta Y \; = \; \Delta X_1 \, X_2
-\end{equation}
-weil $Y$ linear von $X_1$ abhängt und es gilt
-\begin{equation}
-c_1 \; := \; \frac{\Delta Y}{\Delta X_1} \; = \; X_2
-\end{equation}
-was die Empfindlichkeit, d.h.\ Sensitivität $c_1$, der Größe $Y$ auf Änderungen der Größe
-$X_1$ genannt wird.
-\begin{figure}
-\begin{center}
-\includegraphics[width=100mm]{10_vorlesung_GUM/media/understand_fehlerfort_1.pdf}
-\caption{\label{FortpfElliptisch} Eine anschauliche Deutung für die pythagoräische
-Addition der Standardabweichungen liefert die Betrachtung der mit roter Kurve dargestellten
-Ellipse. Die blauen Geraden repräsentieren die Abstände vom Mittelpunkt als Halbmesser
-der Ellipse, die aus den Standardabweichungen jeweils von $X_1$ und $X_2$ berechnet wurden.}
-\end{center}
-\end{figure}
-Da die beiden Größen $X_1$ und $X_2$ zwei unabhängige Dimensionen repräsentieren, werden
-ihre Standardabweichungen nach dem Satz des Pythagoras addiert, eine Veranschaulichung dieses
-Sachverhalts zeigt Abb.~\ref{FortpfElliptisch}. Da die Größen über die Modellgleichung
-miteinander verknüpft sind und die gesuchte Standardabweichung die Dimension der Größe $Y$
-trägt, müssen die Standardabweichungen der Größen $X_1$ und $X_2$ mit den entsprechenden
-Sensitivitäten verknüpft werden, so dass
-\begin{equation}
-s_y^2 \; = \; (c_1 \, s_1)^2 \; + \; (c_2 \, s_2)^2 .
-\end{equation}
-Diese Varianz $s_y^2$ ist also wieder eine \textsl{kombinierte Varianz} und deren Wurzel
-$s_y$ eine \textsl{kombinierte Standardabweichung}.
-
-Für den allgemeinen Fall mit einer Linearsierung durch die Taylorreihenentwicklung
-Gl.~(\ref{univarTaylorLin}) stellen die partiellen Ableitungen an
-der Stelle der Schätzer der direkten Größen die Sensitivitäten
-$c_i = \left. \frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}}$ dar. Der
-Vektor der partiellen Ableitungen heißt \textsl{Gradient}. Der Gradient ist also
-der Steigungsvektor.
-Der Gradient drückt aus, wie stark sich die indirekte Größe $Y$ gemäß der Steigung
-des Kurvenverlaufs des Modells
-ändert, wenn es kleine Änderungen der direkten Größen gibt. Mit anderen Worten besagt dies, wie
-empfindlich die indirekte Größe auf Änderungen der direkten Größen reagiert, d.h.\ wie sensistiv
-das Modell an der Position $\bar{\mathbf{x}}$ ist.
-
-Gegeben sei ein univariates, expliziten Modell $Y = f(\mathrm{X})$, das linearisierbar ist, also
-in Taylorreihe entwickelbar bis zum linearen Term mit dem Erwartungswertevektor
-$\bar{\mathbf{x}}$ als Entwicklungspunkt
-\begin{equation}
-Y = f(\mathbf{X}) \approx \left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}} +
-\sum_{i=1}^N \left.
-\frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i
-\quad \text{und} \quad \mathrm{X} = \bar{\mathbf{x}} + \Delta \mathrm{X} .
-\label{linearisiertesModellY}
-\end{equation}
-Die direkten Messgrößen $X_i$ sind Zufallsgrößen.
-Bei der Linearisierung nehmen die Abweichungen $\Delta X_i$ der direkten Größen von ihren Erwartungswerten
-$\mathrm{E}(X_i) = \bar x_i$ oder als Vektor mit den Erwartungswerten aller direkten Größen
-$\bar{\mathbf{x}}$ die Rolle der Zufallsgrößen ein. Ihr Erwartungswert ist dann
-Null $\mathrm{E}(\Delta X_i) = 0$.
-
-Der Erwartungswert der indirekten Messgröße $Y$ wird durch Einsetzen der Erwartungswerte der
-direkten Messgrößen in die Modellgleichung $Y = f(\mathrm{X})$ gewonnen
-\begin{equation}
-\mathrm{E}(Y) = \left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}}
-\end{equation}
-
-Zu der indirekten Messgröße soll die Varianz ermittelt werden
-\begin{equation}
-\operatorname{Var}(Y) =
-\int \left(Y - E(Y) \right)^2 p(Y) \mathrm{d}Y =
-\int \left(Y^2 - 2 Y \mathrm{E}(Y) + \mathrm{E}(Y)^2\right)  p(Y) \mathrm{d}Y
-\end{equation}
-mit $\int Y \mathrm{E}(Y) p(Y) \mathrm{d}Y = E(Y) \int Y p(Y) \mathrm{d}Y =
-\mathrm{E}(Y) \mathrm{E}(Y)$ wird dies zu
-\begin{equation*}
-\operatorname{Var}(Y)
-= \int \left(Y^2 - \mathrm{E}(Y)^2\right)  p(Y) \mathrm{d}Y
-= \left(\int Y^2 p(Y) \mathrm{d}Y \right) - \mathrm{E}(Y)^2,
-\end{equation*}
-so dass gilt
-\begin{equation}
-\operatorname{Var}(Y)
-= \int \left(Y^2 - \mathrm{E}(Y)^2\right)  p(Y) \mathrm{d}Y
-= \int Y^2 p(Y) \mathrm{d}Y - \int \mathrm{E}(Y)^2  p(Y) \mathrm{d}Y .
-\end{equation}
-Hier wird der Ansatz Gl.~(\ref{linearisiertesModellY}) eingesetzt und mit
-$p(Y)$ aus $p(X_1,\dots,X_N) = p(\mathbf{X})$ und mit
-$\mathrm{d} \mathbf{X} = \mathrm{d} X_1\dots \mathrm{d} X_N$,
-sowie mit $\int \mathrm{E}(Y)^2  p(Y) \mathrm{d}Y = \mathrm{E}(Y)^2$
-\begin{equation}
-\operatorname{Var}(Y)
-= \int \left( \left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}} +
-\sum_{i=1}^N \left.
-\frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i
- \right)^2
-p(\mathbf{X}) \mathrm{d} \mathbf{X}
- \; - \; \mathrm{E}(Y)^2
-\end{equation}
-%\begin{small}
-\begin{equation*}
-= \int \left[ \left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}}^2 +
-2   \left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}}
-\sum_{i=1}^N \left.
-\frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i
-+ \left(
-\sum_{i=1}^N \left.
-\frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i
- \right)^2 \right]  p(\mathbf{X}) \mathrm{d} \mathbf{X}
-\; - \mathrm{E}(Y)^2
-\end{equation*}
-%\end{small}
-\begin{equation*}
-= \int \left[
-2   \left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}}
-\sum_{i=1}^N \left.
-\frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i
-+ \left(
-\sum_{i=1}^N \left.
-\frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i
- \right)^2
-\right]  p(\mathbf{X}) \mathrm{d} \mathbf{X}
-\end{equation*}
-
-\begin{equation*}
-\operatorname{Var}(Y)
-= \int \left[
-2   \left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}}
-\sum_{i=1}^N \left.
-\frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i
-+ \left(
-\sum_{i=1}^N \left.
-\frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i
- \right)^2
-\right]  p(\mathbf{X}) \mathrm{d} \mathbf{X}
-\end{equation*}
-\begin{equation*}
-= 2 \int   \left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}}
-\sum_{i=1}^N \left.
-\frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i
-\,  p(\mathbf{X}) \mathrm{d} \mathbf{X}
-+ \int \left(
-\sum_{i=1}^N \left.
-\frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i
- \right)^2
- p(\mathbf{X}) \mathrm{d} \mathbf{X}
-\end{equation*}
-\begin{equation*}
-= 2 \left. f(\mathbf{X}) \right|_{\bar{\mathbf{x}}}  \sum_{i=1}^N \left.
-\frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}}
-\underbrace{\int  \Delta X_i \, p(\mathbf{X}) \mathrm{d} \mathbf{X}}_{= 0}
-+ \int \left(
-\sum_{i=1}^N \left.
-\frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}} \Delta X_i
- \right)^2
- p(\mathbf{X}) \mathrm{d} \mathbf{X}
-\end{equation*}
-
-\begin{equation}
-\operatorname{Var}(Y)
+\boxed{
+k_{\mathrm{S1}}
 =
-\int \left(
-\sum_{i=1}^N \; \underbrace{
-\left. \frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}}}_{c_i} \;
-\underbrace{\Delta X_i}_{X_i - E(X_i)}
- \right)^2
- p(\mathbf{X}) \mathrm{d} \mathbf{X}
+t_{1-\alpha/2,\nu}
+\sqrt{\frac{\nu-2}{\nu}},
+\qquad \nu>2.
+}
+\end{equation}
+
+Das übliche Student-$t$-Quantil multipliziert somit den
+\emph{Skalenparameter}. Wird stattdessen die
+\emph{Standardabweichung} der zugeordneten Student-$t$-Verteilung
+verwendet, gehört dazu der umgerechnete Erweiterungsfaktor
+$k_{\mathrm{S1}}$.
+
+\paragraph{Fortsetzung des Zahlenbeispiels.}
+
+Für $J=5$ Beobachtungen und $s=2\,\Omega$ gilt
+\begin{equation}
+\nu=4,
+\qquad
+\bar s=\frac{2}{\sqrt5}\,\Omega
+\approx0{,}8944\,\Omega,
+\qquad
+u_{\mathrm{S1}}(\bar x)
 =
-\operatorname{Var}\left(\sum_{i=1}^N\underbrace{
-\left. \frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}}}_{c_i}  X_i\right)
+\bar s\sqrt2
+\approx1{,}2649\,\Omega.
 \end{equation}
+Für eine Überdeckungswahrscheinlichkeit von $0{,}95$ beträgt
+das Student-$t$-Quantil
+\begin{equation}
+t_{0{,}975,4}\approx2{,}7764.
+\end{equation}
+Die Intervallhalbbreite ergibt sich direkt aus dem Skalenparameter:
+\begin{equation}
+U
+=
+t_{0{,}975,4}\bar s
+\approx2{,}483\,\Omega.
+\end{equation}
+Verwenden wir die Standardabweichung der zugeordneten Verteilung,
+lautet der zugehörige Erweiterungsfaktor
+\begin{equation}
+k_{\mathrm{S1}}
+=
+t_{0{,}975,4}\sqrt{\frac{4-2}{4}}
+\approx1{,}9632.
+\end{equation}
+Damit erhalten wir dieselbe Intervallhalbbreite:
+\begin{equation}
+U
+=
+k_{\mathrm{S1}}\,u_{\mathrm{S1}}(\bar x)
+\approx2{,}483\,\Omega.
+\end{equation}
+Beide Schreibweisen liefern also dasselbe Überdeckungsintervall.
+Eine Multiplikation von $u_{\mathrm{S1}}(\bar x)$ mit dem
+unveränderten Student-$t$-Quantil würde dagegen ein zu breites
+Intervall ergeben.
 
-Als nächstes wollen wir wieder das Fortpflanzungsgesetz für die Messunsicherheit
-in der Gestalt von Gl.~(\ref{univarLinearFortpflanzungKap7}) erhalten, wobei jetzt die Koeffizienten
-$c_i$ die Steigungen der Tangenten $\frac{\partial f}{\partial X_i}$ an der Stelle
-der geschätzten Erwartungswerte sind, d.h.\
-$c_i = \left. \frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}}$
+\paragraph{Grenzen der symmetrischen Ergebnisangabe}
 
-\begin{equation}
-\operatorname{Var}(Y)
-= \operatorname{Var}\left(\sum_{i=1}^N c_i X_i\right)
-\end{equation}
-\begin{equation}
-\operatorname {Var}\left(Y\right)
-= \sum _{{i=1}}^{N} \, c_i^2 \operatorname {Var}( X_{i})+2\sum _{{i=1}}^{{N-1}}
-  \sum _{{k=i+1}}^{N} \, c_i c_k \operatorname {Cov}(X_{i}, X_{k})
-\label{UnsicherFortpflLinearisiert}
-\end{equation}
+Eine erweiterte Messunsicherheit wird zusammen mit dem Erweiterungsfaktor
+und der zugrunde gelegten Überdeckungswahrscheinlichkeit angegeben.
+Bei einer schiefen Ausgangsverteilung kann ein symmetrisches Intervall
+um den Schätzwert ungeeignet sein. Dann werden die beiden Intervallgrenzen
+direkt aus der Ausgangsverteilung bestimmt, beispielsweise als
+$[F_Y^{-1}(\alpha/2),F_Y^{-1}(1-\alpha/2)]$.
 
-Zu Kapitel 5.2 im JCGM 100-Dokument des \textsl{Guide} für Messunsicherheit GUM
-sei angemerkt, dass für die Sensitivitäten eine verkürzte, unmathematische Schreibweise
-für die Sensitivitäten gewählt wurde, indem dort geschrieben steht $\frac{\partial f}{\partial x_i}$
-anstelle von $\left. \frac{\partial f}{\partial X_i} \right|_{\bar{\mathbf{x}}}$ oder
-$\left. \frac{\partial f}{\partial X_i} \right|_{\bar x_1, \dots, \bar x_N}$.
-Im GUM wird angemerkt, dass die saloppe Notation $\frac{\partial f}{\partial x_i}$ für
-$\frac{\partial f}{\partial X_i}$
-unter Verwendung der Schätzwerte $x_i$ zu den $X_i$ gewählt wird.
-In unserer Vorlesungsreihe sowie im GUM steht das Symbol mit dem großgeschriebenen $X_i$ für die
-direkten Messgrößen. Das im GUM verwendete $x_i$ als Kleinbuchstabe steht für den Schätzwert,
-was wir in der Vorlesung mit $\bar x_i$ bezeichnen. Da der Schätzwert eine Konstante ist,
-kann man nach dieser natürlich nicht ableiten.
+Die Fortpflanzung einer deterministischen Beziehung $Y=f(\mathbf X)$
+benötigt keine zusätzliche Likelihood, die $Y-f(\mathbf X)$ als zufälligen
+Rest beschreibt. Falls tatsächlich eine weitere Modellabweichung vorliegt,
+muss sie als zusätzliche Einflussgröße begründet und in das Messmodell
+aufgenommen werden. Die Monte-Carlo-Fortpflanzung und die bayesische
+Schätzung von Eingangsverteilungen werden in Kapitel~\ref{montecarloMU} auseinandergehalten.
 
+\paragraph{Vom Messunsicherheitsbudget zur Ergebnisangabe}
 
-\section{Überdeckungsintervall für indirekte Messgrößen}
+Die bisher erläuterten Schritte werden für eine konkrete Messaufgabe
+in einem \textsl{Messunsicherheitsbudget} zusammengeführt.
+Darunter verstehen wir die nachvollziehbare Zusammenstellung
+der Messunsicherheitsbeiträge, ihrer Bestimmung und ihrer Kombination
+mithilfe des Messmodells. Das Budget dokumentiert damit, aus welchen
+Informationen und Annahmen die angegebene Messunsicherheit hervorgeht.
 
-Am Ende von Kapitel~\ref{konzepteStatistik} haben wir das Überdeckungsintervall eingeführt
-und nach Einführung der Quantile der t-Verteilung in Kapitel~\ref{wahrscheinlichHyp} genauer
-behandelt, als \textsl{Vertrauensintervall}, sowie im Zusammenhang der bayesischen Statistik
-gewonnen aus der inversen kumulierten Posteriorverteilung als \textsl{Credible intervall}.
+Üblicherweise werden die Eingangsgrößen mit ihren Schätzwerten $x_i$,
+den zugehörigen Standard\-un\-sicher\-heiten $u(x_i)$ und den
+Sensitivitätskoeffizienten $c_i$ tabellarisch aufgeführt.
+Hinzu kommen Angaben zur Herkunft der Unsicherheiten, zu den
+verwendeten Verteilungsannahmen und zu den Freiheitsgraden.
+Die Produkte $c_i u(x_i)$ beschreiben die mit der jeweiligen
+Sensitivität gewichteten Standardunsicherheiten und haben
+die Einheit der Ausgangsgröße. Bei unkorrelierten Eingangsgrößen
+werden ihre Quadrate zur Ausgangsvarianz addiert.
+Bei korrelierten Eingangsgrößen müssen zusätzlich die
+Kovarianzbeiträge berücksichtigt und dokumentiert werden.
+So wird ersichtlich, welche Einflüsse die Ausgangsunsicherheit
+wesentlich bestimmen.
 
-Die Intervallgrenzen des Vertrauensintervalls haben wir
-auch als Produkt aus einem Quantil und einer Standardabweichung repräsentiert, im Fall, dass
-eine Normalverteilung zugrunde gelegt wird in der Form
+Für die zusammenfassende Ergebnisangabe bezeichnen wir den aus
+dem Messmodell berechneten Ausgangsschätzwert mit
 \begin{equation}
-\left[\bar x \, - \, z_{1-\frac{1}{2}\alpha} \, \sigma_X,
-\bar x \, + \, z_{1-\frac{1}{2}\alpha} \, \sigma_X \right]
+y=f(\mathbf x)
 \end{equation}
-und im Fall, dass eine $t$-Verteilung zugrunde gelegt wird
-\begin{equation}
-\left[\bar x \, - \, t_{1-\frac{1}{2}\alpha, \nu} \, \sigma_X,
-\bar x \, + \, t_{1-\frac{1}{2}\alpha, \nu} \, \sigma_X \right] .
-\end{equation}
-Bei dem Fall, dass eine $t$-Verteilung zugrunde gelegt wird, und zwar, wenn es um kleinere
-Stichprobenumfänge geht, hängt das Quantil von der Anzahl der Freiheitsgrade $\nu_i = J_i - 1$
-ab, die jedoch im allgemeinen für die beiden Größen $X_i$
-unterschiedlich sein kann. Es gilt also, ein gemeinsames Quantil zu finden.
+und seine kombinierte Standardunsicherheit kurz mit $u_{\mathrm c}(y)$.
 
-Mit der bayesischen Methode, die wir zuvor betrachtet haben, konnten wir das
-\textsl{Credible Interval} aus der kumulierten Posterior gewinnen. Bei dem
-zuvor erörterten Beispiel Gl.~(\ref{BeispielProdukt2Gr}) $Y = X_1 X_2$ haben wir statt
-der einen Likelihood drei Verteilungsdichten:
-Für jede Größe $X_i$ haben wir je eine Likelihood
+Sind die zuvor erläuterten Voraussetzungen für die Verwendung
+des Student-$t$-Quantils und der Welch-Satterthwaite-Näherung
+erfüllt, wählen wir für $P=1-\alpha$ den Erweiterungsfaktor
 \begin{equation}
-p_{\mathrm{L},i}(\{X_{i,1}, \dots, X_{i,J}\} | X_i, s_i) \; = \;
-\prod\limits_{j=1}^J \frac{1}{\sqrt{2 \pi} \, s_i}
- e^{- \frac{1}{2} \, \left( \frac{X_{i,j} - X_i}{s_i} \right)^2 }  \; = \;
-l(X_i, s_i | \{X_{i,1}, \dots, X_{i,J}\})
+k=t_{1-\alpha/2,\nu_{\mathrm{eff}}}.
 \end{equation}
-was zwei Verteilungen liefert, und als dritte Verteilung noch
+Mit den effektiven Freiheitsgraden $\nu_{\mathrm{eff}}$
+ergibt sich die erweiterte Messunsicherheit
 \begin{equation}
-p_\mathrm{L,y}( X_1, X_2 | Y, s) \; = \;
-\frac{1}{\sqrt{2 \pi} \, s}
- e^{- \frac{1}{2} \, \left( \frac{Y - X_1 \, X_2}{s} \right)^2 }
+U=k\,u_{\mathrm c}(y)
+=t_{1-\alpha/2,\nu_{\mathrm{eff}}}\,u_{\mathrm c}(y).
 \end{equation}
-wobei dann nicht nur über $s$, sondern auch über $X_1$ und $X_2$ integriert wird, um die
-Posterior als Marginalverteilung, die nur noch von $Y$ abhängt, zu erhalten.
+Das zugehörige Intervall lautet
+\begin{equation}
+\boxed{
+\left[
+y
+-t_{1-\alpha/2,\nu_{\mathrm{eff}}}\,u_{\mathrm c}(y),
+\quad
+y
++t_{1-\alpha/2,\nu_{\mathrm{eff}}}\,u_{\mathrm c}(y)
+\right].
+}
+\end{equation}
+Im frequentistischen Beobachtungsmodell ist dies ein
+näherungsweises Vertrauensintervall zum Vertrauensniveau
+$1-\alpha$. Die Ergebnisangabe umfasst daher neben
+$y$ und $U$ auch den verwendeten Erweiterungsfaktor
+$k$ und das zugehörige Niveau $P$.
 
-Für relativ einfache analytische Zusammenhänge, also für explizite Modelle
-und für ein\-fachere implizite Modellansätze wie die lineare Regression, ist
-es nicht erforderlich die numerisch aufwendigere
-kolmogoroff'sche Wahrscheinlichkeitsrechnung (Bildung
-der Produkte der Verteilungen) anzuwenden.
-Für explizite linearisierbare Modelle
-$$
-Y = f(\mathbf{X}) \qquad \mathbf{Y} = \vec f(\mathbf{X})
-$$
-mit $\vec f = (f_1,\dots,f_l, \dots, f_M)^\mathsf{T}$ ist das
-Fortpflanzungsgesetz gemäß Gl.~(\ref{UnsichFortpfl2}) wie folgt
-\begin{equation}
-u^2(Y_l) = \sum\limits_{i=1}^{N} \, \left( \left. \frac{\partial f_l(\mathbf{X})}{\partial X_i}\right|_{\bar{\mathbf{x}}} \right)^2 \, u^2(X_i) \;  + \;
-2 \, \sum\limits_{i=1}^{{N-1}}
- \sum\limits_{k=i+1}^{N} \, \left. \frac{\partial f_l(\mathbf{X})}{\partial X_i}\right|_{\bar{\mathbf{x}}} \,
- \left. \frac{\partial f_l(\mathbf{X})}{\partial X_k}\right|_{\bar{\mathbf{x}}}  \; \rho_{i,k} \, u(X_i) \, u(X_k)
-\end{equation}
-verwendbar. Für die lineare Regression
-$$
-Y_\mathrm{Regr} = \sum_{l=1}^M \theta_i X_l
-$$
-die bzgl.\ der indirekten Messgrößen $\theta_l = Y_l$ ein implizites Modell ist, gilt
-für die Unsicherheitsfortpflanzung, die in Abschnitt~\ref{subsec:vertrauensbereiche}
-dargelegt wird, siehe Gl.~(\ref{eq:Varianz des Achsenabschnitts}) bzw.\
-Gl.~(\ref{eq:CovRegressparamsMatrix}) mit Gl.~(\ref{eq:URegressparamsMatrix}).
-Mit einer Stichprobe mit Tupeln $(Y_{\mathrm{Regr},j}, X_{1,j},\dots,X_{M,j})$ und mit
-$\boldsymbol Y_{\mathrm{Regr}} = (Y_{\mathrm{Regr},1},\dots,Y_{\mathrm{Regr},J})^{\mathsf{T}}$
-und der Regressormatrix $\boldsymbol X = (X_{l,j})$ liefert das Fortpflanzungsgesetz die
-Kovarianz der Modellparameter
-\begin{equation}
-\operatorname{Cov}(\boldsymbol \theta) \; = \; \left(\boldsymbol X^\mathsf{T} \, \boldsymbol X\right)^{-1} \, \operatorname{Var}(\boldsymbol \varepsilon)
-\end{equation}
-mit $J$ für den Stichprobenumfang und $M$ für die Anzahl der Modellparameter und mit
-\begin{equation}
-\operatorname{Var}(\boldsymbol \varepsilon) \; = \;
-	\frac{1}{J-M}\left(\boldsymbol Y \; - \; \boldsymbol X \, \hat{\boldsymbol \theta}\right)^\mathsf{T}
-\left(\boldsymbol Y \; - \; \boldsymbol X \, \hat{\boldsymbol \theta}\right) .
-\end{equation}
-Die Hauptdiagonale der Kovarianz der Modellparameter enthält die Varianzen
-$$
-\sigma_{\theta_l}^2 = u^2(\theta_l\equiv Y_l)
-$$
-der jeweiligen Modellparameter.
-
-Für die Ermittlung des Überdeckungsintervalls $[y_l-U(Y_l), y_l+U_l]$ wird ein entsprechender
-Erweiterungsfaktor $k$ für $U(Y_l) = k \, u(Y_l)$ gebraucht. Wird als Erweiterungsfaktor das
-Quantil der $t$-Verteilung eingesetzt, so wird eine \textsl{effektive Anzahl
-von Freiheitsgraden} $\nu_\mathrm{eff}$ approximiert.
-In Abschnitt G.4 des Dokuments JCGM 100 GUM:2008 wird auf die Berechnungsmethode
-für $\nu_\mathrm{eff}$ von Satterthwaite aus dem Jahr 1941 \cite{Sat41} zurückgegriffen.
-
-Satterthwaite betrachtet die Varianz $\operatorname{Var}(s_i^2)$
-der Varianz $s_i^2$. Die Varianzen $s_i^2$ sind unabhängige
-Zufallsgrößen, also als Größen zu betrachten, die unkorreliert sind, so dass
-\begin{equation}
-\operatorname{Var}(s_y^2) \; = \;  \operatorname{Var}\left( c_1^2 s_1^2 \right)
- \; + \; \operatorname{Var}\left( c_2^2 s_2^2 \right)
-\label{VarianzvarianzSumme}
-\end{equation}
-gilt.
-Die empirischen Varianzen $s_1^2$ und $s_2^2$ der Größen $X_1$ und $X_2$ sind $\chi^2$-verteilt,
-d.h.\ für die normierte Größe gilt
-\begin{equation}
-Q_i \; = \; \nu_i \, \left(\frac{s_i}{\sigma_i}\right)^2 \, \sim \; \chi^2(\nu_i) .
-\end{equation}
-Der Erwartungswert für $Q_i$ ist
-\begin{equation}
-\operatorname{E}(Q_i) \; = \; \int_0^\infty \; Q \; p_{\chi^2}(Q) \; \operatorname{d}Q \; = \; \nu_i.
-\label{ErwartungswertQ}
-\end{equation}
-Die Varianz $\operatorname{Var}(Q_i)$ ist
-\begin{equation}
-\operatorname{Var}(Q_i) \; = \; \int_0^\infty \; (Q - \nu_i)^2 \; p_{\chi^2}(Q) \; \operatorname{d}Q \; = \; 2 \nu_i.
-\label{VarianzQ}
-\end{equation}
-Die Herleitungen zu den beiden Gln.~(\ref{ErwartungswertQ}) und (\ref{VarianzQ})
-befinden sich in Anhang \ref{ErwaChi2}.
-
-Ferner gilt allgemein für die Varianz einer Zufallszahl $R$
-multipliziert mit einem konstanten Faktor $a$
-\begin{equation}
-\arraycolsep=2.4pt\def\arraystretch{2}
-\begin{array}{ll}
-\operatorname{Var}(a R) & = \; \int\limits_0^\infty \, (a R - \operatorname{E}(a R))^2  \, p(R)  \, \operatorname{d}R \\
- & = \int\limits_0^\infty \, a^2 \, (R - \operatorname{E}(R))^2  \, p(R)  \, \operatorname{d}R\\
- & = a^2 \, \int\limits_0^\infty \, (R - \operatorname{E}(R))^2  \, p(R)  \, \operatorname{d}R\\
- & = a^2 \, \operatorname{Var}(R)
-\end{array}
-\end{equation}
-so dass
-\begin{equation}
-\operatorname{Var}(Q_i) \; = \; \operatorname{Var}\left(\nu_i \, \left(\frac{s_i}{\sigma_i}\right)^2\right)
- \; = \; \left(\frac{\nu_i}{\sigma_i^2}\right)^2 \, \operatorname{Var}(s_i^2)
-\end{equation}
-mit Gl.~(\ref{VarianzQ}) wird dies zu
-\begin{equation}
-2 \nu_i \; = \; \left(\frac{\nu_i}{\sigma_i^2}\right)^2 \, \operatorname{Var}(s_i^2) .
-\end{equation}
- Das heißt
-\begin{equation}
-2 \nu_i \; = \; \frac{\nu_i^2}{\sigma_i^4} \, \operatorname{Var}(s_i^2)
-\end{equation}
-%und
-%\begin{equation}
-%2 \sigma_i^4  \; = \; \frac{\nu_i^2}{\nu_i} \, \operatorname{Var}(s_i)
-%\end{equation}
-%und
-%\begin{equation}
-%2 \sigma_i^4  \; = \; \nu_i \, \operatorname{Var}(s_i)
-%\end{equation}
-also
-\begin{equation}
-\operatorname{Var}(s_i^2) \; = \; \frac{2 \sigma_i^4}{\nu_i} .
-\end{equation}
-so dass nach Sattherthwaite \cite{Sat41} aus Gl.~(\ref{VarianzvarianzSumme}) die \textsl{effektive Anzahl
-der Freiheitsgrade} $\nu_\mathrm{eff}$ für die Größe $Y$, also $\nu_\mathrm{eff} = \nu_y$
-abgeschätzt wird mit
-$$
-\frac{2 \sigma_y^4}{\nu_y} \; = \;  \frac{2 c_1^4 \sigma_1^4}{\nu_1}
- \; + \; \frac{2 c_2^4 \sigma_2^4}{\nu_2}
-$$
-mit $\operatorname{Var}(s_y^2) \; = \; \frac{2 \sigma_y^4}{\nu_y}$
-und nach Rauskürzen des Faktors 2
-\begin{equation}
-\frac{\sigma_y^4}{\nu_y} \; = \;  \frac{c_1^4 \sigma_1^4}{\nu_1}
- \; + \; \frac{c_2^4 \sigma_2^4}{\nu_2}
-\label{Satterthwaite}
-\end{equation}
-so dass
-\begin{equation}
-\nu_y \; = \; \frac{\sigma_y^4}{\frac{(c_1 \, \sigma_1)^4}{\nu_1}
- \; + \; \frac{(c_2 \, \sigma_2)^4}{\nu_2}} .
-\label{EffectiveDFfuer2}
-\end{equation}
-Wenn mit Gleichung (\ref{ErwartungswertQ}) der Erwartungswert
-von $Q$ gleich der Anzahl der Freiheitsgrade ist, also $\operatorname{E}(Q) = \nu$
-für $Q = \nu \left(\frac{s}{\sigma}\right)^2$, dann ist der Erwartungswert der
-Varianz $s^2$
-\begin{equation}
-\operatorname{E}(s^2) \; = \; \operatorname{E}(\frac{\sigma^2}{\nu} Q)
-\end{equation}
-und mit $\frac{\sigma^2}{\nu}$ als konstanter Faktor bezüglich der Wahrscheinlichkeitsdichte
-und mit Gl.~(\ref{ErwartungswertQ}) erhalten wir
-\begin{equation}
-\operatorname{E}(s^2) \; = \; \frac{\sigma^2}{\nu}  \operatorname{E}(Q) \; = \;
-\frac{\sigma^2}{\nu} \nu \; = \; \sigma^2
-\end{equation}
-und wir setzten in Gl.~(\ref{EffectiveDFfuer2}) die Erwartungswerte
-$\operatorname{E}(s_y^2)$, $\operatorname{E}(s_1^2)$ und $\operatorname{E}(s_2^2)$ ein,
-deren Schätzer die empirisch ermittelten Varianzen sind.
-
-Das $t$-Quantil wird damit für $\nu_y = \nu_\mathrm{eff}$ berechnet und das vollständige Messergebnis wie folgt
-angegeben
-\begin{equation}
-Y \; = \; y \, \pm \, t_{1-\alpha/2,\nu_y} s_y .
-\label{vollstaendigesSatterthwaite}
-\end{equation}
-
-
-Verallgemeinert für $N$ direkte Größen ist dies
-\begin{equation}
-\nu_\mathrm{eff} \; = \; \frac{\sigma_y^4}{\sum\limits_{i=1}^N \frac{(c_i \, \sigma_i)^4}{\nu_i}} .
-\label{EffectiveDFviele}
-\end{equation}
-
-
-Aufgrund der Verallgemeinerung, dass \textsl{Überdeckungsintervalle} sowohl
-klassisch ermittelte Vertrauensintervalle als auch bayesisch ermittelte
-\textsl{Credible Intervals} sein können,
-werden die zu einer gewissen Wahrscheinlichkeit $1-\alpha$ gehörenden Faktoren
-\textsl{Erweiterungsfaktor} genannt. Sei  $[z_\mathrm{min}, z_\mathrm{max}]$
-das \textsl{Credible Interval}
-einer Größe $Y$ mit Posterior $p(Y |\dots)$ deren Erwartungswert
-\begin{equation}
-\bar Y \; = \; \int\limits_{-\infty}^\infty \, Y \, p(Y |\dots) \, \operatorname{d}Y
-\end{equation}
-und deren Varianz
-\begin{equation}
-\operatorname{Var}(Y) \; = \; \int\limits_{-\infty}^\infty \, (Y - \bar Y)^2 \, p(Y |\dots) \, \operatorname{d}Y
-\end{equation}
-ist, so ist der \textsl{Erweiterungsfaktor} $k$ für symmetrische Verteilungen mit
-$z_\mathrm{max} - \bar Y = \bar Y - z_\mathrm{min}$
-\begin{equation}
-k \; = \; \frac{z_\mathrm{max} - \bar Y}{\sqrt{\operatorname{Var}(Y)}}
-\end{equation}
-was für klassische Berechnungsverfahren dem
-t-Quantil $t_{1-\alpha/2,\nu_\mathrm{eff}}$ entspricht
-\begin{equation}
-k \; = \; t_{1-\alpha/2,\nu_\mathrm{eff}} .
-\end{equation}
-Für symmetrische Verteilungen ist die halbe Breite des Überdeckungsintervalls
-gleich der \textsl{erweiterten Messunsicherheit} der Größe $Y$. Die
-\textsl{erweiterte Messunsicherheit} kann das Produkt aus
-Erweiterungsfaktor und empirischer Standardabweichung sein.
-
-Während mit \textsl{kleinem} Buchstaben $u$ die Standardunsicherheiten bezeichnet werden,
-werden mit \textsl{großem} Buchstaben $U$ die erweiterten Unsicherheiten geschrieben. Die
-erweiterten Unsicherheiten sind das Produkt aus
-dem Erweiterungsfaktor $k$, der in der klassischen Statistik das $t$-Quantil ist,
-und der Standardunsicherheit $u$.
+Im folgenden Beispiel zur Fraunhoferbeugung stellen wir ein
+solches Messunsicherheitsbudget auf und führen die Rechnung
+von den Eingangsgrößen bis zur Ergebnisangabe durch.
 
 \section{Beispiel: Beugung am Spalt im Fernfeld}
 \label{BeugungSpaltGUM0}
 
-\begin{figure}
-\begin{center}
-\includegraphics[width=106mm, angle = 0]{10_vorlesung_GUM/media/fraunhoferdiffr_singleslit-DE_ohne.pdf}
-  \caption{\label{fig:AnschauungsbeispielSpalt} Einfaches Anschauungsbeispiel, das auf der Beugung am Spalt im Fernfeld, also in Fraunhofernäherung, beruht.}
-\end{center}
-\end{figure}
-Im folgenden wird die Messunsicherheitsfortpflanzung anhand der \textsl{Beugung am Spalt im Fernfeld}, wie sie in Abb.\ \ref{fig:AnschauungsbeispielSpalt} skizziert wird, verdeutlicht.
-Im Fernfeld, also in der Fraunhofernäherung, gilt für den Interferenzeffekt durch die Beugung am Spalt, also die Überlagerung der sich im Spalt bildenden Huygen'schen Elementarwellen, folgender Zusammenhang:
-\begin{equation}
-\text{Gangunterschied:} \quad \Delta = \frac{d}{2} \sin(\theta)
-\quad \hookrightarrow \; \text{Phasenbeziehung:} \;
-\varphi = \frac{2 \pi}{\lambda} \Delta 
-\end{equation}
-mit $\lambda =$ Wellenlänge des Lichts. 
+Wir bestimmen die Spaltbreite aus der Lage eines Minimums im
+Beugungsbild. Das Beispiel zeigt ein mehrstufiges Messmodell: Zunächst
+wird aus den Detektordaten die Minimumsposition bestimmt; anschließend
+wird aus dieser Position die Spaltbreite berechnet.
 
-Die Lichtwellen werden linear superponiert, was bedeutet, dass über alle Elementarwellen integriert wird. Für einen senkrecht zur Bildebene unendlich ausgedehnten Spalt mit der Breite $d$ ist die Lösung des Integrals
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.8\linewidth]{10_vorlesung_GUM/media/fraunhoferdiffr_singleslit-DE_ohne.pdf}
+\caption{Schematische Erzeugung eines Fernfeld-Beugungsbildes eines
+Spalts mit einer Linse. Für die quantitative Auswertung muss die Zuordnung
+zwischen Beugungswinkel und Detektorposition zum tatsächlichen optischen
+Aufbau passen. Insbesondere ist der eingezeichnete Abstand zwischen Spalt
+und Linse nicht allgemein die für diese Zuordnung maßgebliche Länge.}
+\label{fig:AnschauungsbeispielSpalt}
+\end{figure}
+
+\subsection{Messmodell und Näherungen}
+
+Für einen gleichmäßig und senkrecht beleuchteten Spalt der Breite $D$ lautet
+die Intensitäts\-verteilung in der Fraunhofer-Näherung
 \begin{equation}
-I \, = \, I_0 \; \frac{\sin(\varphi)^2}{\varphi^2} \quad \text{und} \quad
-x = L \tan(\theta) \; \hookrightarrow \; \theta = \arctan\left(\frac{x}{L}\right)
+I(\theta)=I_0\left(\frac{\sin\beta}{\beta}\right)^2,
+\qquad \beta=\frac{\pi D\sin\theta}{\Lambda}.
 \label{eq:spaltfunktion}
 \end{equation}
+$\Lambda$ ist die Wellenlänge. Für $\beta=0$ wird der stetige Grenzwert
+$I(0)=I_0$ verwendet. Die Minima liegen bei
+$D\sin\theta_n=n\Lambda$ mit $n=\pm1,\pm2,\dots$.
 
-Die Intensität $I$ des Lichtes auf den Detektorelementen ist proportional zum Grauwert $g(x)$.
-
-Die Minima der Intensitätsverteilung entstehen an den Stellen destruktiver Interferenz
+Wir betrachten zunächst eine Beobachtungsebene im Fernfeld ohne
+abbildende Linse. Für ihren Abstand $L$ vom Spalt und die positive
+Entfernung $X_{\mathrm{min}}$ des ersten Minimums vom Hauptmaximum ist
 \begin{equation}
-\Delta_\mathrm{min} = n \frac{\lambda}{2} \quad n \in I\!\!N_{>0}
-\end{equation}
-Für die Minima erster Ordnung gilt
-\begin{equation}
-\frac{d}{2} \sin(\theta_\mathrm{min}) = \frac{\lambda}{2}
-\; \hookrightarrow \;
-\frac{d}{2} \sin(\arctan\left(\frac{x_\mathrm{min}}{L}\right)) = \frac{\lambda}{2},
-\end{equation}
-so dass für die Spaltbreite gilt
-\begin{equation}
- d = \frac{\lambda}{\sin(\arctan\left(\frac{x_\mathrm{min}}{L}\right))}
-\approx \frac{\lambda L}{x_\mathrm{min}}
+X_{\mathrm{min}}=L\tan\theta_1,\qquad
+D=\frac{\Lambda}{\sin[\arctan(X_{\mathrm{min}}/L)]}
+=\frac{\Lambda\sqrt{L^2+X_{\mathrm{min}}^2}}{X_{\mathrm{min}}}.
 \label{eq:modellspaltbreite}
 \end{equation}
+Diese Formel ist innerhalb dieses geometrischen Modells genauer als die
+Kleinwinkelnäherung
+\begin{equation}
+D\approx\frac{\Lambda L}{X_{\mathrm{min}}}.
+\label{eq:modellspaltbreiteKleinwinkel10}
+\end{equation}
+Für einen Linsenaufbau wie in der Skizze wird das Fernfeld-Beugungsbild
+in der hinteren Brennebene beobachtet. In der paraxialen Näherung tritt
+die Brennweite beziehungsweise eine kalibrierte effektive Länge an die
+Stelle von $L$.
+% \footnote{Zur optischen Fourier-Ebene siehe die
+% Lehrunterlagen der University of Tennessee:
+% \url{https://labs.phys.utk.edu/mbreinig/phys421/modules/m8/optical\%20processor.html}.}
+Die geometrische Beziehung aus Gl.~(\ref{eq:modellspaltbreite}) darf auf
+einen realen Linsenaufbau nur übertragen werden, wenn dessen
+Winkel-Positions-Zuordnung entsprechend bekannt ist.
+In dieser Vorlesung geht es nicht darum, ein physikalisch exaktes Messmodell aufzustellen, sondern nur darum, eine Unsicherheitsbetrachtung zu zeigen.
 
+Wir verwenden im folgenden Budget die einfache Modellfunktion aus
+Gl.~(\ref{eq:modellspaltbreiteKleinwinkel10}). Die Länge $L$ wird dabei
+als bekannte geometrische oder passend kalibrierte effektive Länge
+verstanden. Die Gültigkeit dieser Modellwahl wird anschließend geprüft.
 
-\begin{figure}
-\begin{center}
-\includegraphics[width=75mm, angle = 0]{10_vorlesung_GUM/media/slit_det_L4000_d5p75_labeled.pdf} \hspace{5mm}
-\includegraphics[width=82mm, angle = 0]{10_vorlesung_GUM/media/slit_sensitivity.pdf}
-\caption{\label{fig:BeugungsbildSpalt} \textit{Links:} Intensitätsverteilung der Beugung am Spalt im Fernfeld; \textit{rechts:} Steigung der Tangente an der Modellfunktion für die Spaltbreite, siehe Gl.\ \ref{eq:modellspaltbreite}.}
-\end{center}
+\subsection{Erste Stufe: Minimumsposition aus Detektordaten}
+
+Der Detektor liefert Grauwerte $g_j$ an Positionen $x_j$. Nach geeigneter
+Berücksichtigung von Untergrund und Detektorantwort beschreiben diese die
+Intensitätsverteilung. Eine lokale quadratische Anpassung um das Minimum,
+\begin{equation}
+g(x)=a_0+a_1x+a_2x^2,\qquad a_2>0,
+\end{equation}
+liefert die Position $x_v=-a_1/(2a_2)$ des Scheitelpunkts. Die Kovarianz
+zwischen den Regressionsparametern muss bei der Berechnung von $u(x_v)$
+berücksichtigt werden. Falls die Position des Hauptmaximums $x_0$ ebenfalls
+unsicher ist, geht auch diese Unsicherheit in die Entfernung
+$x_{\mathrm{min}}=|x_v-x_0|$ ein.
+
+Die Kovarianzmatrix der Fitparameter allein erfasst nicht automatisch
+Unsicherheiten der Positionsskala, Pixelgeometrie, Detektorantwort oder
+lokalen Modellwahl. Diese Einflüsse müssen zusätzlich berücksichtigt
+werden, soweit sie relevant sind. Aus der ersten Stufe erhalten wir den
+Schätzwert $x_{\mathrm{min}}$ und die zugeordnete Standardunsicherheit
+$u(x_{\mathrm{min}})$.
+
+Für die zweite Stufe ist die Minimumsentfernung eine \emph{Eingangsgröße}.
+Sie wird dadurch nicht zu einer unmittelbar beobachteten Größe.
+Mehrstufenmodelle müssen auch Kovarianzen zwischen den Zwischenergebnissen
+und weiteren Eingangsgrößen erhalten, wenn gemeinsame Einflüsse bestehen.
+Alternativ kann das gesamte Beugungsprofil angepasst werden; dabei wären
+unter anderem die Spaltbreite, der Untergrund und die Lage des
+Hauptmaximums Modellparameter.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.46\linewidth]{10_vorlesung_GUM/media/slit_det_L4000_d5p75_labeled.pdf}
+\hfill
+\includegraphics[width=0.49\linewidth]{10_vorlesung_GUM/media/slit_sensitivity.pdf}
+\caption{Links: diskret erfasstes Beugungsprofil mit markiertem erstem
+Minimum. Rechts: Spaltbreite als Funktion der Minimumsentfernung;
+Kleinwinkelnäherung, geometrische Beziehung mit
+$\sin[\arctan(x/L)]$ und lokale Tangente. Die Tangente beschreibt die
+Sensitivität erster Ordnung.}
+\label{fig:BeugungsbildSpalt}
 \end{figure}
 
-Die direkten Messgrößen sind der Abstand $L$ zwischen dem Messobjekt, dem Spalt, dessen Breite zu bestimmen ist, die Wellenlänge des beleuchtenden Lichts $\lambda$, die Positionen $x$ und Grauwerte $g(x)$ der Detektorelemente (pixel).
+\subsection{Zweite Stufe: Sensitivitäten und Unsicherheitsbudget}
 
-Die Verteilung der Grauwerte $g(x)$ als Funktion der Positionen auf dem Detektor stellt das Beugungsbild dar, das im Fernfeld mit Gl.\ (\ref{eq:spaltfunktion}) modelliert wird. Die zu diesem Teilproblem indirekte Messgröße ist die Position $x_\mathrm{min}$ des ersten Minimums, bzw.\ dessen Abstand vom Hauptmaximum. 
+Für die Schätzwerte $\lambda$, $L$ und $x_{\mathrm{min}}$ ist
+$d=\lambda L/x_{\mathrm{min}}$. Die Sensitivitätskoeffizienten sind
+\begin{equation}
+\begin{aligned}
+c_L&=\left.\frac{\partial D}{\partial L}\right|_{\mathbf x}
+=\frac{\lambda}{x_{\mathrm{min}}},\\
+c_\lambda&=\left.\frac{\partial D}{\partial\Lambda}\right|_{\mathbf x}
+=\frac{L}{x_{\mathrm{min}}},\\
+c_x&=\left.\frac{\partial D}{\partial X_{\mathrm{min}}}\right|_{\mathbf x}
+=-\frac{\lambda L}{x_{\mathrm{min}}^2}.
+\end{aligned}
+\end{equation}
+Das negative Vorzeichen von $c_x$ bedeutet: Eine größere
+Minimumsentfernung führt zu einer kleineren berechneten Spaltbreite.
+Bei unkorrelierten Eingangsgrößen wird
+\begin{equation}
+u_{\mathrm c}^2(d)=[c_Lu(L)]^2+[c_\lambda u(\lambda)]^2+
+[c_xu(x_{\mathrm{min}})]^2.
+\end{equation}
+Für korrelierte Eingangsgrößen sind die Mischterme zu ergänzen.
 
-Für die diskreten Detektorelemente wird die Grauwertverteilung gemessen $g\!: i \Delta x \mapsto g(i \Delta x)$, mit $\Delta x$ für den Abstand der Detektorelemente und $i$ deren Nummern. Die Minimumsposition $x_\mathrm{min}$ wird mithilfe eines Regressionspolynoms, Kap.\ \ref{KapitellinReg}, in der unmittelbaren Umgebung des Minimums bestimmt.
-
-Aus der Optimierungsrechnung wird der Schätzwert für $x_\mathrm{min}$ zusammen mit dessen Standardunsicherheit $u(x_\mathrm{min})$ gewonnen. Für den nächsten Schritt stellt $x_\mathrm{min}$ die direkte Messgröße dar. Modelle, die in dieser oder ähnlicher Weise mehrstufig sind, hier zweistufig mit der ersten Stufe mit $x_\mathrm{min}$ als indirekte Messgröße und in der zweiten Stufe als direkte Messgröße werden \textsl{Mehrstufenmessmodelle}, engl.\ \textsl{multistage measurement model}, genannt.
-
-\begin{small}
-\renewcommand{\arraystretch}{1.1}
-\begin{tabular}{lcl}
-\textbf{Messgröße} & & \textbf{Unsicherheit}  $u$\\
-\hline
-Abstand Spalt - Objektiv: $L$ & $\hookrightarrow$ & {\`a} priori Wissen bzgl.\ Messaufbau: $u(L)$\\
-Lichtwellenlänge: $\lambda$ & $\hookrightarrow$ & {\`a} priori Wissen über Lichtwellen: $u(\lambda)$\\
-Positionen der Detektorlemente: $x$ & $\hookrightarrow$& {\`a} priori über den Detektor: $u(x)$\\
-Grauwerte: $g(x)$  & $\hookrightarrow$& {\`a} priori knowledge über den Detektor: $u(g)$\\
-\hline
-Minimum, erste Ordnung $x_\mathrm{min}$: & $\hookrightarrow$& Fortpflanzung von $u(x)$ und $u(g)$\\
-\textcolor{red}{\textbf{implicite}} Abhängigkeit von $x$, $g$ & & Ermitteln der Minimumsposition $\min\{g(x)\}$: $u(x_\mathrm{min})$\\
-\hline
-Spaltbreite $d$ & $\hookrightarrow$& Fortpflanzung von $u(x_\mathrm{min})$, $u(L)$, und $u(\lambda)$: $u(d)$\\
-\textcolor{red}{\textbf{explicite}} Abhängigkeit von $x_\mathrm{min}$, $L$, und $\lambda$ & & \\
-\hline
-\end{tabular}
-\end{small}
-
-Alternativ zu diesem zweistufigen Ansatz ließe sich die Spaltbreite $d$ auch direkt durch die Anpassung der gesamten Sincfunktion Gl.\ (\ref{eq:spaltfunktion}) mithilfe einer nichtlinearen Optimierung gemäß Kap.\ \ref{nonlinOpti} durchführen. Dies wäre in der heutigen Zeit der leistungsfähigen Rechentechnik der übliche Weg. Wir haben hier aber die kleine Modellfunktion $d \approx \frac{\lambda L}{x_\mathrm{min}}$ ausgesucht, um eine einfache Gleichung zu haben, anhand derer sich die Unsicherheitsfortpflanzung veranschaulichen lässt.
-
-Es werden nun die Sensitivitäten der indirekten Messgröße Spaltbreite $d$, also wie empfindlich die Spaltbreite $d$ auf Veränderungen der direkten Messgrößen reagiert, betrachtet: Der Gradient (Steigungsvektor der Tangentialhyperebene) an der Stelle der geschätzten Werte $\hat x_\mathrm{min}$, $\hat L$, und $\hat \lambda$ 
-$$
-\left(\begin{array}{c} c_{x_\mathrm{min}}\\ c_L\\ c_\lambda \end{array} \right) \, = \,
-\left( \left. \frac{\partial}{\partial x_\mathrm{min}} d(x_\mathrm{min}, L, \lambda) \right|_{(\hat x_\mathrm{min},\hat L,\hat \lambda)}, \;
- \left. \frac{\partial}{\partial L} d(x_\mathrm{min}, L, \lambda) \right|_{(\hat x_\mathrm{min},\hat L,\hat \lambda)}, \;
- \left. \frac{\partial}{\partial \lambda} d(x_\mathrm{min}, L, \lambda) \right|_{(\hat x_\mathrm{min},\hat L,\hat \lambda)} \right)^{\mathsf{T}}
-$$
-drückt aus, wie sich $d$ ändert, wenn sich $x_\mathrm{min}$, $L$, und $\lambda$ verändern.
-Die Spaltbreite $d$ hängt linear von der Wellenlänge $\lambda$ ab, so dass die Ableitung $\frac{\partial}{\partial \lambda} d(x_\mathrm{min}, L, \lambda)$ von $\lambda$ unabhängig ist.
-Im Falle des ganz einfachen Modells $d \approx \frac{\lambda L}{x_\mathrm{min}}$ ist die Spaltbreite $d$ ebenfalls nur linear von dem Abstand $L$ zwischen Spalt und Objektiv abhängig. Damit gilt auch für diese Ableitung $\frac{\partial}{\partial L} d(x_\mathrm{min}, L, \lambda)$, dass sie von $L$ unabhängig ist. Der funktionale Zusammenhang zwischen $d(x_\mathrm{min}, L, \lambda)$ und $x_\mathrm{min}$ ist nicht linear, sondern hyperbolisch, aber linearisierbar, wenn $u(x_\mathrm{min}) \underset{\sim}{<} \Delta x$, wobei $\Delta x$ der Abstand der Detektorelemente ist.
-
-Es wird angenommen, dass die direkten Messgrößen sich nicht gegenseitig beeinflussen, keine Korrelationen aufweisen. Damit gilt für die kombinierte Unsicherheit
-$$
-u(d) = \sqrt{ \left(c_L u(L)\right)^2 + \left(c_\lambda u(\lambda)\right)^2 + \left(c_{x_\mathrm{min}} u(x_\mathrm{min})\right)^2 }.
-$$
-Ein Zahlenbeispiel zeigt die Beiträge an der Unsicherheit der Spaltbreite $d$ aus den verschiedenen direkten Messgrößen. In der Metrologie wird dies üblicherweise in tabellarischer Form notiert und als \textsl{Unsicherheitsbudget} bezeichnet.
+Das folgende \textsl{Unsicherheitsbudget} verwendet die Eingangsdaten des
+Beispiels. Alle Längen werden in Mikrometer angegeben; die
+Sensitivitätskoeffizienten sind deshalb hier dimensionslos.
 \begin{center}
-\renewcommand{\arraystretch}{2.0}
-\begin{tabular}{|c|c|c|c|c|}
+\small
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{lrrrr}
 \hline
-{\scriptsize Messgröße} & {\scriptsize Schätzwert} & {\scriptsize Standardunsicherheit} & {\scriptsize Sensitivität} & {$|c \, u|$ in $\mathrm{\mu m}$}\\
-\hline\hline
-$L$: & $\bar L = 4000 \, \mathrm{\mu m}$ & $u(L) = 20 \,  \mathrm{\mu m}$ & $c_L = \left. \frac{\partial}{\partial L} d \right|_{\bar L, \bar \lambda, \bar x_\mathrm{min}} = \frac{\bar \lambda}{\bar x_\mathrm{min}} = 0.0014238$ & $0.02858$\\
+Eingangsgröße & Schätzwert & $u$ & $c_i$ & $|c_i u|$\\
+ & $\mathrm{\mu m}$ & $\mathrm{\mu m}$ & & $\mathrm{\mu m}$\\
 \hline
-$\lambda$: & $\bar \lambda = 0.550 \,  \mathrm{\mu m}$ & $u(\lambda) = 0.002 \,  \mathrm{\mu m}$ &  $c_\lambda = \left. \frac{\partial}{\partial L} d \right|_{\bar L, \bar \lambda, \bar x_\mathrm{min}} = \frac{\bar L}{\bar x_\mathrm{min}} = 10.35465$ & $0.02071$\\
-\hline
-$x_\mathrm{min}$: & $\bar x_\mathrm{min} = 386.3 \,  \mathrm{\mu m}$ & $u(x_\mathrm{min}) = 5.9 \,  \mathrm{\mu m}$ &{\tiny $c_{x_\mathrm{min}} = \left. \frac{\partial}{\partial x_\mathrm{min}} d \right|_{\bar L, \bar \lambda, \bar x_\mathrm{min}} = -\frac{\bar \lambda \, \bar L}{\bar x_\mathrm{min}^2} = -0.01474257$} & $0.08698$\\
+$L$ & $4000$ & $20$ & $0.00142376$ & $0.02848$\\
+$\Lambda$ & $0.550$ & $0.002$ & $10.35465$ & $0.02071$\\
+$X_{\mathrm{min}}$ & $386.3$ & $5.9$ & $-0.01474257$ & $0.08698$\\
 \hline
 \end{tabular}
 \end{center}
-$$
-\hookrightarrow \: \bar d \approx \frac{\bar \lambda \bar L}{\bar x_\mathrm{min}} = 5.695 \,  \mathrm{\mu m}
-\quad \text{und} \quad
-u(d) = 0.094 \,  \mathrm{\mu m}
-$$
-also
-$$
-d = (5.695 \, \pm \, 0.187) \,  \mathrm{\mu m} \quad \text{für} \; k = 2
-$$
-
-\section{Aufgabe zum Selbststudium}
-\label{AufgVor7}
-Es sollen Abstände auf einem Werkstück mit Hilfe eines induktiven Wegaufnehmers gemessen werden.
-Das Messprinzip eines induktiven Wegaufnehmers beruht darauf, dass
-eine Wechselspannung ein Spulensystem im Sensor anregt.
-Ein bewegliches ferro-magnetisches Teil am Sensor
-beeinflusst die Induktivität in den Spulen.
-Diese - in den Spulenteilen unterschiedliche - Induktivitätsveränderung wird vom
-Messverstärker ausgewertet und in ein positions-proportionales Gleichspannungssignal
-umgewandelt.
-
-Um die Abstände in der physikalischen Einheit Mikrometer zu erhalten, muss mit Hilfe
-eines Bezugsnormals aus dem Spannungssignal ein Weg mit der Dimension einer Länge
-berechnet werden.
-Es ist bekannt, dass in dem für die Messung relevanten Messbereich (Hub des Sensors)
-die Abhängigkeit zwischen Spannungssignal und Auslenkung des ferro-magnetischen Kerns
-linear ist.
-Das Bezugsnormal ist eine Stufenhöhe.
-
-Zu dem Bezugsnormal gibt es einen Kalibrierschein, der folgenden Höhenwert für das
-Normal angibt:
+Daraus folgen
 \begin{equation}
-d \; = \; (4.997 \pm 0.011) \; \mathrm{\mu m} \qquad \mathrm{mit} \qquad k = 2.1, \nu = 26
+d=5.69506\,\mathrm{\mu m},\qquad
+u_{\mathrm c}(d)=0.09384\,\mathrm{\mu m}.
+\end{equation}
+Die Minimumsentfernung liefert etwa $85.9\,\%$ der kombinierten Varianz,
+die Länge $L$ etwa $9.2\,\%$ und die Wellenlänge etwa $4.9\,\%$.
+Dies sind Anteile an der \emph{Varianz}, nicht an der Standardunsicherheit.
+
+Bei der vorgegebenen Wahl $k=2$ ist $U=0.18767\,\mathrm{\mu m}$.
+Mit aufgerundeter erweiterter Unsicherheit und passend gerundetem Messwert
+kann das Ergebnis angegeben werden als
+\begin{equation}
+d=(5.70\pm0.19)\,\mathrm{\mu m},\qquad k=2.
+\end{equation}
+Die Zuordnung zu etwa $95\,\%$ setzt eine ausreichend gute
+Normalapproximation der Ausgangsverteilung beziehungsweise eine passende
+Begründung des Erweiterungsfaktors voraus. Die Eingangsdaten dieses
+Budgets allein legen keine genaue Überdeckungswahrscheinlichkeit fest.
+
+\subsection{Zwei verschiedene Näherungen prüfen}
+
+Hier werden zwei Näherungen verwendet, die getrennt zu beurteilen sind:
+\begin{enumerate}
+\item Die \emph{Kleinwinkelnäherung} vereinfacht die physikalische
+Modellfunktion.
+\item Die \emph{Linearisierung} vereinfacht die Fortpflanzung der
+Eingangsunsicherheiten durch diese Modellfunktion.
+\end{enumerate}
+Für die Kleinwinkelnäherung ist
+$x_{\mathrm{min}}/L=0.096575$. Die geometrische Beziehung aus
+Gl.~(\ref{eq:modellspaltbreite}) liefert mit denselben Zahlen
+\begin{equation}
+d_{\mathrm{geom}}=5.72155\,\mathrm{\mu m}.
+\end{equation}
+Sie liegt um $0.02650\,\mathrm{\mu m}$ über dem Ergebnis der
+Kleinwinkelnäherung. Ob diese Abweichung vernachlässigt werden darf,
+entscheidet sich anhand der Anforderungen an das Ergebnis. Für die hier
+betrachtete ebene Beobachtungsebene ist es zweckmäßig, die genauer bekannte
+geometrische Beziehung direkt zu verwenden, wenn die Abweichung relevant ist.
+
+Für diese Beziehung sind die Sensitivitäten
+\begin{equation}
+\begin{aligned}
+c_L&=\frac{\lambda L}{x_{\mathrm{min}}\sqrt{L^2+x_{\mathrm{min}}^2}},\\
+c_\lambda&=\frac{\sqrt{L^2+x_{\mathrm{min}}^2}}{x_{\mathrm{min}}},\\
+c_x&=-\frac{\lambda L^2}{x_{\mathrm{min}}^2\sqrt{L^2+x_{\mathrm{min}}^2}}.
+\end{aligned}
+\end{equation}
+Damit ergeben sich in erster Ordnung
+$u_{\mathrm c}(d_{\mathrm{geom}})=0.09345\,\mathrm{\mu m}$ und
+$U=0.18689\,\mathrm{\mu m}$ für $k=2$.
+Der Vergleich betrifft das genannte geometrische Modell, nicht die
+unbekannte Abbildungsfunktion einer realen Linse.
+
+Für die Linearisierung der hyperbolischen Abhängigkeit $D\propto1/X_{\mathrm{min}}$
+ist dagegen das Verhältnis
+\begin{equation}
+\frac{u(x_{\mathrm{min}})}{x_{\mathrm{min}}}
+=\frac{5.9}{386.3}\approx0.0153
+\end{equation}
+maßgeblich. Der quadratische Taylorterm der Kehrwertfunktion hat bei
+einer Abweichung von einer Standardunsicherheit ungefähr $1.5\,\%$ der
+Größe des linearen Terms. Dies ist ein lokaler Hinweis auf geringe
+Krümmung im betrachteten Bereich; für eine vollständige Prüfung ist auch
+die zugeordnete Verteilung einschließlich ihrer Randbereiche zu betrachten.
+Der Pixelabstand allein ist kein Kriterium für die Gültigkeit der
+Linearisierung. 
+
+In Kapitel~\ref{montecarloMU} werden wir die beiden Fortpflanzungsrechnungen  mit einer Monte-Carlo-Auswertung vergleichen. Dabei werden wir auch die unterschiedlichen Verteilungen der Eingangsgrößen diskutieren, insbesonderen der Größe $L$, mit einer U-förmigen Verteilung. 
+
+\section{Aufgabe zum Selbststudium: Kalibrierung eines Wegaufnehmers}
+\label{AufgVor7}
+
+Ein induktiver Wegaufnehmer wandelt die Auslenkung seines Kerns in ein
+Spannungssignal um. Im relevanten Messbereich sei der Zusammenhang linear.
+Gemessen werden Spannungsdifferenzen zwischen zwei Höhenlagen; ein
+konstanter Nullpunkt fällt dabei heraus. Das Bezugsnormal ist eine
+kalibrierte Stufenhöhe $D$.
+
+Der Kalibrierschein nennt
+\begin{equation}
+d=(4.997\pm0.011)\,\mathrm{\mu m},\qquad k=2.1,\quad\nu_d=26.
 \label{kalBezug}
 \end{equation}
+Die Angabe $0.011\,\mathrm{\mu m}$ ist die erweiterte Unsicherheit.
+Für die Spannungsdifferenz am Bezugsnormal und am Werkstück wurden die
+folgenden unabhängigen Wiederholungen unter unveränderten Bedingungen
+erfasst. Die Spannungen werden mit $V$ bezeichnet, damit keine Verwechslung
+mit der erweiterten Messunsicherheit $U$ entsteht.
 
-Mit dem induktiven Wegaufnehmer wurden auf dem Bezugsnormal folgende Stufenhöhen in
-der Dimension der elektrischen Spannung mit der Einheit Millivolt gemessen
-
-% muB = 200; sigB = 8;
-% JB = 11; xB = muB+sigB*randn(1,JB);
-% printf("& %4.1f ", xB);
-% xB = [201.3  187.3  196.5  200.4  193.6  174.2  197.2  185.4  194.4  202.5  205.2];
-Tabelle A5.1:\\
-\begin{tabular}{c||c|c|c|c|c|c|c|c|c|c|c}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{l|rrrrrr}
+Bezugsnormal: $v_{\mathrm B,j}/\mathrm{mV}$
+&201.3&187.3&196.5&200.4&193.6&174.2\\
+Fortsetzung &197.2&185.4&194.4&202.5&205.2&\\
 \hline
-$U_\mathrm{B} / \mathrm{mV}$ & 201.3 & 187.3 & 196.5 & 200.4 & 193.6 & 174.2 & 197.2 & 185.4 & 194.4 & 202.5 & 205.2\\
-\hline
+Werkstück: $v_{\mathrm W,j}/\mathrm{mV}$
+&176.5&184.1&180.5&193.6&176.0&194.5\\
+Fortsetzung &160.9&&&&&
 \end{tabular}
+\end{center}
 
-%Für den Abstand auf dem Werkstück wurden folgende Spannungen gemessen
-%>> muW = 180; sigW = 11;
-%>> JW = 7; xW = muW+sigW*randn(JW,1);
-%>> printf(" %4.1f ", xW);
-% 176.5  184.1  180.5  193.6  176.0  194.5  160.9 >>
-%>> printf("& %4.1f ", xW);
-Tabelle A5.2:\\
-\begin{tabular}{c||c|c|c|c|c|c|c}
+Gesucht ist die konstante Höhe am Werkstück. Ihre Eingangsschätzwerte sind
+die beiden Mittelwerte $\bar v_{\mathrm B}$ und $\bar v_{\mathrm W}$.
+Das Messmodell lautet
+\begin{equation}
+D_{\mathrm W}=D\frac{V_{\mathrm W}}{V_{\mathrm B}},\qquad
+d_{\mathrm W}=d\frac{\bar v_{\mathrm W}}{\bar v_{\mathrm B}}.
+\end{equation}
+Für diese Aufgabe werden die drei Eingangsgrößen als unkorreliert
+behandelt. Zusätzliche Unsicherheiten aus Drift, Nichtlinearität und
+Spannungskalibrierung werden hier als vernachlässigbar angenommen. Die
+lokale Linearisierung und die GUM-$t$-Approximation sollen verwendet werden.
+
+\begin{enumerate}
+\item[a)] Bestimmen Sie aus dem Kalibrierschein die Standardunsicherheit
+$u(d)$.
+\item[b)] Berechnen Sie die Mittelwerte $\bar v_{\mathrm B}$ und
+$\bar v_{\mathrm W}$ sowie die empirischen Standardabweichungen
+$s_{\mathrm B}$ und $s_{\mathrm W}$. Bestimmen Sie anschließend die
+Standardunsicherheiten der \emph{Mittelwerte}.
+\item[c)] Leiten Sie die Sensitivitätskoeffizienten nach $D$,
+$V_{\mathrm B}$ und $V_{\mathrm W}$ her und werten Sie sie an den
+Eingangsschätzwerten aus.
+\item[d)] Berechnen Sie den Schätzwert $d_{\mathrm W}$ und die kombinierte
+Standardunsicherheit $u_{\mathrm c}(d_{\mathrm W})$.
+\item[e)] Bestimmen Sie die effektiven Freiheitsgrade. Verwenden Sie
+$\nu_d=26$, $\nu_{\mathrm B}=J_{\mathrm B}-1$ und
+$\nu_{\mathrm W}=J_{\mathrm W}-1$.
+\item[f)] Bestimmen Sie für $P=0.95=95\,\%$ den Erweiterungsfaktor
+$k=t_{0.975,\nu_{\mathrm{eff}}}$ und die erweiterte Messunsicherheit.
+\item[g)] Geben Sie das gerundete Messergebnis einschließlich
+Erweiterungsfaktor und näherungsweiser Überdeckungswahrscheinlichkeit an.
+Erklären Sie, warum die Verwendung von $s_{\mathrm B}$ und
+$s_{\mathrm W}$ anstelle der Standardunsicherheiten ihrer Mittelwerte
+hier nicht der Aufgabenstellung entsprechen würde.
+\end{enumerate}
+
+% Lösungshinweise sind bewusst als eigener Unterabschnitt gehalten,
+% damit sie für eine Aufgabenfassung einfach entfernt werden können.
+\subsection{Lösungshinweise und Kontrollwerte}
+
+Aus dem Kalibrierschein folgt
+\begin{equation}
+u(d)=\frac{0.011}{2.1}\,\mathrm{\mu m}
+=0.0052381\,\mathrm{\mu m}.
+\end{equation}
+Die Messreihen liefern
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lrr}
+ & Bezugsnormal & Werkstück\\
 \hline
-$U_\mathrm{W} / \mathrm{mV}$ & 176.5 & 184.1 & 180.5 & 193.6 & 176.0 & 194.5 & 160.9 \\
-\hline
+Stichprobenumfang $J$ & $11$ & $7$\\
+Mittelwert $\bar v/\mathrm{mV}$ & $194.36364$ & $180.87143$\\
+Standardabweichung $s/\mathrm{mV}$ & $9.04536$ & $11.54711$\\
+Standardunsicherheit $u(\bar v)/\mathrm{mV}$ & $2.72728$ & $4.36440$\\
+Freiheitsgrade $\nu$ & $10$ & $6$
 \end{tabular}
+\end{center}
 
-Der Zusammenhang zwischen dem Abstand auf dem Werkstück in Mikrometern $d_\mathrm{W}$,
-der Stufenhöhe des Bezugsnormals gemäß Kalibrierschein $d$, dem gemessenen Spannungssignal
-an der Stufenhöhe $U_\mathrm{B}$ und dem gemessenen Spannungssignal $U_\mathrm{W}$ am Werkstück
-ist folgender
+Die Sensitivitäten sind
 \begin{equation}
-d_\mathrm{W} \; = \; \frac{d}{U_\mathrm{B}} \, U_\mathrm{W}
+\begin{aligned}
+c_d&=\frac{\bar v_{\mathrm W}}{\bar v_{\mathrm B}}
+=0.930583,\\
+c_{\mathrm B}&=-\frac{d\bar v_{\mathrm W}}{\bar v_{\mathrm B}^2}
+=-0.0239249\,\mathrm{\mu m/mV},\\
+c_{\mathrm W}&=\frac{d}{\bar v_{\mathrm B}}
+=0.0257095\,\mathrm{\mu m/mV}.
+\end{aligned}
 \end{equation}
+Daraus ergeben sich die Beträge der Standardunsicherheitsbeiträge
+$0.0048745\,\mathrm{\mu m}$, $0.0652497\,\mathrm{\mu m}$ und
+$0.1122066\,\mathrm{\mu m}$ sowie
+\begin{equation}
+\begin{aligned}
+d_{\mathrm W}&=4.65012\,\mathrm{\mu m},\\
+u_{\mathrm c}(d_{\mathrm W})&=0.129891\,\mathrm{\mu m},\\
+\nu_{\mathrm{eff}}&=10.0826,\\
+k=t_{0.975,\nu_{\mathrm{eff}}}&\approx2.22567,\\
+U&\approx0.28909\,\mathrm{\mu m}.
+\end{aligned}
+\end{equation}
+Mit aufgerundeter erweiterter Unsicherheit lautet die Ergebnisangabe
+\begin{equation}
+d_{\mathrm W}=(4.65\pm0.29)\,\mathrm{\mu m},\qquad
+k\approx2.23,\qquad P\approx95\,\%.
+\end{equation}
+$s_{\mathrm B}$ und $s_{\mathrm W}$ beschreiben die Streuung einzelner
+Spannungsbeobachtungen. Die konstante Werkstückhöhe wird hier aus den
+Mittelwerten bestimmt, weshalb deren Standardunsicherheiten fortgepflanzt
+werden. Die Unsicherheit des Bezugsnormals wird durch die Wiederholungen
+nicht verkleinert.
 
-Die Änderungen aufgrund der statistischen Streuung der Spannungswerte $U_\mathrm{B}$ sind
-so klein, dass für die Sensitivität $c_\mathrm{B}$ von $d_\mathrm{W}$
-bezüglich Änderungen von $U_\mathrm{B}$
-mit dem hyperbolischen Zusammenhang $d_\mathrm{W} \sim \frac{1}{U_\mathrm{B}}$
-die Steigung der Tangenten an die Hyperbel verwendet wird. Es wird die
-Tangente verwendet, die an dem Punkt, der sich aus den Mittelwerten
-ergibt, anliegt.
-\begin{equation}
-c_\mathrm{B} \; = \; \left. \frac{\partial}{\partial U_\mathrm{B}}
- d_\mathrm{W} \right|_{\bar U_\mathrm{B}, \bar d, \bar U_\mathrm{W}}
-\end{equation}
-Die Sensitivitäten $c_\mathrm{d}$ und $c_\mathrm{W}$ von $d_\mathrm{W}$
-bezüglich Änderungen von $d$ und $U_\mathrm{W}$ sind aufgrund des
-linearen Zusammenhangs genau
-\begin{equation}
-c_\mathrm{d} \; = \; \left. \frac{U_\mathrm{W}}{ U_\mathrm{B}} \right|_{\bar U_\mathrm{B}, \bar U_\mathrm{W}} \qquad
-c_\mathrm{W} \; = \; \left. \frac{d}{U_\mathrm{B}} \right|_{\bar U_\mathrm{B}, \bar d}
-\end{equation}
-definiert.
-Die kombinierte Varianz unter der Voraussetzung, dass die gemessenen Größen und
-die Angabe aus dem Kalbrierschein unkorreliert sind, ist
-\begin{equation}
-s_\mathrm{dW}^2 \; = \; (c_\mathrm{d} \, s_\mathrm{d})^2 \; + \;
-(c_\mathrm{B} \, s_\mathrm{B})^2 \; + \; (c_\mathrm{W} \, s_\mathrm{W})^2
-\end{equation}
-mit $s_\mathrm{B}$ für die Standardabweichung der in Tabelle A5.1 aufgelisteten Werte,
-$s_\mathrm{W}$ für die Standardabweichung der in Tabelle A5.2 aufgelisteten Werte und
-$s_\mathrm{d}$ für die Standardabweichung der Angabe aus dem Kalibrierschein.
+\section{Übergang zu Supplement 1}
 
-\begin{itemize}
-\item[a)] Ermitteln Sie aus den Angaben des Kalibrierscheins (hier Gl.~(\ref{kalBezug}))
-die Standardabweichung $s_\mathrm{d}$, indem Sie den dort genannten Erweiterungsfaktor verwenden.
-%>> d = 4.997 d =  4.9970
-%>> sd = 0.011/2.1 sd =  0.0052381
-\item[b)] Ermitteln Sie die beiden Mittelwerte $\bar U_\mathrm{B}$ und $\bar U_\mathrm{W}$,
-sowie die beiden empirirschen Standardabweichungen $s_\mathrm{B}$ und $s_\mathrm{W}$
-aus den beiden Tabellen A5.1 und A5.2.
-%>> xBbar = mean(xB) xBbar =  194.36
-%>> xWbar = mean(xW) xWbar =  180.85
-%>> sW = std(xW) sW =  11.561
-%>> sW2 = var(xW) sW2 =  133.65
-%>> sB = std(xB) sB =  9.0410
-%>> sB2 = var(xB) sB2 =  81.739
-\item[c)] Bestimmen  Sie die Sensitivitäten $c_\mathrm{d}$, $c_\mathrm{W}$, $c_\mathrm{B}$ durch Ausführen der
-partiellen Ableitung.
-%(%i4) dW(UB) := UW*d/UB;
-%                                          UW d
-%(%o4)                           dW(UB) := ----
-%                                           UB
-%(%i5) diff(dW(UB),UB);
-%                                      d UW
-%(%o5)                               - ----
-%                                        2
-%                                      UB
-\item[d)] Berechnen Sie die kombinierte empirische Standardabweichung $s_\mathrm{dW}$.
-%>> cd = xWbar/xBbar cd =  0.93048
-%>> cW = d/xBbar cW =  0.025710
-%>> cB = -d*xWbar/(xBbar^2) cB = -0.023922
-%s2 = (sd*cd)^2 + sW2*cW^2 + sB2*cB^2 s2 =  0.13514
-%s = sqrt((sd*cd)^2 + sW2*cW^2 + sB2*cB^2) s =  0.36762
-\item[e)] Berechnen Sie die effektive Anzahl der Freiheitsgrade.
-%nueff = s2^2 / ((sd*cd)^4/26 + (sW2*cW^2)^2/(JW-1) + (sB2*cB^2)^2/(JB-1)) nueff =  12.019
-\item[f)] Berechnen Sie den Erweiterungsfaktor $k$, der
- hier das t-Quantil für ein zweiseitiges Vertrauensniveau
- von $1-\alpha = 0.95\%$ ist.
-% k=tinv(0.975,nueff) k =  2.1784
-\item[g)] Bestimmen Sie das vollständige Messergebnis.
-% dW = d*xWbar/xBbar  dW =  4.6496
-% k*s =  0.80083
-% d_W = 4.6496 \pm 0.80083
-\end{itemize}
+Die linearisierte Rechnung benötigt Eingangsschätzwerte,
+Standardunsicherheiten und Kovarianzen. Für ein Überdeckungsintervall
+kommt eine Annahme über die Ausgangsverteilung hinzu.
+In Kapitel~11 werden stattdessen die gemeinsamen Eingangsverteilungen
+durch das Messmodell fortgepflanzt. So lassen sich die Wirkung der
+Nichtlinearität und die Form der Ausgangsverteilung unmittelbar untersuchen
+und Intervallgrenzen aus deren Quantilen bestimmen.
+
+Beide Verfahren setzen eine begründete Modellierung der Eingangsgrößen
+voraus. Bei der Gegenüberstellung ist insbesondere auf dieselben
+Informationen und auf die Unterscheidung zwischen Standardabweichung und
+Skalenparameter einer $t$-Verteilung zu achten. Numerische Übereinstimmung
+ist deshalb bei endlichen Freiheitsgraden nicht allein durch die Verwendung
+desselben Werts $s/\sqrt J$ garantiert.

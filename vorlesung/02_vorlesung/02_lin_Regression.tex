@@ -1,444 +1,189 @@
-
 \section{Die Idee der linearen Regression}
 \label{RegressionsIdee}
-% 
-Ziel der Regression ist es, den funktionalen Zusammenhang $Y =
-f(X_{1} ,X_{2} ,...,X_{N} )$ zwischen den
-Eingangs-Messgrößen $X_{i}$ (Regressor) und der Ausgangsgröße $Y$
-(Regressanden) möglichst gut zu charakterisieren.
+%
+Regression beschreibt den Zusammenhang zwischen vorgegebenen Eingangsgrößen und einer beobachteten Ausgangsgröße. In der Schreibweise dieses Kapitels heißen die Eingangsgrößen \textbf{Regressoren} und die Ausgangsgröße \textbf{Regressand}. Die Eingangsgrößen sind die unabhängigen Größen, die Ausgangsgröße is die abhängige Größe.
 
-Der allgemeinste Fall der Regressionsrechnung ist der mit sowohl mehreren
-Regressoren als auch mehreren Regressanden.
-Regressionsrechnung mit einem Regressanden, wird \textbf{univariate Regression}, oder oft einfach nur lineare Regression genannt.
-Die Darstellung der Modellgleichung kann dabei wie folgt aussehen
+Für $J$ Beobachtungen schreiben wir allgemein
 \begin{equation}
-Y_j = f(X_{1,j},\dots, X_{i,j},\dots, X_{N,j}) + \varepsilon_j \quad \mathrm{mit} \quad j = 1,2,\ldots,J
+Y_j = f(X_{1,j},\dots, X_{i,j},\dots, X_{N,j}) + \varepsilon_j
+\quad \mathrm{mit} \quad j = 1,2,\ldots,J .
 \label{Kap2Modellglunivar}
 \end{equation}
-wobei $Y_j$ eine Beobachtung zur Zufallsgröße, dem Regressanden $Y$, darstellt bei Vorgabe (Einstellung an einem
-Gerät wie im Beispiel von Kapitel 1 der Präzisionsstromquelle) $X_{i,j}$ des Regressors $X_i$.
-Wenn es mehrere abhängige Größen, also mehrere Regressanden gibt, spricht man von \textbf{multivariater Regression}. Die Regressoren müssen voneinander \textbf{linear unabhängig} sein.
-Sie können aber auch eine Potenzbeziehung zueinander haben, also quadratisch, kubisch etc.
-Wir werden für die Methode der Regressionsrechnung zur Schätzung von Polynomkoeffizienten
-eine Eingangsgröße $X$ und eine Ausgangsgröße $Y$ betrachten, die über ein Potenzgesetz
+Dabei ist $Y_j$ der beobachtete Wert des Regressanden $Y$ zur $j$-ten Einstellung der Regressoren $X_{i,j}$. Die Abweichung $\varepsilon_j$ heißt \textbf{Residuum}. Sie fasst die Streuung der Beobachtung und die Abweichung des gewählten Modells vom realen Zusammenhang zusammen.
+
+In diesem Kapitel betrachten wir die \textbf{univariate Regression}, also den Fall mit genau einer abhängigen Größe $Y$. Gibt es mehrere abhängige Größen, spricht man von \textbf{multivariater Regression}. Der Begriff \textbf{lineare Regression} bedeutet dabei nicht, dass das Modell als Funktion von $X$ immer eine Gerade sein muss. Linear heißt: Das Modell ist linear in den unbekannten Modellparametern. Deshalb sind auch Polynome wie
 \begin{equation}
-Y = f(X) \propto X^k \quad \mathrm{mit} \quad k \in I \! \! N_0
+p_m(X) = \theta_0 + \theta_1 X + \theta_2 X^2 + \cdots + \theta_m X^m
 \label{potenzgesetzlinReg}
 \end{equation}
-also mit $k$ als natürliche Zahl einschließlich der Null, verknüpft sind.
+lineare Regressionsmodelle, denn die Parameter $\theta_0,\theta_1,\ldots,\theta_m$ treten nur linear auf.
 
-Bei der Regressionsrechnung wird vorausgesetzt,
-dass der Regressor $X$ eine Größe ist, die voreingestellt ist und keiner Streuung unterliegt,
-und nur der Regressand $Y$ streut und deshalb als Zufallsgröße betrachtet wird.
-Die Streuung kann verschiedene Ursachen haben:
-\begin{itemize}
-\item Die indirekten Messgrößen, hier die Größen, die durch die
-Modellparameter beschrieben werden, streuen aufgrund von nicht im Modell
-enthaltenden Einflüssen.
-Das bedeutet, dass das Modell eine Approximation des physikalischen Sachverhalts ist.
-\item Der Messvorgang des Regressanden führt zu Streuungen.
-\end{itemize}
-Die Modellparameter sind also wie die Regressanden als Zufallsvariablen
-zu betrachten. Die Regression soll nun Schätzwerte für die
-Modellparameter liefern. Das Modell wird über einen
-funktionalen Zusammenhang zwischen Regressor und Regressand
+Im einfachsten Fall wird der funktionale Zusammenhang zwischen einem Regressor und einem Regressanden geschrieben als
 \begin{equation}
-Y = f(X)
+Y = f(X) .
 \label{Kap2Modellgleichung}
 \end{equation}
-beschrieben.
-
-Um eine Schätzung für die Parameter des funktionalen Zusammenhangs $Y = f(X)$
-zu erhalten, wird die Eingangsgröße in einem bestimmten Bereich
-variiert. Man misst $J$ Messwertpaare $(X_j ,Y_j )$ mit $j=1,\ldots, J$, die sich als Punktwolke in einem Diagramm darstellen lassen. Auf Grund der Streuungen werden die Wertepaare $(X_j, Y_j )$
-die Gleichung $Y_j = f(X_j )$ nicht exakt erfüllen,
-sondern etwas abweichen $\varepsilon_j$, d.~h.
+Für Messdaten erhält man wegen der Streuung nicht exakt $Y_j=f(X_j)$, sondern
 \begin{equation}
-Y_j = f(X_j) + \varepsilon_j \quad \mathrm{mit} \quad j = 1,2,\ldots,J
+Y_j = f(X_j) + \varepsilon_j \quad \mathrm{mit} \quad j = 1,2,\ldots,J .
 \label{Kap2ModellglmitResiduen}
 \end{equation}
 
-Wir stellen hier zusammen welche Typen von Größen bei der Regressionsrechnung behandelt werden:
+Für die klassische lineare Regression nehmen wir an:
 \begin{itemize}
-	\item Die unabhängigen Größen $X$ werden
-	 vorgegeben. Sie haben genau bekannte Werte (engl.\ \textsl{exactly known values})
-	und sind somit keine Zufallsgrößen. Sie sind unabhängig und
-	heißen \textbf{Regressoren}.
-	\item Die abhängigen Größen $Y$, d.h.\ die \textbf{Regressanden} streuen und ihre Residuen sind
-	normalverteilt mit Erwartungswert $E(\varepsilon) = 0$ und Varianz $\mathrm{Var}(\varepsilon) = \sigma^2$.
-
-	Die Residuen sind \textbf{unabhängig und identisch verteilt}, kurz u.i.v.
-	\begin{equation}
-	\varepsilon \; \overset{u.i.v.}{\sim} \; \mathcal{N}(0,\sigma_{\varepsilon}) .
-	\label{Resinormalverteilt}
-	\end{equation}
-	Die Regressanden werden auf Grund ihrer Streuung als Zufallsgrößen betrachtet.
-	Zu jedem beobachteten Wert des Regressanden wird jeweils ein Regressorwert
-	zugeordnet (engl. \textsl{observed data corresponding to the known values}).
-	Sie sind abhängig vom Regressor und werden deshalb auch \textsl{dependent variable} oder
-	\textsl{response variable} genannt.
-	\item Modellparameter, die unbekannt sind (\textsl{unknown parameters}), sind Zufallsgößen. Sie werden
-	auch Regressionsparameter (\textsl{regression parameters}) genannt.
-	\item Ferner gibt es zusätzliche unbekannte Parameter, und zwar die Varianzen der beteiligten
-	Zufallsgrößen, \textsl{unknown additional parameters}. % $\boldsymbol{\delta}$ (unknown variance parameters)
+\item Die Regressoren (unabhängigen Größen) $X$ bzw. $X_i$ werden vorgegeben. Ihre Werte gelten im Modell als genau bekannt (engl.\ \textsl{exactly known values}) und werden nicht als Zufallsgrößen behandelt.
+\item Der Regressand (die abhängige Größe) $Y$ streut. Die Residuen sind \textbf{unabhängig und identisch verteilt} mit Erwartungswert Null und konstanter Varianz:
+\begin{equation}
+\varepsilon_j \; \overset{u.i.v.}{\sim} \; \mathcal{N}(0,\sigma_{\varepsilon}^2) .
+\label{Resinormalverteilt}
+\end{equation}
+Die Regressanden werden auf Grund ihrer Streuung als Zufallsgrößen betrachtet.
+Zu jedem beobachteten Wert des Regressanden wird jeweils ein Regressorwert
+zugeordnet (engl. \textsl{observed data corresponding to the known values}).
+Sie sind abhängig vom Regressor und werden deshalb auch \textsl{dependent variable} oder \textsl{response variable} genannt.
+\item Die unbekannten Modellparameter sind feste, aber unbekannte Größen (\textsl{unknown parameters}). Ihre Schätzwerte $\hat\theta_i$ hängen von den Messdaten ab und sind deshalb Zufallsgrößen.
+\item Ferner gibt es zusätzliche unbekannte Parameter, und zwar die Varianzen der beteiligten Zufallsgrößen, \textsl{unknown additional parameters}.
+\item Für ein eindeutiges Ergebnis müssen die Regressoren im verwendeten Ansatz linear unabhängig sein. Bei Polynomen bedeutet dies praktisch: Es müssen genügend unterschiedliche $X$-Werte vorliegen, damit die Spalten der späteren Regressormatrix unabhängig sind.
 \end{itemize}
 
 \begin{figure}
-	\begin{center}
-		\includegraphics[width=100mm]{02_vorlesung/media/regressionNormalResi_1b.pdf}
-		\caption{\label{regressionNormalResi} Lineare Regression für unabhängig und
-			identisch verteilte Residuen.}
-	\end{center}
+\begin{center}
+\includegraphics[width=100mm]{02_vorlesung/media/regressionNormalResi_1b.pdf}
+\caption{\label{regressionNormalResi} Lineare Regression für unabhängig und identisch verteilte Residuen.}
+\end{center}
 \end{figure}
 
-Abb.~\ref{regressionNormalResi} veranschaulicht, dass die Residuen normalverteilt sind, wobei die vertikale Achse die Wahr\-schein\-lich\-keitsdichte der Residuen darstellt. \newline Der englische Begriff für Wahr\-schein\-lich\-keits\-dichte\-ver\-teil\-ung ist \textsl{probability density function}, kurz pdf. Die unterschiedlichen
-Farben und Symbole sollen unterschiedliche Durchläufe gleicher Messvorgänge darstellen.
+Abb.~\ref{regressionNormalResi} veranschaulicht die Annahme normalverteilter Residuen. Die vertikale Achse zeigt die Wahrscheinlichkeitsdichte der Residuen; der englische Begriff dafür ist \textsl{probability density function}, kurz pdf. Die unterschiedlichen Farben und Symbole stehen für wiederholte Durchläufe desselben Messvorgangs.
 
-\section{Lineare Regression als Beispiel zur Methode der kleinsten Abweichungsquadrate}
-Man bestimmt die Parameter der Regressionsfunktion $Y =
-f(X)$ nun so, dass die Summe der Quadrate der
-Abweichungen der Datenpunkte vom Modell (\textbf{Residuen}) $\varepsilon_j $ möglichst klein wird
-(Methode der kleinsten Abweichungsquadrate),
-d.h.\ die \textbf{Kostenfunktion} $Q$ muss minimal werden:
+\section{Lineare Regression als Methode der kleinsten Abweichungsquadrate}
+
+Die Modellparameter werden so bestimmt, dass die Summe der quadrierten \textbf{Residuen} möglichst klein wird. Mit dem Begriff \textbf{Residuum} wird die Abweichung eines Datenpunktes von dem Modell bezeichnet, das Formelsymbol dafür ist $\varepsilon_j$. Für ein Modell $f(X)$ lautet die \textbf{Kostenfunktion} bzw. \textbf{Zielfunktion}
 \begin{equation}
-Q: = \sum\limits_{j = 1}^J {\varepsilon_j ^2 = } \sum\limits_{j = 1}^J {(Y_j
-	- f(X_j ))^2 \to } \,\,\min
+Q := \sum\limits_{j = 1}^J \varepsilon_j^2
+= \sum\limits_{j = 1}^J \left(Y_j - f(X_j)\right)^2 \; \longrightarrow \; \min .
 \label{eq:Minimimierung-kleinster-Fehlerquadrate}
 \end{equation}
-Die Kostenfunktion ist ein Maß für die Abweichung der Messgrößen vom Modell in Abhängigkeit von der
-Wahl der Werte für die Modellparameter. Für gegebene Werte für die Modellparameter liefert die
-Kostenfunktion ein Maß für die Qualität der Schätzung und wird \textbf{Qualitätsmaß} genannt.
+Die Kostenfunktion ist ein Maß dafür, wie stark die Messwerte vom Modell abweichen. Werden die optimalen Schätzwerte eingesetzt, dient $Q$ als \textbf{Qualitätsmaß} der Anpassung. Bei normalverteilten Residuen entspricht die Minimierung von $Q$ dem Maximieren der Likelihood. Da diesem Verfahren die Annahme als Voraussetzung zugrunde liegt, dass die Likelihood gaußverteilt ist, spricht man in der ingenieurmäßigen Anwendung auch vom Ausgleichsverfahren nach Gauß.
 
-Wie in Kapitel 1 dargelegt, basiert dies auf dem Maximieren der Likelihood, der
-normalverteilten bzw.\ gaußverteilten Wahrscheinlichkeitsdichte der Residuen. Da diesem Verfahren
-die Annahme als Voraussetzung zugrunde liegt, dass die Likelihood gaußverteilt ist, spricht man in der
-ingenieurmäßigen Anwendung auch vom Ausgleichsverfahren nach Gauß.
+\subsection{Polynomansatz ohne Matrixschreibweise}
 
-In die Modellgleichung (\ref{Kap2Modellgleichung}) setzen wir mehrere Potenzgesetze (\ref{potenzgesetzlinReg})
-ein, um folgenden Polynomansatz aufzustellen
+Ein Polynom $m$-ten Grades hat die Form
 \begin{equation}
-Y = f(X) \equiv p_m = \theta _m X ^m + \theta _{m-1} X^{m - 1} +
-\cdots + \theta _1 X + \theta _0
+p_m(X) = \theta_0 + \theta_1 X + \theta_2 X^2 + \cdots + \theta_m X^m
+= \sum\limits_{i=0}^{m} \theta_i X^i .
 \end{equation}
-$m$ bezeichnet den Grad des Polynoms. Die Anzahl der Regressionsparameter bezeichnen wir mit $M = m+1$.
-Unter Berücksichtigung der Streuung der Beobachtungen $Y_j$ des Regressanden ist dies wie in Gl.~(\ref{Kap2ModellglmitResiduen})
+Der Grad des Polynoms ist $m$, die Anzahl der Regressionsparameter ist $M=m+1$. Unter Berücksichtigung der Streuung der Beobachtungen $Y_j$ lautet das Regerssionsmodell
 \begin{equation}
-Y_j = f(X_j) \equiv p_m = \theta _m X_j^m + \theta _{m-1} X_j^{m - 1} + \cdots +
-\theta _1 X_j + \theta _0 + \varepsilon_j
+Y_j = p_m(X_j) + \varepsilon_j
+= \sum\limits_{i=0}^{m} \theta_i X_j^i + \varepsilon_j .
 \label{eq:Kap2ModellglmitResiduenlinearReg}
 \end{equation}
-
-Für die Schätzung der Polynomkoeffizienten setzen wir den Polynomansatz in die
-Minimumbedingung Gl.~(\ref{eq:Minimimierung-kleinster-Fehlerquadrate}) ein:
+Die Kostenfunktion wird damit zu
 \begin{equation}
-Q = Q(\theta _m ,\theta _{m - 1} ,\ldots ,\theta _1 ,\theta _0 ) =
-\sum\limits_{j = 1}^J {(Y_j - p_m (X_j ))^2 \to } \,\,\min
+Q(\theta_0,\theta_1,\ldots,\theta_m) =
+\sum\limits_{j = 1}^J \left(Y_j - \sum\limits_{i=0}^{m} \theta_i X_j^i\right)^2 \; \longrightarrow \; \min .
 \label{eq:Kap2KostenfktlinearReg}
 \end{equation}
-
-Die Schätzwerte der Koeffizienten $\hat{\theta}_k$, für die die Kostenfunktion $Q$ ein Minimum annimmt, sind
-die beste Schätzung oder das Optimum der Parameter $\theta _k $, weshalb im englischen Sprachgebrauch auch der Begriff
-\textsl{best fit} Verwendung findet. Die optimalen Schätzwerte zu den
-Polynomkoeffizienten $\hat{\theta}_k$ ergeben sich durch Lösen des linearen Gleichungssystems,
-das sich durch Null setzen der partiellen Ableitungen von $Q$ nach den Modellparametern ergibt:
+Das Minimum erhält man, indem alle partiellen Ableitungen nach den Modellparametern gleich Null gesetzt werden:
 \begin{equation}
-\left. {\frac{\partial Q}{\partial \theta _k }} \right|_{\theta_k
-	=  \hat\theta_k } = 0,\,\,k = 0,1,\ldots ,m
+\left. {\frac{\partial Q}{\partial \theta_i }} \right|_{\theta_i = \hat\theta_i} = 0,
+\quad i = 0,1,\ldots,m .
 \label{linRegGleichungssystem}
 \end{equation}
-Die resultierende Modellgleichung ist dann die mit den geschätzten
-Regressionsparametern (hier den Polynomkoeffizienten) $\hat\theta_k$:
+So entstehen $m+1$ lineare Gleichungen für die $m+1$ unbekannten Parameter $\hat\theta_i$.
+
+Für ein quadratisches Polynom
 \begin{equation}
-Y = f(X) \equiv p_m = \hat\theta_m X ^m + \hat\theta_{m - 1} X
-^{m - 1} + \cdots \hat\theta_1 X + \hat\theta_0
+Y_j = \theta_0 + \theta_1 X_j + \theta_2 X_j^2 + \varepsilon_j
 \end{equation}
-Ein Schätzwert für die Varianz der Residuen, d.h.
-$\mathrm{Var}(\varepsilon)$, ergibt sich durch die empirische Varianz:
+ergeben sich aus Gl.~(\ref{linRegGleichungssystem}) folgendes lineare Gleichungssystem
+\begin{align}
+J\hat\theta_0 + \hat\theta_1 \sum\limits_{j=1}^J X_j + \hat\theta_2 \sum\limits_{j=1}^J X_j^2
+&= \sum\limits_{j=1}^J Y_j, \nonumber\\
+\hat\theta_0 \sum\limits_{j=1}^J X_j + \hat\theta_1 \sum\limits_{j=1}^J X_j^2 + \hat\theta_2 \sum\limits_{j=1}^J X_j^3
+&= \sum\limits_{j=1}^J X_jY_j, \\
+\hat\theta_0 \sum\limits_{j=1}^J X_j^2 + \hat\theta_1 \sum\limits_{j=1}^J X_j^3 + \hat\theta_2 \sum\limits_{j=1}^J X_j^4
+&= \sum\limits_{j=1}^J X_j^2Y_j .\nonumber
+\end{align}
+Dieses Beispiel zeigt den Übergang zur Matrixschreibweise bereits an: Die Matrixschreibweise fasst solche linearen Gleichungssysteme, wie wir später sehen werden, nur kompakter zusammen.
+
+Sind die Schätzwerte eingesetzt, erhält man die geschätzte Modellfunktion
 \begin{equation}
-\mathrm{Var}(\varepsilon(\hat{\theta}_m ,\hat{\theta}_{m - 1} ,\ldots ,\hat{\theta}_1
-,\hat{\theta_0} )) = s^2 = \frac{Q(\hat{\theta}_m ,\hat{\theta}_{m - 1}
-	,\ldots ,\hat{\theta}_1 ,\hat{\theta_0} )}{J - 1 - m}
+\hat p_m(X) = \hat\theta_0 + \hat\theta_1 X + \hat\theta_2 X^2 + \cdots + \hat\theta_m X^m .
+\end{equation}
+Ein Schätzwert für die Varianz der Residuen ist
+\begin{equation}
+\hat\sigma^2_\varepsilon = s^2 =
+\frac{Q(\hat{\theta}_0,\hat{\theta}_1,\ldots,\hat{\theta}_m)}{J-M}
+= \frac{Q(\hat{\theta}_0,\hat{\theta}_1,\ldots,\hat{\theta}_m)}{J-m-1} .
 \label{eq:s_quadrat_Regresssion}
 \end{equation}
-Wir betrachten zunächst den einfacheren Fall der \textbf{linearen Regression},
-bei dem eine empirische Regressionsgerade  gesucht wird, d.~h.
-es gibt nur zwei Modellparameter $\theta_0$ und $\theta_1$:
-\begin{equation}
-Y = \theta_0 + \theta_1 \cdot X
-\end{equation}
-Die beste Schätzung für die Parameter $\theta _0 $und
-$\theta _1 $ findet man durch Minimierung gemäß
-Gl.~(\ref{eq:Minimimierung-kleinster-Fehlerquadrate}),
-d.~h.
-\begin{equation}
-\label{eq:linRegrMinimierung}
-Q(\theta _0 ,\theta _1 ) = \sum\limits_{j = 1}^J {(Y_j
-	- (\theta _0 + \theta _1 \cdot X_j))^2 \to } \,\,\min
-\end{equation}
-Für jedes vorgegebene Messwertpaar-Ensemble $(X_j ,Y_j )$, $j
-= 1,2,\ldots J$ existiert eine eindeutige Lösung der Gl.
-(\ref{eq:linRegrMinimierung}).
 
-Zum Auffinden des Minimums der Gl.(\ref{eq:linRegrMinimierung}), bildet man die
-partiellen Ableitungen und setzt diese gleich Null:
+\subsection{Regressionsgerade ohne Matrixschreibweise}
+Die Gerade ist der Spezialfall $m=1$:
+\begin{equation}
+Y = \theta_0 + \theta_1 X .
+\end{equation}
+Hier ist $\theta_0$ der Achsenabschnitt und $\theta_1$ die Steigung. Für die Messwerte gilt
+\begin{equation}
+Y_j = \theta_0 + \theta_1 X_j + \varepsilon_j .
+\end{equation}
+Die Kostenfunktion lautet
+\begin{equation}
+Q(\theta_0,\theta_1) = \sum\limits_{j = 1}^J
+\left(Y_j - (\theta_0 + \theta_1 X_j)\right)^2 \; \longrightarrow \; \min .
+\label{eq:linRegrMinimierung}
+\end{equation}
+Zum Auffinden des Minimums werden die partiellen Ableitungen nach $\theta_0$ und $\theta_1$ gleich Null gesetzt:
 \begin{equation}
 \renewcommand*{\arraystretch}{1.5}
-\begin{array}{lcc}
-\left. {\frac{\partial Q(\theta _0 ,\theta _1 )}{\partial \theta_0 }}
-\right|_{\theta _0 = \hat{\theta}_0 ,\,\theta _1 = \hat{\theta}_1 } & = & 0  \\
-\left. {\frac{\partial Q(\theta _0 ,\theta _1 )}{\partial \theta_1 }}
-\right|_{\theta _0 = \hat{\theta}_0 ,\,\theta _1 = \hat{\theta}_1 } & = & 0
+\begin{array}{lcl}
+\left. {\frac{\partial Q}{\partial \theta_0 }}\right|_{\theta_0 = \hat\theta_0,\,\theta_1 = \hat\theta_1} &=& 0, \\
+\left. {\frac{\partial Q}{\partial \theta_1 }}\right|_{\theta_0 = \hat\theta_0,\,\theta_1 = \hat\theta_1} &=& 0 .
 \end{array}
 \label{GleichungssytemKostenfkt}
 \end{equation}
-Für das Vorliegen eines Minimums (nicht Maximum oder Sattelpunktes) müssen noch
-die Bedingungen
+Aus den Ableitungen folgen die Normalgleichungen
+\begin{align}
+J\hat\theta_0 + \hat\theta_1 \sum\limits_{j=1}^{J} X_j
+&= \sum\limits_{j=1}^{J} Y_j, \\
+\hat\theta_0 \sum\limits_{j=1}^{J} X_j + \hat\theta_1 \sum\limits_{j=1}^{J} X_j^2
+&= \sum\limits_{j=1}^{J} X_jY_j .
+\end{align}
+Mit den Mittelwerten
+$$
+\bar X = \frac{1}{J}\sum\limits_{j=1}^{J}X_j
+\quad \mathrm{und} \quad
+\bar Y = \frac{1}{J}\sum\limits_{j=1}^{J}Y_j
+$$
+ergibt die erste Normalgleichung
 \begin{equation}
-	\left. {\frac{\partial^2 Q(\theta _0 ,\theta _1 )}{\partial \theta_0^2 }}
-\right|_{\theta _0 = \hat{\theta}_0 ,\,\theta _1 = \hat{\theta}_1 } > 0 \quad
-\mathrm{und} \quad \left. { \frac{\partial^2 Q(\theta _0 ,\theta _1)}{ \partial \theta_1^2 }}
-\right|_{\theta _0 = \hat{\theta}_0 ,\,\theta _1 = \hat{\theta}_1 } > 0
+\hat\theta_0 = \bar Y - \hat\theta_1 \bar X .
 \end{equation}
-erfüllt sein.
-
-Daraus folgt:
-\[\left. \frac{\partial Q(\theta _0 ,\theta _1 )}{\partial \theta_0 }
-\right|_{\theta _0 = \hat{\theta}_0 ,\,\theta _1 = \hat{\theta}_1} = \sum\limits_{j = 1}^J {Y_j - J} \, \hat{\theta}_0 - \hat{\theta}_1 \sum\limits_{j = 1}^J {X_j = 0}
-\]
-\[
-\left. \frac{\partial Q(\theta _0 ,\theta _1 )}{\partial \theta_1 }
-\right|_{\theta _0 = \hat{\theta}_0 ,\,\theta _1 = \hat{\theta}_1 }= \sum\limits_{j = 1}^J {Y_j X_j - \hat\theta_0 \sum\limits_{j = 1}^J {X_j - \hat\theta_1 \sum\limits_{j = 1}^J {X_j ^2 = 0} } }
-\]
-Mit den Mittelwerten $\bar X$, der sich zu $\sum\limits_{j = 1}^J {X_j } = J \, \bar {X}$ ergibt und dem Mittelwert $\bar Y$, der sich zu
-$\sum\limits_{j= 1}^J {Y_j } = J \, \bar {Y}$ ergibt, folgt:
-\[
-J \, \bar {Y} - J \, \hat{\theta}_0 - J \cdot \hat{\theta}_1 \, \bar {X} = 0 \quad
-\mathrm{bzw.}\quad \hat{\theta}_0 = \bar {Y} - \hat{\theta}_1 \, \bar {X}
-\]
-
-\[
-\sum\limits_{j = 1}^J {X_j \, Y_j \; - \; J \hat{\theta}_0 \, \bar {X}} - \hat{\theta}_1 \sum\limits_{j = 1}^J {X_j ^2 = 0}
-\]
-Diese beiden Gleichungen ineinander eingesetzt liefert:
-\[
-\left(\sum\limits_{j = 1}^J X_j \, Y_j\right) \; -
-\; J (\bar {Y} - \hat{\theta}_1 \, \bar {X}) \, \bar {X} - \hat{\theta}_1 \sum\limits_{j = 1}^J {X_j ^2 = 0}
-\]
-d.h.
-\[
-\sum\limits_{j = 1}^J X_j \, Y_j \; - \; J \bar {Y} \, \bar {X} +
-\hat{\theta}_1\left( J \, \bar {X}^2 - \sum\limits_{j = 1}^J X_j ^2 \right) = 0
-\]
-und mit $(\sum X_j^2) - J \bar X^2 = (\sum X_j^2) - 2 \, J \bar X^2  + J \bar X^2 =
-\sum(X_j^2 - 2 X_j \bar X  + \bar X^2) = \sum(X_j - \bar X)^2$
-\[
-\hat{\theta}_0 = \bar {Y} - \hat{\theta}_1 \bar {X} \quad \mathrm{und} \quad
-\hat{\theta}_1 = \frac{\sum\limits_{j =
-		1}^J {(X_j Y_j - \bar {X}\bar {Y})} }
-{\sum\limits_{j = 1}^J {(X_j
-		- \bar {X})^2} }
-\]
-Durch Verwendung der empirischen Varianz
-\[
-s_X^2 = \frac{1}{J - 1}\sum\limits_{j = 1}^J {(X_j - \bar {X})^2}
-\]
-\noindent und der empirischen Kovarianz:
-\[
-s_{XY} = \frac{1}{J - 1}\sum\limits_{j = 1}^J {(X_j - \bar
-	{X})(Y_j - \bar {Y})}
-\]
-\noindent ergibt sich für die gesuchten Regressionsparameter
-$\hat{\theta}_0$ und $\hat{\theta}_1 $:
+Setzt man dies in die zweite Normalgleichung ein, erhält man für die Steigung
 \begin{equation}
-\hat{\theta}_0 = \bar {Y} - \hat{\theta}_1 \bar {X} \quad \mathrm{und} \quad
-\hat{\theta}_1 = \frac{s_{XY} }{s_X^2 }
+\hat\theta_1 =
+\frac{\sum\limits_{j=1}^{J}(X_j-\bar X)(Y_j-\bar Y)}
+{\sum\limits_{j=1}^{J}(X_j-\bar X)^2} .
+\end{equation}
+Damit lauten die Schätzgleichungen der Regressionsgeraden
+\begin{equation}
+\hat{\theta}_0 = \bar {Y} - \hat{\theta}_1 \bar {X}
+\quad \mathrm{und} \quad
+\hat{\theta}_1 = \frac{s_{XY}}{s_X^2},
 \label{eq:Lineare_Regressionskonstanten}
 \end{equation}
-An dieser Gleichung sieht man, dass der Punkt $(\bar {X},\bar
-{Y})$, den man auch als Schwerpunkt bezeichnet, stets auf der
-Regressionsgeraden liegt. Hier wurde angenommen, dass $X$
-als unabhängige und $Y $ als abhängige
-Zufallsvariable betrachtet wird. Oft ist es jedoch inhaltlich
-nicht klar, welche der beiden Zufallsvariablen die abh\"{a}ngige
-ist. In solch einem Fall kann man zusätzlich die Regression
-von $X$ auf $Y$ durchführen. Trägt man beide
-Regressionsgeraden in das gleiche Koordinatensystem ein, so
-schneiden sich diese im Schwerpunkt $(\bar {X},\bar {Y})$.
-Für den Schätzwert der Varianz der Residuen ergibt sich, siehe Gl.(\ref{eq:s_quadrat_Regresssion})
-\begin{equation}
-\hat\sigma^2_\varepsilon = \hat\sigma_\varepsilon^2 = s^2(\hat{\theta}_0 ,\hat{\theta}_1 ) = \frac{Q(\hat{\theta}_0 ,
-	\hat{\theta}_1 )}{J - 1 - m }
-= \frac{Q(\hat{\theta}_0 ,
-	\hat{\theta}_1 )}{J - 2}
-\end{equation}
+wobei
+$$
+s_X^2 = \frac{1}{J-1}\sum\limits_{j=1}^{J}(X_j-\bar X)^2
+\quad \mathrm{und} \quad
+s_{XY} = \frac{1}{J-1}\sum\limits_{j=1}^{J}(X_j-\bar X)(Y_j-\bar Y)
+$$
+die empirische Varianz von $X$ und die empirische Kovarianz von $X$ und $Y$ sind. Der Punkt $(\bar X,\bar Y)$ liegt immer auf der Regressionsgeraden.
 
-\newpage
-\section{Beispiel zur linearen Regression}
-\label{subsection:lineare-Regression}
-\textbf{Beispiel:} Vergleich der Modellierung mit Gerade und mit Polynom 6.~Grades \\
-Gegeben sei ein Ensemble von Werten
-$(X_j,Y_j )$, $j = 1,2,\ldots ,J$ einer Eingangsgröße (Regressor) $X$ und einer Zufallsgrößen,
-der abhängigen Ausgangsgröße (Regressand) $Y$.
-Beispielhaft ist in Abb.~\ref{fig:LineareRegressionMoeglFits} eine
-entsprechende Punktwolke dargestellt:
-\begin{figure}[!htbp]
-	\centering
-	\includegraphics[width=11cm]{02_vorlesung/media/Regression_der_WertePaare.png}
-    \caption{Beispiel für mögliche Fits, linearer Fit und Polynomfit vom Grade 6} \label{fig:LineareRegressionMoeglFits}
-\end{figure}
-Bevor man mit der Regressionsrechnung anfängt, muss man sich im vorhinein sehr sorgfältig
-überlegen, in welchem physikalischen Zusammenhang die Größen stehen, also welcher
-Ansatz für das Messsystem als Modellgleichung sinnvoll ist.
-In einigen Fällen ist dies auch eine Frage, welche Näherung für welchen Messbereich
-ausreicht.
-% Abb.~\ref{fig:LineareRegression} illustriert die Abweichung der Wertepaare von den unterschiedlichen Modellen und damit wie gut verschiedene Modelle die Daten approximieren.
-
-\textbf{Beispiel:} Bestimmung des Widerstandes $R$ durch lineare Regression \\
-Wir erinnern uns wieder an das Beispiel aus der 1. Vorlesung (siehe z.~B. dort Abb.~1) und bestimmen den Ohmschen Widerstand $R$ sowie eine Offsetspannung $U_0$ bei gegebenen Werten einer
-Präzisions\-strom\-quelle (Regressor, genau bekannt, d.h.\ keine Zufallsgröße) und beobachteten
-Werten eines Voltmeters (Regressand, Zufallsgröße).
-Der Ohmsche Widerstand $R$ und die Offsetspannung $U_0$ sind die zu bestimmenden Modellparameter (Zufallsgrößen)
-
-\begin{center}
-	\begin{tabular}{l||c|c|c|c|c|c|c|c|c}
-			\hline\hline
-			$I$ in mA &    4.0 &     6.0 &     8.0 &    10.0 &    12.0 &    14.0 &    16.0 &    18.0 &    20.0\\
-			\hline
-			$U$ in mV &    62.5 &    51.5 &    96.0 &   140.2 &   138.9 &   195.1 &   225.8 &   207.8 &   223.7 \\
-			\hline\hline
-	\end{tabular}
-\end{center}
-
-Die Modellgleichung lautet mit den beiden Modellparametern
-$\theta_0 :=U_0$ und $\theta_1:=R$
+Für die Residuenvarianz der Geraden folgt aus Gl.~(\ref{eq:s_quadrat_Regresssion}) mit $M=2$:
 \begin{equation}
-U = U_0 + R \cdot I
-\end{equation}
-
-Die beiden Modellparameter können wir mit den beiden Gleichungen (siehe Gl. (\ref{eq:Lineare_Regressionskonstanten})) bestimmt werden.
-\begin{equation}
-\hat{U}_0 = \bar {U} - \hat{R} \bar {I} \quad \mathrm{und} \quad
-\hat{R} = \frac{s_{IU} }{s_I^2 }
-\label{eq:Lineare_Regressionskonstanten_Widerstand}
-\end{equation}
-Zunächst bestimmen wir die beiden Mittelwerte:
-\begin{equation}
-\bar{I}\; := \; \frac{1}{J} \, \sum\limits_{j = 1}^J \, I_j
-= 12 \, \mathrm{mA}
-\qquad
-\bar{U} \; := \; \frac{1}{J} \, \sum\limits_{j = 1}^J \, U_j
-= 149.0556  \, \mathrm{mV}
-\end{equation}
-\begin{figure}
-	\centering
-	\includegraphics[width=11cm]{02_vorlesung/media/Regression_der_WertePaare_Strom_Spannung.png}
-	\caption{Beispiel: Bestimmung des Ohmschen Widerstand und einer Offset-Spannung durch lineare Regression} \label{fig:LineareRegressionWiderstand}
-\end{figure}
-Die empirische Kovarianz mit den $J = 9$ Stichproben ergibt sich zu:
-\[
-s_{IU} = \frac{1}{J - 1}\sum\limits_{j = 1}^J
-(I_j - \bar {I})(U_j - \bar {U}) = 357.0500  \, \mathrm{mA} \cdot \mathrm{mV}
-\]
-
-Die Varianz ergibt sich zu:
-\[
-s_I^2 = \frac{1}{J - 1}\sum\limits_{j = 1}^J {(I_j - \bar {I})^2} = 30  \, \mathrm{mA}^2
-\]
-
-Somit erhalten wir als Schätzwert für $R$
-\[
-\hat{R} = \frac{s_{IU} }{s_I^2} = \frac{357.050 \, \mathrm{mA} \cdot \mathrm{mV}}{30 \, \mathrm{mA}^2} = 11.9017
-\, \frac{\mathrm{mV}}{\mathrm{mA}}
-\]
-mit $\frac{\mathrm{mV}}{\mathrm{mA}} = \frac{\mathrm{V}}{\mathrm{A}} = \mathrm{\Omega}$ also $\hat{R} = 11.9017 \, \mathrm{\Omega}$
-und als Schätzwert für $U_0$:
-\[
-\hat{U}_0 = \bar {U} - \hat{R} \bar {I} = 149.0556 \, \mathrm{mV}-  11.9017  \, \mathrm{\Omega} \cdot 12 \, \mathrm{mA} =
-6.2356 \, \mathrm{mV}
-\]
-
-Das Ergebnis für die Regressionsgerade lautet somit
-\begin{equation}
-U = 6.2356  \, \mathrm{mV} + (11.9017 \, \mathrm{\Omega}) \cdot I
-\end{equation}
- und ist in Abb.~\ref*{fig:LineareRegressionWiderstand} dargestellt.
-
-\section{Varianz der Regressionsparameter}
-\label{subsec:vertrauensbereiche}
-Es können aus den Messreihen die Varianzen der
-geschätzten Regressionsparameter ermittelt werden. Das Verfahren zeigen wir
-hier anhand der Regressionsgeraden mit den geschätzten Parametern
-Achsenabschnitt $\hat{\theta}_0 $ und Steigung $\hat\theta_1 $.
-Die Varianz der Schätzer liefert ein Ma{\ss} f\"{u}r die statistische
-Sicherheit der Sch\"{a}tzung der Parameter $\theta _0 $ und
-$\theta _1 $.
-Für die Varianz des Regressionsparameters Steigung $\hat{\theta}_1 $
-gilt:
-\begin{equation}
-\sigma^2_{\hat{\theta}_1} = \frac{ \hat \sigma^2_{\varepsilon}}{s^2_X \cdot (J- 1) }
-\end{equation}
-Für die Varianz des Regressionsparameters Achsenabschnitt $\hat{\theta}_0 $
-gilt:
-\begin{equation}
-\sigma^2_{\hat{\theta}_0} = \hat \sigma^2_{\varepsilon} \cdot \left(\frac{1}{J}
-	+ \frac{\bar {X}^2}{(J - 1) s_X^2 }\right)
-\end{equation}
-Die Varianz des Achsenabschnittes wird weiter unten in der Gl.(\ref{eq:Varianz des Achsenabschnitts}) hergeleitet. Dort ergibt sich \begin{equation}
-\hat \sigma^2_{\theta_0}  = \hat \sigma^2_{\varepsilon}  \sum(X_j^2)  / (J \sum(X_j^2) - (\sum(X_j))^2)
-\end{equation}
-Wir bezeichnen nun das $\hat \sigma^2_{\varepsilon}$ hier mit $s^2_{\varepsilon}$ und erhalten:
-\begin{equation}
-\hat \sigma^2_{\theta_0}  = s^2_{\varepsilon} \sum(X_j^2)  / (J \sum(X_j^2) - (\sum(X_j))^2)
-\end{equation}
-\begin{equation}
-\hat \sigma^2_{\theta_0} = s^2_{\varepsilon} \frac{1}{J} \sum(X_j^2)  / (\sum(X_j^2) - \frac{1}{J}(\sum(X_j))^2)
-\end{equation}
-Mit der folgenden Null-Identität
-\begin{equation}
-0 =  - \frac{1}{J}(\sum(X_j))^2 + \frac{1}{J}(\sum(X_j))^2
-\end{equation}
-gilt
-\[
-(1/J) \sum(X_j^2)  / (\sum(X_j^2) - \frac{1}{J}(\sum(X_j))^2) =
-\]
-\[
-(1/J) [\sum(X_j^2) - (1/J)(\sum(X_j))^2 + \frac{1}{J}(\sum(X_j))^2] / (\sum(X_j^2) - (1/J)(\sum(X_j))^2)
-\]
-das heisst
-\[
-\frac{1}{J} \sum(X_j^2)  / (\sum(X_j^2) - \frac{1}{J}(\sum(X_j))^2) =
-\]
-\[
-(1/J) [ 1 + \frac{1}{J}(\sum(X_j))^2 / (\sum(X_j^2) - \frac{1}{J}(\sum(X_j))^2) ]
-\]
-
-und mit $(\sum(X_j^2) - \frac{1}{J}(\sum(X_j))^2) = (J-1) s_X^2$ gilt dann
-\begin{align}
-\hat \sigma^2_{\theta_0} =&
-s^2_{\varepsilon} \frac{1}{J} \sum(X_j^2)  / (\sum(X_j^2) - \frac{1}{J}(\sum(X_j))^2) \\
-=& s^2_{\varepsilon} \frac{1}{J} \sum(X_j^2)  / (J-1) s_X^2
-\end{align}
-und mit der Umformung der Null-Identität gilt dann
-\begin{align}
-\hat \sigma^2_{\theta_0}
-=& s^2_{\varepsilon} \frac{1}{J} \sum(X_j^2)  / (\sum(X_j^2) - \frac{1}{J}(\sum(X_j))^2) \\
-=& s^2_{\varepsilon} \frac{1}{J} \left[ 1 + \frac{1}{J}(\sum(X_j))^2 / (\sum(X_j^2) - \frac{1}{J}(\sum(X_j))^2) \right] \\
-=& s^2_{\varepsilon} \frac{1}{J} \left[ 1 + \frac{1}{J(J-1) s_X^2} \left(\sum(X_j)\right)^2 \right]
-\end{align}
-mit $\frac{1}{J}(\sum(X_j)) = \bar X$ gilt $\frac{1}{J}(\sum(X_j))^2 = J \bar X^2$
-so dass
-\begin{align}
-\hat \sigma^2_{\theta_0} =& s_{\varepsilon} \frac{1}{J} \left[ 1 +
-\frac{1}{J (J-1) s_X^2} \left(\sum(X_j) \right)^2 \right] \\
-=& s^2_{\varepsilon} \frac{1}{J(J-1) s_X^2} \left[ 1 + (J \bar X^2) \right] \\
-=&
-s^2_{\varepsilon}  \left[\frac{1}{J} + \frac{\bar X^2}{(J-1) s_X^2} \right]
-\end{align}
-
-Damit erhalten wir für die \textbf{Varianz bzw. die Unsicherheit des Achsenabschnittes}:
-\begin{equation}
-\hat \sigma^2_{\theta_0} =
-s^2_{\varepsilon}  \left[ \frac{1}{J} +\frac{\bar {X}^2}{(J - 1) s_X^2 } \right]
+\hat\sigma^2_\varepsilon = \frac{Q(\hat\theta_0,\hat\theta_1)}{J-2} .
 \end{equation}
 
 \section{Matrixformalismus zur allgemeinen Lösung der linearen Regression}
@@ -601,7 +346,7 @@ Für die Ableitungen nach den $\theta_0, \theta_1$ gilt
 \begin{equation}
 \frac{\partial}{\partial \theta_l} \sum_{j=1}^J \varepsilon_j^2 \; = \;
 2 \sum_{j=1}^J \varepsilon_j \frac{\partial}{\partial \theta_l} \varepsilon_j \; = \;
-2 \sum_{j=1}^J \varepsilon_j (-1) \frac{\partial}{\partial \theta_l}(1 \, \theta_1 \; + \;  X_{1,j} \, \theta_2) \; = \; 0
+2 \sum_{j=1}^J \varepsilon_j (-1) \frac{\partial}{\partial \theta_l}(1 \, \theta_0 \; + \;  X_{1,j} \, \theta_1) \; = \; 0
 \end{equation}
 wobei $l = 0,1$ ist also
 \begin{equation}
@@ -613,9 +358,9 @@ also
 \sum_{j=1}^J \varepsilon_j (1) \; = \; 0 \qquad \mathrm{und}  \qquad
 \sum_{j=1}^J \varepsilon_j ( X_{1,j})  \; = \; 0
 \end{equation}
-Dies sieht in Matrixschreibweise als $2 \times 2$-Gleichungssystem wie folgt aus
+Dies sieht in Matrixschreibweise als Gleichungssystem mit zwei Gleichungen wie folgt aus
 \begin{equation}
-\boldsymbol{\varepsilon}^\mathsf{T} \, \mathbf{X} \; = \;
+\mathbf{X}^\mathsf{T} \, \boldsymbol{\varepsilon} \; = \;
 \left(
 \begin{array}{c}
 0\\
@@ -625,9 +370,9 @@ Dies sieht in Matrixschreibweise als $2 \times 2$-Gleichungssystem wie folgt aus
 \end{equation}
 d.h.
 \begin{equation}
-\left(\mathbf{Y}^\mathsf{T}
+\mathbf{X}^\mathsf{T}\left(\mathbf{Y}
 \; - \;
-\boldsymbol{\theta}^\mathsf{T} \mathbf{X}^\mathsf{T} \right) \, \mathbf{X} \; = \;
+\mathbf{X}\boldsymbol{\theta}\right) \; = \;
 \left(
 \begin{array}{c}
 0\\
@@ -637,27 +382,12 @@ d.h.
 \end{equation}
 d.h.
 \begin{equation}
-\boldsymbol{\theta}^\mathsf{T} \, \mathbf{X}^\mathsf{T}  \, \mathbf{X} \; = \;
-\mathbf{Y}^\mathsf{T} \, \mathbf{X}
-\end{equation}
-%$\frac{\partial}{\partial \beta_l} \varepsilon_j$ auf.
-%Der Vektor mit für die partielle Differentiation heißt Nablaoperator
-%\begin{equation}
-%\nabla_\beta \; = \;
-%\left(
-%\begin{array}{cc}
-%\frac{\partial}{\partial \beta_0} &
-%\frac{\partial}{\partial \beta_1}
-%\end{array}
-%\right)
-%\end{equation}
-das ist äquivalent zu
-\begin{equation}
-\mathbf{X}^\mathsf{T} \, \mathbf{X} \, \boldsymbol{\theta} \; = \;
+\mathbf{X}^\mathsf{T}  \, \mathbf{X} \boldsymbol{\theta} \; = \;
 \mathbf{X}^\mathsf{T} \, \mathbf{Y} .
 \end{equation}
+
 Die numerische Lösung des Gleichungssystems liefert dann die Schätzwerte zu
-den Regressionparametern $\boldsymbol{\theta}$. Ein mögliches Verfahren zum
+den Regressionsparametern $\boldsymbol{\theta}$. Ein mögliches Verfahren zum
 Lösen des linearen Gleichungssystems ist das Gauß-Jordan-Eliminationsverfahren, zu
 dem im Anhang dieses Skripts der Quellcode gemäß den \textsl{Numerical Recipes}
 \cite{Fla02} abgedruckt ist.
@@ -678,7 +408,7 @@ Das j-te Residuum ist gegeben durch:
 \quad j=1,\ldots,J
 \label{eq:A1_Residuen}
 \end{equation}
-Das Qualitätsmaß $Q$ oder häufig auch als Zielfunktion $S$ bzeichnet
+Das Qualitätsmaß $Q$, häufig auch als Zielfunktion $S$ bezeichnet,
 ist gegeben durch:
 \begin{equation}
 Q = \sum_{j=1}^J \varepsilon_j^2.
@@ -732,7 +462,7 @@ das ist
 \end{equation}
 und mit Einsetzen der aus den Schätzern $\boldsymbol{\hat \theta}$ erhaltenen
 empirischen Varianz der Residuen
-$\operatorname {Cov} (\mathbf{Y}, \mathbf{Y}) = \operatorname {Var} (\mathbf{\varepsilon}) = \hat \sigma_{\varepsilon}^2$
+$\operatorname {Cov} (\mathbf{Y}, \mathbf{Y}) = \operatorname {Var} (\mathbf{\varepsilon}) = \hat \sigma_{\varepsilon}^2 \, 1 \! \mathrm{I}$, wobei $1 \! \mathrm{I}$ die  Einheitsmatrix ist, 
 bekommen wir die empirische Kovarianzmatrix
 \begin{equation}
 \boldsymbol{\hat \Sigma}_{\boldsymbol{\theta}} \; = \;
@@ -834,15 +564,7 @@ empirische Varianzen und Kovarianzen erhalten
 \right)
 \end{equation}
 oder einzeln aufgeschrieben, die Varianz des Achsenabschnitts
-%\begin{figure}
-%	\begin{center}
-%		\includegraphics[width=100mm]{Bilder/regressionNormalResi_Perr_1a.eps}
-%		\caption{\label{regressionParamErr} Unsicherheit der Schätzer
-%			der linearen Regression einer Geradengleichung für ein
-%			Vertrauensniveau von $98 \%$. Mit $\nu = J-2 = 26-2 = 24$ Freiheitsgraden
-%			ist das Quantil der Student-t-Verteilung $t_{1-\alpha/2,\nu} = 2.492$.}
-%	\end{center}
-%\end{figure}
+
 \begin{equation}
 \hat \sigma^2_{\theta_0} \; = \;
 \frac{\hat \sigma^2_\varepsilon \, \sum\limits_{j=1}^J X_{1,j}^2}{J \,
@@ -868,15 +590,14 @@ stehen. In der üblichen englischsprachigen Literatur zur Regressionrechnung wir
 die Standardabweichung der Regressionsparameter \textsl{Standard Error} genannt.
 
 
+\subsection{Matrixansatz als allgemeiner Ansatz für lineare Regression}
 
-
-\subsection{Matrixansatz als allgemeiner Ansatz für linearen Regression}
 Die behandelten allgemeinen Formen von Problemstellungen zur Schätzung von Modellparametern
 werden wir in dieser Vorlesungsreihe nicht weiter vertiefen. Sie sollen lediglich einen Einblick und Überblick über die vielfältigen Möglichkeiten in diesem Bereich liefern.
 
 Um die lineare Regression universeller einsetzen zu können, ob nun Polynome oder
 Ebenen oder Paraboloide zu fitten sind, ist es erforderlich den allgemeinen Ansatz zu verstehen
-und die unterschiedlichen Anwendungen so formulieren zu können, dass sie darüber lösbar werden. Im folgenden wollen wir den Übergang auf $M$ Modellparameter
+und die unterschiedlichen Anwendungen so formulieren zu können, dass sie darüber lösbar werden. Im Folgenden wollen wir den Übergang auf $M$ Modellparameter
 $\boldsymbol{\theta} = (\theta_1, \theta_2, \ldots \theta_M)$ vollziehen.
 Wir wollen also den Übergang von Gl.~(\ref{linearRegressionGeradeTheta}) mit
 \begin{equation*}
@@ -1046,7 +767,7 @@ und die $l+1$-te Komponente bis zur $M$-ten sind wieder Nullen.
 \end{array}\right)
 \end{equation}
 Dann lässt sich durch folgende Multiplikation die $l$-te Varianz, d.h. das $l$-te Element
-der Hautpdiagonalen aus der Kovarianzmatrix herausholen
+der Hauptdiagonalen aus der Kovarianzmatrix herausholen
 \begin{equation}
 \hat \sigma_l^2 \; = \; \boldsymbol{e}_l^\mathsf{T} \, \left( \mathbf{X}^\mathsf{T}  \, \mathbf{X} \right)^{-1} \, \boldsymbol{e}_l  \; \hat \sigma_{\varepsilon}^2 .
 \label{eq:URegressparamsMatrix}
@@ -1056,16 +777,15 @@ gewonnen
 \begin{equation}
 \hat \sigma_l \; = \; \sqrt{\hat \sigma_l^2} .
 \end{equation}
-Im fünften Kapitel werden wir dann sehen, wie man mit Hilfe der Varianzen bzw. Standardabweichungen Vertrauensintervalle für die geschätzten Modellparameter bestimmt.
+In Kapitel \ref{wahrscheinlichHyp} werden wir dann sehen, wie man mit Hilfe der Varianzen bzw. Standardabweichungen Vertrauensintervalle für die geschätzten Modellparameter bestimmt.
 Die Herleitung ist im Anhang aufgeschrieben.
 
-\newpage
-\section{Das Bestimmtheitsmaß, empirischer Korrelationskoeffizient}
+\section{Das Bestimmtheitsmaß und der empirische Korrelationskoeffizient}
 Die G\"{u}te des gew\"{a}hlten linearen Ansatzes kann mit dem
 \textbf{Bestimmtheitsmaß} $\rho_{XY}^2 $ bzw. dem \textbf{empirischen
 	Korrelationskoeffizienten} $\rho_{XY}$ beurteilt werden, aber nur dann
 wenn ein solcher Zusammenhang auch existiert. Der empirische
-Korrelationskoeffizienten gibt den Grad der linearen
+Korrelationskoeffizient gibt den Grad der linearen
 Abh\"{a}ngigkeit zwischen den Messwerten $(X_1 ,\ldots ,X_J )$ und
 $(Y_1 ,\ldots ,Y_J)$ an.
 
@@ -1085,7 +805,7 @@ Für den empirischen Korrelationskoeffizienten $\rho_{XY}$ gilt folgendes:
 \end{center}
 
 F\"{u}r die Bestimmung des Bestimmtheitsma{\ss}es oder des
-empirischen Korrelationskoeffizient f\"{u}hrt man eine Streuungs-
+empirischen Korrelationskoeffizienten f\"{u}hrt man eine Streuungs-
 bzw. Varianzanalyse durch. Man kann bei der linearen Regression 3
 Arten von Streuungen unterscheiden:
 \begin{itemize}
@@ -1093,7 +813,7 @@ Arten von Streuungen unterscheiden:
 	\item[] $s_{\mathrm{M}}^2:$~die \textbf{empirische Varianz auf Grund des Modells}
 	\item[] $s_{\mathrm{R}}^2:$~die \textbf{restliche empirische Varianz}
 \end{itemize}
-Die totale Streuung ist bei unabhängigen direkten Messgrößen $X_j$ gegeben
+Die totale Streuung des Regressanden ist gegeben
 durch:
 \begin{equation}
 s_{\mathrm{T}}^2 = \frac{1}{J - 1}\sum\limits_{j = 1}^J {(Y_j - \bar {Y})^2}
@@ -1106,8 +826,8 @@ Mittelwert $\bar{Y}$, d.~h.
 s_{\mathrm{M}}^2 = \frac{1}{J - 1}\sum\limits_{j = 1}^J {(\hat{\theta}_0 + \hat{\theta}_1 X_j - \bar
 	{Y})^2}
 \end{equation}
-Die Differenz zwischen $Y_j$ und $\hat{\theta}_0 + \hat{\theta}_1 X_j $ bleiben im
-Modell unerkl\"{a}rt, sie wird als restliche Streuung bezeichnet:
+Die Differenzen zwischen $Y_j$ und $\hat{\theta}_0 + \hat{\theta}_1 X_j $ bleiben im
+Modell unerkl\"{a}rt; sie werden als restliche Streuung bezeichnet:
 \begin{equation}
 s_{\mathrm{R}}^2 = \frac{1}{J - 1}\sum\limits_{j = 1}^J {(Y_j - (\hat{\theta}_0
 	+ \hat{\theta}_1 X_j))^2}
@@ -1120,8 +840,8 @@ s_{\mathrm{T}}^2 = s_{\mathrm{M}}^2 + s_{\mathrm{R}}^2
 Beweis von Gl.(\ref{eq:totEmpVarianz}): 
 \begin{align}
 	s_T^2 & = \frac{1}{J-1}\sum\limits_{j = 1}^J {(Y_j - \bar {Y})^2} \\
-		&  =  \frac{1}{J-1}\sum\limits_{j = 1}^J {\left[(Y_j-\hat Y_j)+(\hat{Y_j}-\bar{Y})       \right]^2}\\ 
-		& = \frac{1}{J-1}\left[\sum\limits_{j = 1}^J (Y_j-\hat Y_j)^2 + \sum\limits_{j = 1}^J (\hat Y_j-\bar Y_j)^2 +2 \cdot \sum\limits_{j = 1}^J (Y_j-\hat Y_j)(\hat Y_j - \bar Y)  \right]  \\
+		&  =  \frac{1}{J-1}\sum\limits_{j = 1}^J {\left[(Y_j-\hat Y_j)+(\hat Y_j-\bar{Y})       \right]^2}\\ 
+		& = \frac{1}{J-1}\left[\sum\limits_{j = 1}^J (Y_j-\hat Y_j)^2 + \sum\limits_{j = 1}^J (\hat Y_j-\bar Y)^2 +2 \cdot \sum\limits_{j = 1}^J (Y_j-\hat Y_j)(\hat Y_j - \bar Y)  \right]  \\
 		& = s_R^2 + s_M^2 + \frac{1}{J-1} \cdot 2 \cdot \sum\limits_{j = 1}^J (Y_j-\hat Y_j)(\hat Y_j - \bar Y)
 \end{align}
 Es ist jetzt noch zu zeigen, dass
@@ -1158,22 +878,22 @@ Gl.(\ref{eq:1_Beweis_totale_empirische_Varianz}) und Gl.(\ref{eq:2_Beweis_totale
 & = 0
 \end{align}
 Da für das hintere $\hat \theta_1$ kann folgendes eingesetzt werden: 
-\[
+$$
 \hat \theta_1 = \frac{s_{XY}}{s_X^2} = \frac{\sum\limits_{j = 1}^J (X_j-\bar X)(Y_j - \bar Y)}{\sum\limits_{j = 1}^J (X_j-\bar X)^2}
-\]
+$$
 Damit wäre Gl.(\ref{eq:totEmpVarianz}) bewiesen. \\
 % \nonumber
 
 Das \textbf{Bestimmtheitsma{\ss}} ist definiert als das Verh\"{a}ltnis von
 empirischer Varianz des Modells zu der totalen Varianz:
-\[
+$$
 \rho_{XY}^2 = \frac{s_{\mathrm{M}}^2}{s_{\mathrm{T}}^2} = \frac{\sum\limits_{j = 1}^J {(\hat{\theta}_0 + \hat{\theta}_1 X_j - \bar {Y})^2} }{\sum\limits_{j = 1}^J {(Y_j - \bar{Y})^2} }
-\]
+$$
 Mit dem Schwerpunkt $\bar {Y} = \hat{\theta}_0 + \hat{\theta}_1 \bar {X}$ ergibt sich:
-\[
+$$
 \rho_{XY}^2 = \frac{\hat{\theta}_1^2 \cdot \sum\limits_{j = 1}^J
 	{(X_j - \bar X)^2} }{\sum\limits_{j = 1}^J {(Y_j - \bar {Y})^2} }
-\]
+$$
 Mit den Regressionsparametern $\hat{\theta}_1 = \frac{\sum\limits_{j =
 		1}^J {(X_j - \bar {X})(Y_j - \bar {Y})} }{\sum\limits_{j = 1}^J {(X_j
 		- \bar {X})^2} }$ (siehe Gl.(\ref{eq:Lineare_Regressionskonstanten})) erhält man für das
@@ -1191,9 +911,85 @@ berechnen:
 \rho_{XY} = \frac{ s_{XY} }{ s_X \cdot s_Y } \quad \mathrm{~mit~}  - 1 \le \rho_{XY} \le 1
 \end{equation}
 \newpage
-\section{Beispiele zur linearer Regression}
-\label{Vorl2Regressionsaufg2}
-\subsection{Fit einer Geraden mittels linearer Regression}
+\section{Beispiele zur linearen Regression}
+\label{section:Beispiele-lin-Regression}
+
+\subsection{Modellwahl: Gerade oder Polynom}
+Gegeben sei ein Ensemble von Wertepaaren $(X_j,Y_j)$, $j=1,2,\ldots,J$, mit einer vorgegebenen Eingangsgröße (Regressand) $X$ und einer streuenden Ausgangsgröße (Regressor) $Y$. Abb.~\ref{fig:LineareRegressionMoeglFits} zeigt dieselben Daten mit einer Regressionsgeraden und einem Polynom 6.~Grades.
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=11cm]{02_vorlesung/media/Regression_der_WertePaare.png}
+\caption{Beispiel für mögliche Fits: linearer Fit und Polynomfit vom Grad 6.}
+\label{fig:LineareRegressionMoeglFits}
+\end{figure}
+
+Vor der Regressionsrechnung muss festgelegt werden, welches Modell inhaltlich sinnvoll ist. Eine kleine Kostenfunktion allein beweist noch kein gutes physikalisches Modell: Ein Polynom hohen Grades kann Messdaten sehr eng folgen, aber außerhalb des betrachteten Bereichs schlecht oder sogar unsinnig extrapolieren. Die Modellwahl sollte deshalb aus dem physikalischen Zusammenhang, dem Messbereich und dem Zweck der Auswertung begründet werden.
+
+\subsection{Beispiel: Bestimmung eines Ohmschen Widerstands}
+Wir greifen das Beispiel aus der ersten Vorlesung wieder auf. Eine Präzisionsstromquelle gibt den Strom $I$ vor; diese Werte betrachten wir als Regressor und damit als nicht streuend. Ein Voltmeter misst die Spannung $U$; diese Werte betrachten wir als Regressand und damit als Zufallsgröße. Gesucht sind der Ohmsche Widerstand $R$ und eine Offsetspannung $U_0$.
+
+\begin{center}
+\begin{tabular}{l||c|c|c|c|c|c|c|c|c}
+\hline\hline
+$I$ in mA &    4.0 &     6.0 &     8.0 &    10.0 &    12.0 &    14.0 &    16.0 &    18.0 &    20.0\\
+\hline
+$U$ in mV &    62.5 &    51.5 &    96.0 &   140.2 &   138.9 &   195.1 &   225.8 &   207.8 &   223.7 \\
+\hline\hline
+\end{tabular}
+\end{center}
+
+Die Modellgleichung lautet mit den beiden Modellparameter $\theta_0:=U_0$ und $\theta_1:=R$
+\begin{equation}
+U = U_0 + R \cdot I .
+\end{equation}
+Nach Gl.~(\ref{eq:Lineare_Regressionskonstanten}) gilt
+\begin{equation}
+\hat{U}_0 = \bar {U} - \hat{R} \bar {I}
+\quad \mathrm{und} \quad
+\hat{R} = \frac{s_{IU}}{s_I^2} .
+\label{eq:Lineare_Regressionskonstanten_Widerstand}
+\end{equation}
+Zunächst bestimmen wir die Mittelwerte:
+\begin{equation}
+\bar{I} = \frac{1}{J}\sum\limits_{j=1}^{J} I_j = 12\,\mathrm{mA},
+\qquad
+\bar{U} = \frac{1}{J}\sum\limits_{j=1}^{J} U_j = 149.0556\,\mathrm{mV} .
+\end{equation}
+\begin{figure}
+\centering
+\includegraphics[width=11cm]{02_vorlesung/media/Regression_der_WertePaare_Strom_Spannung.png}
+\caption{Bestimmung des Ohmschen Widerstands und einer Offsetspannung durch lineare Regression.}
+\label{fig:LineareRegressionWiderstand}
+\end{figure}
+Die empirische Kovarianz und die empirische Varianz des Regressors sind
+$$
+s_{IU} = \frac{1}{J - 1}\sum\limits_{j = 1}^J
+(I_j - \bar {I})(U_j - \bar {U}) = 357.0500\,\mathrm{mA}\,\mathrm{mV}
+$$
+und
+$$
+s_I^2 = \frac{1}{J - 1}\sum\limits_{j = 1}^J (I_j - \bar {I})^2 = 30\,\mathrm{mA}^2 .
+$$
+Damit ergeben sich
+$$
+\hat{R} = \frac{s_{IU}}{s_I^2}
+= \frac{357.0500\,\mathrm{mA}\,\mathrm{mV}}{30\,\mathrm{mA}^2}
+= 11.9017\,\frac{\mathrm{mV}}{\mathrm{mA}}
+= 11.9017\,\Omega
+$$
+und
+$$
+\hat{U}_0 = \bar U - \hat R\bar I
+= 149.0556\,\mathrm{mV} - 11.9017\,\Omega \cdot 12\,\mathrm{mA}
+= 6.2356\,\mathrm{mV} .
+$$
+Das Ergebnis für die Regressionsgerade lautet somit
+\begin{equation}
+U = 6.2356\,\mathrm{mV} + (11.9017\,\Omega)\, I
+\end{equation}
+und ist in Abb.~\ref{fig:LineareRegressionWiderstand} dargestellt.
+
+\subsection{\label{Vorl2Regressionsaufg2} Fit einer Geraden mittels linearer Regression}
 Gegeben sind 5 Messpunkte
 \begin{table}[htb!]
 	\centering
@@ -1207,7 +1003,7 @@ Gegeben sind 5 Messpunkte
 	Sie den y-Abschnitt $\hat\theta_0$ und die Steigung $\hat\theta_1$ bestimmen. Geben Sie das Bestimmtheitsmaß $\rho_{XY}^2$ an.
 	\item[(b)] Bestimmen Sie die Residuen $\varepsilon_j$ und das
 	Qualitätsmaß $Q(\hat\theta _0,\hat\theta _1)$ der Regression. Geben Sie die Varianz der Residuen
-	$s^2(\hat\theta_0,\hat{\theta_1})$ an?
+	$s^2(\hat\theta_0,\hat\theta_1)$ an?
 	\item[(c)] Geben Sie den Standardabweichung (standard error) der beiden
 	Regressionsparameter $\hat\theta_0$ und $\hat\theta_1$ an?
 
@@ -1226,24 +1022,24 @@ Gegeben sind 5 Messpunkte
 \textbf{Lösung zu Teil (a):}
 
 Gesucht:
-\[
+$$
 Y = \hat\theta_1 \cdot X + \hat \theta_0
-\]
+$$
 Mittelwert von $X$: $\bar{X} = 3$; Mittelwert von $Y$: $\bar{Y} = 0.64$; \\
-Empirische Standardabeichung von $X$: $s_X = 1.5811$; \\
-Empirische Standardabeichung von $Y$: $s_Y = 0.1636$; \\
+Empirische Standardabweichung von $X$: $s_X = 1.5811$; \\
+Empirische Standardabweichung von $Y$: $s_Y = 0.1636$; \\
 Empirische Kovarianz: $s_{XY} = 0.25$ \\
 Schätzwerte $\hat{\theta}_1$ und $\hat{\theta}_0$:
-\[
+$$
 \hat{\theta}_1 = \frac{s_{XY} }{s_X^2 } = 0.100
-\]
-\[
+$$
+$$
 \hat{\theta}_0 = \bar {Y} - \hat{\theta}_1 \bar {X} = 0.340
-\]
+$$
 Bestimmtheitsmaß:
-\[
+$$
 \rho_{XY}^2 = \frac{s_{XY}^2 }{s_X^2 \cdot s_Y^2 } = 0.9346
-\]
+$$
 
 Mit der Gl.(\ref{eq:schaetzwerte_fuer_theta}) können wir
 das Beispiel mit dem Matrixformalismus auch lösen.
@@ -1274,20 +1070,20 @@ Die Regressandenmatrix $\boldsymbol Y$ lautet:
 	\right)
 \end{equation}
 Die gesuchten Modellparameter sind:
-\[
+$$
 \boldsymbol\theta = \left(
 \begin{array}{cc}
 	\theta_0 \\
 	\theta_1 \\
 \end{array}
 \right)
-\]
+$$
 Die optimalen Parameter $\boldsymbol{\hat \theta}$ ergeben sich durch Lösen
 des folgenden Gleichungssystems, siehe Gl.(\ref{eq_Bestimmung_von_hat_theta})
-\[
+$$
 	\boldsymbol{\hat \theta} \; = \;
 	\left( \mathbf{X}^\mathsf{T}  \, \mathbf{X} \right)^{-1} \mathbf{X}^\mathsf{T} \, \mathbf{Y}
-\]
+$$
 
 Der Matlab/Octave-Code lautet:
 \lstinputlisting[style=Matlab]{02_vorlesung/code/schaetzwerte_fuer_theta.m}
@@ -1307,21 +1103,21 @@ Der y-Achsenabschnitt liegt bei 0.34 und die Steigung ist 0.1.
 \textbf{Lösung zu Teil (b)} \\
 Residuen: $\varepsilon_j = Y_j -(\hat\theta _0 + \hat\theta _1 \cdot X_j)$
 mit $j=1,\ldots ,5$
-\[\varepsilon_1 = -0.0400; \;\; \varepsilon_2 =  0.0100;\;\;
+$$\varepsilon_1 = -0.0400; \;\; \varepsilon_2 =  0.0100;\;\;
 \varepsilon_3= 0.0600;\;\; \varepsilon_4 =0.0100;\;\;
 \varepsilon_5 = -0.0400
-\]
+$$
 Qualitätsmaß:
-\[
+$$
 Q(\hat\theta _0,\hat\theta _1) = \sum\limits_{j = 1}^J {\varepsilon_j ^2 }
 = 0.0070
-\]
+$$
 Varianz der Residuen:
-\[
+$$
 s^2(\hat{\theta}_0 ,\hat{\theta}_1 ) = \frac{Q(\hat{\theta}_0 ,
 	\hat{\theta}_1 )}{J - 2} = 0.0023 \quad \text{bzw.} \quad
 s(\hat{\theta}_0 ,\hat{\theta}_1 ) = 0.048
-\]
+$$
 Die Varianz der Residuen ist wie folgt gegeben:
 \begin{equation}
 \operatorname{Var}(\varepsilon) = \frac{1}{J-M} \cdot \left(\mathbf Y - \mathbf X \hat{\boldsymbol\theta}\right)^T
@@ -1339,7 +1135,7 @@ Matlab-Code zur Bestimmung des Qualitätsmaßes und der Varianz
 Q = (Y-X*thetaHat)' * (Y-X*thetaHat)
 % Varianz der Residuen
 Var_epsilon = 1/df *(Y-X*thetaHat)' * (Y-X*thetaHat)
-% Wuzel aus Var_epsilon
+% Wurzel aus Var_epsilon
 RMSE = sqrt(Var_epsilon)
 % Kovarianzen
 Cov = Var_epsilon * inv(X'*X)
@@ -1364,12 +1160,12 @@ Für die Varianz des y-Abschnitt $\hat\theta_0$ ergibt sich:
 0.0023
 \left[\frac{1}{5} + \frac{3^2}{(5-1)\cdot 1.5811^2 } \right]
 \nonumber\\
-&=& 0.00253 \nonumber
+&=& 0.00257 \nonumber
 \end{eqnarray}
 Damit ergibt sich die Standardabweichung für $\hat\theta_0$:
-\[
-s_{\hat\theta_0} = \sqrt{\hat\sigma_{\theta_0}^2} = 0.0503
-\]
+$$
+s_{\hat\theta_0} = \sqrt{\hat\sigma_{\theta_0}^2} = 0.0507
+$$
 Für die Varianz der Steigung $\hat\theta_1$ ergibt sich:
 
 \begin{eqnarray}
@@ -1382,9 +1178,9 @@ Für die Varianz der Steigung $\hat\theta_1$ ergibt sich:
 \end{eqnarray}
 
 Damit ergibt sich die Standardabweichung für $\hat\theta_1$
-\[
-s_{\hat\theta_1} = \sqrt{\hat\sigma_{\theta_1}^2} = 0.01517
-\]
+$$
+s_{\hat\theta_1} = \sqrt{\hat\sigma_{\theta_1}^2} = 0.0153
+$$
 
 \newpage
 \textbf{Anmerkung: Lösung mit Matlab/Octave}
@@ -1405,15 +1201,15 @@ mit Hilfe der Varianzen bzw. Standardabweichungen berechnet. Dazu benötigt man
 noch die t-Verteilung. Da man hier 5 Messpunkte und 2 Modellparameter hat,
 wird die t-Verteilung mit dem Freiheitsgrad 5-2 = 3 benötigt.
 95\%iger Vertrauensbereich für $\hat\theta_1$ mit $t_3 = 3.182$:
-\[
+$$
 \varepsilon _{\hat{\theta}_1} = t_3 \cdot \hat\sigma_{\theta_1} = \frac{t_3 \cdot s(\hat{\theta}_0 ,
 	\hat{\theta}_1 )}{s_X \cdot \sqrt {J
 		- 1} } = 0.0486
-\]
+$$
 95\%iger Vertrauensbereich für $\hat\theta_0$ errechnet sich durch:
-\[
+$$
 \varepsilon _{\hat{\theta}_0} = t_3 \cdot \hat\sigma_{\theta_0} = t_3 \cdot s(\hat{\theta}_0 ,\hat{\theta}_1 ) \cdot \sqrt {\frac{1}{J} + \frac{\bar {X}^2}{(J - 1) s_X^2 }} = 0.1612
-\]
+$$
 \textbf{Ergebnis:} \\
 Der 95\% Vertrauensbereich des Schätzwertes $\hat\theta_1$ ist somit gegeben durch:
 \begin{equation}
@@ -1421,22 +1217,22 @@ Der 95\% Vertrauensbereich des Schätzwertes $\hat\theta_1$ ist somit gegeben du
 \end{equation}
 Der 95\% Vertrauensbereich des Schätzwertes $\hat\theta_0$ ist somit gegeben durch:
 \begin{equation}
-\hat\theta_1 = 0.3400 \pm 0.1612 \quad \text{bzw.} \quad [0.1788;0.5012]
+\hat\theta_0 = 0.3400 \pm 0.1612 \quad \text{bzw.} \quad [0.1788;0.5012]
 \end{equation}
 
 
 \begin{comment}
 95\%iger Vertrauensbereich für $\hat\theta_1$ mit $t_3 = 3.182$ und
 Standardabweichung von $s_X = 1.5811$
-\[
+$$
 \varepsilon _{\hat{\theta}_1} = \frac{t_3 \cdot s(\hat{\theta}_0 ,
 \hat{\theta}_1 )}{s_X \cdot \sqrt {J
 - 1} } = 0.0486
-\]
+$$
 95\%iger Vertrauensbereich für $\hat\theta_0$ errechnet sich durch:
-\[
+$$
 \varepsilon _{\hat{\theta}_0} = t_3 \cdot s(\hat{\theta}_0 ,\hat{\theta}_1 ) \cdot \sqrt {\frac{1}{J} + \frac{\bar {X}^2}{(J - 1) s_X^2 }} = 0.1612
-\]
+$$
 \textbf{Ergebnis:} \\
 Der 95\% Vertrauensbereich des Schätzwertes $\hat\theta_1$ ist somit gegeben durch:
 \begin{equation}
@@ -1444,15 +1240,15 @@ Der 95\% Vertrauensbereich des Schätzwertes $\hat\theta_1$ ist somit gegeben du
 \end{equation}
 Der 95\% Vertrauensbereich des Schätzwertes $\hat\theta_0$ ist somit gegeben durch:
 \begin{equation}
-\hat\theta_1 = 0.3400 \pm 0.1612 \quad \text{bzw.} \quad [0.1788;0.5012]
+\hat\theta_0 = 0.3400 \pm 0.1612 \quad \text{bzw.} \quad [0.1788;0.5012]
 \end{equation}
 \end{comment}
 \subsection{Fit einer kubischen Funktion (Polynom 3. Ordnung) mittels linearer Regression}
 Wir nehmen wieder die gleichen Messwertpaare wie eben. Jedoch fitten wir
 nun eine kubische Funktion durch die Messdaten, d.h.
 \begin{equation}
-Y = \hat{\theta_3} X^3 + \hat{\theta_2} X^2 + \hat{\theta_1} X^1 +
-\hat{\theta_0}
+Y = \hat\theta_3 X^3 + \hat\theta_2 X^2 + \hat\theta_1 X +
+\hat\theta_0
 \end{equation}
 Mit der Gl.(\ref{eq:schaetzwerte_fuer_theta}) können wir
 das Beispiel mit dem Matrixformalismus auch lösen.
@@ -1483,7 +1279,7 @@ Die Regressandenmatrix $\boldsymbol Y$ lautet:
 	\right)
 \end{equation}
 Die gesuchten Modellparameter sind:
-% \[
+% $$
 % \boldsymbol\theta = \left(
 % \begin{array}{cc}
 %	\theta_0 \\
@@ -1492,30 +1288,30 @@ Die gesuchten Modellparameter sind:
 %     \theta_3 \\
 % \end{array}
 % \right)
-% \]
+% $$
 
-\[
+$$
 \boldsymbol\theta = \left(\theta_0, \theta_1, \theta_2,\theta_3 \right)^T
-\]
+$$
 Die optimalen Parameter $\boldsymbol{\hat \theta}$ ergeben sich durch Lösen
 des folgenden Gleichungssystems, siehe Gl.(\ref{eq_Bestimmung_von_hat_theta})
-\[
+$$
 \boldsymbol{\hat \theta} \; = \;
 \left( \mathbf{X}^\mathsf{T}  \, \mathbf{X} \right)^{-1} \mathbf{X}^\mathsf{T} \, \mathbf{Y}
-\]
+$$
 
 Als Ergebnis für die Schätzparameter erhalten wir dann:
-\[\hat{\boldsymbol\theta} =
-(0.1900, \;\; 0.2286,\;\; -0.0214, \;\; -0.0000)^T \]
+$$\hat{\boldsymbol\theta} =
+(0.1900, \;\; 0.2286,\;\; -0.0214, \;\; -0.0000)^T $$
 Für das Qualitätsmaß ergibt sich:
-\[\mathrm{Q} = 5.7143e-04 \]
+$$\mathrm{Q} = 5.7143e-04 $$
 Für die Streuung der Residuen ergibt sich:
-\[\mathrm{Var\_epsilon} = 5.7143e-04 \]
+$$\mathrm{Var\_epsilon} = 5.7143e-04 $$
 Standardabweichung der Residuen:
-\[
-\mathrm{RMSE} = 0.0239 \]
-Die Kovarianzamtrix ergibt sich zu:
-\[
+$$
+\mathrm{RMSE} = 0.0239 $$
+Die Kovarianzmatrix ergibt sich zu:
+$$
 \operatorname{Cov} =
 \begin{bmatrix}
 0.0138  & -0.0176  &  0.0063  & -0.0007 \\
@@ -1523,7 +1319,7 @@ Die Kovarianzamtrix ergibt sich zu:
 0.0063  &  -0.0087 &   0.0033 &  -0.0004 \\
 -0.0007 &   0.0009 &  -0.0004  &  0.0000
 \end{bmatrix}
-\]
+$$
 Der Matlab/Octave-Code lautet (\href{https://mybinder.org/v2/gh/dhueser/MDA-Vorlesung-iprom-tu-bs/master?urlpath=/lab/tree/vorlesung/02_vorlesung/code/cubic_fit.ipynb}{Klicke hier für interaktive Session}):
 \lstinputlisting[style=Matlab]{02_vorlesung/code/cubic_fit.m}
 
@@ -1540,7 +1336,7 @@ verwenden, die uns das gleiche Ergebnis anzeigt:
 \end{figure}
 \newpage
 
-%Das vollständige Messergebnis für jeden der Regressionparameter ist damit
+%Das vollständige Messergebnis für jeden der Regressionsparameter ist damit
 %\begin{equation}
 %\theta_l \; = \;
 %\boldsymbol{e}_l^\mathsf{T} \, \left( \mathbf{X}^\mathsf{T}  \, \mathbf{X} \right)^{-1} %\mathbf{X}^\mathsf{T} \, \mathbf{Y}
@@ -1557,8 +1353,8 @@ verwenden, die uns das gleiche Ergebnis anzeigt:
 \label{Vorl2Regressionsaufg1}
 Es wurde eine Stufe vermessen, die nominal eine Höhe von $100 \; \mathrm{\mu m}$ haben soll.
 Die laterale Achse $x$ wird eingestellt (mit Präzisionstisch positioniert)
-und als Regressor betrachtet, also nicht als Zufallszahl.
-Die vertikale Achse $z$ wird gemessen, als Regressand und damit als Zufallszahl
+und als Regressor betrachtet, also nicht als Zufallsgröße.
+Die vertikale Achse $z$ wird gemessen, als Regressand und damit als Zufallsgröße
 betrachtet.
 
 \begin{center}
@@ -1611,20 +1407,20 @@ Dabei ist $h$ noch nicht die Stufenhöhe, sondern deren Projektion auf die verti
 Die Stufenhöhe $d$ ist der senkrechte Abstand zwischen den beiden parallelen Geraden, die jeweils durch die Punkte auf dem oberen und dem unteren Niveau gehen.
 
 \begin{itemize}
-	\item[a)] Stellen Sie das lineare Gleichungssystem auf, das sich durch partielles Ableiten
+	\item[(a)] Stellen Sie das lineare Gleichungssystem auf, das sich durch partielles Ableiten
 	für das Optimierungsproblem
 	$$
 	\min\limits_{a,c,h} \left\{\sum_{j=1}^{J_T} \varepsilon_j^2\right\}
 	$$
 	ergibt, mit $J_T = 21$.
-	\item[b)] Schreiben Sie die Gleichung für die Stufenhöhe $d$ als Funktion von $h$ und $a$ auf.
-	\item[c)] Schreiben Sie die Gleichung für die Varianz der Residuen auf.
-	\item[d)] Schreiben Sie die Formel für die Kovarianzmatrix der Modellparameter
+	\item[(b)] Schreiben Sie die Gleichung für die Stufenhöhe $d$ als Funktion von $h$ und $a$ auf.
+	\item[(c)] Schreiben Sie die Gleichung für die Varianz der Residuen auf.
+	\item[(d)] Schreiben Sie die Formel für die Kovarianzmatrix der Modellparameter
 	$a, c, h$ auf.
-	\item[e)] Verwenden Sie eine Programmierumgebung Ihrer Wahl, Matlab, Octave, Python, R, ...
+	\item[(e)] Verwenden Sie eine Programmierumgebung Ihrer Wahl, Matlab, Octave, Python, R, \ldots,
 	die Ihnen einen Solver für lineare Gleichungssysteme zur Verfügung stellt, sowie
-	eine Routine zur Matrixinversion und berechen Sie die Zahlenwerte für die Modellparameter
+	eine Routine zur Matrixinversion und berechnen Sie die Zahlenwerte für die Modellparameter
 	sowie deren Kovarianzmatrix.
 \end{itemize}
 Anmerkung: Die inverse Matrix brauchen Sie nicht analytisch zu berechnen, sondern
-	lediglich $(...)^{-1}$ zu notieren.
+	lediglich $(\cdots)^{-1}$ zu notieren.

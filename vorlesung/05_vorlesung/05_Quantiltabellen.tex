@@ -234,7 +234,8 @@ $\nu$ & 0.995 & 0.990 & 0.975 & 0.950 & 0.800 \\
 
 \section{Quantile der Fisher-Verteilung für $\alpha = 5 \%$}
 
-$F_{\alpha/2,\nu_2, \nu_1}$
+
+$F_{\alpha/2,\nu_1, \nu_2}$
 
 \vspace{1mm}
 
@@ -242,8 +243,12 @@ $F_{\alpha/2,\nu_2, \nu_1}$
 
 \begin{tabular}{|c||c|c|c|c|c|c|c|c|c|c|c|}
 \hline
- $\downarrow \, \nu_1 \; | \; \nu_2 \rightarrow$  & 5 & 6 & 7 & 8 & 9 & 10 & 20 & 30 & 40 & 50 & 60 \\
+ $\downarrow \, \nu_2 \; | \; \nu_1 \rightarrow$  & 5 & 6 & 7 & 8 & 9 & 10 & 20 & 30 & 40 & 50 & 60 \\
 \hline\hline
+3 & 0.129 & 0.152 & 0.170 & 0.185 & 0.197 & 0.207 & 0.259 & 0.279 & 0.289 & 0.295 & 0.299\\
+\hline
+4 & 0.135 & 0.161 & 0.181 & 0.198 & 0.212 & 0.224 & 0.285 & 0.308 & 0.320 & 0.327 & 0.332\\
+\hline
  5 & 0.140 & 0.167 & 0.189 & 0.208 & 0.223 & 0.236 & 0.304 & 0.330 & 0.344 & 0.353 & 0.359 \\
 \hline
  6 & 0.143 & 0.172 & 0.195 & 0.215 & 0.231 & 0.246 & 0.320 & 0.349 & 0.364 & 0.374 & 0.381 \\
@@ -271,14 +276,18 @@ $F_{\alpha/2,\nu_2, \nu_1}$
 
 \vspace{1mm}
 
-$F_{1-\alpha/2,\nu_2, \nu_1}$
+$F_{1-\alpha/2,\nu_1, \nu_2}$
 
 \vspace{1mm}
 \begin{footnotesize}
 \begin{tabular}{|c||c|c|c|c|c|c|c|c|c|c|c|}
 \hline
- $\downarrow \, \nu_1 \; | \; \nu_2 \rightarrow$  & 5 & 6 & 7 & 8 & 9 & 10 & 20 & 30 & 40 & 50 & 60 \\
+ $\downarrow \, \nu_2 \; | \; \nu_1 \rightarrow$  & 5 & 6 & 7 & 8 & 9 & 10 & 20 & 30 & 40 & 50 & 60 \\
 \hline\hline
+3 & 14.885 & 14.735 & 14.624 & 14.540 & 14.473 & 14.419 & 14.167 & 14.081 & 14.037 & 14.010 & 13.992\\
+\hline
+4 & 9.364 & 9.197 & 9.074 & 8.980 & 8.905 & 8.844 & 8.560 & 8.461 & 8.411 & 8.381 & 8.360\\
+\hline
  5 & 7.146 & 6.978 & 6.853 & 6.757 & 6.681 & 6.619 & 6.329 & 6.227 & 6.175 & 6.144 & 6.123 \\
 \hline
  6 & 5.988 & 5.820 & 5.695 & 5.600 & 5.523 & 5.461 & 5.168 & 5.065 & 5.012 & 4.980 & 4.959 \\
@@ -303,3 +312,41 @@ $F_{1-\alpha/2,\nu_2, \nu_1}$
 \hline
 \end{tabular}
 \end{footnotesize}
+
+\newpage
+
+\section{Grenzwerte für Lilliefors-Test und Zweistichproben-KS-Test}
+
+Beim Lilliefors-Test sind die Grenzwerte für die Entscheidung bei größeren Stichprobenumfängen (etwa $J>30$) folgende
+\begin{equation*}
+  c_{\alpha,J}^{\mathrm L}
+  \approx
+  \frac{k_\alpha}{\sqrt{J}}
+\end{equation*}
+
+wobei $k_\alpha$ folgende Werte hat:
+
+$$
+\begin{array}{c|ccc}
+\alpha & 0.10 & 0.05 & 0.01\\
+\hline
+k_\alpha & 0.805 & 0.886 & 1.031
+\end{array}
+$$
+
+Beim Zweistichproben-KS-Test sind die Grenzwerte für die Entscheidung bei größeren Stichprobenumfängen
+\begin{equation}
+c_\alpha \sqrt{\frac{J_1+J_2}{J_1J_2}}
+\end{equation}
+
+wobei $c_\alpha$ mit folgenden Werten approximiert wird:
+
+$$
+\begin{array}{c|ccc}
+\alpha & 0.10 & 0.05 & 0.01\\
+\hline
+c_\alpha & 1.22 & 1.36 & 1.63
+\end{array}
+$$
+
+

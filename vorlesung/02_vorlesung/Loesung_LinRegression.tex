@@ -132,14 +132,13 @@ Wir verwenden dazu Gl.~(\ref{UnsicherheitRegressparams}) dieser Vorlesung
 \begin{equation}
 \boldsymbol \Sigma \; = \; \left( \mathbf{X}^\mathsf{T}  \, \mathbf{X} \right)^{-1} \, \sigma_\varepsilon^2
 \end{equation}
-mit
 
 zu (e) Verwenden Sie eine Programmierumgebung Ihrer Wahl, Matlab, Octave, Python, R, ...
 die Ihnen einen Solver für lineare Gleichungssysteme zur Verfügung stellt, sowie
 eine Routine zur Matrixinversion und berechen Sie die Zahlenwerte für die Modellparameter
 sowie deren Kovarianzmatrix.
 
-\begin{verbatim}
+\begin{lstlisting}[style=Matlab]
 function Lsg_Uebung_step()
 %
 % Teil (a)
@@ -161,30 +160,21 @@ function Lsg_Uebung_step()
   printf('c = %1.4f um\n', theta(1));
   printf('h = %1.4f um\n', theta(2));
   printf('a = %1.7f um/um\n', theta(3));
-\end{verbatim}
-\begin{verbatim}
 %
 % Teil (b)
   d = theta(2) / sqrt(1 + theta(3)^2);
   printf('d = %1.4f um\n', d);
-\end{verbatim}
-\begin{verbatim}
 %
 % Teil (c)
   epsilon = z - X * theta;
   var_eps = (epsilon' * epsilon) / (J_T-3);
-\end{verbatim}
-
-~\\
-
-\begin{verbatim}
 %
 % Teil (e)
   Kovarianz = inv(XTX) * var_eps;
   printf(' %e %e %e \n', Kovarianz(1,1), Kovarianz(1,2), Kovarianz(1,3));
   printf(' %e %e %e \n', Kovarianz(2,1), Kovarianz(2,2), Kovarianz(2,3));
   printf(' %e %e %e \n', Kovarianz(3,1), Kovarianz(3,2), Kovarianz(3,3));
-\end{verbatim}
+\end{lstlisting}
 
 Ergebnisse:
 \begin{verbatim}
@@ -214,7 +204,7 @@ die Matrix \texttt{a} mit den Summen aus den Regressoren mit deren Inversen
 \texttt{a}$^{-1}$, die Sie dann für die Kovarianz der Modellparameter brauchen.
 
 \begin{verbatim}
-void gaussjordan(double **a, int n, double **b, int m)
+void gaussjordan(double **a, int n, double **b, int m) {
 /*
 * Linear equation solution by Gauss-Jordan elimination, equation (2.1.1) in
 * Numerical Recipes.

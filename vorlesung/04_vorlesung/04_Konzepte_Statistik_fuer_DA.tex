@@ -1,967 +1,1845 @@
-\label{KonzepteinverseProbleme}
+% Neu geordnet am 2026-10-04; Begriffe und Interpretation überarbeitet am 2026-10-05.
 
-\section{Konzepte zum Lösen inverser Probleme}
-
-In den letzen drei Kapiteln (Vorlesungswochen) haben wir einen Einblick in die
-Vorgehensweise der Maximum-Likelihood-Methode erhalten:
+In den letzten drei Kapiteln haben wir die Grundidee der
+Maximum-Likelihood-Methode und wichtige Verfahren zur Parameterschätzung
+kennengelernt:
 \begin{enumerate}
-\item Die Idee von \textsl{Modell} und \textsl{Lösen inverser Probleme} wurde
-  genannt.
-\item Zur Lösung inverser Probleme wurde das Schätzen von Parametern, die
- linear in die Modellgleichung eingehen, durch \textsl{lineare Regression} vorgestellt.
-\item Ein Einblick in mögliche Verfahren zur Lösung inverser Probleme durch
-  Schätzen von Parametern, die nicht-linear in die Modellgleichung eingehen,
-  wurde gegeben. Hier wurden kurz drei Verfahren zur \textsl{nicht-linearen Optimierung}
-  vorgestellt.
+\item Wir haben erläutert, was ein \textsl{Modell} ist und was es bedeutet, \textsl{ein inverses Problem zu lösen}.
+\item Für Modelle, deren zu schätzende Modellparameter linear in die Modellgleichung
+eingehen, haben wir die \textsl{lineare Regression} behandelt.
+\item Für Modelle mit einer nichtlinearen Abhängigkeit von den Parametern
+haben wir einen Einblick in drei Verfahren der \textsl{nichtlinearen Optimierung} erhalten.
 \end{enumerate}
-Wir haben dabei gesehen, dass es bei der Messdatenanalyse um die Schätzung von
-physikalischen Größen geht, die indirekt über das Messen anderer Größen,
-direkter Messgrößen, ermittelt werden.
-Die Aufgabe der Messtechnik lässt sich auch beschreiben als die Bestimmung
-des Wertes von physikalischen Größen durch Messverfahren, die auf
-physikalischen Prinzipien basieren. Die von einem Sensorsystem angezeigten
-Größen sind dabei im allgemeinem andere Größen als diejenigen, die zu messen sind.
+Dabei stand die Aufgabe im Mittelpunkt, gesuchte physikalische Größen aus
+Beobachtungen anderer, dem Messsystem unmittelbar zugänglicher Größen zu
+bestimmen. Ein \textsl{physikalisches Modell} beschreibt die Verknüpfung zwischen diesen Größen. Ein \textsl{statistisches Modell} beschreibt die \textsl{zufälligen Einflüsse} auf die Beobachtungen und gegebenenfalls deren Abhängigkeiten.
 
-Wir hatten in der ersten Vorlesung, in Abschnitt \ref{ModelleStatistik},
-das Beispiel \glqq Beugung am Gitter\grqq ~betrachtet,
-um die Aufgabenstellung zu verstehen, dass man
-aus den einem Messsystem direkt zugänglichen Größen die gesuchten physikalischen
-Größen gewinnen möchte. Dabei wurde der Begriff des \textsl{Lösens inverser Probleme}
-eingeführt. Nachdem wir bereits Methoden zur Ermittlung von indirekten
-Messgrößen als Modellparameter kennen gelernt haben, haben wir die Chance uns
-unter den Ideen dieses Konzeptes mehr vorstellen zu können.
+Das Beispiel der Beugung am Spalt in Abschnitt~\ref{ModelleStatistik}, Abb.\ \ref{fig:beugungspaltVorl01}, veranschaulichte diese Aufgabe: Aus den beobachteten Größen, der Position auf dem Zeilendetektor $x$ und dem dazugehörigen Intensitätswert $I(x)$, soll die Breite des Spaltes ermittelt werden. In diesem Beispiel sind $x$ und $I(x)$ die direkten Messgrößen und die Breite des Spaltes ist die indirekte Messgröße, d.h.\ die zu bestimmende Eigenschaft des physikalischen Systems,
 
-Darüber hinaus wurde in Abschnitt \ref{ModelleStatistik} schon mal erwähnt, dass
-es etwas unterschiedliche Konzepte oder Heransgehensweisen für Schätzverfahren gibt.
-Auf der einen Seite steht der sogenannte \textsl{frequentistische} Ansatz, bei dem allein
-Beobachtungswerte direkter Größen verwendet werden und die Annahmen über die
-Verteilung der Streuung der direkten Größen impliziet schon ins Schätzverfahren
-selber eingebaut sind. Der Begriff Frequenz wurde an dieser Stelle aus der
-englischen Sprachkonvention \textsl{frequency} übernommen. Das
-heißt hier \textsl{Häufigkeit} und nicht \textsl{Frequenz} wie wir das im Deutschen
-vielfach mit einer periodischen Bewegung verbunden verstehen. Aber auch die
-deutsche Sprache kennt die Sprechweise: \glqq Dies oder jenes Restaurant oder so
-wird gut frequentiert\grqq ~im Sinne von \glqq wird häufig besucht\grqq.
+Nachdem wir Verfahren zur Parameterschätzung kennengelernt haben, können wir das Konzept des inversen Problems nun genauer einordnen.
 
-Eine Verallgemeinerung der Schätzmethoden wurde in den letzten Jahrzehnten
-in die Messdatenanalyse eingeführt, bei der auch die Modellparameter selber als
-Zufallsgrößen behandelt werden. Auch ihnen wird eine Streuung, also
-Wahrscheinlichkeitsverteilung zugrunde gelegt. Bei diesen Verfahren lassen sich
-Schätzwerte und Werte zur Unsicherheit der Modellparameter in die aktuelle
-Schätzung mit einbeziehen. Diese verallgemeinerten Methoden, die die Modellparameter
-als Zufallsgrößen betrachten, werden \textsl{bayesische} Methoden genannt.
+Wir entwickeln die statistische Auswertung in drei Schritten:
+Zunächst unterscheiden wir Vorwärtsmodell, zufällige Abweichungen und
+Residuen. Danach leiten wir aus dem Modell zur statistischen Beschreibung der direkten Messgrößen die Likelihood
+und die \glqq Methode der kleinsten Quadrate\grqq, also die Minimierung der Residuenquadratsumme, her und untersuchen die Streuung
+der Schätzverfahren. Darauf aufbauend führen wir die bayesische
+Verteilung der indirekten Messgrößen, die die Parameter des physikalischen Modells sind, ein, erläutern die Verwendung früherer Messungen
+und zeigen die bayesische Methodik anhand eines einfachen Lehrdatensatzes aus.
 
-Bevor wir diese beiden Ansätze (frequentistisch und bayesisch) gegenüber
-stellen und vergleichen, wollen wir folgende
-zwei Blickrichtungen, messtechnische Aufgaben zu betrachten, beleuchten:
-\begin{itemize}
-\item als Modell von der Physik des Messprinzips gemeinsam mit dem statistischen
-Modell, dass die Größen Zufallsgrößen sind,
-\item als inverses Problem.
-\end{itemize}
-Ein Modell wird dargestellt durch eine Vorstellung darüber, wie die
-indirekten Messgrößen $Y_m$ mit den direkten Messgrößen $X_i$ verknüpft sind:
+Die beiden Sichtweisen, frequentistisch und bayesisch, werden aufbauend auf den zuvor eingeführten Modellen und Rechenverfahren miteinander verglichen. In diesem Zusammenhang wird der Begriff
+\textsl{Frequenz} im Sinne von \textsl{Häufigkeit} verwendet.
+ 
+
+\section{Vorwärtsmodell und inverses Problem}
+\label{V4VorwaertsInvers}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{04_vorlesung/media/Modell1.pdf}
+\caption{Vorwärtsmodell aus physikalischer Beziehung und statistischer
+Beschreibung der Beobachtungen. Das inverse Problem führt von den
+Beobachtungen zur Schätzung der Parameter und der gesuchten Größen.
+Dabei bezeichnen $\mathbf{p}_0$ die festen Werte der zu schätzenden Modellparameter und
+$\mathbf{E}_j$ die zufälligen Abweichungen im Beobachtungsmodell.
+Das dargestellte Modell enthält keine zusätzliche Modellabweichung.}
+\label{ModellbildungKonzepte}
+\end{figure}
+
+Wir bezeichnen die gesuchten, hier indirekt bestimmten Größen mit
+$Y_1,\dots,Y_M$ und die unmittelbar beobachteten Größen mit $X_1,\dots,X_N$.
+Ein Vorwärtsmodell beschreibt schematisch die Richtung
 \begin{equation}
-(Y_1, \dots, Y_M) \xrightarrow{\mathrm{Modell}} (X_1, \dots, X_N)
+(Y_1,\dots,Y_M)
+\xrightarrow{\mathrm{Vorw\ddot artsmodell}}
+\text{Verteilung von }(X_1,\dots,X_N).
 \label{forwardModel1}
 \end{equation}
-\begin{figure}
-\begin{center}
-\includegraphics[width=0.8\textwidth, angle = 0]{04_vorlesung/media/Modell1.pdf}
-\end{center}
-\caption{Modellbildung zur Gewinnung indirekter Messgrößen aus direkten Messgrößen}
-\end{figure}
+Es umfasst eine physikalische Beziehung und ein statistisches Modell, in Abb.\ \ref{ModellbildungKonzepte} schematisch dargestellt.
+Weitere bekannte Einflussgrößen oder Versuchsbedingungen werden dabei
+als gegeben vorausgesetzt.
 
-Ein Messvorgang liefert Beobachtungen zu den direkten Messgrößen.
-Die wahren Werte der indirekten Größen bleiben verborgen. Die
-indirekten Größen können nur geschätzt werden, oftmals auch nur approximiert werden,
-weil die Modelle den physikalischen Sachverhalt nur annähernd beschreiben;
-denn die Realität ist deutlich komplexer und wird von vielfältigen Einflussfaktoren
-bestimmt. Die approximierenden und zufällig streuenden Größen, die die indirekten Messgrößen
-repräsentieren, sind die Modellparameter.
-Die Abweichungen der Modellparameter entstehen also zum einen
-durch vereinfachende Modellannahmen und zum anderen durch zufällige Einflüsse wie das
-thermische Rauschen von Elektronik oder Vibrationen im Laborraum.
+Die Modellparameter fassen die zu bestimmenden Eigenschaften des
+physikalischen Systems, also die indirekten Messgrößen, zusammen. Wir schreiben
+$\mathbf{p}=(P_1,\dots,P_M)^\mathsf{T}$ und bezeichnen einen Schätzwert
+mit $\widehat{\mathbf{p}}$. Der Fettdruck unterscheidet den Parametervektor
+von einer Wahrscheinlichkeitsdichte $p$.
+Die Großbuchstaben $P_m$ dienen hier der Bezeichnung der Parameter;
+sie legen noch keine frequentistische oder bayesische Interpretation fest.
+Hier ist dies so gemeint, dass ein Parameter unmittelbar den Wert einer gesuchten Größe beschreibt und somit sein Schätzwert einen Schätzwert der indirekten Messgröße darstellt. Allgemeiner können
+die gesuchten Größen Funktionen der Parameter sein.
 
-Im vorigen Kapitel hatten wir bereits den Bezeichner $\mathbf{p}$ für die Modellparameter
-verwendet: $\mathbf{p} = (P_1, \dots, P_M)$.
-Der Buchstabe $\mathbf{p}$ steht hier einfach nur für den Anfangbuchstaben
-von dem Begriff Parameter und der Fettdruck weist darauf hin, dass es ein Vektor mit vielen
-Einzelparametern sein kann und dient ferner dazu, das Symbol von dem für die Wahrscheinlichkeitsdichte
-zu unterscheiden. Diese wird mit $p$ für den Anfangsbuchstaben von \textsl{probability} bezeichnet.
-Für die einzelnen Parameter $P_m$ verwenden wir hier den Großbuchstaben, um die Unterscheidung zur
-Wahrscheinlichkeitsdichtefunktion zu haben, sowie in Anlehnung an die Konvention Großbuchstaben
-$X_i$ und $Y_m$ für die Messgrößen zu verwenden.
+Großbuchstaben $X_{i,j}$ bezeichnen im Folgenden Zufallsgrößen;
+$x_{i,j}$ sind die beobachteten Werte. Der Index $i$ zählt
+die Größen, der Index $j=1,\dots,J$ die Beobachtungen.
+
+Zunächst betrachten wir ein additives Modell ohne zusätzliche
+Modellabweichung:
 \begin{equation}
-P_1 \approx Y_1, \dots, P_M \approx Y_M
+\mathbf{X}_j=\mathbf{f}_j(\mathbf{p}_0)+\mathbf{E}_j,
+\qquad \mathbb{E}[\mathbf{E}_j]=\mathbf{0}.
+\label{KonzepteAdditivesModell}
 \end{equation}
-Der Schätzvorgang wird als \textsl{Lösen eines inversen Problems} interpretiert.
+
+Hier bezeichnet $\mathbf p_0$ die im frequentistischen Modell als
+fest angenommenen, unbekannten wahren Werte der zu schätzenden
+Modellparameter, also der indirekten Messgrößen.
+Der Parametervektor $\mathbf p$ ist dagegen das variable Argument bei der Parametersuche und $\widehat{\mathbf p}$ bezeichnet die
+aus den beobachteten Daten bestimmten Schätzwerte zu $\mathbf p$.
+
+Der Vektor $\mathbf{E}_j$ beschreibt die zufälligen
+Abweichungen; $\mathbb{E}[\cdot]$ ist der Erwartungswertoperator.
+Die Funktion $\mathbf{f}_j$ kann auch von bekannten
+Versuchsbedingungen abhängen. Die Schätzung kehrt die Richtung des
+Vorwärtsmodells um:
 \begin{equation}
-(X_1, \dots, X_N) \xrightarrow{\mathrm{inverses \; Problem}} (Y_1, \dots, Y_M)
+\{\mathbf{x}_1,\dots,\mathbf{x}_J\}
+\xrightarrow{\mathrm{inverses\ Problem}}
+\widehat{\mathbf{p}}
+\longrightarrow (\widehat{y}_1,\dots,\widehat{y}_M).
 \label{inverseProblemEq}
 \end{equation}
+Diese Umkehrung ist nicht immer eindeutig oder stabil. Beispielsweise
+können unterschiedliche Parameterwerte nahezu dieselben Beobachtungen
+erzeugen. Dann sind zusätzliche Informationen oder geeignete
+Versuchsbedingungen erforderlich.
 
-Dazu haben wir die \textsl{Maximum-Likelihood}-Methode kennen gelernt, und gesehen, wie
-aus ihr die Methode der kleinsten Residuenquadratsumme hervorgeht. Die Wahrscheinlichkeit,
-dass ein Messwert um den Wert $\varepsilon$ von dem geschätzten Modell abweicht, folgt
-einer Normalverteilung. Mit anderen Worten kann man auch sagen, dass
-die Verteilung der Residuen eine Gaußverteilung ist.
-Die Begriffe Gaußverteilung und Normalverteilung verwenden wir synonym.
+Zufällige Einflüsse, etwa elektronisches Rauschen oder Vibrationen,
+führen zu streuenden Beobachtungen und damit zu streuenden Schätzern.
+Unzureichende Modellannahmen können dagegen systematische Abweichungen
+verursachen. Solche zusätzlichen Modellabweichungen werden im Folgenden
+mit $\delta_j$ bezeichnet und vom zufälligen Term $E_j$ getrennt.
+Die aus einer Anpassung berechnete statistische Unsicherheit erfasst
+diese zusätzlichen Beiträge nicht automatisch.
+
+Für vorgegebene Parameter berechnet das Modell zunächst
 \begin{equation}
-p(\varepsilon | \theta_1,\dots,\theta_M, \sigma) \; = \; \frac{1}{\sigma \sqrt{2 \pi}}
-e^{-\frac{1}{2} \left(\frac{\varepsilon}{\sigma}\right)^2}
-\label{Maximumlikelihood1}
-\end{equation}
-Die Symbolik $p(\varepsilon | \theta_1,\dots,\theta_M, \sigma)$ wird gesprochen:
-\begin{quote}
-Wahrscheinlichkeit $p$ des Eintretens des Ereignises $\varepsilon$
-gegeben die Parameter $\theta_1,\dots,\theta_M$ und $\sigma$.
-\end{quote}
-Der Sprachgebrauch \glqq Eintretens des Ereignisses $\varepsilon$\grqq ~stellt die
-Sprechweise der Statistik für \textsl{bedingte Wahrscheinlichkeiten} dar.
-
-\textsl{Bedingte Wahrscheinlichkeit} heißt:
-\begin{quote}
-Die Wahrscheinlichkeit des Eintretens
-zweier Ereignisse $A_1$ und $A_2$ geteilt durch die Wahrscheinlichkeit des Eintretens von $p(A_2)$
-\begin{equation}
-p(A_1 | A_2) \; = \; \frac{p(A_1 \; \mathrm{und} \; A_2)}{p(A_2)}
-\end{equation}
-\end{quote}
-Zur Illustration des Begriffs der bedingten Wahrscheinlichkeit betrachten wir ein
-Kartendeck mit 52 Spielkarten: Die Anzahl der Buben $B$ ist $4$, die Wahscheinlichkeit, einen Buben
-zu ziehen, ist $4/52$, die
-Wahrscheinlichkeit $p(B | F)$ von allen Bildern bzw.\ Figuren $F = \{B, D, K\}$, einen
- Buben zu ziehen, ist $p(B | F) = 1/3$, die Wahrscheinlichkeit, eine Bildkarte zu ziehen ist $12/52$
-$$
-p(B | F) = \frac{p(B)}{p(F)} = \frac{4/52}{12/52} = \frac{4}{12} = \frac{1}{3} .
-$$
-
-In den angewandten Wissenschaften, Messtechnik,
-Elektrotechnik, etc.\ spricht man von der Wahrscheinlichkeit, dass die Messgröße
-oder hier die Abweichung der Messgröße vom Modell einen Wert $\varepsilon$ annimmt oder
-dass dieser Wert \glqq beobachtet\grqq ~wird unter der Bedingung, dass die Modellparameter
-die Werte $\theta_1,\dots,\theta_M, \sigma$ haben.
-
-
-In Kapitel \ref{KapitellinReg} wurden Sie mit der Regressionsrechnung vertraut gemacht, die
-eine spezielle Anwendung der Maximum-Likelihood-Methode darstellt, bei der
-Größen beteiligt sind, die keine Zufallsgrößen darstellen, die Regressoren.
-Die Residuen und entsprechend die Regressanden sind die Zufallsgrößen,
-für die die in Gl.~(\ref{Maximumlikelihood1}) formulierte Wahrscheinlichkeitsdichte
-angenommen wird.
-Diese Modellannahme, dass die \textsl{Residuen} normalverteilt seien,
-hatten wir in Abschnitt \ref{RegressionsIdee} wie folgt formuliert:
-\begin{quote}
-Die abhängigen Größen $Y$, d.h.\ die \textsl{Regressanden}, streuen und ihre Residuen sind
-	normalverteilt mit Erwartungswert $E(\varepsilon) = 0$ und Varianz $\mathrm{Var}(\varepsilon) = \sigma^2$.
-	Die Residuen sind \textsl{unabhängig und identisch verteilt}, kurz u.i.v.
-	\begin{equation}
-	\varepsilon \; \overset{\mathrm{u.i.v.}}{\sim} \; \mathcal{N}(0,\sigma) .
-	\end{equation}
-\end{quote}
-Ein Residuum der linearen Regression mit $Y$ als Regressand und $X_i$ als Regressoren
-hat folgende Gestalt
-\begin{equation}
-\varepsilon_j \; = \; Y_j \; - \; \sum\limits_{i=1}^{M} \theta_i \, X_{i,j}
-\end{equation}
-wobei der Bezeichner $Y$ der Regressionsrechnung die direkte Messgröße ist und die
-Regressoren ebenfalls zu den direkten Größen gehören, jedoch nicht als Zufallsgrößen mit
-Streuung, sondern mit vorgegebenen, deterministischen Werten.
-
-Ein Residuum nach der Methode der kleinsten Quadrate für ein Modell mit genau nur einer
-einzigen Zufallsgröße $X$ mit einem Modellparameter $\mu$ ist einfach
-\begin{equation}
-\varepsilon_j \; = \; X_j \, - \, \mu .
-\label{oneQuantityOnly1}
-\end{equation}
-
-Im Fall der linearen Regression repäsentiert $\mathbf{p} = (\theta_1,\dots,\theta_M)$,
-im Fall der Geraden $\mathbf{p} = (\alpha, d)$ und im Fall der Einzelgröße
-$\mathbf{p} = \mu$.
-
-Die Schätzung von Modellparametern besteht dann darin, die Modellparameter auszuprobieren,
-d.h.\ viele unterschiedliche Werte \glqq auszuprobieren\grqq,
-\begin{equation}
-(P_1, \dots, P_M) \xrightarrow{\mathrm{Modell}} (X_{\mathrm{Modell},1,j}, \dots, X_{\mathrm{Modell},N,j})
+\mathbf{p}\xrightarrow{\mathrm{Modell}}
+\mathbf{x}_{\mathrm{Modell},j}=\mathbf{f}_j(\mathbf{p}).
 \label{forwardModel2}
 \end{equation}
- und das Ergebnis der
-Modellrechnungen (\ref{forwardModel2}) mit den beobachteten Werten zu vergleichen, solange,
-bis das Ergebnis \glqq gut zu den beobachteten Werten passt\grqq.
+Ein Schätzverfahren legt fest, wie aus den Daten (Beobachtungen der direkten Größen) Schätzwerte der Modellparameter (indirekten Größen)
+bestimmt werden. Die in den vorangegangenen Vorlesungen behandelten
+Anpassungsverfahren wählen die Parameter nach einem festgelegten
+Kriterium für die Übereinstimmung von Modell und Beobachtungen. Ein solches Kriterium ist beispielsweise die Minimierung der Residuenquadratsumme.
 
-%, die Kostenfunktion minimal wird.
+Je nach Modell lassen sich die Schätzwerte unmittelbar berechnen oder
+mithilfe eines iterativen Optimierungsverfahrens bestimmen.
+Für Aussagen über ihre Unsicherheit benötigen wir zusätzlich das
+statistische Beobachtungsmodell. Das statistische Beobachtungsmodell ergänzt die Modellvorhersage um Annahmen darüber, wie stark die möglichen Beobachtungen um die vorhergesagten Werte schwanken, durch welche Wahrscheinlichkeitsverteilungen diese zufälligen Abweichungen beschrieben werden und ob die Abweichungen verschiedener Beobachtungen unabhängig voneinander sind.
 
-%Dieses Ausprobieren, d.h.\ die Variation bzw.\ iterative Veränderung der Modellparameter
-%kann beispielsweise dadurch realisiert werden, dass die Steigung der Kostenfunktion,
-%d.h.\ die Gradientenfunktion $\nabla Q$, berechnet wird und zu jedem Iterationsschritt der
-%entsprechende Parametervektor eingesetzt, um den Schrittvektor zum nächsten Iterationsschritt
-%zu erhalten. Einen Einblick, wie numerische
-%Optimierungsverfahren prinzipiell funktionieren können, haben wir im vorigen Kapitel erhalten.
+\section{Zufällige Abweichungen, Residuen und Modellabweichungen}
+\label{V4Abweichungen}
 
-Die beiden Annahmen, dass - wie wir in Kapitel \ref{KapitellinReg} bereits bei der linearen Regression
-aufgeschrieben hatten - jede einzelne Beobachtung unabhängig und identisch verteilt
-(u.i.v) ist, sind Voraussetzung der Maximum-Likelihood-Methode:
-\begin{itemize}
-\item Jeder Messpunkt wurde unabhängig von allen anderen gewonnen.
-\item Jeder Messpunkt ist identisch verteilt (sie haben die gleiche Streuung).
-\end{itemize}
-
-Die gemeinsame Wahrscheinlichkeitsdichte, engl.\ \textsl{joint probability density}, der
-Residuen von $j$ voneinander unabhängigen Messungen ist dann das Produkt der
-Wahrscheinlichkeitsdichten $p(\varepsilon_j | \mathbf{p}, \sigma)$
-jedes Residuums:
+Für die Herleitung der gewöhnlichen \glqq Methode der kleinsten Quadrate\grqq (kurze Sprechweise für die Methode der Minimierung der Residuenquadratsumme) betrachten wir zunächst skalare Beobachtungen ohne zusätzliche Modellabweichung\footnote{Mit Modellabweichung ist hier gemeint, dass das Modell selber die physikalischen Zusammenhänge nur näherungsweise beschreibt.}:
 \begin{equation}
-p(\varepsilon_1,\dots,\varepsilon_J | \mathbf{p}, \sigma) \; = \;
-\prod\limits_{j = 1}^J \, p(\varepsilon_j | \mathbf{p}, \sigma) \; = \;
- \frac{1}{(\sigma \sqrt{2 \pi})^J} \prod\limits_{j = 1}^J \,
-e^{-\frac{1}{2} \left(\frac{\varepsilon_j}{\sigma}\right)^2}.
+X_j=f_j(\mathbf{p}_0)+E_j,
+\qquad E_j\overset{\mathrm{u.i.v.}}{\sim}\mathcal{N}(0,\sigma^2).
+\label{KonzepteSkalaresModell}
 \end{equation}
-Anhand des kleinen Beispiels mit dem ohm'schen Gesetz haben wir in Abschnitt \ref{ModelleStatistik}
-gesehen (Gln.~(\ref{MaxiLikeR1}), (\ref{MaxiLikeR2}) und Gl.~(\ref{MaxiLikeLSQ})),
-wie die Maximum-Likelihood-Methode in die Methode der kleinsten Summe der
-Residuenquadrate überführt wird:
-Unter Anwendung des Potenzgesetzes wird das Produkt der Wahrscheinlichkeiten also
+Die Abkürzung u.i.v. steht für \textsl{unabhängig und identisch verteilt}. Die Symbolik $E_j\sim\mathcal{N}(0,\sigma^2)$ bedeutet \glqq $E_j$ ist normalverteilt\grqq.
+
+Wir verwenden hier die Schreibweise $\mathcal{N}(\mu,\sigma^2)$ mit
+Erwartungswert $\mu$ und Varianz $\sigma^2$.
+Die Normalverteilung ist eine Modellannahme und keine allgemeine
+Eigenschaft von Messabweichungen. Die Begriffe Normalverteilung und
+Gaußverteilung sind synonym.
+
+Die $E_j$ sind \textsl{zufällige Abweichungen} im Beobachtungsmodell.
+Ohne zusätzliche Modellabweichung beschreibt
+$e_j=x_j-f_j(\mathbf p_0)$ die Abweichung des beobachteten Werts $x_j$
+vom Modellwert bei den wahren Werten $\mathbf p_0$ der Modellparamter (indirekten Messgrößen).
+Diese Beziehung definiert $e_j$ innerhalb des Modells. Sie ermöglicht
+im Allgemeinen keine unmittelbare Berechnung, weil $\mathbf p_0$
+unbekannt ist. Setzt man stattdessen die aus den Daten bestimmten
+Schätzwerte $\widehat{\mathbf p}$ ein, erhält man die angepassten
+Residuen $\widehat{\varepsilon}_j=x_j-f_j(\widehat{\mathbf p})$.
+Diese sind im Allgemeinen nicht mit den Abweichungen $e_j$ identisch.
+
+Wie in Vorlesung~\ref{nonlinOpti} nennen wir die Differenzen zwischen den beobachteten Werten und den jeweiligen Werten für die Modellarameter \textsl{Residuen}:
 \begin{equation}
-p(\varepsilon_1,\dots,\varepsilon_J | \mathbf{p}, \sigma) \; = \;
- \frac{1}{(\sigma \sqrt{2 \pi})^J}  \,
-e^{-\frac{1}{2} \sum\limits_{j = 1}^J \left(\frac{\varepsilon_j}{\sigma}\right)^2} .
+\varepsilon_j(\mathbf{p})=x_j-f_j(\mathbf{p}),
+\qquad
+\boldsymbol{\varepsilon}(\mathbf{p})
+=\bigl(\varepsilon_1(\mathbf{p}),\dots,\varepsilon_J(\mathbf{p})\bigr)^\mathsf{T}.
+\label{KonzepteResiduenfunktion}
+\end{equation}
+Nach der Anpassung erhalten wir die \textsl{angepassten Residuen}
+\begin{equation}
+\widehat{\varepsilon}_j
+=\varepsilon_j(\widehat{\mathbf{p}})
+=x_j-f_j(\widehat{\mathbf{p}}),
+\qquad
+\widehat{\boldsymbol{\varepsilon}}
+=\boldsymbol{\varepsilon}(\widehat{\mathbf{p}}).
+\label{KonzepteAngepassteResiduen}
+\end{equation}
+Der Zirkumflex kennzeichnet die Auswertung am geschätzten Parametervektor.
+Ohne zusätzliche Modellabweichung gilt
+\begin{equation}
+e_j=x_j-f_j(\mathbf{p}_0)=\varepsilon_j(\mathbf{p}_0).
+\label{KonzepteRealisierteAbweichung}
+\end{equation}
+Das angepasste Residuum $\widehat{\varepsilon}_j$ ist im Allgemeinen
+nicht gleich dieser unbekannten Realisierung $e_j$, da
+$\widehat{\mathbf{p}}$ im Allgemeinen von $\mathbf{p}_0$ abweicht.
+Die Verteilungsannahme in Gl.~(\ref{KonzepteSkalaresModell}) gilt für die
+Zufallsgrößen $E_j$. Betrachtet man die angepassten Residuen für
+die verschiedenen Datensätze, die dieses Beobachtungsmodell liefern
+könnte, sind sie im Allgemeinen weder unabhängig noch identisch
+verteilt. Der Grund ist, dass dieselben Daten auch zur Parameterschätzung
+verwendet werden.
+
+Die Abweichungen $E_j$ und die Residuen sind von der
+\textsl{Messunsicherheit} zu unterscheiden. Eine Abweichung kann ein
+Vorzeichen besitzen; eine Standardunsicherheit ist eine nichtnegative
+Kenngröße der zugeordneten Verteilung. Sind die $E_j$ ausschließlich
+messbedingt, sprechen wir von \textsl{Messabweichungen}.
+Ein zufälliger Term $E_j$ ist bereits Bestandteil des statistischen
+Modells und bedeutet für sich genommen keine Unzulänglichkeit dieses
+Modells.
+
+\paragraph{Zusätzliche Modellabweichung.}
+Mit $\delta_j$ bezeichnen wir eine \textsl{zusätzliche Abweichung aufgrund
+einer unzureichenden Modellvorhersage}. Beschreibt
+$f_j(\mathbf{p}_0)$ den Erwartungswert $\mu_j$ der Beobachtung nicht
+hinreichend genau, kann die Differenz
+$\delta_j=\mu_j-f_j(\mathbf{p}_0)$ gesondert berücksichtigt werden.
+Das erweiterte Beobachtungsmodell lautet dann
+\begin{equation}
+X_j=f_j(\mathbf{p}_0)+\delta_j+E_j,
+\qquad \mathbb{E}[E_j]=0.
+\label{KonzepteZusaetzlicheModellabweichung}
+\end{equation}
+Dabei wird $\delta_j$ zunächst als feste, gegebenenfalls unbekannte
+Abweichung behandelt. Eine Wahrscheinlichkeitsverteilung für $\delta_j$
+wäre eine zusätzliche Modellannahme. Für einen realisierten Datensatz
+folgt aus diesem erweiterten Modell
+\begin{equation}
+e_j=x_j-f_j(\mathbf{p}_0)-\delta_j,
+\qquad
+\varepsilon_j(\mathbf{p}_0)=\delta_j+e_j.
+\label{KonzepteRealisierungMitModellabweichung}
+\end{equation}
+Somit gilt die Gleichsetzung
+$e_j=\varepsilon_j(\mathbf{p}_0)$ aus
+Gl.~(\ref{KonzepteRealisierteAbweichung}) nur für $\delta_j=0$.
+Für das weiterhin gegenüber $f_j$ definierte angepasste Residuum ergibt sich
+\begin{equation}
+\widehat{\varepsilon}_j
+=\delta_j+e_j+f_j(\mathbf{p}_0)-f_j(\widehat{\mathbf{p}}).
+\label{KonzepteAngepasstesResiduumMitModellabweichung}
+\end{equation}
+Wird auch die Modellabweichung geschätzt und in die Vorhersage aufgenommen,
+lautet das Residuum des erweiterten Modells dagegen
+$x_j-f_j(\widehat{\mathbf{p}})-\widehat{\delta}_j$.
+Die getrennte Bestimmung von $\mathbf{p}_0$ und $\delta_j$ erfordert
+zusätzliche Annahmen oder Information. Beliebige unbekannte
+$\delta_j$ lassen sich im Allgemeinen nicht gleichzeitig mit
+$\mathbf{p}_0$ eindeutig aus denselben Daten schätzen.
+
+Man könnte $\delta_j$ und $E_j$ zu einem gemeinsamen Term zusammenfassen.
+Dann dürfte man für diesen Term jedoch nicht ohne weitere Begründung
+die Annahme einer Normalverteilung mit Erwartungswert null beibehalten.
+Bei festem $\delta_j$ und $E_j\sim\mathcal{N}(0,\sigma^2)$ gilt beispielsweise
+\begin{equation}
+\delta_j+E_j\sim\mathcal{N}(\delta_j,\sigma^2).
+\end{equation}
+Der Erwartungswert ist somit $\delta_j$ und im Allgemeinen nicht null.
+Unterscheiden sich die $\delta_j$ zwischen den Beobachtungen, sind die
+zusammengefassten Terme außerdem nicht identisch verteilt.
+Deshalb verwenden wir für die zusätzliche Modellabweichung und die
+zufällige Abweichung unterschiedliche Symbole.
+
+\section{Wahrscheinlichkeitsdichte und bedingte Wahrscheinlichkeit}
+\label{V4Dichte}
+Für die folgenden Herleitungen kehren wir zum Modell ohne zusätzliche
+Modellabweichung, also mit $\delta_j=0$, zurück.
+Die Dichte einer zufälligen Abweichung $E_j$ an einer möglichen
+Ausprägung $e$ lautet
+\begin{equation}
+p_E(e\mid\sigma)=\frac{1}{\sigma\sqrt{2\pi}}
+\exp\!\left(-\frac{e^2}{2\sigma^2}\right),\qquad \sigma>0.
+\label{Maximumlikelihood1}
+\end{equation}
+Dies ist eine \textsl{Wahrscheinlichkeitsdichte}, keine Wahrscheinlichkeit
+für einen einzelnen Wert. Die Wahrscheinlichkeitsdichte an einer Stelle ist von der Wahrscheinlichkeit für einen einzelnen Wert zu unterscheiden. Wahrscheinlichkeiten ergeben sich durch Integration der Dichte über Wertebereiche.
+\begin{equation}
+\Pr(a\le E_j\le b\mid\sigma)
+=\int_a^b p_E(E^\prime\mid\sigma)\,\mathrm{d}E^\prime.
+\label{eq:wahrscheinlichkeitgegebensigma}
+\end{equation}
+
+Hier ist $\Pr$ der Wahrscheinlichkeitsoperator. Erst ein Ausdruck wie
+$\Pr(a\le E_j\le b\mid\sigma)$ bezeichnet die Wahrscheinlichkeit eines
+bestimmten Ereignisses unter dem angegebenen Modell.
+
+$E^\prime$ ist die Integrationsvariable: Sie durchläuft mögliche Werte
+von $E_j$ und ist keine zusätzliche Zufallsgröße. Der Großbuchstabe
+mit Strich wird hier ausschließlich als Schreibweise für diese
+Integrationsvariable verwendet.
+
+Die Wahrscheinlichkeits\textbf{dichte} an einer konkreten Stelle kann positiv (also echt größer Null) sein, aber die Wahrscheinlichkeit ist an einem einzelnen, exakt vorgegebenen Wert Null. Das liegt daran, dass wenn ein Intervall um einen vorgegebenen Wert immer schmaler wird, seine Wahrscheinlichkeit bei einer stetigen Verteilungsdichte gegen null geht.
+
+Betrachten wir ein kleines Intervall einer kontinuierlichen, stetigen Wahrscheinlichkeitsdichteverteilung $p_X$ um einen Wert $x_0$
+\[
+\Pr\!\left(x_0-\frac{\Delta}{2}\le X\le x_0+\frac{\Delta}{2}\right)
+\approx p_X(x_0)\,\Delta.
+\]
+Mit abnehmender Intervallbreite $\Delta$ wird diese Wahrscheinlichkeit kleiner, obwohl der Wert der Wahrscheinlichkeitsdichte $p_X(x_0)$ unverändert bleibt. Mit $\Delta \rightarrow 0$ wird 
+\[
+\Pr\!\left(x_0-\frac{\Delta}{2}\le X\le x_0+\frac{\Delta}{2}\right)
+\approx p_X(x_0)\,\Delta \rightarrow 0.
+\]
+
+Der senkrechte Strich in Gl. (\ref{eq:wahrscheinlichkeitgegebensigma}) bedeutet \glqq gegeben\grqq. Bei Ereignissen
+$A_1$ und $A_2$ ist die \textsl{bedingte Wahrscheinlichkeit} definiert durch
+\begin{equation}
+\Pr(A_1\mid A_2)=\frac{\Pr(A_1\cap A_2)}{\Pr(A_2)},
+\qquad \Pr(A_2)>0.
+\end{equation}
+Zur Veranschaulichung betrachten wir das gleichwahrscheinliche Ziehen
+einer Karte aus einem Kartenspiel mit 52 Karten. Sei $B$ das Ereignis
+\glqq Die gezogene Karte ist ein Bube\grqq\ und $F$ das Ereignis
+\glqq Die gezogene Karte ist eine Bildkarte\grqq\ (Bube, Dame oder König).
+Da jeder Bube eine Bildkarte ist, gilt $B\subset F$ und damit
+\begin{equation}
+\Pr(B\mid F)=\frac{\Pr(B\cap F)}{\Pr(F)}
+=\frac{4/52}{12/52}=\frac{1}{3}.
+\end{equation}
+
+Die Schreibweise $p_X(x_j\mid\mathbf p,\sigma)$ bezeichnet die
+Dichte der Beobachtung, ausgewertet am beobachteten Wert $x_j$,
+wenn bestimmte Werte für die Modellparameter $\mathbf p$ und
+die Beobachtungsstreuung $\sigma$ angenommen werden.
+Im betrachteten statistischen Beobachtungsmodell\footnote{d.h.\ die zur Beschreibung des Streuverhaltens der Beobachtungen bzw.\ Messdaten angesetzte Wahrscheinlichkeitsdichte} mit normalverteilten zufälligen Abweichungen legt $f_j(\mathbf p)$ den
+Erwartungswert fest; $\sigma$ ist die Standardabweichung der
+Beobachtung um diesen Erwartungswert. Sie ist nicht die
+Standardunsicherheit der geschätzten Modellparameter.
+
+Der senkrechte Strich bedeutet hier somit:
+\glqq unter der Annahme dieser Werte für $\mathbf p$ und $\sigma$\grqq.
+Dazu muss den Modellparametern selbst keine
+Wahrscheinlichkeitsverteilung zugeordnet werden.
+
+\section{Von der Likelihood zur Methode der kleinsten Quadrate}
+\label{V4Likelihood}
+
+Für einen einzelnen zu schätzenden Modellparameter $\theta$ und einen Vektor
+beobachteter Messwerte $\mathbf x$ schreiben wir
+\[
+l(\theta;\mathbf x)=p(\mathbf x\mid\theta).
+\]
+
+Wir betrachten hier Beobachtungen, deren Verteilung durch eine
+Wahrscheinlichkeitsdichte beschrieben wird.
+Der Ausdruck $p(\mathbf x\mid\theta)$ ist der Wert dieser gemeinsamen
+Dichte am beobachteten Datenvektor $\mathbf x$, unter der Annahme
+des Modellparameterwerts $\theta$. Er ist nicht die Wahrscheinlichkeit,
+genau diesen Datenvektor zu beobachten.
+Bei festgehaltenen Daten und veränderlichem $\theta$ wird derselbe
+Ausdruck als \textsl{Likelihood} $l(\theta;\mathbf x)$ bezeichnet.
+
+Der Strich in $p(\mathbf x\mid\theta)$ bedeutet hier \glqq unter der Annahme des Parameterwerts $\theta$\grqq. Das Semikolon in $l(\theta;\mathbf x)$ trennt den betrachteten Parameter von den festgehaltenen Daten;
+es bezeichnet keine zusätzliche Rechenoperation.
+
+Die Likelihood erlaubt einen relativen Vergleich verschiedener
+Parameterwerte: Bei welchen Werten besitzt das Modell eine größere
+Dichte für die beobachteten Daten? Eine Likelihood ist jedoch
+\textbf{keine Wahrscheinlichkeitsdichte für den Parameter}.
+Sie muss über dem Parameterbereich nicht das Integral $1$ besitzen.
+Auch eine nachträgliche Normierung allein rechtfertigt noch keine
+Wahrscheinlichkeitsaussage über den zu schätzenden Modellparameter.
+
+Im Folgenden wenden wir diese Definition auf den Modellparametervektor
+$\mathbf p$ und die Beobachtungsstreuung $\sigma$ an. Das Symbol $\theta$
+in der vorstehenden Definition stand lediglich für einen einzelnen
+Parameter; es führt kein anderes Schätzprinzip ein.
+
+
+Die Maximum-Likelihood-Methode benötigt ein Modell für die gemeinsame
+Verteilung der Beobachtungen. Unabhängigkeit und identische Verteilung
+sind keine allgemeinen Voraussetzungen dieser Methode.
+
+Für die folgende Herleitung betrachten wir das Modell aus
+Gl.~\eqref{KonzepteSkalaresModell}. Wir nehmen an, dass die Beobachtungen
+bei gegebenen Modellparameterwerten unabhängig sind und dass keine
+zusätzliche Modell\-ab\-weichung vorliegt ($\delta_j=0$).
+Wegen der angenommenen Unabhängigkeit der Beobachtungen ist die gemeinsame
+Wahrscheinlichkeitsdichte der Beobachtungen das Produkt ihrer
+Einzeldichten:
+\begin{align}
+p(\mathbf{x}\mid\mathbf{p},\sigma)
+&=\prod_{j=1}^{J}p_X(x_j\mid\mathbf{p},\sigma)\notag\\
+&=\frac{1}{(\sigma\sqrt{2\pi})^J}
+\exp\!\left[-\frac{1}{2\sigma^2}
+\sum_{j=1}^{J}\bigl(x_j-f_j(\mathbf{p})\bigr)^2\right].
 \label{Likelihood1}
-\end{equation}
-Für die Maximum-Likelihood-Methode wird diese Wahrscheinlichkeitsdichte sorum gesehen,
-dass die in den Residuen steckenden Beobachtungen vorgegeben sind, und die
-Parameter $\mathbf{p}$ durch Maximieren der Verteilung gesucht werden und sich daraus
-die Streuung $\sigma$ der Residuen ergibt. Die Residuen sind Funktion der
-Beobachtungen $X_{1,j},\dots,X_{N,j}$ und der Parameter $\mathbf{p}$, also
-$\varepsilon_j = \varepsilon(X_{1,j},\dots,X_{N,j}, \mathbf{p})$.
-Deshalb formulieren wir die Wahrscheinlichkeitsdichte
-$p(\varepsilon_1,\dots,\varepsilon_J | \mathbf{p}, \sigma)$
-als \textsl{Likelihood} \\
-$l(\mathbf{p}, \sigma | \{X_{1,1}, \dots, X_{1,J}\}, \dots, \{X_{N,1}, \dots, X_{N,J}\})$
-um und Gl.~(\ref{Likelihood1}) formen wir damit wie folgt um zu
+\end{align}
+Hier fasst $\mathbf{x}=(x_1,\dots,x_J)^\mathsf{T}$ die beobachteten Werte
+zusammen. 
+Die zweite Zeile folgt aus der zusätzlich angenommenen Normalverteilung
+der zufälligen Abweichungen $E_j$ mit Erwartungswert null und
+gemeinsamer Varianz $\sigma^2$. Die Beobachtungen besitzen damit
+dieselbe Varianz, können aber unterschiedliche Erwartungswerte
+$f_j(\mathbf p)$ haben.
+
+Hält man diese Werte fest und betrachtet den Ausdruck als
+Funktion der Parameter, erhält man die \textsl{Likelihood}
 \begin{equation}
-l(\mathbf{p}, \sigma | \{X_{1,1}, \dots, X_{1,J}\}, \dots, \{X_{N,1}, \dots, X_{N,J}\}) \; = \;
- \frac{1}{(\sigma \sqrt{2 \pi})^J}  \,
-e^{-\frac{1}{2} \sum\limits_{j = 1}^J \left(\frac{\varepsilon(X_{1,j},\dots,X_{N,j}, \mathbf{p})}{\sigma}\right)^2} .
+l(\mathbf{p},\sigma;\mathbf{x})
+=p(\mathbf{x}\mid\mathbf{p},\sigma)
+=\frac{1}{(\sigma\sqrt{2\pi})^J}
+\exp\!\left[-\frac{S(\mathbf{p})}{2\sigma^2}\right],
+\quad S(\mathbf{p})=\sum_{j=1}^{J}\varepsilon_j(\mathbf{p})^2.
 \label{Likelihood2}
 \end{equation}
+Die Likelihood ist damit eingeführt, ohne den zu schätzenden Modellparametern
+selbst eine Verteilung zuzuordnen. Eine solche Parameterverteilung
+führen wir erst in Abschnitt~\ref{V4Bayes} ein.
 
-Die Maximum-Likelihood-Methode bedeutet: Finde derartige Parameter $\mathbf{p}$, für die
-die \textsl{Likelihood} maximal wird
+\paragraph{Wie die Beobachtungsstreuung in die Rechnung eingeht.}
+Die Annahme über die Streuung steht bereits im Beobachtungsmodell
+aus Gl.~\eqref{KonzepteSkalaresModell}: Bei festen Modellparameterwerten
+$\mathbf p_0$ sind verschiedene Beobachtungen möglich, deren
+Abweichungen durch die Verteilung der $E_j$ beschrieben werden.
+Diese Annahme geht in Gl.~\eqref{Likelihood2} über $\sigma$ in die
+Likelihood ein. Ist $\sigma$ nicht bekannt, wird es mitgeschätzt.
+Es wird keine zusätzliche Streuung durch gedachte Wiederholungen
+eingeführt.
+
+Wird $\sigma$ als fest vorgegeben betrachtet, ist die Maximierung
+der Likelihood bezüglich $\mathbf p$ gleichbedeutend mit der
+Minimierung von $S(\mathbf p)$. Der so bestimmte Schätzwert
+$\widehat{\mathbf p}$ hängt hier nicht vom vorgegebenen Wert
+von $\sigma$ ab.
+
+Soll auch $\sigma$ geschätzt werden, muss die vollständige
+Likelihood einschließlich des Vorfaktors $\sigma^{-J}$ bezüglich
+$\sigma$ maximiert werden. Die Minimierung der Residuenquadratsumme
+allein liefert diesen Schätzwert noch nicht.
+
+Für die Auswertung bleiben die beobachteten Werte $\mathbf x$ fest.
+Die Optimierung verändert nur die zu schätzenden Modellparameter,
+einschließlich einer gegebenenfalls mitgeschätzten Beobachtungsstreuung.
+Sie erzeugt keine neuen Messdaten und führt keine Wiederholungs\-messungen
+durch. Der Ausdruck \textsl{gedachte Wiederholungen} erläutert lediglich,
+welche anderen Datensätze unter demselben Beobachtungsmodell bei
+unveränderten Parameterwerten und Versuchs\-bedingungen möglich wären.
+Die Likelihood und ihre Maximierung benötigen diese Vorstellung
+nicht als zusätzlichen Rechenschritt.
+
+\paragraph{Maximierung der Likelihood.}
+
+Wie im Beispiel zum ohmschen Gesetz in Abschnitt~\ref{ModelleStatistik}
+führt die Maximum-Likelihood-Schätzung unter den genannten Annahmen zur
+Minimierung einer Residuenquadratsumme. Für ein festes, von
+$\mathbf{p}$ unabhängiges $\sigma$ gilt
 \begin{equation}
-\max_{\mathbf{p}, \sigma} \, \left\{ l(\mathbf{p}, \sigma | \{X_{1,1}, \dots, X_{1,J}\}, \dots, \{X_{N,1}, \dots, X_{N,J}\}) \right\}.
+\widehat{\mathbf{p}}
+=\underset{\mathbf{p}}{\operatorname{arg\,max}}\,
+l(\mathbf{p},\sigma;\mathbf{x})
+=\underset{\mathbf{p}}{\operatorname{arg\,min}}\,S(\mathbf{p}).
 \end{equation}
-Damit bedeutet $p(\varepsilon_1,\dots,\varepsilon_J | \mathbf{p}, \sigma)$ die Wahrscheinlichkeit,
-dass die Residuen die Werte $\varepsilon_1,\dots,\varepsilon_J$ annehmen, wenn die Parameter und die Streuung gegeben ist
-mit den Werten $\mathbf{p}, \sigma$. Die Formulierung der Wahrscheinlichkeit als \textsl{Likelihood}
-$l(\mathbf{p}, \sigma | \{X_{1,1}, \dots, X_{1,J}\}, \dots, \{X_{N,1}, \dots, X_{N,J}\})$ drückt die
-Wahrscheinlichkeit aus, dass die Parameter die Werte $\mathbf{p}, \sigma$ annehmen für gegebene Werte der
-direkten Messgrößen $\{X_{1,1}, \dots, X_{1,J}\}, \dots, \{X_{N,1}, \dots, X_{N,J}\}$.
+$\operatorname{arg\,max}$ bezeichnet den Parameterwert, an dem das
+Maximum angenommen wird; $\operatorname{arg\,min}$ entsprechend den
+Parameterwert am Minimum. Dabei wird der positive Ausdruck $S/(2\sigma^2)$ im negativen
+Exponenten minimiert.
 
-Wir maximieren die in Gl.~(\ref{Likelihood2}) gegebene \textsl{Likelihood}, indem wir
-ihren Exponenten minimieren
+Ist $\sigma$ ebenfalls unbekannt, muss auch der Normierungsfaktor
+$\sigma^{-J}$ berücksichtigt werden. Die negative Log-Likelihood lautet
 \begin{equation}
-\min_{\mathbf{p}, \sigma}\left\{ \sum\limits_{j = 1}^J \left(\frac{\varepsilon(X_{1,j},\dots,X_{N,j},\mathbf{p})}{\sigma}\right)^2  \right\}.
+-\log l(\mathbf{p},\sigma;\mathbf{x})
+=\frac{J}{2}\log(2\pi)+J\log\sigma
++\frac{S(\mathbf{p})}{2\sigma^2}.
+\label{KonzepteNegLogL}
 \end{equation}
-Hierbei fällt die Varianz $\sigma^2$, die für alle Residuen und Parameter denselben Wert hat, raus und
-das Optimierungsproblem, d.h.\ die Suche des Minimums, reduziert sich
-auf das Variieren der Parameter $\mathbf{p}$
+Bei einer gemeinsamen unbekannten Varianz, die nicht von
+$\mathbf{p}$ abhängt, ergeben sich weiterhin die
+Kleinstquadrateschätzung von $\mathbf{p}$ und, sofern
+$S(\widehat{\mathbf{p}})>0$,
 \begin{equation}
-\min_{\mathbf{p}} \left\{ \sum\limits_{j = 1}^J \, \varepsilon(X_{1,j},\dots,X_{N,j},\mathbf{p})^2  \right\} .
+\widehat{\sigma}_{\mathrm{ML}}^2
+=\frac{S(\widehat{\mathbf{p}})}{J}.
+\end{equation}
+Davon zu unterscheiden ist der erwartungstreue Varianzschätzer
+$s^2=S(\widehat{\mathbf{p}})/(J-M)$ im korrekt spezifizierten linearen
+Modell mit $M$ unabhängig bestimmbaren Parametern und $J>M$.
+Für nichtlineare Modelle ist diese Freiheitsgradkorrektur im Allgemeinen
+nur näherungsweise begründet. Bei exakt verschwindender
+Residuenquadratsumme wird die Likelihood für $\sigma\to0$ unbeschränkt;
+es gibt dann kein endliches Maximum mit $\sigma>0$.
+
+\section{Frequentistische Auswertung: Standardunsicherheiten und Residuen}
+\label{V4Frequentistisch}
+
+Im \textsl{frequentistischen Ansatz} werden die zu schätzenden
+Modellparameter als feste Größen behandelt, deren Werte aus den
+Messdaten bestimmt werden sollen. Ein Modellparameter kann dabei
+den Wert einer indirekten Messgröße beschreiben.
+Die zufällige Streuung der Beobachtungen führt zu einer Streuung
+der daraus berechneten Parameterschätzwerte; sie bedeutet nicht,
+dass der zugrunde liegende Modellparameter selbst zufällig variiert.
+
+Ein Schätzer ist eine Rechenvorschrift, die möglichen Beobachtungsdaten
+jeweils einen Schätzwert zuordnet. Da die Beobachtungen als
+Zufallsgrößen modelliert werden, ist auch der daraus berechnete
+Schätzer eine Zufallsgröße. Für die konkret beobachteten Messwerte
+liefert die Rechenvorschrift einen bestimmten Schätzwert.
+
+\paragraph{Berechnung der Standardunsicherheiten.}
+Die Unsicherheit der geschätzten Modell\-parameter wird ermittelt,
+indem die im statistischen Beobachtungsmodell beschriebene Streuung
+der Beobachtungen auf die Parameterschätzung übertragen wird.
+Neben den Varianzen und Kovarianzen der Beobachtungen ist dafür
+entscheidend, wie die berechneten Parameterschätzwerte von den
+Beobachtungen abhängen. Die benötigten Varianzen und Kovarianzen
+werden als bekannt vorausgesetzt oder aus den Daten geschätzt.
+Die \textsl{Standardunsicherheit eines geschätzten Modellparameters}
+ergibt sich hier als Quadratwurzel des zugehörigen Diagonalelements
+der Parameterkovarianzmatrix. Wir schreiben dafür $u(\widehat P_m)$
+und entsprechend $u(\widehat\mu)$ oder $u(\widehat R)$ in den Beispielen.
+
+Eine Optimierung kann außer dem Schätzwert auch die Krümmung der
+Kostenfunktion beziehungsweise der negativen Log-Likelihood liefern.
+Dass sich daraus unter geeigneten Voraussetzungen eine
+Parameterkovarianzmatrix berechnen lässt, folgt aus dem statistischen
+Beobachtungsmodell und der Abhängigkeit der Schätzung von den Daten.
+Es ist keine Eigenschaft der Optimierung allein. Die entsprechende
+Herleitung wurde in Vorlesung~\ref{nonlinOpti} behandelt.
+
+\paragraph{Was mit gedachten Wiederholungen gemeint ist.}
+Die frequentistische Interpretation lässt sich durch eine Frage
+verdeutlichen: Welche Parameterschätzwerte würden wir erhalten, wenn
+andere, nach demselben Beobachtungsmodell mögliche Daten vorlägen und
+jeweils mit demselben Verfahren ausgewertet würden?
+Die so betrachtete Streuung der Schätzwerte wird durch die berechnete
+Parameterkovarianz beschrieben.
+
+\textsl{Gedachte Wiederholungen sind keine zusätzliche Modellannahme
+und kein zusätzlicher Berechnungsschritt.} Sie veranschaulichen die
+bereits im Beobachtungsmodell beschriebene Variabilität und deren
+Auswirkung auf die Parameterschätzung. Die benötigten Datensätze
+müssen weder tatsächlich gemessen noch numerisch erzeugt werden.
+Die Standard\-unsicherheiten der geschätzten Modellparameter beschreiben
+hier die daraus abgeleitete Streuung der Schätzwerte, nicht eine
+zufällige Änderung der indirekten Messgrößen.
+
+Die so berechneten Standardunsicherheiten berücksichtigen die im
+jeweiligen Modell erfassten Beiträge. Eine zusätzliche systematische
+Abweichung durch eine unzureichende Modellvorhersage wird dadurch
+nicht automatisch erfasst.
+
+\subsection{Wiederholte Messung einer einzelnen Größe}
+\label{V4Mittelwert}
+
+Ein besonders einfaches lineares Modell beschreibt wiederholte
+Beobachtungen derselben Größe. Der zu schätzende Modellparameter ist ihr Erwartungswert $\mu$:
+\begin{equation}
+X_j=\mu+E_j,\qquad
+E_j\overset{\mathrm{u.i.v.}}{\sim}\mathcal N(0,\sigma^2),
+\qquad j=1,\dots,J.
+\label{T2Normalmodell}
+\end{equation}
+Hier ist der Modellparametervektor eindimensional, $\mathbf p=(\mu)$,
+und die Residuenfunktion lautet
+\begin{equation}
+\varepsilon_j(\mu)=x_j-\mu.
+\label{oneQuantityOnly1}
+\end{equation}
+Die Minimierung der Quadratsumme ergibt den beobachteten Mittelwert
+$\widehat\mu=\overline x=J^{-1}\sum_j x_j$ als Schätzwert für $\mu$.
+Der zugehörige Schätzer ist
+\[
+\overline X=\frac1J\sum_{j=1}^J X_j
+=\mu+\frac1J\sum_{j=1}^J E_j.
+\]
+Die Abweichungen haben den Erwartungswert null. Wegen ihrer
+Unabhängigkeit addieren sich ihre Varianzen; der Faktor $1/J$ geht
+quadratisch in die Varianz ein. Damit folgt
+\[
+\mathbb E[\overline X]=\mu,\qquad
+\operatorname{Var}(\overline X)
+=\frac1{J^2}\sum_{j=1}^J\operatorname{Var}(E_j)
+=\frac{\sigma^2}{J}.
+\]
+Eine Summe unabhängiger normalverteilter Zufallsgrößen ist wiederum
+normalverteilt. Deshalb gilt unter diesem Modell exakt
+\begin{equation}
+\overline X\sim\mathcal N\!\left(\mu,\frac{\sigma^2}{J}\right),
+\qquad u(\widehat\mu)=\frac{\sigma}{\sqrt J}.
+\label{T2VerteilungMittelwert}
+\end{equation}
+Dies ist eine Verteilung möglicher Mittelwerte bei festem $\mu$,
+keine Verteilung für den zu schätzenden Modellparameter $\mu$.
+Die zugeordnete Standardunsicherheit $u(\widehat\mu)$ wird hier aus
+der Standardabweichung dieser Mittelwertverteilung bestimmt.
+
+Ist $\sigma$ unbekannt, schätzen wir die Varianz der Einzelbeobachtungen
+durch
+\[
+S^2=\frac1{J-1}\sum_{j=1}^J(X_j-\overline X)^2,
+\qquad
+s^2=\frac1{J-1}\sum_{j=1}^J(x_j-\overline x)^2.
+\]
+$S^2$ ist der Varianzschätzer als Zufallsgröße, $s^2$ sein aus den
+beobachteten Daten berechneter Wert. Bei geschätzter Beobachtungsstreuung
+verwenden wir $u(\widehat\mu)=s/\sqrt J$ als Standardunsicherheit
+des geschätzten Modellparameters.
+
+\paragraph{Konfidenzintervall als Aussage über ein Verfahren.}
+Ein Intervallschätzverfahren berechnet aus den Beobachtungsdaten
+eine untere und eine obere Grenze. Beim hier betrachteten Verfahren
+bedeutet ein Konfidenzniveau von $95\,\%$: Unter dem angenommenen
+Beobachtungsmodell beträgt die Wahrscheinlichkeit $95\,\%$, dass
+das aus den möglichen Daten berechnete Intervall den festen
+Modellparameterwert enthält.
+
+Die Wahrscheinlichkeit bezieht sich auf die möglichen Datensätze
+und die daraus berechneten Intervalle. Dies lässt sich durch gedachte
+Wiederholungen derselben Messung und Auswertung veranschaulichen;
+solche Wiederholungen sind kein zusätzlicher Berechnungsschritt.
+Dem festen Modellparameter wird dabei keine
+Wahrscheinlichkeitsverteilung zugeordnet.
+
+Für spätere Vergleiche geben wir hier bereits das Konfidenzintervall
+für den Erwartungswert $\mu$ bei unbekannter Beobachtungsstreuung
+$\sigma$ an. Wir setzen das Beobachtungsmodell aus
+Gl.~\eqref{T2Normalmodell} voraus: Die $J>1$ Beobachtungen sind
+unabhängig und normalverteilt mit demselben Erwartungswert $\mu$
+und derselben Varianz $\sigma^2>0$.
+
+Bezeichnet $S$ die Stichprobenstandardabweichung, deren Quadrat
+mit dem Nenner $J-1$ berechnet wird, so besitzt die Größe
+\begin{equation}
+T=\frac{\overline X-\mu}{S/\sqrt J}
+\sim p_t(J-1)
+\label{T2StudentGroesse}
+\end{equation}
+eine Student-$t$-Verteilung mit $J-1$ Freiheitsgraden.
+Die ausführliche Behandlung dieser Verteilung folgt in
+Vorlesung~\ref{wahrscheinlichHyp}.
+
+Das $\alpha$-Quantil $t_{\alpha,\nu}$ der Student-$t$-Verteilung
+mit $\nu$ Freiheitsgraden ist durch
+\[
+\Pr\!\left(T\le t_{\alpha,\nu}\right)=\alpha,
+\qquad T\sim p_t(\nu),
+\]
+definiert. Dabei ist $t_{\alpha,\nu}$ ein Quantilwert; der Index
+$\alpha$ gibt die Wahrscheinlichkeit links von diesem Wert an.
+
+Wegen der Symmetrie der Student-$t$-Verteilung gilt
+\[
+\Pr\!\left(
+-t_{1-\alpha/2,J-1}\le T\le t_{1-\alpha/2,J-1}
+\right)=1-\alpha.
+\]
+Unterhalb und oberhalb dieses Bereichs verbleibt jeweils die
+Wahrscheinlichkeit $\alpha/2$.
+
+Einsetzen von $T$ aus Gl.~\eqref{T2StudentGroesse} und Umstellen
+der Ungleichungen nach $\mu$ liefert
+\begin{equation}
+\Pr\nolimits_{\mu,\sigma}\!\left(
+\overline X-t_{1-\alpha/2,J-1}\frac{S}{\sqrt J}
+\le\mu\le
+\overline X+t_{1-\alpha/2,J-1}\frac{S}{\sqrt J}
+\right)=1-\alpha.
 \end{equation}
 
-Die Aussage, dass jeder Messpunkt identisch verteilt ist, also die gleiche Streuverteilung hat,
-bedeutet aber nicht unbedingt, dass die Streubreite eine skalare Größe $\sigma$ sein muss,
-sondern nur, dass für alle Beobachtungen die identischen Varianzen gelten.
+Die Vorschrift zur Berechnung dieser Intervallgrenzen ist festgelegt.
+Auch $\alpha$, $J$ und der daraus bestimmte Quantilwert sind fest.
+Die Größen $\overline X$ und $S$ hängen jedoch von den möglichen
+Beobachtungsdaten ab und sind deshalb Zufallsgrößen. Damit sind
+auch die aus ihnen berechneten Intervallgrenzen Zufallsgrößen:
+Andere mögliche Datensätze können zu anderen Grenzen führen.
+Mit einem \textsl{zufälligen Intervall} ist somit ein datenabhängiges
+Intervall gemeint, dessen Grenzen nach einer festen Vorschrift
+berechnet werden.
 
+Der tiefgestellte Zusatz $\mu,\sigma$ kennzeichnet das
+Beobachtungsmodell bei festen Werten von $\mu$ und $\sigma$.
+Die Wahrscheinlichkeit $1-\alpha$ gehört zum Ereignis, dass
+die datenabhängigen Grenzen den festen Wert $\mu$ einschließen.
+Sie beschreibt die Überdeckung durch das Verfahren.
 
-Wenn der Messpunkt ein Vektor aus mehreren Größen ist, die nicht
-dieselbe physikalische Dimension haben oder zwar dieselbe physikalische Dimension, aber dennoch
-unterschiedlich stark streuen, weil die Messprinzipien sich unterscheiden, dann stellt sich
-die Darstellung der Residuen komplizierter dar.
-
-Ein Beispiel für unterschiedliche physikalische
-Dimensionen kann wieder das mit der Messung eines elektrischen Widerstandes sein, bei dem $X_1$ eine
-Strommessung und $X_2$ eine Spannungsmessung repräsentieren kann.
-Ein Beispiel für dieselbe physikalische Dimension mit unterschiedlichem Streuverhalten kann ein
-Oberflächenmessgerät sein, bei dem die Sensorik in vertikaler Richtung zur Messung der Höhen einer
-Topographie ein optischer oder taktiler Punktsensor sein kann und die horizontale Achse durch einen
-Schlitten mit einem Wegmesssystem in Form eines Glasmaßstabs sein kann.
-
-Ein Residuum nach der Methode der kleinsten Quadrate für ein Modell ohne Regressoren,
-also mit allen beteiligten Größen als Zufallsgrößen, lässt sich allgemein nicht mit
-einem Ansatz darstellen, in dem die Modellparameter linear sind. Bereits bei einer
-Geraden, für die sowohl die Abzissengröße $X_1$ als auch die Ordinatengröße $X_2$ streut,
-gehen die Modellparameter nichtlinear in die Kostenfuntion ein.
-Die Modellparameter sind der Steigungswinkel $\alpha$ der Geraden relativ zur Abzisse und
-der Abstand $d$ der Geraden vom Koordinatenursprung. Das Residuum $\varepsilon_j$ stellt den
-Abstand des $j$-ten Messpunktes $(X_{1,j}, X_{2,j})$ zum Modell dar, siehe Abb.~\ref{ResiduenVarianzen}.
-
-Wir betrachten als Beispiel zwei Messgrößen gleicher physikalischer Dimension, jedoch
-mit unterschiedlichem Streuverhalten:
-\begin{figure}
-\begin{center}
-\includegraphics[width=100mm]{03_vorlesung/media/ResiduenVarianzen.pdf}
-\end{center}
-\caption{Veranschaulichung für Schätzung von Geradenparametern durch
-Minimierung der Summe der Quadrate der Residuen bei verschiedenen Varianzen
-$\sigma_1^2$ und $\sigma_2^2$ der beiden direkten Messgrößen $X_1$ und $X_2$
-\label{ResiduenVarianzen}}
-\end{figure}
-Eine Gerade, die in einer Ebene liegt, mit den beiden direkten Messgrößen $X_1$ und $X_2$
-und den Modellparametern $\alpha$ für den Winkel und
-$d$ für den Abstand der Geraden vom Koordinatenursprung
+Für die konkret beobachteten Daten setzen wir die berechneten
+Werte $\overline x$ und $s$ ein und erhalten
 \begin{equation}
-\varepsilon_j \; = \;
-\left(\begin{array}{c} X_{1,j}\\ X_{2,j}\end{array}\right) \cdot
-\left(\begin{array}{c} -\sin(\alpha)\\ \cos(\alpha)\end{array}\right) \; - \; d .
-\label{TLSgerade}
+\left[
+\overline x-t_{1-\alpha/2,J-1}\frac{s}{\sqrt J},\;
+\overline x+t_{1-\alpha/2,J-1}\frac{s}{\sqrt J}
+\right].
+\label{T2KonfidenzUnbekannt}
 \end{equation}
-Hier stehen die Residuen $\varepsilon_j$ des $j$-ten Messpunktes $(X_{1,j}, X_{2,j})$
-senkrecht auf der Modellgeraden, siehe Abb.~\ref{ResiduenVarianzen}, weil beide
-Messgrößen $X_1$ und $X_2$ gleichermaßen Zufallsgrößen sind und nicht eine davon
-ein Regressor ist und die andere ein Regressand ist. Bei dieser \textsl{Least-Square} Methode
-spricht man auch von \textsl{Total Least-Square} Methode, weil \glqq total\grqq ~alle Größen
-streuen können, also Zufallsgrößen sind.
+Dieses Intervall hat feststehende Grenzen. Es enthält den festen
+Wert $\mu$ oder enthält ihn nicht; welche dieser beiden Möglichkeiten
+zutrifft, ist im Allgemeinen nicht bekannt. Die frequentistische
+Aussage von $95\,\%$ betrifft die Überdeckung durch das Verfahren,
+nicht eine nachträgliche Wahrscheinlichkeit für $\mu$ innerhalb
+dieses konkreten Intervalls.
 
-\begin{equation}
-Q(\alpha, d) \; = \;
-\sum\limits_{j=1}^J \,  \left(\frac{\varepsilon_j(\alpha, d) \sin(\alpha)}{\sigma_1}\right)^2
-\; + \; \sum\limits_{j=1}^J \, \left(\frac{\varepsilon_j(\alpha, d) \cos(\alpha)}{\sigma_2}\right)^2 .
-\label{KostenfktLTSVarmatrix1}
-\end{equation}
-$\sigma_i^2$ ist die Varianz der Messgröße $X_i$ für alle $j=1,\dots,J$ Beobachtungen zu
-dieser Messgröße. Zu jeder Messgröße gibt es ein Beobachtungstupel $(X_{i,1}, \dots, X_{i,J})$
-mit $i = 1, \dots, N$ und andererseits zu jeder Beobachtung $j = 1, \dots, J$
-ein Messwertetupel gemäß den direkten Messgrößen $(X_{1,j}, \dots, X_{N,j})$. Zu jeder
-Beobachtung gibt es das Residuum entsprechend als Vektor
-\begin{equation}
-\vec \varepsilon_j \; = \;
-\left(\begin{array}{c} -\varepsilon_j \sin(\alpha)\\
-\varepsilon_j \cos(\alpha)
-\end{array}\right)  \; = \;
-\left(\begin{array}{c} \varepsilon_{1,j}\\
-\varepsilon_{2,j}
-\end{array}\right).
-\end{equation}
-Die Kostenfunktion Gl.~(\ref{KostenfktLTSVarmatrix1}) in Vektorschreibweise sieht dann wie folgt aus
-\begin{equation}
-Q(\alpha, d) \; = \;
-\sum\limits_{j=1}^J \,
-\vec \varepsilon_j^\mathsf{T} \left(
-\begin{array}{cc}
-\frac{1}{\sigma_1^2} & 0 \\
-0 & \frac{1}{\sigma_2^2}
-\end{array}\right) \vec \varepsilon_j \,
-\label{KostenfktLTSVarmatrix2} .
-\end{equation}
+Für ein Konfidenzniveau von $95\,\%$ ist $\alpha=0{,}05$ und
+damit $1-\alpha/2=0{,}975$.
 
-Die Abweichungen der direkten Messgrößen zu den entsprechenden Werten, die Residuen,
-die bei der Modellschätzung Gl.~(\ref{forwardModel2}) errechnet werden, müssen also als
-vektorielle Größen behandelt werden, wenn die verschiedenen direkten Messgrößen $X_i$ eine
-unterschiedliche Varianz $\sigma_i^2 = \sigma_{i,i}$ oder noch allgemeiner auch
-Kovarianzen $\sigma_{i,k}$ aufweisen, die als Kovarianzmatrix
-\begin{equation}
-\boldsymbol{\Sigma} \; = \;
-\left(\begin{array}{ccc}
-\sigma_1^2 & \dots & \sigma_{1,N}\\
- & \ddots & \\
-\sigma_{N,1} & \dots & \sigma_N^2
-\end{array}\right)
-\end{equation}
-zusammengefasst wird, so dass die Kostenfunktion in folgender Gestalt dargestellt wird
-\begin{equation}
-Q(\mathbf{p}) \; = \;
- \sum\limits_{j=1}^J \, \vec \varepsilon(X_{1,j},\dots,X_{N,j},\mathbf{p})^\mathsf{T} \,
-\boldsymbol{\Sigma}(X_{1,j},\dots,X_{N,j},\mathbf{p})^{-1} \, \vec \varepsilon(X_{1,j},\dots,X_{N,j},\mathbf{p})_j .
-\label{generalLSmethod}
-\end{equation}
-Wir haben im vorherigen Kapitel gesehen, dass
-bei der Lösung von inversen Problemen, bei denen im Gegensatz zur linearen
-Regression eine nichtlineare Verknüpfung der Modellparameter vorliegt,
-die Parameter nicht mehr durch Lösen eines linearen Gleichungssystems
-bestimmt werden können, sondern mittels eines der Methoden der
-nichtlinearen Optimierung, die iterative Verfahren sind.
+\subsection{Lineare Regression als Beispiel}
 
-
-Die Wahrscheinlichkeitsdichteverteilung für den Vektor der Residuen der
-$j$-ten Beobachtung ist dann
+In Vorlesung~\ref{KapitellinReg} haben wir die lineare Regression behandelt.
+In der dort üblichen Bezeichnung ist $Y_j$ der Regressand und
+$x_{i,j}$ sind die vorgegebenen Regressorwerte:
 \begin{equation}
-p(\vec \varepsilon_j | \mathbf{p}, \boldsymbol{\Sigma}) \; \propto \;
-e^{-\frac{1}{2} \, \vec \varepsilon^\mathsf{T}_j \, \boldsymbol{\Sigma}^{-1} \, \vec \varepsilon_j }.
+Y_j=\sum_{i=1}^{M}\theta_i x_{i,j}+E_j,
+\qquad
+\varepsilon_j(\boldsymbol{\theta})
+=y_j-\sum_{i=1}^{M}\theta_i x_{i,j}.
 \end{equation}
+Das Symbol $Y$ bezeichnet in diesem Regressionsbeispiel eine beobachtete
+Größe; es hat hier eine andere Rolle als im Schema des inversen Problems. Die indirekten Messgrößen, die die Modellparameter sind, sind bei der linearen Regression die Regressionskoeffizienten und werden in diesem Vorlesungskript  mit dem Formelsymbol $\theta$ bezeichnet. Ein konstanter Term lässt sich durch einen Regressor mit dem Wert $1$
+darstellen. 
 
-Die \textsl{joined probability density} ist dann entsprechend
+Die Regressorwerte werden in diesem Modell als feste, hinreichend
+genau bekannte Eingabewerte behandelt. Bei der Bestimmung eines
+Widerstands aus einer Strom-Spannungs-Kennlinie werden beispielsweise
+verschiedene Stromwerte eingestellt und die zugehörigen Spannungen
+gemessen. Der gewählte Strombereich soll eine zuverlässige Bestimmung
+der Geradensteigung ermöglichen, die den Widerstand beschreibt.
+
+Bei der linearen Regression wird die Messunsicherheit
+der Stromwerte vernachlässigt. Diese Näherung ist gerechtfertigt,
+wenn ihr Einfluss auf den geschätzten Widerstand und dessen
+Standardunsicherheit hinreichend klein ist. Andernfalls muss die
+Messunsicherheit der Stromwerte zusätzlich zu derjenigen der
+Spannungswerte im statistischen Modell berücksichtigt werden.
+Dafür eignet sich beispielsweise eine Geradenanpassung nach der
+Methode der kleinsten Quadrate mit einer Kostenfunktion, die die
+Messunsicherheiten beider Größen berücksichtigt.
+
+Die Annahme aus Abschnitt~\ref{RegressionsIdee} ist präzise so zu verstehen:
+Die zufälligen Abweichungen $E_j$ sind bedingt auf die Regressorwerte
+unabhängig normalverteilt, haben den Erwartungswert
+null und dieselbe Varianz $\sigma^2$. Die Regressanden besitzen damit
+bedingt auf die Regressoren dieselbe Varianz, im Allgemeinen aber
+unterschiedliche Erwartungswerte. Sie sind also nicht identisch verteilt.
+Die lineare Kleinstquadrateschätzung stimmt unter diesen Annahmen mit
+der Maximum-Likelihood-Schätzung der Regressionsparameter überein.
+Als Optimierungsverfahren setzt die Methode der kleinsten Quadrate
+selbst keine Normalverteilung voraus.
+
+\paragraph{Anschluss an die Regressormatrix aus Vorlesung \ref{KapitellinReg}.}
+Wir verwenden weiterhin die dort eingeführte Regressormatrix
+$\mathbf X\in\mathbb R^{J\times M}$. Sie wird auch als
+\textsl{Designmatrix} bezeichnet. Jede Zeile gehört zu einer Beobachtung,
+jede Spalte stellt einen Regressor dar und ist einem Regressionskoeffizienten zugeordnet. Mit den oben verwendeten
+Indizes gilt $[\mathbf X]_{ji}=x_{i,j}$. Für eine Gerade mit
+Achsenabschnitt $\theta_0$ und Steigung $\theta_1$ lautet sie beispielsweise
 \begin{equation}
-p(\vec \varepsilon_1,\dots, \vec \varepsilon_J | \mathbf{p}, \boldsymbol{\Sigma}) \; \propto \;
-\prod\limits_{j=1}^J \,
-e^{-\frac{1}{2} \, \vec \varepsilon^\mathsf{T}_j \, \boldsymbol{\Sigma}^{-1} \, \vec \varepsilon_j } \; = \;
-e^{-\frac{1}{2} \; \sum\limits_{j=1}^J \, \vec \varepsilon^\mathsf{T}_j \, \boldsymbol{\Sigma}^{-1} \, \vec \varepsilon_j } .
+\mathbf X=
+\begin{pmatrix}
+1&x_1\\
+1&x_2\\
+\vdots&\vdots\\
+1&x_J
+\end{pmatrix},
+\qquad
+\boldsymbol\theta=\begin{pmatrix}\theta_0\\\theta_1\end{pmatrix},
+\qquad M=2.
+\label{KonzepteRegressormatrix}
+\end{equation}
+Dabei ist $x_j$ der beobachtete Regressorwert; in Vorlesung~\ref{KapitellinReg} wurde
+hierfür auch $X_j$ bzw. $X_{1,j}$ geschrieben. Der Großbuchstabe in
+$\mathbf X$ bezeichnet hier die bekannte Matrix. Sie wird in 
+dem Regressionsansatz als nicht zufällig betrachtet und unterscheidet sich damit vom Zufallsvektor $\mathbf X_j$ eines allgemeinen Beobachtungsmodells. Wir betrachten also eine feste Regressormatrix mit vollem Spaltenrang und
+gewöhnliche, ungewichtete kleinste Quadrate. Es gilt
+\begin{equation}
+\mathbf Y=\mathbf X\boldsymbol\theta+\mathbf E,
+\qquad
+\mathbb E[\mathbf E]=\mathbf0,
+\qquad
+\operatorname{Cov}(\mathbf E)=\sigma^2\mathbf I_J.
+\label{KonzepteLinearesVektormodell}
+\end{equation}
+Hier enthält $\boldsymbol\theta$ die festen Werte der zu schätzenden
+Modellparameter, in diesem Fall die Regressionskoeffizienten.
+Eine zusätzliche Modellabweichung wird in dieser Herleitung nicht
+berücksichtigt. Der Vektor $\mathbf y$ enthält die beobachteten Werte der im
+Zufallsvektor $\mathbf Y$ zusammengefassten Größen.
+
+Die folgenden Kovarianzen beschreiben, wie die
+berechneten Parameterschätzwerte, Modellwerte und Residuen mit den
+nach dem Beobachtungsmodell möglichen Daten variieren.
+Die Formeln für konkrete Schätzwerte verwenden $\mathbf y$; für die
+Berechnung ihrer Kovarianzen wird darin der Zufallsvektor $\mathbf Y$
+eingesetzt. Den Zirkumflex verwenden wir wie in den vorangegangenen
+Vorlesungen sowohl beim Schätzer als auch bei seinem beobachteten Wert.
+
+\paragraph{Kovarianz der geschätzten Parameter.}
+Aus Vorlesung~\ref{KapitellinReg}, Gl.~(\ref{eq:schaetzwerte_fuer_theta}), ist bekannt:
+\begin{equation}
+\widehat{\boldsymbol\theta}
+=(\mathbf X^\mathsf T\mathbf X)^{-1}\mathbf X^\mathsf T\mathbf y.
+\end{equation}
+Ferner hatten wir in Vorlesung \ref{Einfuehrung} die Multiplikation einer Zufallsgröße $X$ mit einer festen skalaren Größe $b$ kennengelernt, Gl. (\ref{eq:skalierungvarianz}) mit $\operatorname {Var}(b X) \; := \; b^2 \, \operatorname {Var}(X)$. 
+
+Entsprechend gilt dies für eine feste Matrix $\mathbf B$, also
+$\operatorname{Cov}(\mathbf B\mathbf Y)
+=\mathbf B\operatorname{Cov}(\mathbf Y)\mathbf B^\mathsf T$.
+Mit $\operatorname{Cov}(\mathbf Y)=\sigma^2\mathbf I_J$ erhalten wir daher
+\begin{align}
+\operatorname{Cov}(\widehat{\boldsymbol\theta})
+&=\sigma^2(\mathbf X^\mathsf T\mathbf X)^{-1}
+\mathbf X^\mathsf T\mathbf X
+(\mathbf X^\mathsf T\mathbf X)^{-1}\notag\\
+&=\sigma^2(\mathbf X^\mathsf T\mathbf X)^{-1}.
+\label{KonzepteParameterkovarianz}
+\end{align}
+Dies ist die bekannte $M\times M$-Kovarianzmatrix der Schätzwerte der Modellparameter.
+Die Vereinfachung ist möglich, weil
+$(\mathbf X^\mathsf T\mathbf X)^{-1}(\mathbf X^\mathsf T\mathbf X)
+=\mathbf I_M$ unmittelbar als Teilprodukt vorkommt\footnote{Die Symbole $\mathbf I_M$ und $\mathbf I_J$ stehen für Einheitsmatrix, $\mathbf I_M$ für eine $M \times M$-Matrix mit $M$ Einsen auf der Hauptdiagonalen, Nullen sonst.}.
+Daraus folgt jedoch \emph{nicht}
+$\mathbf X(\mathbf X^\mathsf T\mathbf X)^{-1}\mathbf X^\mathsf T
+=(\mathbf X^\mathsf T\mathbf X)^{-1}$.
+Die linke Matrix ist $J\times J$, die rechte $M\times M$ groß.
+Die Reihenfolge der Faktoren darf nicht beliebig geändert werden.
+
+Der Anschluss an Vorlesung~\ref{nonlinOpti} ergibt sich aus der Residuenfunktion
+$\boldsymbol\varepsilon(\boldsymbol\theta)
+=\mathbf y-\mathbf X\boldsymbol\theta$.
+Ihre Jacobi-Matrix bezüglich der Parameter ist
+\begin{equation}
+\mathbf J=-\mathbf X,
+\qquad
+\mathbf J^\mathsf T\mathbf J=\mathbf X^\mathsf T\mathbf X.
+\end{equation}
+Damit lässt sich Gl.~(\ref{KonzepteParameterkovarianz}) auch als
+$\operatorname{Cov}(\widehat{\boldsymbol\theta})
+=\sigma^2(\mathbf J^\mathsf T\mathbf J)^{-1}$ schreiben.
+Im linearen Modell ist dies eine exakte Beziehung. Bei nichtlinearen
+Modellen liefert die entsprechende Formel unter den gleichen
+Varianzannahmen im Allgemeinen nur eine Näherung durch Linearisierung
+am geschätzten Parametervektor.
+
+\paragraph{Schätzwertewerte der Modellparameter und ihre Kovarianz.}
+Die Ausgleichsrechnung (Regression oder Optimierung) liefert die Schätzwertewerte der Modellparameter
+\begin{equation}
+\widehat{\mathbf y}
+=\mathbf X\widehat{\boldsymbol\theta}
+=\underbrace{\mathbf X(\mathbf X^\mathsf T\mathbf X)^{-1}
+\mathbf X^\mathsf T}_{\displaystyle\mathbf P_X}\mathbf y.
+\label{KonzepteProjektionsmatrix}
+\end{equation}
+Die Matrix $\mathbf P_X$ bildet die Daten auf die durch die Anpassung geschätzten Werte der Modellparameter ab.
+Sie ist eine Projektionsmatrix; häufig wird sie auch mit
+$\mathbf H$ bezeichnet. Hier verwenden wir $\mathbf P_X$, um sie von
+der Hesse-Matrix der Kostenfunktion aus Vorlesung~3 zu unterscheiden.
+Die Kovarianzfortpflanzung von den Parameterschätzerwerten ergibt
+\begin{equation}
+\operatorname{Cov}(\widehat{\mathbf y})
+=\mathbf X\operatorname{Cov}(\widehat{\boldsymbol\theta})\mathbf X^\mathsf T
+=\sigma^2\mathbf P_X.
+\end{equation}
+Es gilt $\mathbf P_X^\mathsf T=\mathbf P_X$. Außerdem folgt direkt
+\begin{equation}
+\mathbf P_X^2
+=\mathbf X(\mathbf X^\mathsf T\mathbf X)^{-1}
+(\mathbf X^\mathsf T\mathbf X)
+(\mathbf X^\mathsf T\mathbf X)^{-1}\mathbf X^\mathsf T
+=\mathbf P_X.
+\end{equation}
+Die erneute Projektion bereits geschätzer Modellparameterwerte ändert diese
+also nicht.
+
+\paragraph{Kovarianz der Residuen zu den Schätzwerten der Modellparameter.}
+Die Differenzen zwischen den Messwerten des Regressanden und dem Regressanden, der aus den Schätzwerten der Modellparameter (Regressionskoeffizienten) und den Regressoren gebildet wird, sind die Residuen nach der Ausgleichsrechnung (Parameteranpassung). Sie werden im Folgenden kurz \textsl{angepasste Residuen} genannt:
+\begin{equation}
+\widehat{\boldsymbol\varepsilon}
+=\boldsymbol\varepsilon(\widehat{\boldsymbol\theta})
+=\mathbf y-\widehat{\mathbf y}
+=(\mathbf I_J-\mathbf P_X)\mathbf y.
+\end{equation}
+Ihre Kovarianzmatrix hängt somit über eine andere Matrix von den Beobachtungen ab als die Kovarianzmatrix der Parameterschätzwerte. Aus der Regel zur Kovarianzfortpflanzung folgt
+\begin{align}
+\operatorname{Cov}(\widehat{\boldsymbol\varepsilon})
+&=\sigma^2(\mathbf I_J-\mathbf P_X)
+(\mathbf I_J-\mathbf P_X)^\mathsf T\notag\\
+&=\sigma^2(\mathbf I_J-2\mathbf P_X+\mathbf P_X^2)\notag\\
+&=\sigma^2(\mathbf I_J-\mathbf P_X)\notag\\
+&=\sigma^2\left[\mathbf I_J-
+\mathbf X(\mathbf X^\mathsf T\mathbf X)^{-1}\mathbf X^\mathsf T\right].
+\label{KonzepteResiduenkovarianz}
+\end{align}
+Diese $J\times J$-Matrix beschreibt die Residuen bezüglich der Parameterschätzwerte, nicht die
+$M$ Parameterschätzwerte selbst. Ihre Diagonalelemente sind
+$\operatorname{Var}(\widehat\varepsilon_j)
+=\sigma^2(1-[\mathbf P_X]_{jj})$.
+Für $j\ne k$ gilt
+$\operatorname{Cov}(\widehat\varepsilon_j,\widehat\varepsilon_k)
+=-\sigma^2[\mathbf P_X]_{jk}$.
+
+Die Residuen nach der Parameteranpassung, kurz \textsl{angepasste Residuen} bezeichnet, sind also im Allgemeinen korreliert, auch wenn die ursprünglichen Abweichungen $E_j$ unabhängig sind.
+Normalverteilung ist für diese Kovarianzformeln nicht erforderlich.
+
+Anschaulich entsteht die Kopplung dadurch, dass dieselben Daten zur
+Schätzung aller Modellwerte verwendet werden. Die Normalgleichungen
+aus Vorlesung~\ref{KapitellinReg} verlangen
+$\mathbf X^\mathsf T\widehat{\boldsymbol\varepsilon}=\mathbf0$.
+Bei einer Geraden mit Achsenabschnitt bedeutet dies insbesondere
+$\sum_j\widehat\varepsilon_j=0$ und
+$\sum_j x_j\widehat\varepsilon_j=0$.
+Die Residuen können daher nicht unabhängig voneinander variieren.
+
+\paragraph{Bedeutung der aus den Residuen geschätzten Varianz.}
+Die in Vorlesung~\ref{KapitellinReg} verwendete Größe
+\begin{equation}
+\widehat\sigma_\varepsilon^2
+=\frac{\widehat{\boldsymbol\varepsilon}^\mathsf T
+\widehat{\boldsymbol\varepsilon}}{J-M},\qquad J>M,
+\end{equation}
+ist ein Schätzergebnis der gemeinsamen Varianz $\sigma^2$ der ursprünglichen
+Abweichungen $E_j$. Sie ist weder die Kovarianzmatrix des angepassten
+Residuenvektors noch die Varianz jedes einzelnen angepassten Residuums.
+Bei unbekanntem $\sigma^2$ wird in den obigen Kovarianzformeln
+$\sigma^2$ durch $\widehat\sigma_\varepsilon^2$ ersetzt, um die jeweiligen
+Kovarianzmatrizen zu schätzen. Damit ergibt sich insbesondere wieder
+die empirische Parameterkovarianz aus
+Gl.~(\ref{UnsicherheitRegressparams}) in Vorlesung~\ref{KapitellinReg}.
+
+\section{Vektorielle Beobachtungen und gewichtete kleinste Quadrate}
+\label{V4VektorLikelihood}
+
+Für $N$ gemeinsam beobachtete Größen enthält die Matrix
+$\boldsymbol{\Sigma}_j$ die Varianzen und Kovarianzen der zufälligen Abweichungen:
+\begin{equation}
+\boldsymbol{\Sigma}_j=
+\begin{pmatrix}
+\sigma_{1,j}^2 & \cdots & \sigma_{1N,j}\\
+\vdots & \ddots & \vdots\\
+\sigma_{N1,j} & \cdots & \sigma_{N,j}^2
+\end{pmatrix}.
+\end{equation}
+Die Kovarianzen innerhalb einer Beobachtung sind von Abhängigkeiten
+zwischen verschiedenen Beobachtungen zu unterscheiden.
+Im Folgenden setzen wir weiterhin unabhängige Beobachtungen voraus.
+
+Für das additive Modell aus Gl.~(\ref{KonzepteAdditivesModell}) ohne
+zusätzliche Modellabweichung und mit
+$\mathbf{E}_j\sim\mathcal{N}_N(\mathbf{0},\boldsymbol{\Sigma}_j)$ und
+positiv definiten Kovarianzmatrizen gilt
+\begin{equation}
+p(\mathbf{x}_j\mid\mathbf{p},\boldsymbol{\Sigma}_j)
+=\frac{\exp\!\left[-\tfrac12\boldsymbol{\varepsilon}_j(\mathbf{p})^{\mathsf{T}}
+\boldsymbol{\Sigma}_j^{-1}\boldsymbol{\varepsilon}_j(\mathbf{p})\right]}
+{(2\pi)^{N/2}\sqrt{\det\boldsymbol{\Sigma}_j}}.
+\end{equation}
+Hier bezeichnet
+$\boldsymbol{\varepsilon}_j(\mathbf{p})=\mathbf{x}_j-\mathbf{f}_j(\mathbf{p})$
+den $N$-dimensionalen Residuenvektor der Beobachtung $j$.
+Für den gesamten Datensatz können die Vektoren zu
+$\boldsymbol{\varepsilon}(\mathbf{p})
+=(\boldsymbol{\varepsilon}_1(\mathbf{p})^\mathsf{T},\dots,
+\boldsymbol{\varepsilon}_J(\mathbf{p})^\mathsf{T})^\mathsf{T}$
+zusammengefasst werden. Wie im skalaren Fall gilt nach der Anpassung
+$\widehat{\boldsymbol{\varepsilon}}
+=\boldsymbol{\varepsilon}(\widehat{\mathbf{p}})$.
+Bei einer implizit beschriebenen Modellkurve müssen gegebenenfalls
+zusätzlich die Positionen der Modellpunkte bestimmt werden. Dies
+veranschaulicht anschließend das Geradenbeispiel in
+Abschnitt~\ref{V4StreuendeKoordinaten}. Die Dichte bezieht sich auf die ursprünglichen
+Beobachtungen, nicht auf die bereits angepassten Residuen.
+
+Die gemeinsame Dichte, englisch \textsl{joint probability density}, ist
+\begin{equation}
+p(\mathbf{x}_1,\dots,\mathbf{x}_J\mid
+\mathbf{p},\boldsymbol{\Sigma}_1,\dots,\boldsymbol{\Sigma}_J)
+=\prod_{j=1}^{J}p(\mathbf{x}_j\mid\mathbf{p},\boldsymbol{\Sigma}_j).
 \label{LikelihoodKov}
 \end{equation}
-
-
-Bei der Lösung eines inversen Problems geht es darum, die Parameter $\mathbf{p}$
-für gegebene Beobachtungen $X_{i,j}$ zu finden, die das Maximum der Wahrscheinlichkeitsdichtefunktion
-Gl.~(\ref{LikelihoodKov}) bilden, d.h.\ die Parameter, für die die Wahrscheinlichkeitsdichte
-maximal wird. Wir schreiben deshalb die Residuenvektoren $\vec \varepsilon_j$ als Funktion
-der Beobachtungen $\vec \varepsilon(X_{1,j},\dots,X_{N,j},\mathbf{p})$ auf und verändern die Schreibweise
-für die Wahrscheinlichkeit so, dass wir als Likelihood $l$, die eine Funktion der
-Variablen $\mathbf{p}$ und $\boldsymbol{\Sigma}$ für gegebene Beobachtungen $(X_{1,j},\dots,X_{N,j})$ ist,
-ausdrücken. Gl.~(\ref{LikelihoodKov}) bekommt dann folgende Gestalt
+Wir fassen alle beobachteten Werte als Datensatz $\mathcal{D}$ zusammen.
+Sind die Kovarianzmatrizen bekannte Funktionen der Parameter, lautet
+die Likelihood für feste Daten
 \begin{equation}
-l(\mathbf{p}, \boldsymbol{\Sigma} | \{X_{1,1}, \dots, X_{1,J}\}, \dots, \{X_{N,1}, \dots, X_{N,J}\} ) \; \propto \;
-e^{-\frac{1}{2} \; \sum\limits_{j=1}^J \, \vec \varepsilon^\mathsf{T}(X_{1,j},\dots,X_{N,j},\mathbf{p}) \,
- \boldsymbol{\Sigma}^{-1} \, \vec \varepsilon(X_{1,j},\dots,X_{N,j},\mathbf{p}) } .
+l(\mathbf{p};\mathcal{D})
+=\frac{\exp[-Q(\mathbf{p})/2]}
+{(2\pi)^{NJ/2}\displaystyle\prod_{j=1}^{J}
+\sqrt{\det\boldsymbol{\Sigma}_j(\mathbf{p})}},
 \label{LikelihoodKov2}
 \end{equation}
-Die Kovarianzmatrix ist wie die Residuen Funktion der Parameter und der Beobachtungen,
-also $\boldsymbol{\Sigma}(X_{1,j},\dots,X_{N,j},\mathbf{p})$ und
-variiert werden die Parameter $\mathbf{p}$.
-Zur Maximierung der in Gl.~(\ref{LikelihoodKov2}) gegebenen
-\textsl{Likelihood} wird der Exponent minimiert, was in die Methode der kleinsten Residuenquadratsumme
-übergeht, also
+wobei die Daten als feste Werte in die Residuen und damit also Kostenfunktion eingehen
 \begin{equation}
-\min_{\mathbf{p}} \; \left\{
- \sum\limits_{j=1}^J \, \vec \varepsilon(X_{1,j},\dots,X_{N,j},\mathbf{p})^\mathsf{T} \,
-\boldsymbol{\Sigma}(X_{1,j},\dots,X_{N,j},\mathbf{p})^{-1} \, \vec \varepsilon(X_{1,j},\dots,X_{N,j},\mathbf{p})_j \right\} .
+Q(\mathbf{p})=\sum_{j=1}^{J}
+\boldsymbol{\varepsilon}_j(\mathbf{p})^{\mathsf{T}}
+\boldsymbol{\Sigma}_j(\mathbf{p})^{-1}\boldsymbol{\varepsilon}_j(\mathbf{p}).
+\label{generalLSmethod}
 \end{equation}
+Sind die Kovarianzmatrizen fest vorgegeben und parameterunabhängig,
+ist die Maximierung der Likelihood gleichbedeutend mit der Minimierung
+von $Q$. Dies ist die verallgemeinerte Methode der kleinsten Quadrate.
+Der Ausdruck $\boldsymbol{\varepsilon}^{\mathsf{T}}\boldsymbol{\Sigma}^{-1}\boldsymbol{\varepsilon}$
+ist dimensionslos. Er erlaubt somit auch die gemeinsame Behandlung
+von Komponenten mit unterschiedlichen physikalischen Einheiten;
+ein gewöhnlicher euklidischer Abstand wäre in diesem Fall nicht sinnvoll.
 
-\section{Vollständiges Messergebnis einer normalverteilten Messgröße}
-
-Zu einem \textsl{Messergebnis} gehört jeweils ein Intervall, das ein Maß für die Unsicherheit
-des Wertes/ der Werte der Messgröße ist, siehe [VIM 2.9]
-
-\begin{quote}
-\textbf{Messergebnis}
-
-Menge von Größenwerten, die einer Messgröße zugewiesen sind, zusammen mit jeglicher
-verfügbarer relevanter Information
-
-ANMERKUNG 1 Ein \textsl{Messergebnis} enthält im Allgemeinen \glqq relevante Information\grqq ~über
-die Menge der Größenwerte, von denen einige repräsentativer für die Messgröße sein können als andere.
-Dies kann in Form einer Wahrscheinlichkeitsdichtefunktion ausgedrückt werden.
-
-ANMERKUNG 2 Ein \textsl{Messergebnis} wird im Allgemeinen
-als ein einziger Messwert und eine \textsl{Messunsicherheit}
-ausgedrückt. Wird die Messunsicherheit für einige
-Zwecke als vernachlässigbar angesehen, kann das
-Messergebnis als ein einziger Messwert ausgedrückt
-werden. In vielen Bereichen ist dies die übliche Art, ein
-Messergebnis auszudrücken.
-
-ANMERKUNG 3 In der traditionellen Literatur und in der
-vorhergehenden Ausgabe des VIM war das Messergebnis
-als ein Wert definiert, der einer Messgröße zugewiesen
-ist, und so erklärt, dass er eine Anzeige oder ein
-unkorrigiertes oder ein korrigiertes Ergebnis bedeutet, je
-nach Kontext.
-\end{quote}
-
-Mit der in Anmerkung~1 angesprochenen Wahrscheinlichkeitsdichteverteilung $p: X \mapsto p(X)$
-kann beispielsweise  eine Gaußverteilung gemeint sein, mit der sich das Streuverhalten
-der betrachteten Messgröße beschreibbar ist. Sie gibt die Information darüber, wie groß die
-Wahrscheinlichkeit dafür ist, dass eine einzelne Beobachtung innerhalb eines gewissen
-Intervalls $[x_1, x_2]$ liegt. Das Intervall $[x_1, x_2]$ wird im Rahmen der frequentistischen
-Betrachtungsweise \textsl{Vertrauensintervall} und im Rahmen der bayesischen Betrachtungsweise
-\textsl{Credible interval}, was auf Deutsch \textsl{Glaubwürdigkeitsintervall} heißt, genannt.
-In der Metrologie wird ein gemeinsamer Begriff für beide Betrachtungsweisen verwendet:
-\textsl{Überdeckungsintervall}.
-Die Wahrscheinlichkeit $\alpha$, dass eine Einzelbeobachtung außerhalb des Überdeckungsintervalls liegt,
-heißt \textsl{Signifikanzniveau}. Die Die Wahrscheinlichkeit $1 - \alpha$, dass eine Einzelbeobachtung
-innerhalb des Überdeckungsintervalls liegt, heißt \textsl{Vertrauensniveau}.
-
-Das Überdeckungsintervall gibt den Bereich an, in dem ein Ereignis mit
-Wahrscheinlichkeit $1-\alpha$ beobachtet wird bzw.\ die Messgröße einen Wert in diesem Bereich
-annimmt, das heißt
+Hängen die Kovarianzmatrizen dagegen von den zu schätzenden Parametern
+ab, muss auch ihre Determinante berücksichtigt werden:
 \begin{equation}
-\int\limits_{x_1}^{x_2} p(X) \, \operatorname{d} X \; = \; 1 - \alpha .
-\label{eq:vertrauensniveau}
+-2\log l(\mathbf{p};\mathcal{D})
+=NJ\log(2\pi)+\sum_{j=1}^{J}\log\det\boldsymbol{\Sigma}_j(\mathbf{p})
++Q(\mathbf{p}).
+\label{KonzepteLogdet}
 \end{equation}
-Eine Wahrscheinlichkeitsdichteverteilung $p(X)$
-wird immer so normiert, dass ihre Fläche $1$ ist:
-\begin{equation}
-\int\limits_{-\infty}^\infty p(X) \, \operatorname{d} X \; = \; 1
-\end{equation}
-Das heißt mit anderen Worten:
-Unsere Größe nimmt mit Wahrscheinlichkeit $1$ irgend einen beliebigen
-Wert zwischen minus und plus Unendlich an.
+Hier sind alle Größen in fest gewählten Einheiten ausgedrückt.
+Eine Änderung der Einheiten verändert nur parameterunabhängige
+Konstanten in der Log-Likelihood.
+Zu schätzende Kovarianz\-parameter müssen in das Schätzproblem einbezogen
+werden. Die Verwendung von aus denselben Beobachtungen abgeleiteten
+Gewichten ist gesondert zu begründen; sie liefert nicht automatisch
+eine vollständige Maximum-Likelihood-Schätzung.
 
-Das vollständige Messergebnis setzt sich zusammen aus dem Erwartungswert
-\begin{equation}
-E(X) \; = \; \int\limits_{-\infty}^\infty \, X  p(X) \, \operatorname{d} X
-\end{equation}
-und dem Über\-deck\-ungs\-intervall, das sich durch Umkehrung von Gl.~(\ref{eq:vertrauensniveau})
-herleiten lässt, also aus der Umkehrfunktion $P^{-1}$ der kumulativen Verteilung das
-\begin{equation}
-[P^{-1}(\frac{\alpha}{2}), P^{-1}(1-\frac{\alpha}{2})] .
-\end{equation}
+Sind verschiedene Beobachtungen korreliert, gilt die
+Produktdarstellung aus Gl.~\eqref{LikelihoodKov} nicht mehr. Dann werden alle
+Beobachtungen zu einem Vektor zusammengefasst. Sie müssen durch eine gemeinsame Wahrscheichlichkeitsdichte (\textsl{joint probability density}) beschrieben werden und entsprechend gemeinsam mit ihrer vollständigen Kovarianzmatrix modelliert werden.
 
-Man kann zur Berechnung eines Überdeckungsintervalls
-rechenzeiteffizient auf vorhandene tabellierte Werte für
-die Umkehrfunktion der Normalverteilung zurück greifen, wenn
-folgendes der Fall ist:
-\begin{itemize}
-\item Über die reinen Beobachtungen $X_{1,j}$ hinaus liegen keine
-Informationen vor, also keine vorherigen Ergebnisse zu den zu
-schätzenden Modellparameter (kein \textsl{Prior})
-und keine weiteren beeinflussenden Verteilungen.
-\item Es kann davon ausgegangen werden, dass die
-einzelnen Beobachtungswerte um das Modell
-normalverteilt streuen.
-\end{itemize}
-Vertrauensintervalle können mit Hilfe
-tabellierter Werte von Integrationsgrenzen zu ausgesuchten Ver\-trauens\-niveaus
-der Normalverteilung berechnet werden. Eine solche Integrationsgrenze wird \textsl{Quantil}
-genannt. Die Tabellen beziehen sich auf normierte Zufallsgrößen.
-Für die Gaußverteilung normieren wir die Zufallsgröße, so dass der
-Erwartungswert $\mu = 0$ ist und die Varianz $\sigma^2 = 1$, d.h.
-$Z$ ist \textsl{standardnormalverteilt}
-\begin{equation}
-Z \; \sim \; \mathcal{N}(0,1) .
-\label{standardNormalverteilt}
-\end{equation}
-Die Wahrscheinlichkeitsdichtefunktion $p(Z)$ ist die \textsl{Standard}normalverteilung
-\begin{equation}
-p(Z) \; = \; \frac{1}{\sqrt{2 \pi}} \, e^{-\frac{1}{2} Z^2}
-\qquad \textrm{mit} \qquad Z \; = \; \frac{X - \mu}{\sigma} .
-\end{equation}
+\section{Streuende Koordinaten und gewichtete Geradenanpassung}
+\label{V4StreuendeKoordinaten}
 
-Die in den Formelsammlungen und Tabellenwerken aufgelisteten Grenzen sind
-als obere Integrationsgrenze definiert
+Die allgemeine Gewichtung wenden wir nun auf eine Geradenanpassung an.
+Häufig sind mehreren Komponenten einer Beobachtung Messunsicherheiten
+zugeordnet. Bei der Bestimmung eines elektrischen Widerstands können dies
+beispielsweise Strom und Spannung sein. Auch Größen gleicher
+physikalischer Dimension können unterschiedlich stark streuen, etwa
+die horizontale Position und die vertikale Höhe bei einer
+Oberflächenmessung. Die Form der Kostenfunktion muss diese Unterschiede
+berücksichtigen.
+
+Für die geometrische Darstellung betrachten wir zunächst zwei Größen
+gleicher physikalischer Dimension, ausgedrückt in derselben Einheit und
+mit gleicher Achsenskalierung. Eine Gerade lässt sich durch ihren
+Steigungswinkel $\alpha$ und einen orientierten Abstand $d$ beschreiben.
+Mit dem Einheitsnormalenvektor
+$\mathbf{n}(\alpha)=(-\sin\alpha,\cos\alpha)^\mathsf{T}$ gilt
+$\mathbf{n}^{\mathsf{T}}\mathbf{z}=d$ für Punkte $\mathbf{z}$ auf der
+Geraden. Der geometrische Abstand zum Ursprung ist $|d|$.
+Für den Messpunkt $\mathbf{x}_j=(x_{1,j},x_{2,j})^\mathsf{T}$ ist
 \begin{equation}
-\int\limits_{-\infty}^{z_\alpha} p(Z) \mathrm{d} Z \; = \; \alpha .
-\label{WahrscheinlichkeitQuantil}
+\varepsilon_j(\alpha,d)
+=\mathbf{n}(\alpha)^{\mathsf{T}}\mathbf{x}_j-d
+=-x_{1,j}\sin\alpha+x_{2,j}\cos\alpha-d
+\label{TLSgerade}
 \end{equation}
-In Abb.~\ref{normVertQuantil} wird dies anhand des Quantils $z_\alpha = 0.5244$
-zu $\alpha = 0.7$ also $70 \%$ Wahrscheinlichkeit beispielhaft gezeigt.
+der vorzeichenbehaftete senkrechte Abstand zur Geraden. Dabei bezeichnet
+$\mathbf{x}_j$ einen beobachteten Messpunkt; $\mathbf{z}$ bezeichnet
+einen Punkt, der auf der betrachteten Geraden liegt. Die Messpunkte
+müssen nicht auf dieser Geraden liegen.
+
+
+
+Sind die Messabweichungen sowohl zwischen verschiedenen Messpunkten als
+auch zwischen den beiden Koordinaten unabhängig normalverteilt und
+haben sie überall dieselbe Varianz $\sigma^2$, führt die Anpassung zur
+Minimierung der Summe der quadrierten senkrechten Abstände.
+Dies ist die gewöhnliche \textsl{Total-Least-Squares-Methode} (TLS)
+für die Gerade. Im Folgenden erweitern wir diese Anpassung auf
+unterschiedliche Varianzen und mögliche Korrelationen zwischen den
+beiden Koordinaten eines Messpunkts.
+
+\paragraph{Beobachtete Messpunkte und zu schätzende Punkte auf der Geraden.}
+Zu jedem beobachteten Messpunkt $\mathbf{x}_j$ suchen wir einen
+zugehörigen Punkt $\mathbf{z}_j$ auf der Geraden. Seine Koordinaten
+sind zusätzliche zu schätzende Größen. Für eine vorgegebene Gerade
+kann dieser Punkt nur noch entlang der Geraden verschoben werden;
+pro Messpunkt bleibt daher eine frei wählbare Koordinate entlang der
+Geraden. Die Geradenparameter fassen wir zum Vektor
+$\mathbf{p}=(\alpha,d)^\mathsf{T}$ zusammen.
+
+Die Kovarianzmatrizen der Messabweichungen $\boldsymbol{\Sigma}_j$
+seien bekannt, positiv definit und unabhängig von den zu schätzenden
+Größen. Die verschiedenen Beobachtungen seien statistisch unabhängig.
+Das Beobachtungsmodell lautet
+\begin{equation}
+\mathbf{X}_j=\mathbf{z}_j+\mathbf{E}_j,
+\qquad
+\mathbf{E}_j\sim\mathcal{N}_2(\mathbf{0},\boldsymbol{\Sigma}_j),
+\qquad
+\mathbf{n}(\alpha)^\mathsf{T}\mathbf{z}_j=d.
+\label{V4GeradeBeobachtungsmodell}
+\end{equation}
+$\mathcal{N}_2$ bezeichnet eine zweidimensionale Normalverteilung.
+Die Diagonalelemente von $\boldsymbol{\Sigma}_j$ sind die Varianzen
+der beiden Koordinatenabweichungen; die übrigen Elemente beschreiben
+ihre Kovarianz. Die Punkte $\mathbf{z}_j$ sind in diesem Modell die
+Erwartungswerte der möglichen Beobachtungen $\mathbf{X}_j$.
+Die vorliegenden Messwerte $\mathbf{x}_j$ bleiben während der gesamten
+Anpassung unverändert.
+
+\paragraph{Likelihood und gemeinsame Anpassungsaufgabe.}
+Für die beobachteten Messpunkte lautet die Likelihood
+\begin{align}
+l(\mathbf{p},\mathbf{z}_1,\ldots,\mathbf{z}_J;
+  \mathbf{x}_1,\ldots,\mathbf{x}_J)
+&=C\exp\!\left[-\frac12
+ W(\mathbf{z}_1,\ldots,\mathbf{z}_J)\right],
+\label{V4GeradeLikelihood}\\
+W(\mathbf{z}_1,\ldots,\mathbf{z}_J)
+&=\sum_{j=1}^{J}
+(\mathbf{x}_j-\mathbf{z}_j)^\mathsf{T}
+\boldsymbol{\Sigma}_j^{-1}(\mathbf{x}_j-\mathbf{z}_j),
+\label{V4GeradeGemeinsameKosten}\\
+C&=\prod_{j=1}^{J}\frac{1}{2\pi\sqrt{\det\boldsymbol{\Sigma}_j}}.
+\notag
+\end{align}
+Diese Likelihood wird nur für Modellpunkte betrachtet, die auf der
+jeweiligen Geraden liegen. Die Geradenparameter $\mathbf{p}$ gehen
+somit über die Bedingungen
+$\mathbf{n}(\alpha)^\mathsf{T}\mathbf{z}_j=d$ in die Anpassung ein.
+Der Strichpunkt in der Likelihood trennt die zu schätzenden Größen
+von den feststehenden Beobachtungsdaten.
+
+Die Likelihood ist die gemeinsame Wahrscheinlichkeitsdichte,
+ausgewertet an den beobachteten Messpunkten und als Funktion der zu
+schätzenden Größen betrachtet. \emph{Maximieren} bedeutet hier:
+Wir suchen Geradenparameter und zugehörige Modellpunkte, für die
+dieser Dichtewert möglichst groß ist. Die Daten selbst werden dabei
+nicht verändert oder vergrößert.
+
+Weil die Kovarianzmatrizen fest vorgegeben sind, ist auch der
+Vorfaktor $C$ konstant. Die Likelihood wird daher genau dann maximal,
+wenn die gewichtete Residuenquadratsumme $W$ minimal wird.
+Die gemeinsame Anpassungsaufgabe lautet damit
+\begin{equation}
+\min_{\substack{\alpha,d,\,\mathbf{z}_1,\ldots,\mathbf{z}_J\\
+\mathbf{n}(\alpha)^\mathsf{T}\mathbf{z}_j=d\;\text{für alle }j}}
+W(\mathbf{z}_1,\ldots,\mathbf{z}_J).
+\label{V4GeradeGemeinsameAnpassung}
+\end{equation}
+Zum Verständnis zerlegen wir diese Aufgabe in zwei Schritte:
+Zuerst bestimmen wir die zugehörigen Modellpunkte für eine vorgegebene
+Gerade; danach vergleichen wir verschiedene Geraden.
+
+\paragraph{Erster Schritt: Modellpunkte für ein festes $(\alpha,d)$-Paar.}
+Stellen wir uns eine bestimmte Gerade vor, deren Winkel $\alpha$ und
+Abstand $d$ festgehalten werden. Für jeden Messpunkt wird nun derjenige
+Punkt auf dieser Geraden gesucht, der den gewichteten quadratischen
+Abstand minimiert:
+\begin{equation}
+\mathbf{z}_j^*(\mathbf{p})
+=\underset{\mathbf{z}:\,\mathbf{n}(\alpha)^\mathsf{T}\mathbf{z}=d}
+{\operatorname{arg\,min}}
+(\mathbf{x}_j-\mathbf{z})^\mathsf{T}
+\boldsymbol{\Sigma}_j^{-1}(\mathbf{x}_j-\mathbf{z}).
+\label{V4GeradeModellpunkt}
+\end{equation}
+$\operatorname{arg\,min}$ bezeichnet den Punkt, an dem der Ausdruck
+sein Minimum annimmt, nicht den Wert dieses Minimums.
+\textbf{Verändert wird dabei $\mathbf{z}$, nicht der beobachtete
+Messpunkt $\mathbf{x}_j$.}
+
+Der Stern kennzeichnet den bereits abstandsminimierenden Punkt auf
+der \emph{jeweils vorgegebenen} Geraden. Er bezeichnet keinen beliebigen
+Zwischenstand eines numerischen Iterationsverfahrens. Die Anpassung
+der Geradenparameter ist damit aber noch nicht abgeschlossen.
+Bei einem anderen $(\alpha,d)$-Paar liegen die zugehörigen Punkte
+$\mathbf{z}_j^*(\mathbf{p})$ im Allgemeinen an anderen Stellen.
+Das Argument $\mathbf{p}$ macht diese Abhängigkeit sichtbar.
+
+Der zugehörige Residuenvektor ist
+$\boldsymbol{\varepsilon}_j^*(\mathbf{p})
+=\mathbf{x}_j-\mathbf{z}_j^*(\mathbf{p})$.
+Der skalare senkrechte Abstand $\varepsilon_j(\mathbf{p})$ aus
+Gl.~\eqref{TLSgerade} ist von diesem zweidimensionalen Vektor zu
+unterscheiden. Weil $\mathbf{z}_j^*$ auf der Geraden liegt, gilt
+\[
+\mathbf{n}^\mathsf{T}\boldsymbol{\varepsilon}_j^*
+=\mathbf{n}^\mathsf{T}\mathbf{x}_j-d=\varepsilon_j.
+\]
+Die Minimierung des gewichteten quadratischen Abstands unter dieser
+Bedingung liefert
+\begin{equation}
+\boldsymbol{\varepsilon}_j^*=\mathbf{x}_j-\mathbf{z}_j^*
+=\frac{\varepsilon_j\boldsymbol{\Sigma}_j\mathbf{n}}
+{\mathbf{n}^\mathsf{T}\boldsymbol{\Sigma}_j\mathbf{n}},
+\qquad
+Q_j=\frac{\varepsilon_j^2}
+{\mathbf{n}^\mathsf{T}\boldsymbol{\Sigma}_j\mathbf{n}}.
+\label{KonzepteGewichteteProjektion}
+\end{equation}
+Hier haben wir die Argumente $\mathbf{p}$ bzw. $\alpha$ zur Verkürzung
+weggelassen. $Q_j$ ist der kleinste erreichbare Kostenbeitrag des
+$j$-ten Messpunkts für die vorgegebene Gerade. Die zugehörigen
+Modellpunkte lassen sich unmittelbar berechnen:
+\[
+\mathbf{z}_j^*(\mathbf{p})
+=\mathbf{x}_j-
+\frac{\varepsilon_j(\mathbf{p})\boldsymbol{\Sigma}_j\mathbf{n}(\alpha)}
+{\mathbf{n}(\alpha)^\mathsf{T}\boldsymbol{\Sigma}_j\mathbf{n}(\alpha)}.
+\]
+Für diesen ersten Schritt ist daher kein iteratives Suchverfahren nötig.
+
+Bei unterschiedlichen Koordinatenvarianzen oder einer Korrelation
+zwischen den Koordinaten ist $\boldsymbol{\varepsilon}_j^*$ im Allgemeinen
+nicht parallel zu $\mathbf{n}$. Die gewichtete Projektion steht dann
+im ursprünglichen Koordinatensystem nicht senkrecht zur Geraden.
+Abbildung~\ref{ResiduenVarianzen} zeigt den Unterschied.
 
 \begin{figure}
-\begin{center}
-\includegraphics[width=79mm]{05_vorlesung/media/normpdfQuantil.pdf}
-\hspace{5mm}
-\includegraphics[width=81mm]{05_vorlesung/media/normcdfQuantil.pdf}
-\caption{\label{normVertQuantil} Quantil $z_\alpha = 0.5244$ und Wahrscheinlichkeit
-$\alpha = 0.7$ der Standard\-normalverteilung.}
-\end{center}
+\centering
+\includegraphics[width=\textwidth]{04_vorlesung/media/ResiduenVarianzen.pdf}
+\caption{Euklidische und gewichtete Projektion eines Messpunkts auf
+dieselbe vorgegebene Gerade. Links: Bei isotroper Kovarianz der Messabweichungen
+$\boldsymbol{\Sigma}=\sigma^2\mathbf{I}$ gilt
+$\boldsymbol{\varepsilon}_{\perp}=\varepsilon\mathbf{n}$.
+Rechts: Bei unterschiedlichen Varianzen wird der Mahalanobis-Abstand
+minimiert; $\boldsymbol{\varepsilon}^*$ steht im Allgemeinen nicht senkrecht zur Geraden.
+Die Konturen erfüllen
+$(\mathbf{x}-\mathbf{z})^{\mathsf{T}}\boldsymbol{\Sigma}^{-1}
+(\mathbf{x}-\mathbf{z})=c$; $c$ ist ein festes Konturenniveau, keine Wahrscheinlichkeit.
+Die Konturen sind keine angegebenen Überdeckungsbereiche.}
+\label{ResiduenVarianzen}
 \end{figure}
 
-Dies lesen wir so:
-\begin{quote}
-Die Ereignisse Werte zu $Z$ zu beobachten, die kleiner sind als $z_\alpha$, können
-mit einer Wahrscheinlichkeit von $\alpha$ eintreten.
-\end{quote}
-Die in den Tabellenwerken gelisteten Wahrscheinlichkeiten $\alpha$ werden
-aus der Integration der Wahrscheinlichkeitsdichte der normierten Zufallsgröße
-von minus Unendlich bis zu einer endlichen oberen Integrationsgrenze $z_\alpha$
-gewonnen.
-Die zu einem Wert eines Quantils gehörende Wahrscheinlichkeit wird durch den tiefgestellten
-Index bei $z_\alpha$ gekennzeichnet, in unserem Beispiel aus Abb.~\ref{normVertQuantil}
-ist dies dann
-$$
-z_{0.7} \; = \; 0.5244
-$$
-Als weiteres Beispiel betrachten wir die Frage, wie hoch die Wahrscheinlichkeit ist,
-Werte zu beobachten, die in den Ausläufern einer Verteilungsdichte liegen.
-Die Ausläufer werden im Englischen
-als \textsl{Tails} (Schwänze) bezeichnet. Dies sollen Beobachtungen zu der normierten
-Zufallsgröße $Z$ mit Werten, die zum einen kleiner oder gleich $-1.960$ sind, sein
-$$
-z_{0.025} \; = \; -1.960
-$$
-und zum anderen, die Beobachtungen mit Werten größer oder gleich $1.960$, also die
-in dem rechten Ausläufer (\textsl{Tail}) der Standardnormalverteilung liegen.
-Die Wahrscheinlichkeit für Beobachtungen im linken \textsl{Tail} ist
-\begin{equation*}
-\int\limits_{-\infty}^{-1.960} p(Z) \mathrm{d} Z \; = \; 0.025 .
-\end{equation*}
 
-Aufgrund der Symmetrie der Standardnormalverteilung ist die Wahrscheinlichkeit für das Liegen von
-Werten im rechten \textsl{Tail} ebenfalls $0.025$. Wir rechnen also zusammen, dass mit
-einer Wahrscheinlichkeit von $0.05 = 0.025+0.025$ Werte in den beiden \textsl{Tails} außerhalb
-des Intervalls $[-1.960, 1.960]$ liegen können. Somit ist die Wahrscheinlichkeit, dass sie
-innerhalb des Intervalls liegen $1 - 0.05 = 0.95$
+\paragraph{Zweiter Schritt: Anpassung von Winkel und Abstand der Geraden.}
+Nun werden verschiedene Geraden miteinander verglichen. Für jedes
+$(\alpha,d)$-Paar verwenden wir die zuvor bestimmten zugehörigen
+Punkte $\mathbf{z}_j^*(\mathbf{p})$. Durch Einsetzen dieser Punkte in
+$W$ entsteht eine Kostenfunktion, die nur noch von den beiden
+Geradenparametern abhängt:
 \begin{equation}
-\int\limits_{-1.96}^{1.96} \, p(Z) \, \operatorname{d} Z \; = \; 0.95
+Q(\alpha,d)=\sum_{j=1}^{J}
+\bigl(\boldsymbol{\varepsilon}_j^*(\mathbf{p})\bigr)^\mathsf{T}
+\boldsymbol{\Sigma}_j^{-1}\boldsymbol{\varepsilon}_j^*(\mathbf{p})
+=\sum_{j=1}^{J}\frac{\varepsilon_j(\alpha,d)^2}
+{\mathbf{n}(\alpha)^\mathsf{T}\boldsymbol{\Sigma}_j\mathbf{n}(\alpha)}.
+\label{KostenfktLTSVarmatrix2}
 \end{equation}
-was uns zeigt, wie wir die Tabellen zu verwenden haben.
-Wenn wir ein zweiseitiges Intervall betrachten wollen, wie hier zu einem Vertrauensniveau
-von $95 \%$, so müssen wir im Tabellenwerk nach dem Quantil, das für $97.5 \%$ gelistet
-ist, schauen
-$$
-z_{0.975} \; = \; 1.960
-$$
-weil
-$$
-0.95 \; = \;
-\underbrace{\int\limits_{-\infty}^{z_{0.975}} \, p(Z) \, \operatorname{d} Z}_{0.975} \; - \;
-\underbrace{\int\limits_{-\infty}^{z_{0.025}} \, p(Z) \, \operatorname{d} Z}_{0.025}
-$$
-Aufgrund der Achssymmetrie der Normalverteilung gilt
-$$
-z_{\frac{1}{2}\alpha} = -z_{1-\frac{1}{2}\alpha} .
-$$
-Da sich die Quantile zum jeweiligen Vertrauensniveau $1-\alpha$ auf die normierte Zufallsgröße
-beziehen, muss für die Berechnung des Vertrauensintervalls zurückgerechnet werden
+Die endgültigen Schätzwerte ergeben sich durch Minimierung über
+Winkel und Abstand:
 \begin{equation}
-Z \; = \; \frac{X - \mu}{\sigma} \qquad \Leftrightarrow \qquad X \; = \; \mu + Z \sigma
+\widehat{\mathbf{p}}
+=\begin{pmatrix}\widehat\alpha\\\widehat d\end{pmatrix}
+=\underset{\mathbf{p}=(\alpha,d)^\mathsf{T}}
+{\operatorname{arg\,min}}\,Q(\alpha,d).
+\label{V4GeradeParameterSchaetzung}
 \end{equation}
-also
+Erst nach dieser Anpassung bezeichnen wir die zugehörigen geschätzten
+Modellpunkte und Residuen mit einem Dach:
 \begin{equation}
-[z_{\frac{1}{2}\alpha}, z_{1-\frac{1}{2}\alpha}] =
-[-z_{1-\frac{1}{2}\alpha}, z_{1-\frac{1}{2}\alpha}]
- \qquad \Leftrightarrow  \qquad
-[\mu \, - \, z_{1-\frac{1}{2}\alpha} \, \sigma, \mu \, + \, z_{1-\frac{1}{2}\alpha} \, \sigma]
+\widehat{\mathbf{z}}_j=\mathbf{z}_j^*(\widehat{\mathbf{p}}),
+\qquad
+\widehat{\boldsymbol{\varepsilon}}_j
+=\mathbf{x}_j-\widehat{\mathbf{z}}_j
+=\boldsymbol{\varepsilon}_j^*(\widehat{\mathbf{p}}).
+\label{V4GeradeEndgueltigePunkte}
 \end{equation}
-Mit $\alpha$ sind die $5 \%$ Signifikanzniveau und mit $1-\alpha$ die $95 \%$ Vertrauensniveau gemeint.
+Der Stern unterscheidet somit die Anpassung der Punkte für eine
+vorgegebene Gerade von den endgültigen Schätzwerten nach der Anpassung
+der Geraden. Die beiden Schritte beschreiben die mathematische
+Aufgabe. Ein numerisches Verfahren kann die Geradenparameter und die
+Punkte auch gemeinsam unter den Geradenbedingungen optimieren.
 
-Die Likelihood wird maximal für
+Sind die Messabweichungen in den beiden Koordinaten unkorreliert und
+gelten für alle Messpunkte dieselben Varianzen $\sigma_1^2$ und
+$\sigma_2^2$, vereinfacht sich die Kostenfunktion zu
 \begin{equation}
-y \; = \; \frac{1}{J} \sum_{j=1}^J X_{1,j} ,
+Q(\alpha,d)=\sum_{j=1}^{J}
+\frac{\varepsilon_j(\alpha,d)^2}
+{\sigma_1^2\sin^2\alpha+\sigma_2^2\cos^2\alpha}.
+\label{KostenfktLTSVarmatrix1}
 \end{equation}
-wobei $y$ der Schätzwert für den Modellparameter $Y$ ist.
-Der Schätzwert $s^2$ für die Varianz $\sigma^2$ wird berechnet mit
+Für eine gemeinsame Kovarianz $\sigma_{12}$ kommt im Nenner der Term
+$-2\sigma_{12}\sin\alpha\cos\alpha$ hinzu.
+Man darf also nicht zuerst euklidisch projizieren und anschließend die
+Komponenten dieses Residuenvektors mit unterschiedlichen Varianzen
+gewichten. Bereits die Auswahl des Modellpunkts muss die Kovarianz
+berücksichtigen.
+
+Bei einer gemeinsamen bekannten, positiv definiten Kovarianz kann
+man die Koordinaten so transformieren, dass die transformierten
+Messabweichungen unkorreliert sind und Einheitsvarianz besitzen.
+Die Geradenanpassung lässt sich dann durch eine Eigenwert- oder
+Singulärwertzerlegung lösen. Die trigonometrischen Funktionen in der
+Winkeldarstellung erzwingen somit nicht in jedem Fall eine allgemeine
+iterative nichtlineare Optimierung.
+
+\paragraph{Warum hier kein zusätzlicher Logarithmusterm entsteht.}
+Für jedes $(\alpha,d)$-Paar haben wir die Likelihood bezüglich der
+zugehörigen Modellpunkte maximiert. Das Einsetzen dieser Punkte in
+die ursprüngliche Likelihood heißt \textsl{Profilierung}; die
+entstehende Funktion heißt \textsl{Profil-Likelihood}:
 \begin{equation}
-s^2 \; = \; \frac{1}{J-1} \sum_{j=1}^J (X_{1,j} - y)^2 .
+l_{\mathrm{prof}}(\mathbf{p};\mathbf{x}_1,\ldots,\mathbf{x}_J)
+=C\exp\!\left[-\frac12 Q(\alpha,d)\right].
+\label{V4GeradeProfilLikelihood}
 \end{equation}
+Der Vorfaktor $C$ aus Gl.~\eqref{V4GeradeLikelihood} bleibt dabei
+unverändert, weil alle $\boldsymbol{\Sigma}_j$ fest vorgegeben sind.
+Deshalb gilt
+\[
+-2\ln l_{\mathrm{prof}}
+=-2\ln C+Q(\alpha,d).
+\]
+Der erste Summand ist konstant. Die Maximierung dieser Likelihood
+ist daher gleichbedeutend mit der Minimierung von $Q$.
 
-\section{Konzept der bayesischen Verfahren zum Lösen inverser Probleme}
-\label{bayeskonzept}
+Der Ausdruck
+$\mathbf{n}(\alpha)^\mathsf{T}\boldsymbol{\Sigma}_j\mathbf{n}(\alpha)$
+im Nenner von $Q$ hängt zwar vom Winkel ab. Er entsteht jedoch durch
+das Einsetzen der für die jeweilige Gerade abstandsminimierenden
+Punkte in die ursprüngliche Quadratsumme. Er ist \emph{kein neuer
+Normierungsfaktor} der Likelihood. Deshalb wird der Kostenfunktion
+kein zusätzlicher Logarithmus dieses Ausdrucks hinzugefügt.
 
-Für komplexere Fragestellungen hinsichtlich der Varianzen und hinsichtlich der Möglichkeit,
-sukzessive neue Informationen durch weitere Beobachtungen zu bereits geschätzten Modellparametern
-hinzuzufügen und damit die Werte von
-interessierenden indirekten Messgrößen immer weiter zu verbessern, stoßen die gängigen Ansätze
-der Maximum-Likelihood-Methode an gewisse Grenzen. Insbesondere die Möglichkeit, bereits durch
-vergangene Optimierungsprozesse gewonnene Parameter durch Gewinnen neuer Beobachtungen zu verändern,
-ist nicht Gegenstand der \glqq herkömmlichen\grqq ~Statistik. Mit \glqq herkömmlich\grqq ~ist
-an dieser Stelle die \textsl{frequentistische} Statistik gemeint, bei der empirisch aus
-Beobachtungen Häufigkeitsverteilungen gewonnen werden, empirische Wahrscheinlichkeitsverteilungen
-(Likelihood) berechnet werden, und entsprechend eine Schätzung von Modellparametern erfolgt.
-Die lineare Regression ist ein Teilgebiet der \textsl{frequentistischen} Statistik
+% \paragraph{Abgrenzung zur Integration über mögliche Modellpunkte.}
+% Hier wurden die Modellpunkte geschätzt, indem für jede Gerade die
+% Likelihood bezüglich ihrer Positionen maximiert wurde.
+% Eine \emph{Integration} über mögliche Modellpunkte wäre ein anderes
+% Vorgehen; damit ist tatsächlich eine Rechnung mit dem
+% Integraloperator $\int$ gemeint. Dafür müsste man zusätzlich angeben,
+% mit welcher Verteilung bzw. welchem Integrationsmaß die verschiedenen
+% Positionen entlang der Geraden berücksichtigt werden sollen.
+% Eine solche Verteilung der Modellpunkte ist im hier verwendeten
+% Beobachtungsmodell nicht vorgegeben. Die oben hergeleitete
+% Kostenfunktion beruht auf der Minimierung bezüglich der Modellpunkte,
+% nicht auf einer solchen Integration.
 
-In der Statistik gibt es dazu zweierlei Blickrichtungen:
-\begin{enumerate}
-\item In der \textbf{frequentistischen Statistik} wird angenommen,
-dass der Wert einer indirekten Messgröße unbekannt, aber konstant/ fest ist und deshalb
-auch \textsl{wahrer Wert} genannt wird. In Bezug auf die direkt messbaren Größen wird angenommen,
-dass sie aufgrund des Mangels an Erkenntnis über alle möglichen Einflüsse und Abläufe im Messprozess
-streuen, so dass sie als Zufallsgrößen behandelt werden. Die Behandlung als Zufallsgröße
-bedeutet dabei, dass der Wahrscheinlichkeit für eine Beobachtung einen konkreten Wert anzunehmen eine
-Wahrscheinlichkeitsdichteverteilung zugrunde gelegt wird.
+\section{Bayesische Auswertung: vom Vorwissen zur Parameterverteilung}
+\label{V4Bayes}
+
+Bislang wurden Verteilungen möglicher Beobachtungen (von direkten Messgrößen) und daraus
+berechneter Schätzwerte von Modellparamtern (von indirekten Messgrößen) betrachtet. Eine Likelihood ließ sich auswerten
+und maximieren, ohne den festen Parametern selbst Wahrscheinlichkeiten
+zuzuordnen. Nun ergänzen wir das Beobachtungsmodell um eine Beschreibung
+des Kenntnisstands über die zu schätzenden Modellparameter.
+
+Im \textsl{bayesischen Ansatz} lässt sich die Unsicherheit über den
+Wert einer indirekten Messgröße, die durch einen Modellparameter
+beschrieben wird, durch eine
+\textsl{Wahrscheinlichkeitsverteilung} beschreiben. Ausgangspunkt ist die
+Frage: Welche Werte kommen nach unserem gegenwärtigen Kenntnisstand für
+den gesuchten Parameter infrage, und wie plausibel sind sie? Dazu werden
+Wertebereichen Wahrscheinlichkeiten zugeordnet. Eine Wahrscheinlichkeit
+von beispielsweise $90\,\%$ für einen bestimmten Bereich drückt aus, wie
+stark die verfügbare Information unter den getroffenen Annahmen dafür
+spricht, dass der unbekannte Wert in diesem Bereich liegt.
+
+Betrachten wir als Beispiel die indirekte Messgröße Widerstand $R$ eines Bauteils
+bei festgelegten Umgebungsbedingungen. Aus einer früheren Kalibrierung
+und unserem Wissen über die Stabilität des Bauteils erwarten wir einen
+Wert nahe $100\,\Omega$. Dieses Vorwissen könnte durch eine Verteilung
+beschrieben werden, die dem Bereich von $99\,\Omega$ bis $101\,\Omega$
+eine Wahrscheinlichkeit von $90\,\%$ zuordnet. Auf die Werte außerhalb
+dieses Bereichs entfallen dann zusammen die übrigen $10\,\%$. Diese
+Zahlen dienen nur der Veranschaulichung; in einer konkreten Aufgabe muss
+die Verteilung aus der verfügbaren Information begründet werden.
+Die Angabe eines einzigen Bereichs und seiner Wahrscheinlichkeit legt
+die gesamte Verteilung noch nicht fest.
+
+Für die hier betrachteten kontinuierlichen Parameter beschreiben wir
+solche Verteilungen durch eine \textsl{Dichtekurve}. Die Fläche unter der
+Kurve über einem Wertebereich gibt dessen Wahrscheinlichkeit an;
+die gesamte Fläche beträgt $1$, entsprechend $100\,\%$.
+Eine starke Konzentration der Fläche in der Nähe von $100\,\Omega$
+würde ausdrücken, dass wir den Widerstand dort mit hoher
+Wahrscheinlichkeit vermuten. Eine stärker um denselben Wert gestreute
+Verteilung würde eine größere Unsicherheit über seinen Wert ausdrücken.
+Dabei kann der Widerstand selbst während der Messung konstant sein:
+Die Verteilung beschreibt hier unseren unvollständigen Kenntnisstand
+über diesen festen Wert.
+
+Die Verteilung, die unseren Kenntnisstand \textbf{vor Einbeziehung
+der jetzt betrachteten Daten} beschreibt, heißt
+\textsl{Priorverteilung} oder kurz \textsl{Prior}. Das Wort
+\textsl{prior} bedeutet hier \textsl{vorhergehend}.
+\glqq A priori\grqq ~bedeutet in diesem Zusammenhang somit nicht
+\glqq vor jeder experimentellen Erfahrung\grqq. Eine Priorverteilung kann
+gerade auf früheren Messungen beruhen. Beispielsweise kann die
+Parameterverteilung aus einer früheren bayesischen Auswertung als Prior
+für eine neue Auswertung dienen, sofern die damalige Information auf
+die aktuelle Messaufgabe übertragbar ist.
+
+Weitere Grundlagen können physikalische Zusammenhänge oder begründete
+Angaben über mögliche Wertebereiche sein. Die Information legt nicht
+immer eine einzige Verteilung eindeutig fest. Die Wahl der Prior gehört
+deshalb zu den Annahmen der Auswertung und muss offengelegt und begründet
+werden. Auch eine sehr breite Verteilung ist eine solche Annahme; sie
+bedeutet nicht automatisch, dass keinerlei Vorwissen eingebracht wird.
+Eine Verteilung wird dabei nicht allein deshalb zur Prior, weil sie vor
+dem Experiment bekannt ist: Eine bekannte Verteilung der Streuung
+künftiger Beobachtungen gehört zunächst zum Beobachtungsmodell.
+Eine Prior beschreibt dagegen den Kenntnisstand über die Werte der
+zu schätzenden Modellparameter.
+
+\subsection{Aktualisierung durch die Bayes-Regel}
+
+Wir fassen alle zu schätzenden Modellparameter in $\boldsymbol\theta$ zusammen.
+Dieser Vektor kann beispielsweise die Modellparameter $\mathbf p$
+und eine unbekannte Beobachtungsstreuung $\sigma$ enthalten.
+Sei $p_0(\boldsymbol\theta)$ die Prior vor Einbeziehung der aktuellen
+Daten $\mathbf x$. Die Bayes-Regel lautet für Dichten
 \begin{equation}
-\underbrace{(Y_1, \dots, Y_M)}_{\mathrm{unbek, konst, wahr}} \xrightarrow{\mathrm{Messprozess}}
-\underbrace{(X_1, \dots, X_N)}_{\mathrm{Zufallsgroessen}}
+p_1(\boldsymbol\theta\mid\mathbf x)
+=\frac{l(\boldsymbol\theta;\mathbf x)\,p_0(\boldsymbol\theta)}
+{\displaystyle\int_{\Theta}
+l(\boldsymbol\theta';\mathbf x)\,p_0(\boldsymbol\theta')
+\,\mathrm d\boldsymbol\theta'}.
+\label{V4BayesDichten}
 \end{equation}
-\item Umgekehrt ist die Weise, wie das Zustandekommen der Streuung von Größen gesehen wird,
-in der Statistik, die den Satz von Bayes zum Berechnen bedingter Wahrscheinlichkeiten
-verwendet. Dieses Gebiet der Statistik wird wegen der Verwendung des
-Satzes von Bayes auch \textbf{bayesische Statistik} genannt.
+Der Nenner integriert über alle zulässigen Parameterwerte
+$\boldsymbol\theta'\in\Theta$. Er ist bei gegebenen Daten eine Konstante
+und sorgt dafür, dass die resultierende Dichte die Gesamtwahrscheinlichkeit
+$1$ besitzt. Wir setzen voraus, dass dieses Integral positiv und endlich
+ist. Die Verteilung $p_1$ heißt \textsl{Posteriorverteilung} oder kurz
+\textsl{Posterior}. Sie beschreibt den aktualisierten Kenntnisstand
+\textbf{nach} Einbeziehung der Daten.
 
-Hier werden die Beobachtungen der direkten Größen, als konkrete, feste Werte eingesetzt,
-um die Erkenntnis über die zu bestimmende indirekte Größe zu überprüfen bzw.\ zu vermehren.
-Die Vorstellung ist, dass durch den Mangel an Erkenntnis die indirekten Größen als
-Zufallsgrößen zu behandeln sind. Es wird nun also nicht mehr nur eine Likelihood-Verteilung
-berechnet, deren Maximum gesucht wird. Sondern es wird eine Kombination der Likelihood mit
-einer Wahrscheinlichkeitsdichteverteilung,
-die eine {\`a} priori Annahme über die indirekten Messgrößen darstellt, berechnet und der
-Erwartungswert (das erste statistische Moment) und die Varianz (das zweite statistische Moment)
-dieser kombinierten Verteilungsdichte ermittelt.
+Bei gegebenem Beobachtungsmodell verstärkt die Multiplikation mit der
+Likelihood diejenigen Parameterbereiche relativ zu anderen, die besser
+mit den neuen Daten vereinbar sind. Die Prior trägt die zuvor verfügbare
+Information bei. Erst ihre Verknüpfung und die Normierung liefern die
+hier verwendete Parameterdichte.
 
-Dabei repräsentieren die Wahrscheinlichkeiten für die zu erwartenden Beobachtungen eines Parameters
-(einer indirekten Messgröße),
-den Grad der Erkenntnis, vernünftiger Glaubwürdigkeit, über die indirekte Messgröße.
-In der englischsprachigen Literatur wird dies \textsl{Degree of Belief} genannt.
+Aus der Posteriorverteilung lassen sich beispielsweise ein Erwartungswert
+als Schätzwert und eine Standardabweichung als Unsicherheitsmaß berechnen,
+sofern diese Größen existieren. Diese Standardabweichung beschreibt
+die verbleibende Unsicherheit über den Parameter bei gegebenen Daten.
+Allgemeiner bestimmt man zu einer vorgegebenen Wahrscheinlichkeit $1-\alpha$ die Integrationsgrenzen der Posterior, um das Überdeckungsintervall zu erhalten. Dazu kommen wir dann etwas später.
 
-Vielleicht kann man sich diese Denkweise so vorstellen wie die Vorgehensweise eines Detektivs
-oder Kriminalkommissars beim Sammeln von immer mehr Indizien zum Aufklären eines Falls.
+Frequentistisch wird die Standardunsicherheit der geschätzten
+Modellparameter aus der Streuung der Parameterschätzwerte bestimmt,
+die das Beobachtungsmodell und das Schätzverfahren gemeinsam ergeben.
+Die genauen
+Integrale und ein Beispiel folgen in Abschnitt~\ref{V4Lehrbeispiel}.
+
+\subsection{Frühere Messungen: gemeinsame Auswertung oder Aktualisierung}
+\label{V4FruehereMessungen}
+
+Auch frequentistische Verfahren können physikalisches Vorwissen und
+Ergebnisse früherer Messungen berücksichtigen. Physikalisches Vorwissen
+kann beispielsweise in die Modellgleichungen oder in Einschränkungen
+des zulässigen Parameterbereichs eingehen. Frühere und aktuelle
+Messergebnisse lassen sich gemeinsam auswerten, wenn ein statistisches
+Modell ihren Zusammenhang mit den gesuchten Parametern beschreibt.
+Dabei müssen auch mögliche Änderungen der Messgröße und Abhängigkeiten
+zwischen den Messungen berücksichtigt werden.
+
+Wir betrachten zur Vereinfachung einen einzelnen Parameter $\theta$.
+Bezeichnen $\mathbf x^{(1)}$ frühere und $\mathbf x^{(2)}$ aktuelle
+Messdaten und sind beide Datensätze bei gegebenem $\theta$ unabhängig,
+so ist die gemeinsame Likelihood
+\[
+l_{\mathrm{gesamt}}(\theta;\mathbf x^{(1)},\mathbf x^{(2)})
+=l_1(\theta;\mathbf x^{(1)})\,
+ l_2(\theta;\mathbf x^{(2)}).
+\]
+Die einzelnen Likelihoods dürfen unterschiedliche Formen besitzen,
+beispielsweise aufgrund verschiedener Messverfahren oder unterschiedlich
+großer Streuungen. Bei abhängigen Datensätzen muss ihre gemeinsame
+Beobachtungsverteilung verwendet werden; das einfache Produkt der
+einzelnen Likelihoods ist dann im Allgemeinen nicht zulässig.
+
+\textbf{Auch frequentistisch wird also das Produkt von Likelihoods
+verwendet.} Bei der Maximum-Likelihood-Methode wählt man als Schätzwert
+den Parameterwert, bei dem die gemeinsame Likelihood am größten ist.
+Die Fläche unter der Likelihood über einem Parameterbereich wird dabei
+nicht als Wahrscheinlichkeit dafür interpretiert, dass der feste
+Parameterwert in diesem Bereich liegt.
+
+Bayesisch können dieselben Datensätze gemeinsam nach
+Gl.~\eqref{V4BayesDichten} oder nacheinander ausgewertet werden.
+Dabei bezeichnet $p_0(\theta)$ jetzt den Kenntnisstand
+\textbf{vor beiden Datensätzen}:
+\begin{align*}
+p_1(\theta\mid\mathbf x^{(1)})
+&\propto l_1(\theta;\mathbf x^{(1)})\,p_0(\theta),\\
+p_2(\theta\mid\mathbf x^{(1)},\mathbf x^{(2)})
+&\propto l_2(\theta;\mathbf x^{(2)})\,
+         p_1(\theta\mid\mathbf x^{(1)}).
+\end{align*}
+Das Zeichen $\propto$ bedeutet \glqq proportional zu\grqq; der jeweils noch
+fehlende Faktor normiert die Dichte auf die Gesamtfläche $1$.
+Die Indizes $0$, $1$ und $2$ kennzeichnen die aufeinanderfolgenden
+Kenntnisstände. Die erste Posteriorverteilung $p_1$ übernimmt bei der
+zweiten Auswertung die Rolle der Prior.
+\textbf{Bereits in dieser Prior enthaltene Messdaten dürfen nicht
+nochmals als zusätzliche Daten in die Likelihood eingehen.}
+Bei abhängigen Datensätzen muss die Likelihood der aktuellen Daten
+zusätzlich die früheren Daten als Bedingung berücksichtigen.
+
+\subsection{Wann beide Ansätze dieselben Zahlen liefern}
+\label{V4GleicheZahlen}
+Wenn $p_0(\theta)$ im betrachteten Parameterbereich konstant ist, gilt
+\[
+p_1(\theta\mid\mathbf x^{(1)})
+\propto l_1(\theta;\mathbf x^{(1)}).
+\]
+Dann hat die aus der ersten Auswertung gewonnene Prior für die zweite
+Auswertung dieselbe Form wie der frühere Likelihood-Beitrag.
+Auch $p_2$ ist dann proportional zur gemeinsamen Likelihood.
+Eine konstante Prior auf einem unbeschränkten Parameterbereich ist
+allerdings nicht zu einer Dichte normierbar. Sie kann als formaler Ansatz
+verwendet werden, wenn daraus eine normierbare Posteriorverteilung
+entsteht; sie ist nicht mit dem Verzicht auf Annahmen gleichzusetzen.
+
+Unter geeigneten Voraussetzungen können beide Ansätze dieselben
+Schätzwerte, numerisch gleiche Standardunsicherheiten der geschätzten
+Modellparameter und dieselben Intervallgrenzen liefern. Die
+Standardunsicherheiten werden dabei frequentistisch aus der Streuung
+der Parameterschätzer und bayesisch aus der Posteriorverteilung bestimmt.
+Das ist jedoch keine allgemeine Eigenschaft. Schon eine andere Prior
+kann die Ergebnisse verändern. Auch aus proportionalen Kurven allein
+folgt keine allgemeine Übereinstimmung aller Schätz- und
+Intervallverfahren.
+
+Ein einfaches Zahlenbeispiel verdeutlicht diese mögliche Übereinstimmung.
+Eine frühere Messung desselben konstanten Widerstands habe
+$m_0=100\,\Omega$ ergeben, eine aktuelle Messreihe den Mittelwert
+$\overline x=102\,\Omega$. Das Beobachtungsmodell nimmt an, dass die möglichen Ergebnisse der früheren Messung und der aktuellen Messreihe unabhängig voneinander sind. Beide Ergebnisse werden als normalverteilt mit demselben Erwartungswert $R$, dem Wert des gesuchten Widerstands, und jeweils einer Standardabweichung von $1\,\Omega$ beschrieben. Frequentistisch werden
+die beiden Ergebnisse wegen ihrer gleichen Präzision gleich gewichtet:
+\[
+\widehat R=\frac{m_0+\overline x}{2}=101\,\Omega.
+\]
+
+Die Standardunsicherheit des zusammengefassten Ergebnisses berechnen
+wir durch Unsicherheitsfortpflanzung. Da die beiden Messergebnisse
+als unabhängig angenommen werden, ist die Varianz ihrer Summe gleich
+der Summe ihrer einzelnen Varianzen, hier also
+$(1\,\Omega)^2+(1\,\Omega)^2$.
+Für den Mittelwert wird diese Summe durch $2$ geteilt.
+Bei der Unsicherheitsfortpflanzung geht dieser Faktor quadratisch ein:
+Die Varianz des Mittelwerts ist daher die Varianz der Summe geteilt
+durch $2^2=4$. Die Wurzel daraus ergibt die Standardunsicherheit
+des gemeinsam geschätzten Widerstands:
+\[
+u(\widehat R)
+=\sqrt{\frac{(1\,\Omega)^2+(1\,\Omega)^2}{4}}
+=\frac{1}{\sqrt{2}}\,\Omega
+\approx0{,}707\,\Omega.
+\]
+
+Bayesisch kann die Information aus der früheren Messung durch eine
+Normalverteilung für den Widerstand $R$ mit Erwartungswert
+$100\,\Omega$ und Standardabweichung $1\,\Omega$ beschrieben werden.
+Diese Verteilung dient als Priorverteilung für die Auswertung der
+aktuellen Messreihe.
+
+Sie ergibt sich beispielsweise, wenn man die frühere Messung mit
+normalverteilten zufälligen Abweichungen und bekannter Standardabweichung
+$1\,\Omega$ auswertet und davor eine formal konstante Priordichte
+auf der gesamten reellen Achse ansetzt. Eine solche konstante
+Funktion ist selbst keine normierte Wahrscheinlichkeitsdichte,
+weil ihr Integral über die reelle Achse unendlich ist.
+Nach Einbeziehung der früheren Messung lässt sich das Produkt aus
+dieser Funktion und der Likelihood jedoch normieren; es ergibt
+die genannte Normalverteilung.
+
+Die Verknüpfung dieser Priorverteilung mit der Likelihood der aktuellen
+Messreihe liefert eine ebenfalls normalverteilte Posteriorverteilung
+mit Erwartungswert $101\,\Omega$ und Standardabweichung
+$1/\sqrt{2}\,\Omega\approx0{,}707\,\Omega$.
+
+Die hier verwendeten Normalverteilungen für $R$ berücksichtigen
+die physikalische Einschränkung $R>0$ nicht ausdrücklich.
+Bei den gewählten Zahlen ist die Wahrscheinlichkeit, die sie
+negativen Widerstandswerten zuordnen, jedoch vernachlässigbar klein.
+
+Beide Auswertungen liefern somit denselben geschätzten Widerstand
+und numerisch dieselbe Standard\-un\-sicher\-heit. Frequentistisch
+beschreibt diese Standard\-un\-sicher\-heit die Streuung der möglichen
+Schätzwerte unter dem Beobachtungsmodell. Bayesisch beschreibt
+sie die Breite der Posteriorverteilung und damit die verbleibende
+Unsicherheit über den Widerstand bei den vorliegenden Daten.
+
+Auch bei identischen Zahlen bleiben die Aussagen verschieden:
+Die frequentistisch bestimmte Standard\-un\-sicher\-heit der geschätzten
+Modellparameter beschreibt die Streuung möglicher Schätzwerte unter
+dem Beobachtungsmodell. Die bayesisch bestimmte Standard\-un\-sicher\-heit
+wird aus der Streuung der Posteriorverteilung der indirekten Messgröße
+beziehungsweise des Modellparameters bei gegebenen Daten ermittelt.
+Entsprechend sind Konfidenz- und
+Kredibilitätsintervalle zu unterscheiden. Dies wird im folgenden
+Lehrbeispiel an den tatsächlich berechneten Intervallen erläutert.
+
+\section{Vollständiges Lehrbeispiel: Widerstand und unbekannte Streuung}
+\label{V4Lehrbeispiel}
+
+Im vorigen Beispiel waren die Standardunsicherheiten der beiden
+Ausgangsschätzwerte bekannt; beide Ansätze
+lieferten dieselben Zahlen. Nun betrachten wir einen anderen, eigens
+festgelegten Lehrdatensatz. Neben dem Widerstand $\mu$ ist hier auch
+die Standardabweichung $\sigma$ der Einzelbeobachtungen unbekannt.
+Das Beispiel führt von den Daten über die gemeinsame Posteriorverteilung
+bis zur Ergebnisangabe und zum Vergleich der Intervalle.
+
+\subsection{Daten, Beobachtungsmodell und Priorverteilungen}
+Die sieben beobachteten Widerstandswerte lauten
 \begin{equation}
-\underbrace{(X_1, \dots, X_N)}_{\mathrm{Beobachtungen}} \xrightarrow{\mathrm{inverses \; Problem}}
-\underbrace{(Y_1, \dots, Y_M)}_{\mathrm{Zufallsgroessen}}
+\mathbf x=(32,38,41,45,48,53,58)\,\Omega.
+\label{T2Lehrdaten}
 \end{equation}
-Die Erkenntnis über die indirekten Größen (Modellparameter $Y_1, \dots, Y_M$) wird mit jeder
-neuen Messkampagne $\kappa$ revidiert
+Wir verwenden das Normalmodell aus Gl.~\eqref{T2Normalmodell}.
+Die Likelihood ist der Spezialfall von Gl.~\eqref{Likelihood2}
+mit $f_j(\mathbf p)=\mu$:
 \begin{equation}
-\arraycolsep=2.4pt\def\arraystretch{2}
-\left.
-\begin{array}{l}
-\underbrace{(X_1, \dots, X_N)}_{\mathrm{neue~Beobachtungen}}\\
-\underbrace{(Y_1, \dots, Y_M)_{\kappa-1}}_{\mathrm{Zufallsgroessen, vorher}}
-\end{array}\right\}
- \xrightarrow{\mathrm{inverses \; Problem}}
-\underbrace{(Y_1, \dots, Y_M)_{\kappa}}_{\mathrm{Zufallsgroessen}}
+l(\mu,\sigma;\mathbf x)
+=\frac{1}{(\sqrt{2\pi}\sigma)^J}
+\exp\!\left[-\frac{1}{2\sigma^2}\sum_{j=1}^J(x_j-\mu)^2\right],
+\qquad J=7,\quad\sigma>0.
+\label{V4LikelihoodMuSigma}
 \end{equation}
-\end{enumerate}
-Da wir wie vorher detailiert dargelegt die indirekten Größen durch approximative Modellparameter ersetzten,
-also $Y_m \approx P_m$, sind es die Schätzungen zu den Parametern $\mathbf{p} = (P_1,\dots,P_M)$, die
-sozusagen \glqq\textsl{upgedated}\grqq ~werden.
+Die Prior-Dichte für $\mu$ sei eine Normaldichte mit
+$y_0=44\,\Omega$ und $u_0=5\,\Omega$:
 \begin{equation}
-\arraycolsep=2.4pt\def\arraystretch{2}
-\left.
-\begin{array}{l}
-\underbrace{(X_1, \dots, X_N)}_{\mathrm{neue~Beobachtung}}\\
-\underbrace{(P_1, \sigma^2_1, \dots, P_M, \sigma^2_M)_{\kappa-1}}_{\mathrm{Zufallsgroesse, vorher}}
-\end{array}\right\}
- \xrightarrow{\mathrm{inverses \; Problem}}
-\underbrace{(P_1, \sigma^2_1, \dots, P_M, \sigma^2_M)_{\kappa}}_{\mathrm{Zufallsgroesse}}
+p_0(\mu)=\frac{1}{\sqrt{2\pi}\,u_0}
+\exp\!\left[-\frac{(\mu-y_0)^2}{2u_0^2}\right].
+\label{T2PriorMittelwert}
 \end{equation}
-
-Die hier umgangsprachlich einfach \glqq\textsl{updaten}\grqq ~der Modellparameter genannte
-Veränderung der Parameter aufgrund neuer Beobachtungen, das heißt neuer Informationen, wird
-Informationszuwachs oder Erkenntniszuwachs genannt. In Abb.\ \ref{BayesFreqVergleich}
-sind die beiden Heransgehensweisen der frequentistischen und der bayesischen Statistik im
-Überblick dargestellt.
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=140mm]{04_vorlesung/media/Konzept_Bayes.pdf}
-\caption{Übersicht zu den Heransgehensweisen der frequentistischen und der bayesischen
-Statistik}
-\label{BayesFreqVergleich}
-\end{center}
-\end{figure}
-
-Der Heransgehensweise, einen Informationszuwachs statistisch zu verarbeiten, liegt der \textsl{Satz von
-Bayes} zu bedingten Wahrscheinlichkeiten zugrunde:
+Für $\sigma$ setzen wir unabhängig davon eine Gleichverteilung an:
 \begin{equation}
-p(M | D) \; = \; \frac{p(D | M) p(T)}{p(D | M) p(M) \, + \, p(D | \lnot M) p(\lnot M)}
-\label{bayestheorem}
+p_0(\sigma)=
+\begin{cases}
+\dfrac1{18\,\Omega},&2\,\Omega\le\sigma\le20\,\Omega,\\[4pt]
+0,&\text{sonst}.
+\end{cases}
+\label{T2PriorSigmaBeispiel}
 \end{equation}
-mit $M$ für die Theorie und $D$ für die Indizien (engl.\ \textsl{evidence}).
+Gleich lange Teilintervalle innerhalb dieser Grenzen haben damit dieselbe
+Priorwahrscheinlichkeit. Die Grenzen und die Unabhängigkeit sind
+\emph{für dieses Lehrbeispiel gesetzte Annahmen}. In einer realen
+Auswertung wären sie aus vorab verfügbarer Information zu begründen;
+sie werden hier nicht aus den sieben neuen Beobachtungen geschätzt.
+Die Gleichverteilung ist keine allgemeine Beschreibung fehlenden Wissens.
+Die Normalprior für den positiven Widerstand ist hier eine Näherung,
+deren Wahrscheinlichkeit für negative Werte vernachlässigbar klein ist.
 
+Aus den Daten erhalten wir $\overline x=45{,}000\,\Omega$ und
+$s\approx8{,}907\,\Omega$.
 
-Die Theorie ist dabei
-ein Modell $f$ mit Parametern $\mathbf{p}$, $\boldsymbol{\Sigma}$, die als statistisches Ereignis $M$
-betrachtet wird. Die Indizien sind die Tupel von Beobachtungen zu
-den direkten Messgrößen, die Daten, die ebenfalls als Ereignis $D$ betrachtet werden.
-\begin{itemize}
-\item $p(M)$ heißt \textsl{Prior}:
-
-Wahrscheinlichkeit des {\`a} priori geschätzten
-Modells mit $(\mathbf{p}_0, \boldsymbol{\Sigma}_0)$
-
-\item $p(M | D)$ heißt \textsl{Posterior}:
-
-Wahrscheinlichkeit des Modells mit Parametern $(\mathbf{p}, \boldsymbol{\Sigma})$
-für die neuen Beobachtungen, also den hinzugewonnenen Datensatz
- $D = \{(X_{1,1},\dots,X_{1,J}), \dots,(X_{N,1},\dots  X_{N,J})\}$.
-\end{itemize}
-
-% ----------
-
-Für das Verständnis, wie das Prinzip der bayesischen Statistik funktioniert,
-betrachten wir das ganz einfache Beispiel Gl.~(\ref{oneQuantityOnly1}), also
- den einfachsten Fall einer einzigen Größe. Der Modellparameter $P = \mu$ repräsentiere
-eine indirekte Messgröße $Y$. Die Größe $\mu$ ist aus einer Stichprobe zu schätzen.
-Als {\`a} priori Information seien folgende Angaben bekannt:
-\begin{itemize}
-\item Der {\`a} priori Schätzwert der Modellgröße $\mu$ sei $y_0$.
-\item Der {\`a} priori Schätzwert seiner Varianz $\sigma^2$ sei $s^2_0$.
-\item Diese Größe sei normalverteilt, also verwenden wir als
-Verteilungsdichtefunktion $p$ die Gaußverteilung.
-\end{itemize}
-Die neue Stichprobe $\{X_{1,1}, \dots, X_{1,J}\}$ sei vom Umfang deutlich kleiner als
-die Informationsbasis, die dem {\`a} priori-Wissen zugrunde gelegen hat, so dass
-für die Streuung der Varianz die $\chi^2$-Verteilung $p_{\chi^2,\nu}$
-für $\nu = J-1$ Freiheitsgrade verwendet wird. Hierzu müssen wir im Stoff vorgreifen.
-Diese Verteilungsdichtefunktion werden wir in der 5.\ Vorlesung behandeln.
-Sie wird verwendet als Verteilungsdichte für Varianzen und ist eine schiefsymmetrische
-Verteilung mit längerem Ausläufer zu größeren Werten. Je kleiner der Stichprobenumfang,
-desto schiefer die Verteilung und ausgeprägter die Ausläufer.
-
-Die gesamte Wahrscheinlichkeitsdichteverteilung $p(Y,\sigma)$ für die indirekte Messgröße
-$Y$ bzw.\ deren Approximation als Modellparameter $P = \mu$ mit Streuung $\sigma$ wird als Produkt
-folgender Wahrscheinlichkeiten berechnet,
-\begin{itemize}
-\item der Likelihood $p_\mathrm{L}$,
-\item der Verteilungsdichte $p_\mathcal{N}(y | y_0, s_0)$ der Größe $\mu$ aus den {\`a} priori Informationen,
-\item der Verteilungsdichte $p_{\chi^2,\nu}(s)$ der Varianz $\sigma^2$ dieser Größe.
-\end{itemize}
-Die zu ermittelnde bedingte Wahrscheinlichkeitsdichte wird so interpretiert, dass die Verteilung Funktion
-der Variablen $\mu$ und $\sigma$ ist, gegeben die Beobachtungswerte der Stichprobe. Die Likelihood wird
-dabei betrachtet als die bedingte Wahrscheinlichkeitsdichte $p_\mathrm{L}$ der
-direkten Messgröße $X_1$ gegeben die Modellparameter $\mu$ und $\sigma$:
+\subsection{Gemeinsame Posteriorverteilung}
+Aufgrund der angenommenen Unabhängigkeit in der Prior gilt
+$p_0(\mu,\sigma)=p_0(\mu)p_0(\sigma)$. Die Bayes-Regel ergibt
 \begin{equation}
-p_\mathrm{L}(\{X_{1,1}, \dots, X_{1,J}\} | \mu, \sigma) \; = \;
-\prod\limits_{j=1}^J \frac{1}{\sqrt{2 \pi} \, \sigma}
- e^{- \frac{1}{2} \, \left( \frac{X_{1,j} - \mu}{\sigma} \right)^2 }  \; = \;
-l(\mu, \sigma | \{X_{1,1}, \dots, X_{1,J}\}).
-\end{equation}
-Die Varianz $\sigma^2$ wird gemäß der $\chi^2$-Verteilung variiert. Das Variieren der Varianz
-bzw.\ deren Wurzel $\sigma$ symbolisieren wir durch den Gebrauch der Variablen $s$.
-Das Variieren des Modellparameters $\mu$ symbolisieren wir durch den Gebrauch der Variablen $y$.
-Der Parameter $\mu$ wird ebenfalls variiert gemäß der Gaußverteilung, wir verwenden folgende
-Likelihood:
-\begin{equation}
-p_\mathrm{L}(\{X_{1,1}, \dots, X_{1,J}\} | y, s) \; = \;
-\prod\limits_{j=1}^J \frac{1}{\sqrt{2 \pi} \, s}
- e^{- \frac{1}{2} \, \left( \frac{X_{1,j} - y}{s} \right)^2 }  \; = \;
-l(y, s | \{X_{1,1}, \dots, X_{1,J}\}).
-\end{equation}
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=100mm]{04_vorlesung/media/understand_bayes_mean_posteriormatrix.pdf}
-\caption{\label{posteriormatrix} Posterior-Wahrscheinlichkeitsdichte als Funktion
-der beiden zu schätzenden Größen $y$ und $s$.}
-\end{center}
-\end{figure}
-Das Produkt ist die Wahrscheinlichkeit des Modellparameters und dessen Varianz gegeben
-die Stichprobe $\{X_{1,1}, \dots, X_{1,J}\}$ und die {\`a} priori Informationen $y_0, s_0$
-\begin{equation}
-p(y, s | \{X_{1,1}, \dots, X_{1,J}\}, y_0, s_0) \; = \; C \,
-p_\mathrm{L}(\{X_{1,1}, \dots, X_{1,J}\} | y, s) \; p_\mathcal{N}(y | y_0, s_0) \; p_{\chi^2,\nu}(s)
+p_1(\mu,\sigma\mid\mathbf x)
+=C\,l(\mu,\sigma;\mathbf x)\,p_0(\mu)p_0(\sigma),
 \label{ProduktWahrscheinlichkeiten}
 \end{equation}
-mit $C$ als Normierungsfaktor derart zu wählen, dass die integrierte Wahrscheinlichkeit Eins ist, d.h.
-$$
-\int\limits_{-\infty}^\infty  \int\limits_0^\infty \; p(y, s | \{X_{1,1}, \dots, X_{1,J}\}, y_0, s_0) \;
-\mathrm{d}s \, \mathrm{d}y \; = \; 1 .
-$$
-Die Verteilungsdichte $p(y, s | \{X_{1,1}, \dots, X_{1,J}\}, y_0, s_0)$ ist Funktion der
-Variablen $y$ und $s$ mit vorgegebenen Parametern
-(festen Werten) $\{X_{1,1}, \dots, X_{1,J}\}$, $y_0, s_0$, wie es beispielhaft in
-Abb.~\ref{posteriormatrix} dargestellt wird.
+wobei die Normierungskonstante durch
+\[
+C^{-1}=\int_{-\infty}^{\infty}\int_0^\infty
+l(\mu',\sigma';\mathbf x)\,p_0(\mu')p_0(\sigma')
+\,\mathrm d\sigma'\,\mathrm d\mu'
+\]
+bestimmt wird. Außerhalb des vorgegebenen Bereichs für $\sigma$
+verschwindet der Integrand. Der Index $1$ bezeichnet hier die
+Aktualisierung durch diesen einen Lehrdatensatz.
 
-Die Wahrscheinlichkeitsdichteverteilung
-$p_\mathcal{N}(y | y_0, s_0)$ wird \textsl{Prior} genannt und die
-Wahr\-schein\-lich\-keits\-dichte\-ver\-teilung $p(y, s | \{X_{1,1}, \dots, X_{1,J}\}, y_0, s_0)$
-wird \textsl{Posterior} genannt.
+Abb.~\ref{posteriormatrix} zeigt sie als Funktion von $\mu$ und $\sigma$.
+Ihre Farbe stellt eine \emph{Dichte} dar; eine Wahrscheinlichkeit entsteht
+erst durch Integration über einen Bereich der Parameterfläche.
+Die Unabhängigkeit in der Priorverteilung muss in der Posteriorverteilung
+nicht erhalten bleiben.
 
-Wir integrieren Gl.~(\ref{ProduktWahrscheinlichkeiten}) über $s$, um eine
-Wahrscheinlichkeits\-dichte\-verteilung zu gewinnen, die nur noch Funktion von $y$ ist
-\begin{equation}
-p(y | \{X_{1,1}, \dots, X_{1,J}\}, y_0, s_0)  \; = \;
-\int\limits_0^\infty p(y, s | \{X_{1,1}, \dots, X_{1,J}\}, y_0, s_0) \operatorname{d}s
-\label{RandverteilungPosterior}
-\end{equation}
-Diese Verteilung wird \textsl{Randverteilung} oder \textsl{Marginalverteilung} genannt.
-Allgemeiner gilt: Gegeben zwei Zufallsgrößen $A$ und $B$ mit gemeinsamer Verteilungsdichte
-$p(A, B)$; dann heißen die Verteilungen der einzelnen Zufallsgrößen
-$A$ und $B$ die Randverteilungen des Zufallsvektors $(A, B)$.
-
-Als Schätzwert für $Y$ berechnen wir den Erwartungswert des Modellparameters $\mu$
-durch Integration über alle Werte $y$ gewichtet mit der Wahrscheinlichkeitsdichte
-$p(y | \{X_{1,1}, \dots, X_{1,J}\}, y_0, s_0)$ aus Gl.~(\ref{RandverteilungPosterior})
-\begin{equation}
-y_1 \; = \; \int\limits_{-\infty}^\infty \, y \, p(y | \{X_{1,1}, \dots, X_{1,J}\}, y_0, s_0)
-\operatorname{d}y
-\end{equation}
-wobei wir $y_1$ mit Index $1$ schreiben, um anzuzeigen, dass dies die Revision der Schätzung des
-Modellparameters $\mu \approx Y$ gegenüber vorheriger Kenntnis mit Schätzwert $y_0$ ist.
-
-Wir rufen uns die Definition des vollständigen Messergebnisses in Erinnerung, das aus
-dem Schätzwert einer Messgröße und den beigeordneten Informationen, die entweder
-direkt die Wahrscheinlichkeitsdichteverteilung sein kann oder aber, im Falle einer
-symmetrischen Verteilung, deren Breite und das Vertrauensniveau.
-
-Die als beigeordnete Information gegebene Wahrscheinlichkeitsdichteverteilungen sind
-die in den Gln. (\ref{Likelihood2}) und (\ref{LikelihoodKov2}) vorgestellen Likelihoods oder
-der in Gl.~(\ref{RandverteilungPosterior}) vorgestellten Posterior
-mit gemeint:
-$$
-p(y | \{X_{1,1}, \dots, X_{1,J}\}, y_0, s_0)
-$$
-Die Likelihood wird
-für kleine Stich\-proben\-um\-fänge ($N < 100$) anstelle durch eine Gaußverteilung durch eine Verteilung
-repräsentiert, deren Charakteristik im Kurvenverlauf
-überhöhter und mit länger auslaufenden Rändern ist. Sie wird $t$-Verteilung genannt.
-Wir werden später in Kapitel \ref{wahrscheinlichHyp} auf diesen Verteilungtyp zurück kommen.
-
-Allgemein betrachten wir für beide Fälle eine Wahrscheinlichkeitsdichtefunktion $p \! : y \mapsto p(y)$.
-Der Definitionsbereich für $y$ reicht von minus bis plus Unendlich. Von Interesse ist der Kernbereich
-der Dichteverteilung für eine spezifizierte Wahrscheinlichkeit $1-\alpha$, beispielsweise
-$1-\alpha = 0.95$ oder $0.90$ oder so.
-Dies ist die Wahrscheinlichkeit einer Größe, einen Messwert im Bereich (Intervall) $[y_\mathrm{min}, y_\mathrm{max}]$,
-anzunehmen
-\begin{equation}
-1 \, - \, \alpha \; = \;
-\int\limits_{y_\mathrm{min}}^{y_\mathrm{max}} p(y)
-\operatorname{d}y .
-\label{UeberdeckungWahrscheinlichkeit}
-\end{equation}
-Die Breite des Intervalls gibt dann die \textsl{Messunsicherheit} an.
-
-Das Intervall $[y_\mathrm{min}, y_\mathrm{max}]$, zu dem die Fläche $1 - \alpha$ unter der die
-Verteilungsdichte $p(y)$ repräsentierenden Kurve gehört, wird \textsl{Überdeckungsintervall} genannt.
-Es ist der verallgemeinerte Begriff aus der Metrologie für das, was in der
-\textsl{frequentistischen} Statistik \textsl{Vertrauensintervall},
-engl.\  \textsl{Confidence Interval}, und in der \textsl{bayesischen} Statistik
-\textsl{Glaubwürdigkeitsintervall}, engl.\ \textsl{Credible Interval},
-heißt. Während der Begriff \textsl{Vertrauensintervall} in der deutschsprachigen
-Literatur üblich ist, wird anstelle des Begriffs \textsl{Glaubwürdigkeitsintervall} üblicherweise
-auch in der deutschsprachigen Literatur der Begriff \textsl{Credible Interval} verwendet.
-
-Die Verwendung unterschiedlicher Bezeichnungen, \textsl{Confidence Interval} und
-\textsl{Credible Interval}, soll die Unterschiedlichkeit der Vorstellungen
-über den Charakter einer indirekten Messgröße $Y$ zum Ausdruck bringen.
-Die Unterschiedlichkeit in der Vorstellung von einer indirekten Messgröße $Y$ besteht darin,
-dass im Fall der \textsl{bayesischen} Statistik
-die indirekte Messgröße $Y$ als Größe, die intrinsisch eine Zufallsgröße ist, betrachtet
-wird. Im Fall der \textsl{frequentistischen} Statistik wird $Y$ als eine Größe betrachtet,
-die einen festen, wahren Wert hat, der aber nicht zugänglich ist. Nur der
-Modellparameter, der eine indirekte Messgröße approximiert und der indirekt aus anderen
-Zufallsgrößen gewonnen wird, wird als daraus resultierend einer Streuung unterliegend betrachtet.
-
-Die Wahrscheinlichkeit $1 - \alpha$ wird in der \textsl{frequentistischen} Statistik
-\textsl{Vertrauensniveau} genannt. Die beiden Flächen unter den
-Ausläufern der Dichteverteilung stellt eine Wahrscheinlichkeit $\alpha$ dar, die in der
-\textsl{frequentistischen} Statistik \textsl{Signifikanzniveau} genannt wird.
-
-Im folgenden werden wir sehen, wie eine \textsl{Messunsicherheit} im Rahmen der
-\textsl{bayesischen} Statistik gewonnen wird.
-Die Grenzen des \textsl{Credible Interval} $[y_\mathrm{min}, y_\mathrm{max}]$ bilden die
-Integrationsgrenzen $y_\mathrm{min}$ und $y_\mathrm{max}$ der \textsl{Posterior}, so dass
-\begin{equation}
-1 \, - \, \alpha \; = \;
-\int\limits_{y_\mathrm{min}}^{y_\mathrm{max}} p(y | \{X_{1,1}, \dots, X_{1,J}\}, y_0, s_0)
-\operatorname{d}y .
-\label{UeberdeckungPosterior}
-\end{equation}
-Die Integrationsgrenzen werden über die Umkehrfunktion der kumulativen Verteilung $P$ berechnet.
-Die kumulative Verteilung $P$ ist
-\begin{equation}
-P(y) \; = \; \int\limits_{-\infty}^{y} p(y^\prime | \{X_{1,1}, \dots, X_{1,J}\}, y_0, s_0)
-\operatorname{d}y^\prime .
-\end{equation}
-Die Umkehrfunktion schreiben wir symbolisch als $P^{-1}$.
-Wir berechnen für das \textsl{Credible Interval}
-\begin{equation}
-y_\mathrm{min} \, = \, P^{-1}(\frac{\alpha}{2}) \qquad \mathrm{und} \qquad
-y_\mathrm{max} \, = \, P^{-1}(\frac{1-\alpha}{2}).
-\end{equation}
-\begin{figure}
-\begin{center}
-\includegraphics[width=80mm]{04_vorlesung/media/understand_bayes_mean_posteriormarginal.pdf}
-\hspace{5mm}
-\includegraphics[width=80mm]{04_vorlesung/media/understand_bayes_mean_cumposterior.pdf}
-\caption{\label{posteriorCredible}\textsl{Links:} Die blaue Kurve stellt die
-Randverteilung der Posterior-Wahrscheinlichkeitsdichte als Funktion
-der beiden zu schätzenden Größen $Y$ mit \textsl{Credible Interval} dar und die
-rot gestrichelte Kurve die Student-t-Verteilung mit Vertrauensintervall.
-\textsl{Rechts:} Kumulierte Randverteilung der Posterior-Wahrscheinlichkeitsdichte, deren
-Umkehrfunktion verwendet wird, um die Intervallgrenzen des \textsl{Credible Interval}s zu ermitteln.}
-\end{center}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.76\linewidth]{04_vorlesung/media/understand_bayes_mean_posteriormatrix.pdf}
+\caption{Gemeinsame Posterior-Dichte für den Lehrdatensatz aus
+Gl.~\eqref{T2Lehrdaten} und die angegebenen Priorverteilungen.
+$\mu$ ist der gesuchte Erwartungswert, $\sigma$ die unbekannte
+Standardabweichung der Beobachtungen. Die Dichte hat die Einheit
+$\Omega^{-2}$.}
+\label{posteriormatrix}
 \end{figure}
-Abb.~\ref{posteriorCredible} links zeigt im Vergleich folgende Verteilungsdichten
-\begin{itemize}
-\item die Posterior als Funktion des Parameters
-$y$ mit einem \textsl{Credible Interval} für eine Wahrscheinlichkeit von
-$1 - \alpha = 0.95$ (blaue, durchgezogene Kurve und blaue, durchgezogene Linien)
-\item die $t$-Verteilung (rote, gestrichelte Kurve), die sich für die in dem
-graphisch dargestellten Beispiel verwendeten Stichprobe mit Stichprobenumfang $J = 7$, folglich
-$\nu = J - 1 = 6$ Freiheitsgraden ergeben hat, sowie das Vertrauensintervall (rote, gestrichelte Linien),
-das aus dem Mittelwert der Stichprobe
-und der empirischen Standardabweichung des Mittelwerts multipliziert mit dem
-$t$-Quantil gewonnen wurde. Mit dem Begriff $t$-Quantil werden die Integrationsgrenzen dieser Verteilung
-zu vorgegebenen Wahrscheinlichkeiten $\frac{\alpha}{2}$ und $1 - \frac{\alpha}{2}$ bezeichnet.
-\end{itemize}
 
-Abb.~\ref{posteriorCredible} rechts zeigt die kumulierte Posterior, aus deren Umkehrfunktion
-zu den Wahrscheinlichkeiten $\frac{\alpha}{2}$ und $1 - \frac{\alpha}{2}$ die
-Intervallgrenzen des \textsl{Credible Interval}s gewonnen werden.
+\subsection{Randverteilung, Schätzwert und Standardunsicherheit}
+Uns interessiert vor allem der Widerstand $\mu$. Die unbekannte
+Beobachtungsstreuung $\sigma$ darf dabei nicht einfach weggelassen
+werden. Für jeden Wert von $\mu$ integrieren wir die gemeinsame Dichte
+über alle möglichen Werte von $\sigma$:
+\begin{equation}
+p_1(\mu\mid\mathbf x)
+=\int_0^\infty p_1(\mu,\sigma'\mid\mathbf x)\,\mathrm d\sigma'.
+\label{V4Marginalisierung}
+\end{equation}
+Dieses Vorgehen heißt \textsl{Marginalisierung}; das Ergebnis heißt
+\textsl{Randdichte} oder \textsl{Marginaldichte} von $\mu$.
+Die Unsicherheit über $\sigma$ wird dadurch berücksichtigt.
+Das Einsetzen nur eines Schätzwerts für $\sigma$ ist im Allgemeinen
+nicht gleichwertig. Die Randdichte ist in
+Abb.~\ref{posteriorCredible} links dargestellt.
 
-Die Ermittlung der \textsl{Messunsicherheit} im Rahmen der
-\textsl{frequentistischen} Statistik unter Verwendung der $t$-Verteilung
-wird in den kommenden Wochen detailiert und mit Beispielen dargelegt werden.
-Sie wird einen großen Teil dieser Vorlesungsreihe ausmachen und Klausurrelevanz haben.
+Als Schätzwert und Standardunsicherheit verwenden wir den
+Posteriorerwartungswert $y_1$ und die Posteriorstandardabweichung $u_1$:
+\begin{align}
+y_1&=\int_{-\infty}^{\infty}\mu'\,
+     p_1(\mu'\mid\mathbf x)\,\mathrm d\mu',\\
+u_1^2&=\int_{-\infty}^{\infty}(\mu'-y_1)^2
+     p_1(\mu'\mid\mathbf x)\,\mathrm d\mu'.
+\end{align}
+Der Strich kennzeichnet jeweils die laufende Integrationsvariable.
+
+\subsection{Kredibilitätsintervall und Vergleich mit dem Konfidenzintervall}
+Ein \textsl{Kredibilitätsintervall}, auch
+\textsl{Glaubwürdigkeitsintervall} genannt, mit Wahrscheinlichkeit
+$1-\alpha$ erfüllt
+\[
+\int_{\mu_{\min}}^{\mu_{\max}}
+p_1(\mu'\mid\mathbf x)\,\mathrm d\mu'=1-\alpha.
+\]
+Diese Bedingung allein legt die Grenzen noch nicht eindeutig fest.
+Wir wählen hier ein zentrales Intervall, bei dem unterhalb und oberhalb
+jeweils die Wahrscheinlichkeit $\alpha/2$ verbleibt.
+Die zugehörige kumulative Verteilungsfunktion ist
+\[
+P_1(m)=\int_{-\infty}^{m}p_1(\mu'\mid\mathbf x)\,\mathrm d\mu'.
+\]
+$m$ bezeichnet hier einen möglichen Grenzwert für den Parameter.
+Die Kleinschreibung $p_1$ bezeichnet die Dichte, die Großschreibung
+$P_1$ die aufintegrierte, d.h. kumulierte, Wahrscheinlichkeit bis zu diesem Grenzwert.
+Für die hier stetige, streng monoton steigende Verteilungsfunktion erhalten wir
+\[
+\mu_{\min}=P_1^{-1}(\alpha/2),\qquad
+\mu_{\max}=P_1^{-1}(1-\alpha/2).
+\]
+$P_1^{-1}$ ist die Umkehrfunktion, nicht der Kehrwert: Sie ordnet
+einer Wahrscheinlichkeit den zugehörigen Quantilwert zu und wird deshalb auch \textsl{Quantilfunktion} genannt.
+Für $95\,\%$ sind die Wahrscheinlichkeiten $0.025$ und $0.975$
+einzusetzen. Die numerische Integration liefert
+\begin{equation}
+y_1\approx44.626\,\Omega,\qquad
+u_1\approx3.059\,\Omega,\qquad
+[\mu_{\min},\mu_{\max}]
+\approx[38.489,\;50.642]\,\Omega.
+\label{T2BeispielErgebnis}
+\end{equation}
+Das Intervall enthält $95\,\%$ der Posteriorwahrscheinlichkeit.
+Die Verteilungsfunktion rechts in Abb.~\ref{posteriorCredible} zeigt,
+wie die beiden Grenzen aus den Wahrscheinlichkeiten $0.025$ und
+$0.975$ gewonnen werden.
+
+Zum Vergleich ergibt Gl.~\eqref{T2KonfidenzUnbekannt} ohne die genannten
+Priorannahmen das frequentistische $95\,\%$-Kon\-fidenz\-intervall
+\begin{equation}
+\overline x\pm t_{0.975,6}\frac{s}{\sqrt7}
+\approx[36.762,\;53.238]\,\Omega.
+\end{equation}
+Die unterschiedlich breiten Intervalle beruhen auf unterschiedlichen
+Informationsgrundlagen: Nur die bayesische Rechnung verwendet hier
+zusätzlich die festgelegten Priorverteilungen. Das schmalere Intervall
+belegt deshalb keine allgemeine Überlegenheit des Verfahrens.
+
+Auch die Wahrscheinlichkeitsaussagen unterscheiden sich:
+Das Konfidenzniveau beschreibt die Überdeckung durch das wiederholt
+angewandte Verfahren aus Abschnitt~\ref{V4Mittelwert}. Das
+Kredibilitätsintervall enthält dagegen $95\,\%$ der posterioren
+Wahrscheinlichkeit bei den vorliegenden Daten und den getroffenen
+Modell- und Priorannahmen. Es muss nicht für jeden festen Parameterwert
+zugleich eine frequentistische Überdeckungswahrscheinlichkeit von
+$95\,\%$ besitzen. Die Breite eines solchen Intervalls ist außerdem
+nicht mit der Standardunsicherheit $u_1$ gleichzusetzen.
+
+Die rote Kurve ist ausdrücklich nur eine Darstellungshilfe für den
+Vergleich der Intervallgrenzen. Mit $a=s/\sqrt J$ ist sie definiert als
+\begin{equation}
+g_t(m)=\frac1a p_{t,{J-1}}\!\left(\frac{m-\overline x}{a}\right),
+\end{equation}
+wobei $p_{t,{J-1}}$ die Dichte der
+Student-$t$-Verteilung mit $J-1$ Freiheitsgraden ist.
+Diese Verteilung beschreibt unter den angenommenen
+Beobachtungsbedingungen die Zufallsgröße
+$$
+T=\frac{\overline X-\mu}{S/\sqrt J}
+$$
+aus Gl.~\eqref{T2StudentGroesse}.
+
+Für die rote Kurve wird diese Dichte entlang der horizontalen Achse
+mit dem Faktor $a=s/\sqrt J$ skaliert und um den beobachteten
+Mittelwert $\overline x$ verschoben. Der Vorfaktor $1/a$ stellt
+sicher, dass die Fläche unter der Kurve weiterhin $1$ beträgt.
+Die Quantile zu den Wahrscheinlichkeiten $0.025$ und $0.975$
+liegen dann genau an den Grenzen des $95\,\%$-Konfidenzintervalls.
+Diese Übereinstimmung dient dem grafischen Vergleich; sie ordnet
+dem festen Parameter $\mu$ im frequentistischen Ansatz keine
+Wahrscheinlichkeitsverteilung zu.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.48\linewidth]{04_vorlesung/media/understand_bayes_mean_posteriormarginal.pdf}
+\hfill
+\includegraphics[width=.48\linewidth]{04_vorlesung/media/understand_bayes_mean_cumposterior.pdf}
+\caption{Links: Marginale Posterior-Dichte von $\mu$ mit ihrem zentralen
+$95\,\%$-Kredibilitätsintervall (blau). Die rote Referenzkurve stellt
+zum Vergleich die verschobene und skalierte $t$-Dichte $g_t$ dar;
+die roten Grenzen sind die des frequentistischen Konfidenzintervalls.
+Rechts: Posterior-Verteilungsfunktion mit den Quantilen zu
+$0.025$ und $0.975$.}
+\label{posteriorCredible}
+\end{figure}
+
+\section{Einordnung, Nutzen und Grenzen}
+\label{V4Einordnung}
+Ein wesentlicher Vorteil des bayesischen Ansatzes ist die gemeinsame
+Posteriorverteilung für die zu schätzenden Modellparameter. Sie erlaubt es, 
+bei den vorliegenden Daten und den getroffenen Modell- und
+Priorannahmen Wahrscheinlichkeiten für Parameterbereiche anzugeben.
+Bei mehreren Parametern beschreibt sie auch deren Abhängigkeiten.
+Dabei können asymmetrische Verteilungen oder mehrere getrennte
+Bereiche hoher Dichte dargestellt werden. Aus der gemeinsamen
+Posteriorverteilung lassen sich außerdem Verteilungen für abgeleitete
+Messgrößen berechnen.
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{04_vorlesung/media/Konzept_Bayes_v2.pdf}
+\caption{Frequentistische und bayesische Sichtweise bei der Bestimmung
+indirekter Messgrößen aus beobachteten Messwerten: statistische
+Beschreibung der beteiligten Größen und Interpretation der
+zugehörigen Unsicherheiten.}
+\label{fig:KonzeptFreqBayes}
+\end{figure}
+
+Begründetes Vorwissen kann insbesondere dann hilfreich sein, wenn
+nur wenige Messdaten vorliegen. Es kann auch helfen, wenn sich
+deutlich unterschiedliche Modellparameterwerte ähnlich gut mit den
+Messdaten vereinbaren lassen. Die betreffenden Parameterwerte lassen
+sich dann allein aus diesen Daten nur mit großer Unsicherheit
+schätzen; sie sind durch die Daten nur schwach bestimmt.
+
+Eine geeignete Priorverteilung kann zusätzliche Information darüber
+einbringen, welche dieser Werte nach dem bisherigen Kenntnisstand
+plausibel sind. Wenn die Daten selbst wenig Information über einen
+Parameter liefern, kann die Wahl der Priorverteilung das Ergebnis
+entsprechend stark beeinflussen.
+
+Bayesische Verfahren sind deshalb nicht grundsätzlich genauer als
+frequentistische. Eine unzutreffende oder zu enge Priorverteilung kann zu einer zu klein ausgewiesenen Unsicherheit führen.
+Die Berechnung komplexer Posteriorverteilungen kann zudem einen
+erheblichen Rechenaufwand erfordern.
+
+
+Frequentistische Verfahren können ebenfalls Vorwissen berücksichtigen, komplexe
+Unsicherheiten untersuchen und Unsicherheiten auf abgeleitete Größen
+übertragen. Ihre Beurteilung richtet sich dabei nach den Eigenschaften
+der Verfahren unter dem jeweiligen Beobachtungsmodell,
+beispielsweise nach der Streuung der möglichen Schätzwerte oder der
+Überdeckungswahrscheinlichkeit eines Intervallschätzverfahrens.
+Gedachte Wiederholungen veranschaulichen diese Eigenschaften;
+sie sind kein zusätzlicher Schritt der Optimierung oder
+Unsicherheitsberechnung.
+
+Die Unterscheidung lautet somit nicht \glqq Optimierung oder Verteilung\grqq:
+Beide Ansätze können Optimierungsverfahren verwenden, und beide
+benötigen ein Wahrscheinlichkeitsmodell der Beobachtungen. Die
+Likelihood und ihre Maximierung sind für sich genommen nicht
+auf die frequentistische Sichtweise beschränkt.
+\textbf{Frequentistisch werden Wahrscheinlichkeits\-aussagen über mögliche
+Beobachtungen und die daraus berechneten Schätzer getroffen.
+Bayesisch wird zusätzlich eine Verteilung für die Werte der
+zu schätzenden Modellparameter bei gegebener Information verwendet
+und aktualisiert.} Abbildung \ref{fig:KonzeptFreqBayes} stellt die frequentistische und bayesische Sichtweise bei der Bestimmung
+indirekter Messgrößen aus beobachteten Messwerten gegenüber.
+
+Für eine metrologische Ergebnisangabe müssen zusätzlich die Messgröße,
+die Bedingungen und die berücksichtigten Unsicherheitsbeiträge klar sein.
+Eine Auswertung der Wiederholstreuung allein erfasst nicht automatisch
+alle relevanten Beiträge. Die frequentistische Intervallschätzung und
+die Verwendung der $t$- und $\chi^2$-Verteilung werden in den folgenden
+Vorlesungen vertieft und anhand weiterer Beispiele geübt; sie sind
+klausurrelevant.

@@ -1,624 +1,1068 @@
 \section{Fortpflanzung durch Kombination der Verteilungen}
+\label{VorschauMCVerfahren}
+% Fachliche Grundlage: JCGM 101:2008, Abschnitte 5.2, 5.3 und 6.1.
+% Das Label VorschauMCVerfahren bleibt fuer bestehende Verweise erhalten.
 
-Im vorherigen Kapitel wurde die Methode, die Unsicherheit mittels der Fortplanzung der Varianzen über die Sensitivitäten der Modellfunktion, dargelegt. Die Ergänzungsdokumente S1 und S2 zum GUM, bieten wie in Abschnitt \ref{VorschauMCVerfahren} bereits skizziert Alternativen dazu. Diese ermöglichen es, die Messunsicherheit 
-\begin{itemize}
-\item für Modelle zu berechnen, die nicht durch eine linearisierbare, explizite Funktion ausgedrückt werden können
-\item für direkte Messgrößen einzusetzten, deren Wahrscheinlichkeitsdichteverteilungen eine beliebige Charakteristik aufweisen dürfen. 
-\end{itemize} 
-Während für die Unsicherheitsfortpflanzung der Varianzen über die Sensitivitäten vorausgesetzt wird, dass die Wahrscheinlichkeitsdichteverteilungen der direkten Messgrößen glockenförmig sind (Gaußverteilung, Student-t-Verteilung), können den direkten Messgrößen bei den allgemeineren Verfahren beliebige Wahrscheinlichkeitsdichteverteilungen zugrunde liegen. 
+Im vorherigen Kapitel haben wir die Varianzen und Kovarianzen der
+Eingangsgrößen mithilfe der Sensitivitätskoeffizienten fortgepflanzt.
+Bei einem linearen Modell mit festen Koeffizienten ist diese
+Varianzfortpflanzung exakt. Bei einem nichtlinearen Modell liefert sie
+eine Näherung, wenn die Taylorentwicklung nach dem linearen Term
+abgebrochen werden kann. Für die Varianzfortpflanzung eines linearen
+Modells müssen die Varianzen und Kovarianzen existieren; die vollständige
+gemeinsame Wahrscheinlichkeitsverteilung muss dafür nicht bekannt sein.
+Eine Normalverteilung der Ein\-gangs\-größen ist dabei nicht erforderlich.
+Die Voraussetzungen für eine Intervallangabe mithilfe von Normal- oder
+Student-$t$-Quantilen sind davon jedoch zu unterscheiden. Vertrauensintervalle lassen sich nicht mehr ermitteln, wenn die Verteilung Ausgangsgröße erkennbar von einer $t$- oder Gaußverteilung abweicht. Werden die Verteilungen jedoch direkt fortgepflanzt, lässt sich aus der kombinierten Wahrscheinlichkeitsdichteverteilung ein Überdeckungsintervall ermitteln. Dann spielt die Art der Verteilungen der Eingangsgrößen keine Rolle mehr.
 
-Dies ist möglich, weil die Wahrscheinlichkeitsdichteverteilungen der direkten Messgrößen nach den Regeln der Kolmogoroff'schen Wahrscheinlichkeitstheorie kombiniert werden. Die Wahrscheinlichkeitsdichteverteilung der indirekten Messgröße ist die kombinierte Verteilung, das heißt hier die \textsl{gemeinsame Wahrscheinlichkeit}, engl.\ \textsl{joint probability}, für die Schnittmenge der gemeinsam beobachteten direkten Messgrößen, engl.\ \textsl{event intersection}.
+In dieser Vorlesung wird die \textsl{Fortpflanzung von Verteilungen} dargelegt.
+Aus einer gemeinsamen Wahrscheinlichkeitsverteilung der Eingangsgrößen
+wird mithilfe des Messmodells die Verteilung der Ausgangsgröße bestimmt.
+Dieser Ansatz liegt GUM Supplement~1 zugrunde; Supplement~2 erweitert
+die Betrachtung auf mehrere Ausgangsgrößen.
+Hier beschränken wir uns zunächst auf eine skalare Ausgangsgröße.
 
-Die \textsl{gemeinsame Wahrscheinlichkeit} ist ein statistisches Maß für die Möglichkeit, \textsl{likelihood}, des gleichzeitigen Eintretens zweier stochastisch unabhängiger Ereignisse $E_i$ und $E_j$ bzw.\ des Eintretens bei identisch ausgeführten Experimenten.
-\begin{itemize}
-  \item Beide Ereignisse müssen voneinander unabhängig sein.
-  \item Wenn $p(E_i)$ die Wahrscheinlichkeit für das Eintreten von $E_i$ ist und $p(E_j)$ die Wahrscheinlichkeit für das Eintreten von $E_j$, dann ist $p(E_i \cap E_j)$ die Wahrscheinlichkeit, dass beide Ereignisse gleichzeitig eintreten; sie ist \underline{das Produkt der beiden Einzelwahrscheinlichkeiten} $p(E_i \cap E_j) = p(E_i) p(E_j)$.
-\end{itemize}
+Die Modellfunktion wird dabei in ihrer ursprünglichen Form verwendet.
+Die Fortpflanzung setzt somit keine Linearisierung voraus und kann
+unterschiedliche Verteilungsformen berücksichtigen, beispiels\-weise
+Normal-, Student-$t$-, Rechteck- oder Arkussinusverteilungen.
+Voraussetzung ist, dass eine geeignete gemeinsame Eingangsverteilung
+festgelegt wird und das Modell den Eingangskombinationen in \mbox{deren}
+relevantem Wertebereich einen eindeutigen Ausgangswert zuordnet.
+Eine geschlossene analytische Darstellung der Modellfunktion ist
+dafür nicht notwendig.
 
-Wir betrachten direkte Messgrößen $\mathbf{X} = (X_1,\dots,X_N)$ mit Wahrscheinlichkeitsdichteverteilungen $p(X_1), \dots, p(X_N)$.
-Die gemeinsame Wahrscheinlichkeit, dass für Messgröße $X_1$ der Wert $x_{1,i_1}$, gleichzeitig für $X_2$ der Wert $x_{1,i_2}$, ... und gleichzeitig für $X_N$ der Wert $x_{N,i_N}$ beobachtet wird ist
+\subsection{Gemeinsame Verteilung der Eingangsgrößen}
+
+Wir fassen die Eingangsgrößen im Zufallsvektor
 \begin{equation}
-p(x_{1,i_1}, \dots, x_{N,i_N}) = \prod\limits_{\nu=1}^N p(x_{\nu,i_\nu})
+\mathbf X=(X_1,\dots,X_N)^\mathsf T
 \end{equation}
-Jetzt betrachten wir eine Modellgleichung $f(\mathbf{Y}, \mathbf{X}) = 0$, die die Beziehung der indirekten Messgröße $\mathbf{Y}$ zu den direkten Messgrößen $\mathbf{X}$ beschreibt und berechnen die bedingte Wahrscheinlichkeit \textsl{conditional probability}
+zusammen. Ihre gemeinsame Wahrscheinlichkeitsdichte bezeichnen wir mit
+$p_{\mathbf X}(\mathbf X')$.
+Der Vektor $\mathbf X'=(X_1',\dots,X_N')^\mathsf T$ enthält mögliche
+Wertekombinationen der Eingangsgrößen und dient als Integrationsvariable.
+Er ist vom Vektor $\mathbf x$ der festen Eingangsschätzwerte zu
+unterscheiden. Die Eingangsverteilung beschreibt die Unsicherheit auf
+Grundlage der für die Auswertung verfügbaren Informationen.
+Diese können beispielsweise aus Messreihen, Kalibrierscheinen oder
+begründeten Annahmen über Wertebereiche stammen.
+
+Für kontinuierlich verteilte Größen ist der Wert einer
+Wahrscheinlichkeitsdichte an einem einzelnen Punkt keine
+Wahrscheinlichkeit. Die Wahrscheinlichkeit, dass die Eingangswerte
+in einem Bereich $A$ liegen, erhalten wir durch Integration:
 \begin{equation}
-p(\mathbf{Y} | \{x_{1,i_1}, \dots, x_{N,i_N}\}) = \int\limits_{-\infty}^{\infty} \dots \int\limits_{-\infty}^{\infty} \delta(f(\mathbf{Y}, \mathbf{X}^\prime, \{x_{1,i_1}, \dots, x_{N,i_N}\})) \prod\limits_{\nu=1}^N p_\nu(X_\nu^\prime | x_{\nu,i_\nu}) \; \mathrm{d}^N \mathbf{X}^\prime
+\Pr(\mathbf X\in A)
+=\int\limits_A p_{\mathbf X}(\mathbf X')\,\mathrm d^N\mathbf X',
+\qquad
+\mathrm d^N\mathbf X'=\mathrm dX_1'\cdots\mathrm dX_N'.
+\end{equation}
+Das Integral addiert die Wahrscheinlichkeitsbeiträge aus allen
+Teilen dieses Bereichs.
+
+Die Menge der reellen Zahlen wird mit $\mathbb R$ bezeichnet.
+Entsprechend ist $\mathbb R^N$ die Menge aller Vektoren mit
+$N$ reellen Komponenten. Sie umfasst damit alle reellen
+Wertekombinationen der $N$ Eingangsgrößen.
+Der physikalisch zulässige Wertebereich kann jedoch auf
+eine Teilmenge davon beschränkt sein. Außerhalb dieses
+zulässigen Bereichs ist die Dichte null.
+
+Über den gesamten Raum $\mathbb R^N$ gilt die Normierung
+\begin{equation}
+\int\limits_{\mathbb R^N}p_{\mathbf X}(\mathbf X')\,
+\mathrm d^N\mathbf X'=1.
+\end{equation}
+Die Wahrscheinlichkeit, dass die Eingangsgrößen irgendeine
+der zulässigen Wertekombinationen annehmen, beträgt somit eins.
+
+Sind die Eingangsgrößen statistisch unabhängig, zerfällt die
+gemeinsame Dichte in das Produkt der Einzeldichten:
+\begin{equation}
+p_{\mathbf X}(\mathbf X')
+=\prod_{i=1}^N p_{X_i}(X_i').
+\label{eq:gemeinsameEingangsdichte11}
+\end{equation}
+Unkorreliertheit allein genügt hierfür nicht.
+Bei Abhängigkeiten muss die gemeinsame Verteilung diese berücksichtigen;
+die Kenntnis der Einzeldichten reicht dann im Allgemeinen nicht aus.
+Die gemeinsame Verteilung ist für abhängige wie für unabhängige
+Eingangsgrößen definiert. Nur die Produktdarstellung setzt
+Unabhängigkeit voraus.
+
+\subsection{Vom Eingangsbereich zum Ausgangsintervall}
+
+Das Messmodell sei
+\begin{equation}
+Y=f(\mathbf X).
+\end{equation}
+Jede mögliche Eingangskombination $\mathbf X'$ wird durch das Modell
+auf den Ausgangswert $f(\mathbf X')$ abgebildet.
+Verschiedene Eingangskombinationen können dabei denselben
+Ausgangswert ergeben.
+
+Wir fragen zunächst nach der Wahrscheinlichkeit, dass die
+Ausgangsgröße in einem Intervall $[a,b]$ liegt.
+Dazu betrachten wir alle Eingangskombinationen, deren Modellwerte
+in dieses Intervall fallen. Sie bilden den Bereich
+\begin{equation}
+A_{[a,b]}
+=\bigl\{\mathbf X'\in\mathbb R^N:
+a\leq f(\mathbf X')\leq b\bigr\}.
+\label{eq:integrationsbereich}
+\end{equation}
+Die gesuchte Wahrscheinlichkeit ist die gesamte
+Eingangswahrscheinlichkeit in diesem Bereich:
+\begin{equation}
+\boxed{
+\Pr(a\leq Y\leq b)
+=\int\limits_{A_{[a,b]}}p_{\mathbf X}(\mathbf X')\,
+\mathrm d^N\mathbf X'.
+}
+\label{eq:AusgangsintervallEingangsraum11}
+\end{equation}
+Die Wahrscheinlichkeiten werden also mithilfe des Modells den
+entsprechenden Ausgangswerten zugeordnet und dort zusammengefasst.
+Die Ausgangsverteilung ist deshalb nicht die gemeinsame
+Eingangsverteilung selbst, sondern die durch das Modell daraus
+entstehende Verteilung.
+
+Entsprechend erhalten wir die Verteilungsfunktion, die kumulative Wahrscheinlichkeitsverteilung, der Ausgangsgröße:
+\begin{equation}
+P_Y(z)=\Pr(Y\leq z)
+=\int\limits_{\{\mathbf X':\,f(\mathbf X')\leq z\}}
+p_{\mathbf X}(\mathbf X')\,\mathrm d^N\mathbf X'.
+\label{eq:VerteilungsfunktionFortpflanzung11}
+\end{equation}
+Diese Beziehung beschreibt die Verteilungsfortpflanzung, ohne
+bereits ein Verfahren zur Berechnung des Integrals festzulegen.
+
+Ein Integral über einen vorgegebenen Bereich $A$ lässt sich
+auch als Integral über den gesamten Raum schreiben.
+Dazu multiplizieren wir den Integranden mit einer
+\textsl{Indikatorfunktion}, die als Fensterfunktion wirkt:
+\begin{equation}
+w_A(\mathbf X')
+=
+\begin{cases}
+1 & \text{falls }\mathbf X'\in A,\\
+0 & \text{sonst}.
+\end{cases}
+\end{equation}
+Damit gilt
+\begin{equation}
+\int\limits_A p_{\mathbf X}(\mathbf X')\,\mathrm d^N\mathbf X'
+=
+\int\limits_{\mathbb R^N}
+w_A(\mathbf X')\,p_{\mathbf X}(\mathbf X')\,
+\mathrm d^N\mathbf X'.
+\end{equation}
+Die Fensterfunktion lässt die Beiträge innerhalb von $A$
+unverändert und setzt alle Beiträge außerhalb von $A$ auf null.
+Der Bereich $A$ muss dabei nicht beschränkt sein.
+
+Für die kumulative Verteilungsfunktion $P_Y(z)=\Pr(Y\leq z)$ sollen genau
+die Eingangskombinationen berücksichtigt werden, für die
+$f(\mathbf X')\leq z$ gilt.
+Das zugehörige Fenster lässt sich mithilfe der
+\textsl{Heaviside-Sprungfunktion}
+\begin{equation}
+H(u)
+=
+\begin{cases}
+0 & \text{für }u<0,\\
+1 & \text{für }u\geq0
+\end{cases}
+\end{equation}
+darstellen. Denn $H(z-f(\mathbf X'))$ ist genau dann eins,
+wenn der Modellwert höchstens $z$ beträgt.
+Damit erhalten wir
+\begin{equation}
+P_Y(z)
+=
+\int\limits_{\mathbb R^N}
+H\!\left(z-f(\mathbf X')\right)\,
+p_{\mathbf X}(\mathbf X')\,\mathrm d^N\mathbf X'.
+\label{eq:VerteilungsFortpflanzungHeaviside}
+\end{equation}
+Dies ist dieselbe Verteilungsfunktion wie in
+Gl.~(\ref{eq:VerteilungsfunktionFortpflanzung11}) --
+lediglich die Darstellung des Integrationsbereichs wurde geändert.
+
+Nun gehen wir von der kumulativen Verteilungsfunktion zur
+\emph{Wahrscheinlichkeitsdichte} der Ausgangsgröße über.
+Besitzt die Ausgangsverteilung eine Dichte, erhalten wir diese
+durch Ableiten der Verteilungsfunktion, wobei die Beziehung
+im Allgemeinen fast überall gilt:
+\begin{equation}
+p_Y(Y')
+=
+\left.\frac{\mathrm d P_Y(z)}{\mathrm d z}\right|_{z=Y'}.
+\end{equation}
+
+Die Ableitung der Heaviside-Sprungfunktion ist im Sinne
+der mathematischen Distributionen die
+\textsl{Dirac-Deltafunktion}:
+\begin{equation}
+\frac{\mathrm d H(u)}{\mathrm d u}=\delta(u).
+\end{equation}
+Formales Ableiten der Integraldarstellung von $P_Y$
+führt deshalb zu
+\begin{equation}
+p_Y(Y')
+=
+\int_{\mathbb R^N}
+\delta\!\left(Y'-f(\mathbf X')\right)\,
+p_{\mathbf X}(\mathbf X')\,\mathrm d^N\mathbf X'.
+\end{equation}
+Die Deltafunktion ersetzt hier also nicht unmittelbar
+die Fensterfunktion eines endlichen Ausgangs\-intervalls.
+Sie tritt beim Übergang von der kumulierten Wahrscheinlichkeit
+zur Wahrscheinlichkeitsdichte der Ausgangsgröße auf.
+
+Die Dirac-Deltafunktion ist keine gewöhnliche Funktion,
+sondern eine \textsl{Distribution} im mathematischen Sinn.
+Die verschobene Deltafunktion $\delta(Y'-v)$ konzentriert
+ihr gesamtes Gewicht eins auf die Stelle $Y'=v$.
+Wird sie unter einem Integral mit einer geeigneten stetigen
+Funktion $\varphi$ multipliziert, liefert das Integral
+genau deren Funktionswert an dieser Stelle:
+\begin{equation}
+\int\limits_{-\infty}^{\infty}
+\varphi(Y')\,\delta(Y'-v)\,\mathrm dY'
+=
+\varphi(v).
+\end{equation}
+Diese Wirkung wird als \textsl{Auswahleigenschaft} bezeichnet:
+Das Integral wählt aus der Funktion $\varphi$ den Wert
+$\varphi(v)$ aus.
+
+Insbesondere gilt die Normierung
+\begin{equation}
+\int\limits_{-\infty}^{\infty}
+\delta(Y'-v)\,\mathrm dY'=1.
+\end{equation}
+Sie beschreibt somit eine auf den Wert $v$ konzentrierte
+Wahrscheinlichkeit mit Gesamtgewicht eins.
+
+Bei einer festgehaltenen Kombination von Werten der Eingangsgrößen
+$\mathbf X'=(X_1',\dots,X_N')^\mathsf T$ legt das Messmodell
+den zugehörigen Ausgangswert $f(\mathbf X')$ eindeutig fest.
+Die bedingte Verteilung von $Y$ ist dann auf $f(\mathbf X')$
+konzentriert. Formal schreiben wir
+\begin{equation}
+p_{Y\mid\mathbf X}(Y'\mid\mathbf X')
+=\delta\!\left(Y'-f(\mathbf X')\right).
+\end{equation}
+Die Deltafunktion drückt hier aus, dass bei festgehaltenen
+Eingangsgrößen im Modell keine weitere zufällige Variation
+der Ausgangsgröße vorgesehen ist.
+Sie belegt nicht, dass das physikalische Messmodell vollständig ist.
+Relevante verbleibende Einflüsse müssen in der Modellierung
+berücksichtigt werden.
+
+Die Wahrscheinlichkeitsdichte der Ausgangsgröße entsteht, indem diese bedingten Verteilungen
+mit der gemeinsamen Eingangsdichte gewichtet und über alle
+Eingangskombinationen\footnote{Kombinationen von Werten der Eingangsgrößen} integriert werden:
+\begin{equation}
+\begin{aligned}
+p_Y(Y')
+&=\int\limits_{\mathbb R^N}
+p_{Y\mid\mathbf X}(Y'\mid\mathbf X')\,
+p_{\mathbf X}(\mathbf X')\,\mathrm d^N\mathbf X'
+\\
+&=\int\limits_{\mathbb R^N}
+\delta\!\left(Y'-f(\mathbf X')\right)\,
+p_{\mathbf X}(\mathbf X')\,\mathrm d^N\mathbf X'.
+\end{aligned}
 \label{eq:probCombinationGeneral}
 \end{equation}
-wobei $\delta(f(Y, \mathbf{X}))$ für die Dirac'sche Deltafunktion steht, was an dieser Stelle besagt, dass das Modell selber genau sei.
-
-Es gibt unterschiedliche Möglichkeiten und Methoden, das Integral durch numerische Integrationen zu berechnen. Eine der Möglichkeiten ist die im GUM-S1 beschriebene Monte-Carlo-Integration.
-
-Zur Erläuterung der Grundidee von der Bestimmung der gemeinsamen Wahrscheinlichkeit (Posterior)  betrachten wir wieder das einfache Anschauungsbeispiel \textsl{Beugung am Spaltim Fernfeld} mit dem in Abschnitt \ref{BeugungSpaltGUM0} beschriebenen Modell, siehe Abb.\ \ref{fig:AnschauungsbeispielSpalt}.
-
-Die Spaltbreite $d$ wird als Funktion der Wellenlänge der beleuchtenden ebenen Lichtwelle $\lambda$, des Abstands $L$ zwischen Spalt und Objektiv, sowie der Lage des ersten Intensitätsminimums $x_\mathrm{min}$ durch die kleine Modellgleichung Gl.\ (\ref{eq:modellspaltbreite}) beschrieben. 
-Für die Kleinwinkelnäherung wird Gl.\ (\ref{eq:probCombinationGeneral}) zu
+Dies ist die in GUM Supplement~1, Abschnitt~5.2, angegebene
+formale Darstellung der Verteilungsfortpflanzung.
+$Y'$ ist hier der festgehaltene Ausgangswert, für den die Dichte
+berechnet wird; integriert wird über die möglichen Eingangswerte.
+Bei unabhängigen Eingangsgrößen nimmt das Integral die Form
 \begin{equation}
-\iiint \delta(d - \frac{\lambda L}{x_\mathrm{min}}) \, p(\lambda | \lambda_0, \sigma_\lambda) \, p(L | \hat L, a_L) \, p(x_\mathrm{min} | \{\dots, x_{\mathrm{min},j}, \dots\}) \;
-\mathrm{d} \lambda \, \mathrm{d} L \, \mathrm{d} x_\mathrm{min}
+p_Y(Y')
+=\int\limits_{-\infty}^{\infty}\!\cdots\!
+\int\limits_{-\infty}^{\infty}
+\delta\!\left(Y'-f(X_1',\dots,X_N')\right)
+\prod_{i=1}^N p_{X_i}(X_i')\,
+\mathrm d X_1'\cdots\mathrm d X_N'
+\label{eq:wahrscheinlichkeitsdichteY}
+\end{equation}
+an. Wird $p_Y$ anschließend über ein gewähltes Intervall $[a,b]$
+von Werten der Ausgangsgröße integriert, liefert die
+Deltafunktion für eine festgehaltene Kombination der Eingangswerte
+genau dann einen Beitrag, wenn der zugehörige Modellwert
+$f(\mathbf X')$ in diesem Intervall liegt.
+Damit ergibt sich wieder Gl.~(\ref{eq:AusgangsintervallEingangsraum11}).
+
+Für ein implizites Modell $h(Y,\mathbf X)=0$ ist zunächst festzulegen,
+welche eindeutig bestimmte Lösung $Y$ zu einer Eingangskombination
+gehört. Diese Zuordnung übernimmt dann die Rolle von $f$.
+
+Dies soll nun anhand eines einfachen Beispiels illustriert werden, dazu betrachten wir die Summe zweier Größen.
+
+Für zwei unabhängige Eingangsgrößen und das Modell
+\begin{equation}
+Y=X_1+X_2
+\end{equation}
+lautet das Integral aus Gl.\ (\ref{eq:wahrscheinlichkeitsdichteY})
+\begin{equation}
+p_Y(Y')
+=\int\limits_{-\infty}^{\infty}\!\int\limits_{-\infty}^{\infty}
+\delta(Y'-X_1'-X_2')\,
+p_{X_1}(X_1')p_{X_2}(X_2')\,
+\mathrm dX_2'\,\mathrm dX_1'.
+\end{equation}
+Zu einem festgehaltenen Ausgangswert $Y'$ tragen diejenigen
+Eingangskombinationen bei, für die $X_2'=Y'-X_1'$ gilt.
+Die Auswahleigenschaft der Deltafunktion führt deshalb zu
+\begin{equation}
+p_Y(Y')
+=\int\limits_{-\infty}^{\infty}
+p_{X_1}(X_1')\,p_{X_2}(Y'-X_1')\,\mathrm dX_1'.
+\label{eq:Faltungsintegral11}
+\end{equation}
+Dieses Integral heißt \textsl{Faltung} der beiden Eingangsverteilungen.
+Es fasst die Beiträge aller Wertepaare zusammen, deren Summe $Y'$
+ergibt. Die Faltung ist damit ein Spezialfall der
+Verteilungsfortpflanzung für ein additives Modell.
+
+\subsection{Anwendung auf die Spaltbreitenmessung}
+
+Wir betrachten erneut das Anschauungsbeispiel
+\textsl{Beugung am Spalt im Fernfeld} aus
+Abschnitt~\ref{BeugungSpaltGUM0}.
+In der Kleinwinkelnäherung lautet die Modellbeziehung
+\begin{equation}
+D=\frac{\Lambda L}{X_{\mathrm{min}}}.
+\end{equation}
+Hier bezeichnet $D$ die gesuchte Spaltbreite, $\Lambda$ die
+Wellenlänge und $X_{\mathrm{min}}$ den positiven Abstand des ersten
+Intensitätsminimums von der Beugungsmitte.
+$L$ ist die im Messmodell verwendete geometrische oder passend
+kalibrierte effektive Länge.
+Die Großbuchstaben kennzeichnen die Größen im Wahrscheinlichkeitsmodell;
+$d$, $\lambda$ und $x_{\mathrm{min}}$ sind die zugehörigen Schätzwerte.
+
+Für die gemeinsame Eingangsverteilung schreiben wir
+$p_{\Lambda,L,X_{\mathrm{min}}}(\lambda',\ell',q')$.
+Die Variablen $\lambda'$, $\ell'$ und $q'$ laufen über mögliche Werte
+der drei Eingangsgrößen. Damit lautet die Ausgangsdichte
+\begin{equation}
+p_D(D')
+=\iiint
+\delta\!\left(D'-\frac{\lambda'\ell'}{q'}\right)
+p_{\Lambda,L,X_{\mathrm{min}}}(\lambda',\ell',q')\,
+\mathrm d\lambda'\,\mathrm d\ell'\,\mathrm dq'.
 \label{eq:probCombinationSpalt}
 \end{equation}
+Die Integration erstreckt sich über den Eingangsbereich, auf dem
+die Modellbeziehung definiert ist. Insbesondere wird vorausgesetzt,
+dass $q'$ im betrachteten Bereich positiv ist.
+Sind die drei Eingangsgrößen statistisch unabhängig,
+lässt sich ihre gemeinsame Wahrscheinlichkeitsdichte faktorisieren:
+\begin{equation}
+p_{\Lambda,L,X_{\mathrm{min}}}(\lambda',\ell',q')
+=
+p_\Lambda(\lambda')\,p_L(\ell')\,
+p_{X_{\mathrm{min}}}(q').
+\end{equation}
+Die Zuordnung konkreter Verteilungen muss sich auf die verfügbaren
+Informationen über diese Eingangsgrößen stützen.
 
-Dazu verwenden wir wieder die folgenden Werte für die Eingangsgrößen:
+Für ein Spaltbreitenintervall $[d_a,d_b]$ müssen wir beispielsweise
+alle Eingangskombinationen berücksichtigen, für die
+\begin{equation}
+d_a\leq\frac{\lambda'\ell'}{q'}\leq d_b
+\end{equation}
+gilt. Die gemeinsame Eingangsdichte wird über genau diesen Bereich
+integriert. So lässt sich die Bedeutung des Integrals auch ohne
+Verwendung der Deltafunktion beschreiben.
+
+\paragraph{Schätzwert, Standardunsicherheit und Überdeckungsintervall aus der Ausgangsverteilung ermitteln:}
+
+Aus der Wahrscheinlichkeitsdichteverteilung der indirekten Messgröße (Ausgangsgröße) bestimmen wir, sofern die entsprechenden Momente existieren, den Schätzwert und die Standardunsicherheit:
+\begin{equation}
+y=\operatorname E(Y)
+=\int\limits_{-\infty}^{\infty}Y'\,p_Y(Y')\,\mathrm dY',
+\qquad
+u^2(y)
+=\int\limits_{-\infty}^{\infty}(Y'-y)^2p_Y(Y')\,\mathrm dY'.
+\end{equation}
+Die Standardunsicherheit $u(y)$ ist die positive Wurzel dieser Varianz.
+Bei einem nichtlinearen Modell muss der Erwartungswert
+$\operatorname E[f(\mathbf X)]$ nicht mit $f(\mathbf x)$ übereinstimmen.
+Die Verteilungsfortpflanzung berücksichtigt die Modellbeziehung,
+ohne sie durch ihre Tangente am Entwicklungspunkt zu ersetzen.
+
+Ein Intervall mit gleichen Wahrscheinlichkeiten in den beiden
+äußeren Bereichen erhalten wir für $P=1-\alpha$ aus den Quantilen:
+\begin{equation}
+[y_{\mathrm{low}},y_{\mathrm{high}}]
+=\left[P_Y^{-1}(\alpha/2),\,
+P_Y^{-1}(1-\alpha/2)\right].
+\end{equation}
+Die Grenzen werden hier unmittelbar aus der Ausgangsverteilung
+bestimmt. Ein Normal- oder Student-$t$-Erweiterungsfaktor wird
+dafür nicht vorausgesetzt.
+
+Bis hierher ist festgelegt, welche Wahrscheinlichkeiten und
+Kenngrößen zu berechnen sind. Wie die Integrale ausgewertet werden,
+ist noch offen. Im nächsten Abschnitt veranschaulichen wir die
+Integration in Gleichung (\ref{eq:wahrscheinlichkeitsdichteY}) 
+zunächst durch eine grobe Einteilung in Klassen und
+das Summieren der zugehörigen Wahrscheinlichkeitsbeiträge.
+Im daran anschließenden Abschnitt behandeln wir die Monte-Carlo-Methode zur Realisierung der Integration. 
+
+In beiden Abschnitten verwenden wir das Beispiel mit der Beugung am Spalt in der Fraunhofer- und Kleinwinkelapproximation, für das wir folgende Werte und Modelle der Wahrscheinlichkeitsverteilungen der Eingangsgrößen ansetzen:
+
+% Die Spaltbreite $d$ wird als Funktion der Wellenlänge der beleuchtenden ebenen Lichtwelle $\lambda$, des Abstands $L$ zwischen Spalt und Objektiv, sowie der Lage des ersten Intensitätsminimums $x_\mathrm{min}$ durch die Modellgleichung für die Kleinwinkelnäherung, Gl.\ (\ref{eq:einfachNaeherungSpalt}), beschrieben. 
 
 Die Wellenlänge der nicht ideal monochromatischen, ebenen Welle, deren Abweichung als Gaußspektrum modelliert wird, ist
 $$
- \lambda_0 = 0.550 \, \mathrm{\mu m} \quad \sigma_\lambda = 0.0014 \, \mathrm{\mu m}.
+ \lambda_0 = 0.550 \, \mathrm{\mu m} \quad \sigma_{\lambda,\mathrm{spec}} = 0.0014 \, \mathrm{\mu m}.
 $$
 Für die Verteilung der Wellenlänge wird die Beleuchtung als Gauß'sches Spektrum, das eine Funktion der Wellenzahl ist, modelliert
 $$
 S(k) = \frac{1}{2\sqrt{\pi} \, \sigma_k} \, e^{-\left(\frac{k - k_0}{2 \sigma_k}\right)^2}
 $$
 wobei $k$ die Wellenzahl ist mit $k = \frac{2\pi}{\lambda}$, das Maximum der spektralen Verteilung $k_0 = \frac{2\pi}{\lambda_0}$ ist und die Bandbreite
-$\sigma_k = \frac{2\pi}{\lambda_0} \sigma_\lambda$
+$\sigma_k = \frac{2\pi}{\lambda_0} \sigma_{\lambda,\mathrm{spec}}$
 Wenn man für die Wellenzahlen die Wellenlängen einsetzt, wir dies zu
 $$
-S(\lambda) = \frac{\lambda_0^2}{4\sqrt{\pi}^3 \sigma_\lambda} \, e^{-\left(\frac{(\lambda_0 - \lambda)\lambda_0}{2 \lambda \, \sigma_\lambda}\right)^2}
+S(\lambda) = \frac{\lambda_0^2}{4\sqrt{\pi}^3 \sigma_{\lambda,\mathrm{spec}}} \, e^{-\left(\frac{(\lambda_0 - \lambda)\lambda_0}{2 \lambda \, \sigma_{\lambda,\mathrm{spec}}}\right)^2}
 $$
 Wenn wir unser Zahlenbeispiel
-$\lambda_0 = 0.5500 \, \mathrm{\mu m}$ und $\sigma_\lambda = 0.0014 \, \mathrm{\mu m}$
+$\lambda_0 = 0.5500 \, \mathrm{\mu m}$ und $\sigma_{\lambda,\mathrm{spec}} = 0.0014 \, \mathrm{\mu m}$
 einsetzen und dann eine einfache Gaußglocke an das Spektrum anpassen, bekommen wir die 
 Näherungsgleichung 
 \begin{equation}
-S(\lambda) \approx a \, e^{- \frac{1}{2} \left(\frac{(\lambda_0 - \lambda)}{\sigma}\right)^2}
+S(\lambda) \approx a \, e^{- \frac{1}{2} \left(\frac{(\lambda_0 - \lambda)}{\sigma_{\lambda,\mathrm{g}}}\right)^2}
 \label{eq:gaussspektrumWL}
 \end{equation}
-mit $\sigma = 0.002 \, \mathrm{\mu m}$.
+mit $\sigma_{\lambda,\mathrm{g}} = 0.002 \, \mathrm{\mu m}$.
+
+Der Abstand des ersten Beugungsminimums vom Hauptmaximum wird mit einer gaußverteilten Streuung angesetzt mit den Werten 
+$$
+x_\mathrm{min,0} = 386.3\, \mathrm{\mu m}, \quad \sigma_\mathrm{xmin} = 5.9 \, \mathrm{\mu m}
+$$
 
 Der Abstand zwischen Spalt (Messobjekt) und Objektiv ist $L$. Die Unsicherheit dieses Abstands soll in unserem Modell durch störende Vibrationen verursacht werden, so dass $L$ sinusförmig mit einer Amplitude $a_L$ variiert
 $$
-\hat L = 4000 \, \mathrm{\mu m} \quad a_L = 20 \, \mathrm{\mu m}.
+L_0 = 4000 \, \mathrm{\mu m}, \quad a_L = 20 \, \mathrm{\mu m}.
 $$
-Für die Simulation einer Stichprobe von $n_\mathrm{xmin} = 1500$ Minimumspositionen wird eine Spaltbreite von $d = 5.75 \, \mathrm{\mu m}$ angesetzt.
 
-Im nächsten Abschnitt wird zunächst die Grundidee der Kombination von Wahrscheinlichkeitsdichteverteilungen durch Lösen des Integrals in Gl.~\ref({eq:probCombinationGeneral}) durch einfache numerische Integration dargestellt.
 
-\section{Integration mittels Klassierung}
+\section{Integration der Wahrscheinlichkeitsdichte mittels Klassierung}
 \label{GUMS1alternativKlassieren}
-In Abschnitt \ref{numerischeIntegration} wurden unterschiedliche Methoden zur numerischen Integration vorgestellt.
 
-Die einfachste Methode, die Fläche unter einer Kurve zu ermitteln ist die Trapezapproximation (z.B. als Romberg-Verfahren implementiert), hier wird äquidistant gesampelt. Für Funktionen mit recht unterschiedlichem Krümmungsverhalten ist ein angepasstes Sampling besser geeignet. Hierzu wurden in Abschnitt \ref{numerischeIntegration} zufallszahlenbasierte Methoden vorgestellt. Alternativ ist es auch möglich, die kumulative Wahrscheinlichkeitsdichtefunktion zu nutzen und die Wahrscheinlichkeiten gleichförmig zu sampeln. Hierzu wird die Ordinate der kumulativen Wahrscheinlichkeitsverteilung in äquidistante Klassen eingeteilt und aus der Umkehrfunktion die Klassen auf der Abzisse ermittelt.
+Wir nähern das Integral Gl.\ Gleichung (\ref{eq:wahrscheinlichkeitsdichteY})  durch eine endliche Summe an: Dazu teilen wir die Wertebereiche der
+Eingangsgrößen in Klassen ein, ordnen jeder Klasse ihre Wahrscheinlichkeit
+zu und verwenden für jede Klasse einen repräsentativen Wert.
+Anschließend berechnen wir die Modellwerte für alle Kombinationen dieser
+Repräsentanten und fassen deren Wahrscheinlichkeitsbeiträge zusammen.
 
-Wir verwenden die kumulative Wahrscheinlichkeitsverteilung $P$ des gaußverteilten Spektrums Gl.~(\ref{eq:gaussspektrumWL}) mit $\lambda_0 = 0.5500 \, \mathrm{\mu m}$ und $\sigma = 0.0020 \, \mathrm{\mu m}$, um das Spektrum mit $K_\mathrm{P} = 86$ Klassen zu sampeln
+Wir betrachten weiterhin das Messmodell der Spaltbreitenmessung
+in der Kleinwinkelnäherung:
 \begin{equation}
-P(\lambda) = \frac{1}{2} - \frac{1}{2} \, f_\mathrm{erf}\left(\frac{\lambda - \lambda_0}{\sqrt{2} \sigma}\right)
-\quad \leftrightarrow \quad \lambda \; = \; \sqrt{2} \sigma \, f_\mathrm{ierf}\left(2 P - 1\right) \, + \, \lambda_0
-\label{eq:kumgaussspektrumWL}
-\end{equation}
-wobei $f_\mathrm{erf}$ für Fehlerfunktion steht und $f_\mathrm{ierf}$ die Umkehrfunktion der Fehlerfunktion bezeichnet. Beide stehen in den Numerikbibliotheken der meisten Entwicklungswerkzeuge zur Verfügung.
-
-Die Wahrscheinlichkeiten werden in $K_\mathrm{P} = 86$ gleichgroße Intervalle unterteilt: $P_k = k \, \Delta P$ mit $k = 1,\dots, K_\mathrm{P}+1$ für die Intervallgrenzen. Die Wahrscheinlichkeiten sind somit gleichförmig gewählt. Die Intervallgrenzen $\lambda_k$ für die Wellenlängen haben dadurch entsprechend ungleichförmige Abstände:
-\begin{equation}
-\lambda_k \; = \; \sqrt{2} \sigma \, f_\mathrm{ierf}\left(2 k \, \Delta P \, - \, 1\right) \, + \, \lambda_0 \quad \text{mit} \quad k = 1,\dots, K_{\lambda}+1
-\label{eq:cumgaussinversediskrete}
-\end{equation}
-Ebenso wird die Klasseneinteilung der Wahrscheinlichkeitsdichteverteilung für die Positionen des ersten Minimums des Beugungsbildes durchgeführt.
-
-Die Wahrscheinlichkeitsverteilung der vibrationsbedingten Variationen $\tilde L$ mit der Amplitude $a$ um den mittleren Abstand zwischen Spalt und Objektiv $L$ wird bestimmt mit 
-\begin{equation}
-\tilde L = L - a_L \cos(\pi \, k \, \Delta P)
-\end{equation}
-
-Hier betrachten wir die Kleinwinkelnäherung mit $\sin \approx \cos$.
-\begin{equation}
-d \approx \frac{\lambda L}{x_\mathrm{min}}
+D=\frac{\Lambda L}{X_{\mathrm{min}}}.
 \label{eq:einfachNaeherungSpalt}
 \end{equation}
+Dabei bezeichnet $D$ die Spaltbreite, $\Lambda$ die Wellenlänge,
+$L$ die im Modell verwendete geometrische oder kalibrierte effektive
+Länge und $X_{\mathrm{min}}$ den positiven Abstand des ersten
+Intensitätsminimums von der Beugungsmitte.
+Die Kleinwinkelnäherung verwendet $\sin\theta\approx\tan\theta\approx\theta$
+für kleine Winkel $\theta$ im Bogenmaß.
+Für das folgende Beispiel werden die drei Eingangsgrößen als
+statistisch unabhängig angenommen.
 
-Eine mögliche Implementierung kann wie folgt aussehen:
-\lstinputlisting[style=Python]{11_vorlesung_GUMS1/code/spalt_discretesampling.py}
+\paragraph{Klassenwahrscheinlichkeiten und Repräsentanten:}
 
-Dieses Beispiel zeigt, wie man mittels einfacher numerischer Integration der Gleichung (\ref{eq:probCombinationSpalt}) zur Wahrscheinlichkeitsdichterverteilung der indirekten Messgröße kommt. Die numerische Integration erfolgt hierbei durch diskrete rechteckige Flächenelemente, durch die die Fläche unter den Verteilungskurven approximiert wird. Die Dirac'sche $\delta$-Funktion wird ebenfalls in diskrete Intervalle unterteilt, die als zweiseitige Heaviside-Funktion, also als Rechteckfunktion $H$, notiert wird:
-
-$p(d_{\nu}) \; =$
+Für eine Eingangsgröße $X_i$ mit Verteilungsfunktion $P_i$ bilden
+die Grenzen $b_{i,0},\dots,b_{i,K_i}$ die Klassen.
+Die Wahrscheinlichkeit der $k$-ten Klasse ist
 \begin{equation}
- \sum\limits_{j=1}^{K_\mathrm{P}}\sum\limits_{k=1}^{K_\mathrm{P}}\sum\limits_{l=1}^{K_\mathrm{P}} H(d - \frac{\lambda_j L_k}{x_{\mathrm{min},l}} | d_{\nu}-\frac{1}{2} \leq d < d_{\nu}+\frac{1}{2} ) \; p(\lambda_j | \lambda_0, \sigma_\lambda) \, p(L_k | \hat L, a_L) \, p(x_{\mathrm{min},l} | \bar x_{\mathrm{min}}, \sigma_{x_\mathrm{min}}) \;
-\Delta \lambda_j \; \Delta L_k \, \Delta x_{\mathrm{min},l}
-\label{eq:probCombinationSpaltdiscrete}
+w_{i,k}
+=\Pr(b_{i,k-1}<X_i\leq b_{i,k})
+=P_i(b_{i,k})-P_i(b_{i,k-1}).
+\label{eq:Klassenwahrscheinlichkeit11}
+\end{equation}
+Diese Wahrscheinlichkeit ist dimensionslos. Sie ist vom Wert
+der Wahrscheinlichkeitsdichte an einem einzelnen Punkt zu unterscheiden.
+Aus der Dichte könnte sie auch durch Integration über die Klasse
+bestimmt werden. Die Näherung
+\begin{equation}
+w_{i,k}\approx p_{X_i}(x'_{i,k})\,
+(b_{i,k}-b_{i,k-1})
+\end{equation}
+mit einem Repräsentanten $x'_{i,k}$ ist nur für eine endliche
+Klassenbreite sinnvoll und setzt voraus, dass die Dichte innerhalb
+dieser Klasse ausreichend gut durch diesen Dichtewert beschrieben wird.
+Wenn die Verteilungsfunktion verfügbar ist, können wir die
+Klassenwahrscheinlichkeit stattdessen unmittelbar als Differenz
+nach Gl.~(\ref{eq:Klassenwahrscheinlichkeit11}) bestimmen.
+
+Hier wählen wir \emph{gleich wahrscheinliche Klassen}.
+Wir unterteilen dazu die Wahrscheinlichkeitsachse $[0,1]$ in $K_i$
+gleich große Intervalle mit Grenzen
+\begin{equation}
+r_{i,k}=\frac{k}{K_i},\qquad k=0,\dots,K_i.
+\end{equation}
+Die zugehörigen Grenzen im Wertebereich erhalten wir aus der
+Quantilfunktion, also der inversen Verteilungsfunktion:
+\begin{equation}
+b_{i,k}=P_i^{-1}(r_{i,k}),
+\qquad w_{i,k}=\frac{1}{K_i}.
+\end{equation}
+Die Klassen sind damit gleich wahrscheinlich, haben im Allgemeinen
+aber unterschiedliche Breiten im Wertebereich.
+Wo die Dichte groß ist, genügen schmale Klassen; wo sie klein ist,
+werden die Klassen breiter.
+
+Als Repräsentanten verwenden wir die Quantile in der Mitte der
+jeweiligen Wahrscheinlichkeitsintervalle:
+\begin{equation}
+x'_{i,k}
+=P_i^{-1}\!\left(\frac{k-\tfrac12}{K_i}\right),
+\qquad k=1,\dots,K_i.
+\label{eq:Quantilrepraesentanten11}
+\end{equation}
+Diese Werte liegen im Allgemeinen nicht in der arithmetischen Mitte
+der Klassen im Wertebereich. Sie dienen der numerischen Integration.
+Für eine unbeschränkte Verteilung können die äußeren Klassengrenzen
+unendlich sein. Die Repräsentanten werden jedoch nur für
+Wahrscheinlichkeiten strikt zwischen null und eins berechnet und
+sind bei den hier verwendeten Verteilungen endlich.
+Die gesamte Wahrscheinlichkeit wird berücksichtigt; die Verteilung
+wird nicht an einem willkürlich gewählten Rand abgeschnitten.
+Die Darstellung einer ganzen Klasse durch einen einzigen Wert
+bleibt allerdings eine Näherung, insbesondere in den Ausläufern.
+
+Für eine Funktion $g$ ergibt sich so die Integrationsregel
+\begin{equation}
+\int\limits_{-\infty}^{\infty}g(X_i')\,p_{X_i}(X_i')\,\mathrm dX_i'
+\approx\sum_{k=1}^{K_i}w_{i,k}\,g(x'_{i,k}).
+\end{equation}
+Hier werden feste Repräsentanten systematisch verwendet.
+Es werden keine Zufallszahlen gezogen.
+
+\paragraph{Anwendung der Klassierung der drei Eingangsverteilungen unseres Beispiels:}
+
+Für die Wellenlänge verwenden wir in diesem Beispiel die das Spektrum approximierende Normalverteilung aus Gl.\ (\ref{eq:gaussspektrumWL}), mit den oben angegebenen Werten
+\begin{equation*}
+\lambda_0=0.5500\,\mathrm{\mu m},
+\qquad \sigma_{\lambda,\mathrm{g}}=0.0020\,\mathrm{\mu m}.
+\end{equation*}
+Ihre Verteilungsfunktion und deren Umkehrfunktion lauten
+\begin{equation}
+\begin{aligned}
+P_\Lambda(\lambda')
+&=\frac12\left[1+
+\operatorname{erf}\!\left(
+\frac{\lambda'-\lambda_0}{\sqrt2\,\sigma_{\lambda,\mathrm{g}}}
+\right)\right],\\
+P_\Lambda^{-1}(r)
+&=\lambda_0+\sqrt2\,\sigma_{\lambda,\mathrm{g}}\,
+\operatorname{erf}^{-1}(2r-1),\qquad 0<r<1.
+\end{aligned}
+\label{eq:kumgaussspektrumWL}
+\end{equation}
+Dabei ist $\operatorname{erf}$ die Fehlerfunktion und
+$\operatorname{erf}^{-1}$ ihre Umkehrfunktion.
+Mit $K_\Lambda$ Klassen erhalten wir die Repräsentanten
+\begin{equation}
+\lambda_j
+=P_\Lambda^{-1}\!\left(\frac{j-\tfrac12}{K_\Lambda}\right),
+\qquad j=1,\dots,K_\Lambda.
+\label{eq:cumgaussinversediskrete}
 \end{equation}
 
-Dabei bedeutet die Schreibweise $H(a - b | b - \frac{1}{2}\Delta \leq a < b + \frac{1}{2}\Delta)$, dass $H$ Eins wird, wenn $a$ innerhalb des Intervalls $[b - \frac{1}{2}\Delta, b + \frac{1}{2}\Delta)$ liegt, sonst Null. 
+\begin{figure} %[!ht]
+\centering
+\includegraphics[width=\linewidth]{11_vorlesung_GUMS1/media/discretesampling-cdf_lambda.pdf}
+\caption{Klassierung der Wellenlänge. Links: Verteilungsfunktion
+mit Stützstellen in gleich großen Wahrscheinlichkeitsschritten.
+Rechts: Analytische Normaldichte (rot gestrichelt) und ihre
+numerische Näherung durch Differenzenquotienten der
+Verteilungsfunktion (blau mit Kreuzen).}
+\label{fig:verteilungenlambda}
+\end{figure}
 
-Die Einzelterme $p(\lambda_j | \lambda_0, \sigma_\lambda) \, p(L_k | \hat L, a_L) \, p(x_{\mathrm{min},l} | \bar x_{\mathrm{min}}, \sigma_{x_\mathrm{min}}) \;
-\Delta \lambda_j \; \Delta L_k \, \Delta x_{\mathrm{min},l}$ werden in das Array \texttt{prob\_d\_all} gefüllt. Das Array hat $K_\mathrm{P}^N$ Elemente, hier für $N = 3$ direkte Messgrößen also $K_\mathrm{P}^3$ Elemente.
+\begin{figure} %[!ht]
+\centering
+\includegraphics[width=\linewidth]{11_vorlesung_GUMS1/media/discretesampling-cdf_xmin.pdf}
+\caption{Klassierung der Minimumsposition. Links: Verteilungsfunktion
+mit Stützstellen in gleich großen Wahrscheinlichkeitsschritten.
+Rechts: Analytische Normaldichte (rot gestrichelt) und ihre
+numerische Näherung durch Differenzenquotienten (blau mit Kreuzen).
+Die dargestellte Verteilung ist die für die Eingangsgröße
+$X_{\mathrm{min}}$ verwendete Unsicherheitsbeschreibung.}
+\label{fig:verteilungenxmin}
+\end{figure}
 
-Die einzelnen Werte $\frac{\lambda_j L_k}{x_{\mathrm{min},l}}$ werden in das Array \texttt{d\_spalt\_all}, das ebenso $K_\mathrm{P}^3$ Elemente bekommt, gefüllt.
+In gleicher Weise wird die Umkehrfunktion, Gl.\ (\ref{eq:cumgaussinversediskrete}), für den Abstand des Beugungsminimums vom Hauptmaximum verwendet mit den zuvor genannten Werten
+$$
+x_\mathrm{min,0} = 386.3\, \mathrm{\mu m}, \quad \sigma_\mathrm{xmin} = 5.9 \, \mathrm{\mu m}
+$$
 
-\begin{lstlisting}[style=Python]
-    nominator = []
-    prob_nom = []
-    for i_L in range(0, n_gauss-1):
-        nominator = np.append(nominator, L_mid[i_L]*lambda_mid)
-        prob_nom = np.append(prob_nom, prob_L[i_L]*prob_light*d_L[i_L]*d_lambda)
-    d_spalt_all = []
-    prob_d_all = []
-    for i_x in range(0, n_gauss-1):
-        d_spalt_all = np.append(d_spalt_all, nominator/xmin_mid[i_x])
-        prob_d_all = np.append(prob_d_all, prob_nom*prob_xmin[i_x]*d_xmin[i_x])
-\end{lstlisting}
+Die beiden Abbildungen~\ref{fig:verteilungenlambda} und \ref{fig:verteilungenxmin} veranschaulichen die Normalerteilung und die Einteilung entlang der Wahrscheinlichkeitsachse.
+
+
+Für die vibrationsbedingte Variation von $L$ verwenden wir eine
+Arkussinusverteilung im Intervall $[L_0-a_L,L_0+a_L]$ mit
+\begin{equation}
+L_0=4000\,\mathrm{\mu m},\qquad a_L=20\,\mathrm{\mu m}.
+\end{equation}
+Diese Verteilung entsteht bei einer sinusförmigen Variation mit
+gleichverteilter Phase. Ihre Quantilfunktion lautet
+\begin{equation}
+P_L^{-1}(r)=L_0-a_L\cos(\pi r),\qquad 0\leq r\leq1.
+\end{equation}
+Die Repräsentanten sind somit
+\begin{equation}
+\ell_k=L_0-a_L\cos\!\left(
+\pi\frac{k-\tfrac12}{K_L}\right),
+\qquad k=1,\dots,K_L.
+\end{equation}
+Die hohe Dichte in der Nähe der beiden Intervallgrenzen führt dort
+zu besonders schmalen Klassen, siehe Abb.~\ref{fig:verteilungenL}.
+
+\begin{figure} %[!ht]
+\centering
+\includegraphics[width=\linewidth]{11_vorlesung_GUMS1/media/discretesampling-cdf_L.pdf}
+\caption{Klassierung der vibrationsbedingten Abstandsvariation.
+Links: Verteilungsfunktion der Arkussinusverteilung mit
+Stützstellen in gleich großen Wahrscheinlichkeitsschritten.
+Rechts: Numerisch angenäherte Dichte.
+Die Dichte ist an den Rändern besonders groß; die exakte
+Arkussinusdichte wird dort unbeschränkt, bleibt aber integrierbar.
+Die endlichen Werte der gezeichneten Näherung hängen von der
+Klassierung ab.}
+\label{fig:verteilungenL}
+\end{figure}
+
+Die Repräsentanten $q_l$ für $X_{\mathrm{min}}$ bestimmen wir
+entsprechend aus der zugeordneten Verteilungsfunktion:
+\begin{equation}
+q_l=P_{X_{\mathrm{min}}}^{-1}\!\left(
+\frac{l-\tfrac12}{K_x}\right),\qquad l=1,\dots,K_x.
+\end{equation}
+In der vorhandenen Darstellung wird hierfür eine Normalverteilung
+verwendet, siehe Abb.~\ref{fig:verteilungenxmin}.
+Ihre Parameter müssen aus der Unsicherheitsbeschreibung der
+Minimumsposition stammen. Es ist insbesondere zu unterscheiden,
+ob die Streuung einzelner Positionsbestimmungen oder die
+Unsicherheit einer daraus geschätzten Position in das Modell eingeht.
+Im relevanten Wertebereich muss $X_{\mathrm{min}}$ positiv und
+ausreichend von null entfernt sein. Falls eine unbeschränkte
+Normalverteilung diese physikalische Bedingung nicht angemessen
+beschreibt, ist eine geeignete Verteilung mit positivem Wertebereich
+zu verwenden.
+
+\paragraph{Kombination der Eingangsklassen und Ausgangsklassierung:}
+
+Wir kombinieren jeden Wellenlängenrepräsentanten $\lambda_j$ mit
+jedem Längenrepräsentanten $\ell_k$ und jeder Minimumsposition $q_l$.
+Für jede Kombination berechnen wir
+\begin{equation}
+d_{jkl}=\frac{\lambda_j\ell_k}{q_l}.
+\end{equation}
+Wegen der angenommenen Unabhängigkeit ist die Wahrscheinlichkeit
+der zugehörigen Kombination von Eingangsklassen
+\begin{equation}
+w_{jkl}=w_{\Lambda,j}\,w_{L,k}\,w_{x,l}.
+\end{equation}
+Bei gleich wahrscheinlichen Klassen folgt
+\begin{equation}
+w_{jkl}=\frac{1}{K_\Lambda K_L K_x}.
+\end{equation}
+Die Größen $w_{jkl}$ sind die Wahrscheinlichkeiten der Eingangsklassen,
+deren Beiträge durch die Modellwerte $d_{jkl}$ repräsentiert werden.
+Bei abhängigen Eingangsgrößen dürften diese Gewichte nicht als
+Produkt gebildet werden; sie müssten aus der gemeinsamen
+Eingangsverteilung bestimmt werden.
+
+Für die Darstellung der Ausgangsverteilung, also der Verteilung der Spaltbreiten $D$, wählen wir zusätzlich
+Klassen $I_\nu=[d_{\nu-1},d_\nu)$ mit Breiten
+$\Delta d_\nu=d_\nu-d_{\nu-1}$.
+Die letzte Klasse schließt ihre rechte Grenze ein.
+Die Fensterfunktion
+\begin{equation}
+W_\nu(D')=
+\begin{cases}
+1 & \text{falls }D'\in I_\nu,\\
+0 & \text{sonst}
+\end{cases}
+\end{equation}
+wählt die Modellwerte innerhalb der jeweiligen Klasse der Ausgangsgröße Spaltbreite aus.
+Die Verbindung zur Dirac-Darstellung ist
+\begin{equation}
+\int_{I_\nu}\delta(D'-f(\mathbf X'))\,\mathrm dD'
+=W_\nu(f(\mathbf X')),
+\end{equation}
+wobei die Zuordnung von Werten genau auf einer Klassengrenze
+einheitlich festgelegt wird. Für eine stetige Ausgangsverteilung
+ändert diese Randkonvention die Klassenwahrscheinlichkeit nicht.
+
+Wir nähern also zunächst die \emph{Wahrscheinlichkeit einer
+Ausgangsklasse} an, indem wir die Gewichte aller zugehörigen
+Modellwerte addieren:
+\begin{equation}
+\boxed{
+\pi_\nu
+=
+\sum_{j=1}^{K_\Lambda}
+\sum_{k=1}^{K_L}
+\sum_{l=1}^{K_x}
+W_\nu(d_{jkl})\,w_{jkl}.
+}
+\label{eq:probCombinationSpaltdiscrete}
+\end{equation}
+Hier und im Folgenden bezeichnet $\pi_\nu$ den durch die Summe
+berechneten Näherungswert für $\Pr(D\in I_\nu)$.
+Die Ausgangsklassen werden so gewählt,
+dass sie alle berechneten Modellwerte enthalten.
+Dann gilt bis auf Rundungsabweichungen
+\begin{equation}
+\sum_\nu\pi_\nu=\sum_{j,k,l}w_{jkl}=1.
+\end{equation}
+
+Die Klassenwahrscheinlichkeit $\pi_\nu$ ist noch kein Dichtewert.
+Eine innerhalb der Klasse konstante Dichte erhalten wir durch
+Division durch die Klassenbreite:
+\begin{equation}
+p_D(D')\approx\frac{\pi_\nu}{\Delta d_\nu}
+\qquad\text{für }D'\in I_\nu.
+\end{equation}
+Die Höhe dieses Rechtecks ist ein Dichtewert, seine Fläche ist
+die Klassenwahrscheinlichkeit.
+Bei Angabe der Spaltbreite in $\mathrm{\mu m}$ hat die Dichte
+die Einheit $\mathrm{\mu m}^{-1}$.
+
+\paragraph{Schätzwert, Standardunsicherheit und Intervallgrenzen:}
+
+Den Erwartungswert und die Varianz nähern wir unmittelbar aus den
+gewichteten Modellwerten an:
+\begin{equation}
+\widehat d=\sum_{j,k,l}w_{jkl}\,d_{jkl},
+\qquad
+u^2(\widehat d)=\sum_{j,k,l}w_{jkl}
+(d_{jkl}-\widehat d)^2.
+\end{equation}
+Diese Ausdrücke sind numerische Näherungen für die Momente der
+Ausgangsverteilung, sofern diese existieren.
+Es handelt sich nicht um die Auswertung einer zufällig gezogenen
+Stichprobe. Ein Korrekturfaktor mit einer um eins verminderten
+Anzahl von Modellwerten wird deshalb nicht verwendet.
+Die Standardunsicherheit $u(\widehat d)$ ist die positive Wurzel
+der fortgepflanzten Varianz. Sie wird nicht durch die Wurzel aus
+der Anzahl der Klassenkombinationen geteilt.
+
+Für die Verteilungsfunktion addieren wir die
+\emph{Klassenwahrscheinlichkeiten} kumulativ:
+\begin{equation}
+C_0=0,\qquad C_\nu=\sum_{m=1}^\nu\pi_m
+\approx P_D(d_\nu).
+\end{equation}
+Bei der rechteckförmigen Dichtenäherung steigt die
+Verteilungsfunktion innerhalb jeder Klasse linear an.
+Liegt eine gesuchte Wahrscheinlichkeit $r$ zwischen
+$C_{\nu-1}$ und $C_\nu$ und ist $\pi_\nu>0$, erhalten wir das
+zugehörige Quantil durch lineare Interpolation:
+\begin{equation}
+P_D^{-1}(r)
+\approx d_{\nu-1}
++\Delta d_\nu\frac{r-C_{\nu-1}}{\pi_\nu}.
+\end{equation}
+Ein Intervall mit gleichen Wahrscheinlichkeiten in den beiden
+äußeren Bereichen ergibt sich für $P=1-\alpha$ aus
+\begin{equation}
+[d_{\mathrm{low}},d_{\mathrm{high}}]
+=\left[P_D^{-1}(\alpha/2),\,
+P_D^{-1}(1-\alpha/2)\right].
+\end{equation}
+Die Interpolation verbessert die Ablesung innerhalb der
+Ausgangsklassen. Sie beseitigt nicht den Näherungseinfluss
+einer zu groben Eingangsklassierung.
 
 \begin{figure}[!ht]
-\begin{center}
-\includegraphics[width=170mm, angle = 0]{11_vorlesung_GUMS1/media/discretesampling-cdf_d.pdf}
-  \caption{\label{fig:verteilungenSpaltbreite} Kumulative Wahrscheinlichkeitsverteilung aus der Posterior, \textit{links}, und die Posterior (Wahrscheinlichkeitsdichteverteilung) selbst, \textit{rechts}.}
-\end{center}
+\centering
+\includegraphics[width=\linewidth]{11_vorlesung_GUMS1/media/discretesampling-cdf_d.pdf}
+\caption{Vorhandene numerische Darstellung der Ausgangsverteilung
+der Spaltbreite. Links: Verteilungsfunktion mit Markierungen für
+die Wahrscheinlichkeiten $0.025$ und $0.975$.
+Rechts: Ausgangsdichte und eingezeichneter Schätzwert.
+Die eingetragenen Zahlen gehören zur dargestellten Auswertung;
+eine andere Klassierung kann geringfügig andere Näherungswerte
+liefern.}
+\label{fig:verteilungenSpaltbreite}
 \end{figure}
 
-Die Diskretisierung der indirekten Messgröße Spaltbreite wird in diesem Beispiel mit der Funktion \texttt{linspace} realisiert. Die Heavisidefunktion wird mit der Pythonfunktion \texttt{where} vorgenommen. Diese Art von Funktion kann in anderen Programmierumgebungen auch \texttt{find} heißen:
+Die Verteilungen der Wellenlänge und des Abstands beschreiben bereits vor der aktuellen Spaltmessung verfügbare Informationen. Die Bestimmung der zugehörigen Standardunsicherheiten wird im klassischen GUM als Typ B eingeordnet. In der bayes'schen Interpretation nach Kacker und Jones \cite{Kac03} können diese Verteilungen für die aktuelle Auswertung als Priorverteilungen aufgefasst werden.
 
+Für die Minimumposition verwenden wir den aus den aktuellen Messdaten bestimmten Schätzwert und die zugehörige, durch statistische Auswertung ermittelte Standardunsicherheit $u(x_{\mathrm{min}})$. Ihre Bestimmung wird im klassischen GUM als Typ A eingeordnet. Für die Verteilungsfortpflanzung setzen wir zusätzlich eine Normalverteilung mit diesem Schätzwert als Erwartungswert und dieser Standardunsicherheit als Standardabweichung an. Die Wahl der Verteilungsform ist eine zusätzliche Modellannahme; sie folgt nicht allein aus der Einordnung als Typ A.
+
+Die gemeinsame Fortpflanzung der drei Eingangsverteilungen durch das Messmodell liefert die Wahrscheinlichkeitsverteilung der Spaltbreite auf Grundlage der aktuellen Messdaten, der übernommenen Informationen und der getroffenen Modellannahmen. Solange wir offenlassen, wie die für die Minimumposition angesetzte Wahrscheinlichkeitsdichte zustande gekommen ist, bezeichnen wir die resultierende Verteilung der Spaltbreite allgemein als Ausgangsverteilung.
+
+Beschreibt die angesetzte Normalverteilung die auf die unbekannte Minimumposition bezogene, normierte Likelihood, so kann sie unter der zusätzlichen Annahme einer konstanten Priordichte für diese Position als Posteriorverteilung interpretiert werden. Zusammen mit den Priorverteilungen der Wellenlänge und des Abstands ergibt ihre Fortpflanzung durch das Messmodell innerhalb dieser bayes'schen Beschreibung eine Posteriorverteilung der Spaltbreite.
+
+\paragraph{Pythonbeispiel:}
+
+Die Funktion in folgendem Quellcode setzt diese Rechnung für die drei unabhängigen
+Eingangsgrößen um. Alle Längen werden in $\mathrm{\mu m}$ angegeben.
+Die übrigen Vorgabewerte entsprechen dem beschriebenen Beispiel.
+Die Funktion verwendet für jede Eingangsgröße $K$ Klassen.
+
+% \begin{lstlisting}[style=Python,float=p,basicstyle=\ttfamily\footnotesize,
+% caption={Verteilungsfortpflanzung durch gleich wahrscheinliche Eingangsklassen.},
+% label={lst:klassierungSpalt11}]
 \begin{lstlisting}[style=Python]
-    d_spalt = np.linspace(np.min(d_spalt_all), np.max(d_spalt_all), n_spalt)
-    d_d = d_spalt[1] - d_spalt[0]
-    prob_d = np.zeros(n_spalt)
-    for i_d in range(0, n_spalt-1):
-        idx_list = np.where((d_spalt[i_d] <= d_spalt_all) & \
-                            (d_spalt_all < d_spalt[i_d+1]))[0]
-        if len(idx_list) > 0:
-            prob_d[i_d] = np.sum(prob_d_all[idx_list])
-    idx_list = np.where(d_spalt[n_spalt-1] <= d_spalt_all)[0]
-    if len(idx_list) > 0:
-        prob_d[n_spalt-1] = np.sum(prob_d_all[idx_list])
+def klassierung_spalt(K=86, xmin_0=386.3, sigma_xmin = 5.9, 
+                     n_bins=200, alpha=0.05,
+                     lambda_0=0.5500, sigma_lambda=0.0020,
+                     L_0=4000.0, a_L=20.0):
+    # Quantile in der Mitte der Wahrscheinlichkeitsklassen
+    r = (np.arange(K) + 0.5) / K
+    z = norm.ppf(r)
+    lambda_rep = lambda_0 + sigma_lambda * z
+    L_rep = L_0 - a_L * np.cos(np.pi * r)
+    xmin_rep = xmin_0 + sigma_xmin * z
+    if np.any(xmin_rep <= 0.0):
+        raise ValueError("Positive Minimumspositionen erforderlich")
+
+    # Alle K**3 Kombinationen, keine Zufallsziehung
+    # berechne alle Produkte von lambda und L
+    numerator = lambda_rep[:, None] * L_rep[None, :]
+    # und alle Produkte von numerator und xmin_rep
+    # diese sortieren fuer die kumulative Verteilung
+    d_all = np.sort((numerator[:, :, None]
+             / xmin_rep[None, None, :]).ravel())
+    
+    # erzeuge ein Array von derselben Groesse n wie d_all,
+    # in dem alle Arrayelemente denselben Wert haben,
+    # hier also 1/n
+    # in diesem Fall ist weights schon so gewaehlt,
+    # dass die Summe ueber alle weights schon 1 ist
+    weights = np.full(d_all.size, 1.0 / d_all.size)
+
+    # Momente direkt aus den gewichteten Modellwerten
+    d_est = np.sum(weights * d_all)
+    u_d = np.sqrt(np.sum(weights * (d_all - d_est)**2))
+
+    N_d = len(d_all)
+    cdf_slit = (np.arange(N_d) + 0.5) / N_d
+
+    def quantile(probability):
+        # Finde die Stelle, in deren Naehe das gesuchte Quantil liegt.
+        i = np.searchsorted(
+            cdf_slit[0:-1], probability, side="left"
+        )
+
+        # lineare Interpolation zwischen 2 Stuetzstellen
+        probability_before = cdf_slit[i]
+        probability_after = cdf_slit[i+1]
+        fraction = (
+            (probability - probability_before)
+            / (probability_after - probability_before)
+        )
+        value = d_all[i] + fraction * (d_all[i+1] - d_all[i])
+
+        return float(value)
+
+    interval = (quantile(alpha / 2.0),
+                quantile(1.0 - alpha / 2.0))
+    at50percent = quantile(0.5)
+    return {"d": d_est, "u": u_d, "interval": interval,
+            "d_all": d_all, "d_cdf": cdf_slit,
+            "at50percent": at50percent}
+
+if __name__ == "__main__":
+    result = klassierung_spalt()
+    print(result["d"], 'pm', result["u"])
+    print(result["d"]-1.96*result["u"], result["d"]+1.96*result["u"])
+    print(result["interval"])
+    print('d at 50% probability', result["at50percent"])
+    print((result["d"]-result["interval"][0])/result["u"])
+    print((result["interval"][1]-result["d"])/result["u"])
 \end{lstlisting}
-Die Berechnung des Erwartungswertes wird mit dem Befehl \texttt{d\_erw = np.sum(prob\_d * d\_spalt) * d\_d} erwirkt.
-
-Die Berechnung der kumulativen Wahrscheinlichkeit im Diskreten geschieht durch kumulative Summation, \texttt{cumsum}, und dient der Bestimmung des Überdeckungsintervalls.
-
-\begin{lstlisting}[style=Python]
-    prob_d_kum = np.cumsum(prob_d)
-    prob_d /= (d_d*prob_d_kum[-1])
-    prob_d_kum /= prob_d_kum[-1]
-    i_li = np.argmin(np.abs(prob_d_kum-0.025))
-    i_re = np.argmin(np.abs(prob_d_kum-0.975))
-    print('Ergebnis: bar d', d_erw)
-    print('Ueberdeckungsintervall: [', d_spalt[i_li],',', d_spalt[i_re],']')
-\end{lstlisting}
-
-Der Wahrscheinlichkeitswert \texttt{prob\_d\_kum[i\_li]} liegt nur in der Nähe von $\frac{\alpha}{2} = 0.025$ und der Wahrscheinlichkeitswert \texttt{prob\_d\_kum[i\_re]} in der Nähe von $1-\frac{\alpha}{2} = 0.975$, so dass genau genommen eine Interpolation gemacht werden müsste. Wir wollen uns den Aufwand für diese Nachkommastellen sparen, vor allem um das Programmbeispiel übersichtlich zu halten.
-
-Die Posteriorverteilung mit dem geschätzten Ergebnis ist in Abb.~\ref{fig:verteilungenSpaltbreite} dargestellt. Abb.~\ref{fig:verteilungenxmin} zeigt die diskret klassierten Verteilungen für $x_\mathrm{min}$. Die beiden Abbildungen \ref{fig:verteilungenlambda} und \ref{fig:verteilungenL} zeigen dies für $\lambda$ und $L$.
-
-\begin{figure}[!ht]
-\begin{center}
-\includegraphics[width=170mm, angle = 0]{11_vorlesung_GUMS1/media/discretesampling-cdf_xmin.pdf}
-  \caption{\label{fig:verteilungenxmin} \textit{Links:} Kumulative Wahrscheinlichkeitsverteilung der Positionen des ersten Minimums des Beugungsbildes, bei der die Wahrscheinlichkeiten äquidistant gesampelt sind, \textit{rechts:} die Wahrscheinlichkeitsdichteverteilung dazu, wobei die blaue Kurve mit den x-Markierungen die numerisch berechneten Steigungen der linken Kurve darstellt und die rot gestrichelte Kurve die analytische Gaußfunktion.}
-\end{center}
-\end{figure}
-
-
-\begin{figure}[!ht]
-\begin{center}
-\includegraphics[width=170mm, angle = 0]{11_vorlesung_GUMS1/media/discretesampling-cdf_lambda.pdf}
-  \caption{\label{fig:verteilungenlambda} \textit{Links:} Kumulative Wahrscheinlichkeitsverteilung der Lichtwellenlänge, bei der die Wahrscheinlichkeiten äquidistant gesampelt sind, \textit{rechts:} die Wahrscheinlichkeitsdichteverteilung dazu, wobei die blaue Kurve mit den x-Markierungen die numerisch berechneten Steigungen der linken Kurve darstellt und die rot gestrichelte Kurve die analytische Gaußfunktion.}
-\end{center}
-\end{figure}
-
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=170mm, angle = 0]{11_vorlesung_GUMS1/media/discretesampling-cdf_L.pdf}
-  \caption{\label{fig:verteilungenL} \textit{Links:} Kumulative Wahrscheinlichkeitsverteilung der vibrationsbedingten Abstandsvariation, \textit{rechts:} die Wahrscheinlichkeitsdichteverteilung dazu, wobei die blaue Kurve mit den x-Markierungen die numerisch berechneten Steigungen der linken Kurve darstellt.}
-\end{center}
-\end{figure}
 
 \section{Monte-Carlo Integration}
 
-Bei einer Monte-Carlo-Simulation werden die Funktionsargumente der Verteilungsfunktionen nicht in diskrete Klassen eingeteilt. Statt dessen werden die Werte des Funktionsarguments einer Wahrscheinlichkeitsdichteverteilung ausgewürfelt. Dazu wird die inverse kumulative Wahrscheinlichkeitsverteilung verwendet. 
+Bei einer Monte-Carlo-Simulation werden die Funktionsargumente der Verteilungsfunktionen nicht in diskrete Klassen eingeteilt. Statt dessen werden die Werte des Funktionsarguments einer Wahrscheinlichkeitsdichteverteilung ausgewürfelt, sofern die Verteilung des Beobachtungsmodell als Bibliotheksfunktion vorliegt. Andernfalls kann die inverse kumulative Wahrscheinlichkeitsverteilung (Quantilfunktion) verwendet werden. 
 
-Wir betrachten eine Messgröße $X$, die das Funktionsargument einer Wahrscheinlichkeitsdichteverteilung $p(X)$ darstellt. Dazu wird die kumulative Wahrscheinlichkeitsverteilung durch Integration berechnet
-\begin{equation}
-  P(X) = \int\limits_{-\infty}^{X} \, p(X^\prime) \, \mathrm{d} X^\prime.
-  \label{eq:cumprob11}
-\end{equation}
-Gemäß den Kolmogoroff'schen Axiomen der Wahrscheinlichkeitstheorie hat das sichere Eintreten eines Ereignisses die Warhscheinlichkeit 1 und damit auch
-\begin{equation}
-  \int\limits_{-\infty}^{\infty} \, p(X^\prime) \, \mathrm{d} X^\prime \, = \, 1.
-  \label{eq:prob1}
-\end{equation}
-Es wird eine gleichverteilte Zufallszahl $R \in [0,1)$ generiert und ein Wert für die Messgröße $x$ über die Umkehrfunktions $P^{-1}$ der kumulativen Wahrscheinlichkeitsverteilung gewonnen:
-\begin{equation}
-x = P^{-1}(R)
-\label{eq:MCbeobachtung}
-\end{equation}
-Der Wert ist eine ausgewürfelte Beobachtung. Die Monte-Carlo-Simulation einer Stichprobe $\{x_1,\dots,x_{J_R}\}$ wird aus einer Anzahl $J_R$ synthetisch erzeugter, gleichverteilter Zufallszahlen gewonnen:
-\begin{equation}
-x_i = P^{-1}(R_i) \qquad \text{mit} \quad i = 1, \dots, J_R
-\label{eq:MCstichprobe}
-\end{equation}
-Diese Art der Simulationsberechnungen werden \glqq Monte-Carlo\grqq~ genannt, weil Zufallszahlen generiert werden. Monte-Carlo ist ein Stadtbezirk im Fürstentum Monaco mit einem weltberühmten Spielcasino. Die Erzeugung von zufallsbasierten Stichproben wird verglichen mit den Zufallsergebnissen eines Glücksspiels.
+Für den Fall unabhängiger Eingangsgrößen wird üblicherweise je Eingangsgröße eine Stichprobe mit einem sehr großen Umfang $J_R$ gezogen und über das Messmodell $J_R$ Kombinationen berechnet \cite{Cox06}, wie in Abb.\ (\ref{fig:MonteCarloSimuPrinzip}) symbolhaft skizziert.
 
-Für die in der Statistik relevanten Wahrscheinlichkeitsdichteverteilungen, unter anderem die Normalverteilung, $t$-Verteilung, $\chi^2$-Verteilung, bieten die üblichen Programmierumgebungen fertige Bibliotheksfunktionen, die eine entsprechende Stichprobe $\{x_1,\dots,x_{J_R}\}$ direkt liefern. In Python kann man eine normalverteilte Stichprobe mit Erwartungswert $\mu$, Standardabweichung $\sigma$ und Stichprobenumfang $J_R$, im Code mit \texttt{n\_rnd} bezeichnet\footnote{Im Vorlesungsskript verwenden wir meistens den Großbuchstaben $J$ für Stichprobenumfänge und den Großbuchstaben $N$ für die Anzahl direkter Messgrößen, in Python ist jedoch die Konvention etabliert, dass für Variablenbezeichner Kleinbuchstaben verwendet werden. Deshalb nutzen wir im Pythoncode für die Gesamtzahl von Stichproben oder von Größen den Kleinbuchstaben \texttt{n} und für die Laufvariablen jeweils die Buchstaben \texttt{i} und \texttt{j}.}, wie folgt erzeugen:
-\begin{lstlisting}[style=Python]
-import numpy as np 
-x_array = np.random.normal(mu, sigma, n_rnd)
-\end{lstlisting}
-
-Wir verwenden hier wieder das Beispiel der \textsl{Beugung am Spalt im Fernfeld}:
-\begin{itemize}
-\item Die Erzeugung einer Stichprobe des gauß- bzw.\ normalverteilten Spektrums der Beleuchtung, Gl.~(\ref{eq:gaussspektrumWL}),
-mit $\lambda = 0.550 \, \mathrm{\mu m}$ und $\sigma = 0.0020 \, \mathrm{\mu m}$, sowie
-$\{\lambda_1, \dots, \lambda_{i_\lambda}, \dots, \lambda_{J_\lambda}\}$
-mit einem Umfang von beispielsweise $J_{\lambda} = 2000$ kann wie folgt implementiert werden:
-\begin{lstlisting}[style=Python]
-import numpy as np
-lambda_lw = 0.55 # micron
-sigma_lw = 0.002
-n_lambda = 2000
-np.random.seed(1)
-dt = np.random.normal(lambda_lw, sigma_lw, n_lambda)
-\end{lstlisting}
-
-\item Der Abstand $L$ schwankt durch eine Überlagerung von Vibrationen, die als Funktion der Zeit $t$ betrachtet werden. Dies wird wie folgt modelliert
-$$
-L(t) = \hat L + a_L \cos\left(\frac{2\pi}{T} t\right)
-\quad \text{und} \quad
-\frac{\mathrm{d}}{\mathrm{d} t} L(t) = \dot L = -a_L \frac{2\pi}{T} \sin\left(\frac{2\pi}{T} t\right)
-$$
-und eine Stichprobe $\{L_1, \dots, L_{i_L}, \dots, L_{J_L}\}$
-hier $J_L = 1200$ erzeugt.
-\begin{lstlisting}[style=python]
-import numpy as np
-a = 20 # micron
-L = 4000
-t_max = 100 # msec
-n_t = 1200
-t = np.linspace(0, t_max, n_t)
-delta_t = t[1]
-np.random.seed(0)
-dt = np.random.normal(0, 1.6*delta_t, n_t)
-wl = t_max/20
-L_sample = L + a * np.sin(2 * np.pi * (t+dt)/wl )
-\end{lstlisting}
-
-Man kann auch die Amplitude streuen lassen, beispielsweise um $3\%$
-\begin{lstlisting}[style=Python]
-delta_a = np.random.normal(0, 0.03*a, n_t)
-a += delta_a
-\end{lstlisting}
-
-\item Die Spaltfunktion in der Fraunhofernäherung ist eine Sinc-Funktion mit 
-$$
-I = I_0 \, \left(\frac{\sin(u)}{u}\right)^2
-$$
-für $I_0$ wurde der Zahlenwert $240$ gewählt und für das Pixelrauschen $0.1$. Es wurden $n_\mathrm{det} = 64$ Detektorelemente simuliert, sowie eine Detektorlänge, die fünf Mal dem Abstand vom Hauptmaximum und erstem Minimum der Intensitätsverteilung der Fraunhoferbeugung am Spalt entspricht, angesetzt. Eine Messung soll eine Spaltbreite von $d_\mathrm{m} = 0.575 \, \mathrm{\mu m}$, im Code \texttt{d\_slit}, ergeben haben.
-\begin{lstlisting}[style=Python]
-L = 4000 # micron
-num_det = 64
-intens_0 = 240
-lambda_light = 0.55 # micron
-d_slit = 5.75 # micron
-pix_noise = 0.1
-x_min = L * np.tan(np.arcsin(lambda_light/ d_slit))
-x = np.linspace(-2.5*x_min, 2.5*x_min, num_det)
-
-# hier koennte man noch eine Unsicherheit der 
-# Pixelpositionen, also eine Abweichung der 
-# Aequidistanz einbauen
-
-theta = np.arctan(x/L)
-delta = (d_slit/2) * np.sin(theta)
-u =  delta * (2 * np.pi / lambda_light)
-intens = intens_0 * (np.sin(u)/u)**2
-num_xmin = 1500
-x_min_a = np.zeros(num_xmin)
-for iseed in range(0,num_xmin):
-    np.random.seed(iseed)
-    detnoise = np.random.normal(0,pix_noise,num_det)
-    detsignal = intens * (1+detnoise)
-    ...
-    # hier wird der Fit zur Bestimmung der Minimumsposition eingebaut
-\end{lstlisting}
-\end{itemize}
-
-\begin{figure}
-\includegraphics[width=80mm, angle = 0]{11_vorlesung_GUMS1/media/jitter_timeseries.pdf}
-\hspace{2mm}
-\includegraphics[width=80mm, angle = 0]{11_vorlesung_GUMS1/media/jitter_distribution_of_L.pdf}
-  \caption{\label{fig:SpaltjitterL} \textit{Links:} Monte-Carlo-Simulation der Schwankung des Abstands $L$ zwischen Spalt und Objektiv durch Vibrationen als Funktion der Zeit für die große Stichprobe, \textit{rechts:} Histogramm der Abstände $L$ der Stichprobe dazu.}
-\end{figure}
-
-\begin{figure}
-\includegraphics[width=80mm, angle = 0]{11_vorlesung_GUMS1/media/FD_slit_detnoise_xmin_distribution_absf1500.pdf}
-\hspace{2mm}
-\includegraphics[width=80mm, angle = 0]{11_vorlesung_GUMS1/media/randn_light_hist.pdf}
-  \caption{\label{fig:SpaltMUxminlambda} Histogramme der Minimumposition des Beugungsbildes $x_\mathrm{min}$ und der Lichtwellenlänge $\lambda$, die als große Stichproben per Monte-Carlo-Simulation generiert wurden.}
-\end{figure}
-
-Aus den synthetisch erzeugten Stichproben
-$$
-\{L_1, \dots, L_{i_L}, \dots, L_{N_L}\} \quad \text{and} \quad
-\{x_{\mathrm{min},1}, \dots, x_{\mathrm{min},i_x}, \dots, x_{\mathrm{min},N_x}\} \quad \text{and} \quad
-\{\lambda_1, \dots, \lambda_{i_\lambda}, \dots, \lambda_{N_\lambda}\}
-$$
-werden  $N_L \times N_x \times N_\lambda$ verschiedene Spaltbreiten berechnet:
-$$
-d_{i_L, i_x, i_\lambda} = \frac{\lambda_{i_\lambda} \, L_{i_L}}{x_{\mathrm{min},i_x}} \quad \text{resp.} \quad
-d_{i_L, i_x, i_\lambda} = \frac{\lambda_{i_\lambda}}{\sin\left( \arctan\left(\frac{x_{\mathrm{min},i_x}}{L_{i_L}} \right)\right)}
-$$
-Diese können histogrammiert werden zu $h:\! d_k \mapsto h(d_k)$, wobei $d_k$ die jeweiligen Histogrammklassen $k = 1,\dots,N_{\mathrm{bin}}$ bezeichnet.
-
-\begin{figure}[!ht]
-% Erste Minipage mit einem Bild
-\begin{minipage}{80mm}
-Hier haben wir beispielsweise $N_{\mathrm{bin}} = 300$ Histogrammklassen gewählt. Als Ergebnis für den Erwartungwert kann der Schwerpunkt des Histogramms
-$$
-\bar d = \frac{1}{N_{\mathrm{tot}}}\sum\limits_{k=1}^{N_{\mathrm{bin}}} d_k h(d_k) \quad \text{für} \quad {N_{\mathrm{tot}} = \sum\limits_{k=1}^{N_{\mathrm{bin}}} h(d_k)}
-$$
-und die Breite aus der empirischen Standardabweichung berechnet werden.
-$$
-\sigma(d) = \sqrt{\frac{1}{N_{\mathrm{tot}}-1}\sum\limits_{k=1}^{N_{\mathrm{bin}}} \left(d_k - \bar d\right)^2 h(d_k) }
-$$ 
-\end{minipage}
-\hfill % Fügt einen flexiblen Abstand zwischen den Minipages ein
-% Zweite Minipage mit einem anderen Bild
-\begin{minipage}{70mm}
-\includegraphics[width=70mm, angle = 0]{11_vorlesung_GUMS1/media/dslit_histo.pdf}
-  \caption{\label{fig:SpaltbreitenHisto} Histogramm der Spaltbreite $d$.}
-\end{minipage}
-\end{figure}
-
-Dieser Ansatz setzt voraus, dass das Histogramm eine Näherung einer Gaußverteilung darstellt. Wir wollen mit Abb.\ \ref{fig:Spaltwahrscheinlichkeitsvert} zeigen, wie gut der Schwerpunkt $\bar d$ mit der Standardabweichung $\sigma(d)$ jeweils eine Gaußglocke repräsentieren, die die Histogramme in guter Näherung wieder geben.
-
-\begin{figure}[!ht]
-\begin{center}
-\includegraphics[width=160mm, angle = 0]{11_vorlesung_GUMS1/media/dslit_MC_probdens_cumprob.pdf}
-  \caption{\label{fig:Spaltwahrscheinlichkeitsvert} \textit{Links:} Wahrscheinlichkeitsdichteverteilungen für die Modellgleichungen (\ref{eq:modellspaltbreite}), zum einen die Originalhistogramme und zum anderen die Gaußverteilungen, \textit{rechts:} die kumulativen Verteilungen dazu.}
-\end{center}
-\end{figure}
-Der Vergleich der im rechten Diagramm von Abb.\ \ref{fig:Spaltwahrscheinlichkeitsvert} notierten Überdeckungsintervalle zeigt, dass die Verteilungen etwas asymmetrisch sind. Die Überdeckungsintervalle, die aus den kumulativen Verteilungen gewonnen werden sind leicht verschoben zu denen, die direkt aus dem Schwerpunkt $\bar d$ und der Standardabweichung $\sigma(d)$ berechnet wurden.
-
-Der Ansatz, jedes Element der Stichprobe je einer direkten Messgröße mit allen anderen Elementen zu verknüpfen, führt zu extrem hoher Komplexität, je größer die Anzahl der direkten Messgrößen ist. Wenn jede Stichprobe den Umfang $J_R$ hat und wenn es $N$ direkte Messgrößen gibt, so nimmt die Komplexität exponentiell zu mit $J_R^N$.
-
-Üblicherweise wird deshalb ein größerer Umfang $J_R$ je Stichprobe gewählt, aber dann nicht jede synthetische Beobachtung mit jeder verknüpft, sondern nur $J_R$ Kombinationen berechnet, so dass es nur eine Schleife über den Stichprobenumfang $J_R$ gibt.
-
-\begin{figure}[!ht]
+\begin{figure} %[!ht]
 \begin{center}
 \includegraphics[width=160mm, angle = 0]{11_vorlesung_GUMS1/media/MonteCarloSimuPrinzip.pdf}
   \caption{\label{fig:MonteCarloSimuPrinzip} Monte-Carlo-Simulation mit $N \times J_R$ Stichproben für $N$ direkte Messgrößen, für die jeweils Stichproben mit jeweiligem Umfang von $J_R$ gewürfelten Beobachtungen generiert werden. Jedes Beobachtungstupel $(x_{1,j},\dots,x_{N,j})$ mit $j = 1,\dots,J_R$ wird in das Modell eingefügt, so dass eine Stichprobe $(y_{1},\dots,y_{J_R})$ gewonnen wird.}
 \end{center}
 \end{figure}
 
-Für das Beispiel \textsl{Beugung am Spalt im Fernfeld} kann eine solche Implementierung wie folgt realisiert werden:
-\begin{itemize}
-\item Es wird ein Stichprobenumfang gewählt, zum Beispiel $J_R = 1500$. 
-\item Für die Eingangsgrößen (Eingabeparameter) werden wieder dieselben Werte verwendet wie zuvor, mit $L = 4000 \, \mathrm{\mu m}$ und dessen Auslenkung durch Vibration $a_L = 20 \, \mathrm{\mu m}$, mit einer Anzahl der Detektorelemente von $n_\mathrm{det} = 64$ (\texttt{num\_det}), $I_0 = 240$, $\lambda = 0.55 \, \mathrm{\mu m}$, $\bar d_\mathrm{m} = 5.75  \, \mathrm{\mu m}$ und \texttt{pix\_noise} $= 0.1$.
-\item Die nominelle Spaltbreite $d_\mathrm{nom}$, die für den Startwert zur Einpassung der Spaltfunktion Gl.~(\ref{eq:spaltfunktion}) genutzt wird, wird angesetzt mit $d_\mathrm{nom} = 5.50 \, \mathrm{\mu m}$.
-\item In diesem Modell streuen die Positionen der Detektorelemente (Pixel) um $10 \%$ der Pixelabstände.
-\end{itemize}
+% rsvg-convert -f pdf -o file.pdf file.svg
+Wir zeigen für unser Beugung-am-Spalt-Beispiel $J_R = 10000$ Ziehungen. Die Eingangsgrößen Wellenlänge $\lambda$ und Abstand $L$ sind Größen mit vorgegebenen Resultaten und mit Typ B Unsicherheit und den Zahlenwerten wie oben. Die Lichtwellenlänge $\lambda$ gilt wie bei der Methode mit der Klassierung als gaußverteilt und der Abstand $L$ wieder als Arcussinus-verteilt durch Vibrationen. Mit den 10000 Ziehungen erhalten wir die in den Abbildungen \ref{fig:SpaltjitterL} für den Abstand $L$ und \ref{fig:SpaltMUxminlambda}, \textsl{rechts}, für die Wellenlänge $\lambda$ dargestellten Verteilungen.
 
-Es wird die Modellannahme gemacht, dass sich die Pixelpositionen nicht verändern, so dass mit einer festen Anordnung gerechnet wird, die aber als nicht exakt äquidistant angesehen wird. Deshalb werden einmalig (vor der Schleife über alle $J_R$ Beobachtungen) um zehn Prozent von der Äquidistanz abweichende Pixelpositionen \texttt{x\_simu} simuliert mit 
+\begin{figure}
+\includegraphics[width=\linewidth, angle = 0]{11_vorlesung_GUMS1/media/03_L_pdf_cdf.pdf}
+  \caption{\label{fig:SpaltjitterL} Monte-Carlo-Simulation der Schwankung des Abstands $L$ zwischen Spalt und Objektiv durch Vibrationen als Funktion der Zeit für die große Stichprobe.}
+\end{figure}
 
-\begin{lstlisting}[style=Python]
-    x_min = L * np.tan(np.arcsin(lambda_light/ d_slit))
-    x_det = np.linspace(-2.5*x_min, 2.5*x_min, num_det) 
-    sigma_dx = 0.1 * (x_det[1] - x_det[0])
-    x_simu = x_det + np.random.normal(0, sigma_dx, num_det)
-\end{lstlisting}
 
-Die Unsicherheit des Abstands $L$ zwischen dem Messobjekt Spalt und dem Objektiv wird hier als Schwingung modelliert. Die Häufigkeit der Auslenkpositionen einer Sinuswelle ist in den Umkehrpunkten größer als im Nulldurchgang und entspricht einer U-Verteilung. Für gleichverteilte Abtastzeiten liefern die Auslenkungen einer Halbwelle die Verteilung der Auslenkpositionen $\Delta L$
+\begin{figure}
+\includegraphics[width=\linewidth, angle = 0]{11_vorlesung_GUMS1/media/pdf_xmin_und_lambdaf.pdf}
+  \caption{\label{fig:SpaltMUxminlambda} Histogramme der Minimumposition des Beugungsbildes $x_\mathrm{min}$ und der Lichtwellenlänge $\lambda$, die als große Stichproben per Monte-Carlo-Simulation generiert wurden.}
+\end{figure}
+
+Die Eingangsverteilung für den mittleren Minimumabstand
+$X_\mathrm{min}$, Abstand der ersten Minima vom Hauptmaximum, wird aus fünf Wiederholungsmessungen bestimmt.
+Für das betrachtete Messszenario wird der Spalt vor jeder Messung
+erneut auf dem Probenhalter positioniert. Dadurch kann sich die
+Position des Hauptmaximums auf dem Detektor zwischen den
+Messungen verschieben.
+
+Der Zeilendetektor besitzt 64 Pixel und ist $2\,\mathrm{mm}$ lang.
+Aus jedem der fünf gemessenen Intensitätsprofile bestimmen wir
+einen Schätzwert für die Positionen der ersten Minima.
+
+Unter Verwendung der Spaltfunktion der Fraunhoferbeugung beschreiben wir das
+kontinuierliche Intensitätsprofil durch
 \begin{equation}
-\Delta L \; = \; a_L \, \cos(\pi \, R) \qquad \text{mit gleichverteilter Zufallszahl} \qquad R \in [0, 1)
-\label{cosverteilungL}
+I(x;A,x_0,q)
+=
+A\left[
+\operatorname{sinc}\left(\frac{x-x_0}{q}\right)
+\right]^2,
+\label{eq:spaltfktfuersignalfit}
+\end{equation}
+wobei wir entsprechend der NumPy-Funktion \texttt{np.sinc}
+die normierte Definition
+\begin{equation}
+\operatorname{sinc}(z)=\frac{\sin(\pi z)}{\pi z},
+\qquad
+\operatorname{sinc}(0)=1
+\end{equation}
+verwenden.
+Hier bezeichnet $x$ die Koordinate entlang des Detektors,
+$A$ einen Intensitätsfaktor und $x_0$ die Position des
+Hauptmaximums.
+
+Die registrierten Pixelwerte beziehungsweise Grauwerte sind
+proportional zur über die sensitive Pixelfläche integrierten
+Intensität. Es werden deshalb die Parameter $A$, $x_0$ und $q$ der 
+Modellfunktion Gl.~(\ref{eq:spaltfktfuersignalfit}) an das jeweils gemessene 
+Pixelsignal angepasst.
+
+Die fünf Schätzwerte von $q$ ergeben
+\begin{equation}
+x_{\mathrm{min},j}=\hat q_j,
+\qquad j=1,\dots,5.
 \end{equation}
 
-Für die direkten Messgrößen des Abstands zwischen Spaltobjekt und Objektiv und der Lichtwellenlänge werden Stichproben vom Umfang $J_R$ erzeugt mit:
-
-\begin{lstlisting}[style=Python]
-    L_vary = L + a * np.cos(np.pi * np.random.uniform(0, 1, n_rnd))
-    lambda_vary = np.random.normal(lambda_light, sigma_lambda, n_rnd)
-\end{lstlisting}
-Zu jedem Beobachtungstupel $j=1,\dots,J_R$ bzw.\ für die Indizierung in Python $j=0,\dots,J_R-1$ wird ein Beugungsbild mit einem Pixelrauschen von $10 \%$, d.h.\ mit \texttt{pix\_noise} $= 0.1$, erzeugt. Für die Phasenlagen wird das jeweilige Beobachtungspaar $(L_j, \lambda_j)$ eingesetzt. Für das daraus berechnete Beugungsbild $I_j$ wird die gemessene Spaltbreite $\bar d_\mathrm{m} = 5.75  \, \mathrm{\mu m}$ (\texttt{d\_slit}) verwendet.
-
-\begin{lstlisting}[style=Python]
-    for i_rnd in range(0, n_rnd):
-        r_simu = (np.pi / lambda_vary[i_rnd]) * np.sin(np.arctan(x_simu/L_vary[i_rnd]))
-        u_simu =  d_slit * r_simu
-        # Intensitaetsverteilung der Beugungsinterferenzen
-        intens = intens_0 * (np.sin(u_simu)/u_simu)**2
-        # Pixelrauschen
-        detnoise = np.random.normal(0,pix_noise,num_det)
-        detsignal = intens * (1+detnoise)
-\end{lstlisting}
-
-Zu jeder Beobachtung $I_j, L_j, \lambda_j$ wird eine Spaltbreite $d_j$ durch nicht-lineare Optimierung mittels einer Bibliotheksfunktion geschätzt. Die Modellfunktion Gl.\ (\ref{eq:spaltfunktion}), die für die Zielfunktion der Optimierungsrechnung verwendet wird, sieht nach Einsetzen der direkten Größen in die Phasenbeziehung $\varphi = p_1 r$ wie folgt aus:
-\begin{equation}
-g(r) \, = \, p_0 \; \left(\frac{\sin(p_1 \, r)}{p_1 \, r}\right)^2 \quad \text{mit} \quad
-r = \frac{\pi}{\lambda} \sin\left(\arctan\left(\frac{x}{L}\right)\right)
-\label{eq:spaltfunktioneingesetzt}
-\end{equation}
-wobei $(p_0, p_1)$ die zu schätzenden Größen sind, $p_0$ = Intensität im Maximum, $p_1$ = die zu schätzende Spaltbreite. Die Ziel- oder Kostenfunktion ist 
-\begin{equation}
-Q(p_0,p_1) \; = \; \sum\limits_{i=1}^{n_\mathrm{det}} \, \varepsilon_i^2 \quad \text{mit} \quad \varepsilon_i = g_i \; - \; p_0 \; \left(\frac{\sin(p_1 \, r_i)}{p_1 \, r_i}\right)^2
-\end{equation}
-
-Die Modellfunktion Gl.~(\ref{eq:spaltfunktioneingesetzt}) mit der Residuenfunktion $\varepsilon$ wird wie folgt implementiert:
-\begin{lstlisting}[style=Python]
-    funcBeugungsbild = lambda p, r : p[0] * (np.sin(p[1]*r) / (p[1]*r))**2
-    resiBeugungsbild = lambda p, r, g : g - funcBeugungsbild(p, r)
-\end{lstlisting}
-
-Die Minimumsuche $\min_{p_0, p_1} \{ Q(p_0,p_1) \}$ findet innerhalb der Schleife über alle Beobachtungen $j = 1,\dots,J_R$ mit Hilfe der Methode der kleinsten Quadrate \texttt{leastsq} aus der Bibliothek \texttt{scipy.optimize} statt
-
-\begin{lstlisting}[style=Python]
-    for i_rnd in range(0, n_rnd):
-        ...
-        p_init = np.array([np.max(detsignal), d_nom])
-        p_fit, inv_Jac, infodict, errmsg, ier = leastsq(resiBeugungsbild, p_init,\
-             args=(r_simu, detsignal), full_output=True)
-        # Varianz der Residuen
-        residual_variance = np.sum(infodict['fvec']**2) / (num_det - 2)
-        # Kovarianzmatrix
-        covar = inv_Jac * residual_variance
-        sigma_dslit[i_rnd] = np.sqrt(covar[1][1])
-        dslit_esti[i_rnd] = p_fit[1]
-\end{lstlisting}
-
-Zu dem Schätzwert $d_j$, der in das Array \texttt{dslit\_esti} eingetragen wird, liefert der Optimierer über die Jakobimatrizen auch die Standardunsicherheit $\sigma_{d_j}$, die in das Array \texttt{sigma\_dslit} eingetragen wird.
-
-Der gesamte Programmierungsvorschlag sieht wie folgt aus:
-
-\lstinputlisting[style=Python]{11_vorlesung_GUMS1/code/spalt_MonteCarlo.py}
-
-\pagebreak
-
-Es wird der Mittelwert aus der durch Monte-Carlo-Simulation gewonnenen Stichpobe $\{\dots, d_j, \dots \}$ berechnet:
-$$
-\bar d = \frac{1}{J_R} \, \sum\limits_{j=1}^{J_R} \, d_j
-$$
-beispielsweise mit der Numpy-Funktion \texttt{mean}.
-
-
-\begin{figure}[!ht]
+Für die betrachteten Messreihen erhalten wir:
 \begin{center}
-\includegraphics[width=110mm, angle = 0]{11_vorlesung_GUMS1/media/cdf_d_nR1500_MC.pdf}
-  \caption{\label{fig:MonteCarloSimuSpalt} Kumulative Wahrscheinlichkeitsverteilung der aus einer Monte-Carlo-Simulation gewonnen Stichprobe mit Stichprobenumfang $J_R = 1500$. Die Stichprobe wurde der Größe nach sortiert und die Wahrscheinlichkeiten aus $P_{y,k_j} = \frac{k_j}{J_R}$ bestimmt, wenn $k_j$ die Indizes der sortierten Stichprobe sind.}
+\small
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|l||c|c|c|c|c|}
+\hline
+Messung $j$ & 1 & 2 & 3 & 4 & 5 \\
+\hline
+$x_{\mathrm{min},j}/\mathrm{\mu m}$
+& 384.090764
+& 388.313261
+& 386.368012
+& 387.446657
+& 386.959645 \\
+\hline
+\end{tabular}
+\end{center}
+
+Für die folgende Zuordnung einer Student-$t$-Verteilung behandeln
+wir diese Werte als unabhängige Beobachtungen derselben konstanten
+Größe mit näherungsweise normalverteilten Abweichungen.
+Wir berechnen den Mittelwert und die Stichprobenstandardabweichung:
+\begin{equation}
+\bar x_\mathrm{min}
+=
+\frac{1}{5}\sum_{j=1}^{5}x_{\mathrm{min},j},
+\qquad
+s=
+\sqrt{
+\frac{1}{4}\sum_{j=1}^{5}
+\left(x_{\mathrm{min},j}-\bar x_\mathrm{min}\right)^2
+}.
+\end{equation}
+Der Skalenparameter der dem unbekannten Mittelwert zugeordneten
+Student-$t$-Verteilung lautet
+\begin{equation}
+a=\frac{s}{\sqrt{5}},
+\qquad
+\nu=5-1=4.
+\end{equation}
+
+Für die Monte-Carlo-Ziehungen wird zunächst ein
+Pseudozufallszahlengenerator initialisiert. Die Funktion
+\texttt{np.random.default\_rng} erzeugt eine Instanz
+\texttt{rng} der Klasse \texttt{numpy.random.Generator}:
+\begin{lstlisting}[style=Python]
+import numpy as np
+
+SEED = 19273
+rng = np.random.default_rng(SEED)
+\end{lstlisting}
+
+\texttt{SEED} legt die Initialisierung des
+Pseudozufallszahlengenerators fest. Ein anderer Seed liefert
+andere Zufallswerte und damit eine andere Monte-Carlo-Stichprobe;
+die zugrunde gelegte Wahrscheinlichkeitsverteilung bleibt
+unverändert. Bei gleichem Seed, gleicher Softwareumgebung und
+unveränderter Folge der Generatoraufrufe werden dieselben
+Zufallswerte reproduziert.
+
+Die Monte-Carlo-Stichprobe mit Umfang $J_R=10000$ wird
+anschließend wie folgt erzeugt:
+\begin{lstlisting}[style=Python]
+N_MC = 10000
+J = len(xmin)
+nu = J - 1
+
+xmin_mittel = np.mean(xmin)
+scale = np.std(xmin, ddof=1) / np.sqrt(J)
+
+xmin_samples = (
+    xmin_mittel + scale * rng.standard_t(nu, N_MC)
+)
+\end{lstlisting}
+Die Methode \texttt{standard\_t} erzeugt hier Werte aus einer
+zentralen Student-$t$-Verteilung mit vier Freiheitsgraden und
+Skalenparameter eins. Durch Multiplikation mit \texttt{scale}
+und Addition von \texttt{xmin\_mittel} erhalten wir die
+gewünschte verschobene und skalierte Verteilung.
+
+Es bleibt noch zu diskutieren, ob wie in GUM Supplement 1 eine normalverteilte Stichprobe in dieser Weise aus der Student-$t$-Verteilung zu erzeugen ist, siehe GUM-S1 Abschnitt 6.4.9.3, oder ob die Ziehung mittels Normalverteilung mit der Standardabweichung der $t$-Verteilung Gl.~\ref{eq:tSkalaStandardabweichung10} zu verwenden ist, die in Abschnitt~6.4.9.4 genannt wird. Die Autoren der Vorlesung werden dies im Laufe des WS 2026/27 klären.
+
+Die Spaltbreiten werden mit dem Modell der Kleinwinkelnäherung berechnet. Bei der Monte-Carlo-Simulation liefern die drei Stichproben zu den drei Eingangsgrößen
+$J_R = 10000$ Tripel, die eingesetzt in die Modellgleichung je eine Spaltbreite liefern:
+
+\begin{lstlisting}[style=Python]
+d_samples = lambda_samples * L_samples / xmin_samples
+\end{lstlisting}
+
+Abbildung \ref{fig:Spaltwahrscheinlichkeitsvert} stellt die Verteilungen von \texttt{d\_samples} graphisch dar.
+
+\begin{figure} %[!ht]
+\begin{center}
+\includegraphics[width=\linewidth, angle = 0]{11_vorlesung_GUMS1/media/05_spaltbreite_pdf_cdf.pdf}
+  \caption{\label{fig:Spaltwahrscheinlichkeitsvert} \textit{Links:} Wahrscheinlichkeitsdichteverteilung der aus der Monte-Carlo-Rechnung gewonnenen Spaltbreiten-Stichprobe mit $J_R = 10000$, \textit{rechts:} die kumulative Verteilung dazu.}
 \end{center}
 \end{figure}
 
-Zur Bestimmung des Überdeckungsintervalls wird die kumulative Wahrscheinlichkeitsdichteverteilung berechnet, indem die Stichprobe sortiert wird 
-$$
-\dots \le d_{k_j-1} \le d_{k_j} \le d_{k_j+1} \le \dots
-$$
-und die Wahrscheinlichkeiten 
-$$
-P_{y,k_j} = \frac{k_j}{J_R}
-$$
-berechnet werden. Für die Wahrscheinlichkeitswerte $\frac{\alpha}{2} = 0.025$ und $1-\frac{\alpha}{2} = 0.975$ könnte man zwischen den Werten $P_{y,k_j}$, die die beiden nächsten Nachbarn um $\frac{\alpha}{2}$ bzw.\ um $1-\frac{\alpha}{2}$ sind, interpolieren. Bei der sehr großen Stichprobe hier, werden hier einfach nur die Indizes der beiden am dichtesten liegenden Werte verwendet.
-
-\begin{lstlisting}[style=Python]
-    d_sort = np.sort(dslit_esti)
-    prob_d_kum = np.arange(0, n_rnd) / n_rnd
-    i_li0 = np.argmin(np.abs(prob_d_kum-0.025))
-    i_re0 = np.argmin(np.abs(prob_d_kum-0.975))
-    print('Ueberdeckungsintervall: [', d_sort[i_li0],',', d_sort[i_re0],']')
-\end{lstlisting}
+Der Schwerpunkt der Wahrscheinlichkeitsdichteverteilung liefert den Schätzwert der Spaltbreite und aus der kumulativen Verteilung kann dann genauso wie in dem Beispiel mit dem klassierten Integrationsverfahren, das Überdeckungsintervall bestimmt werden.
+% \lstinputlisting[style=Python]{11_vorlesung_GUMS1/code/spalt_MonteCarlo.py}
 
 
-Die aus der Messung im Labor ermittelte Spaltbreite $\bar d_\mathrm{m} = 5.750 \, \mathrm{\mu m}$ wurde in die Simulationsrechnung als Eingabeparameter hineingesteckt und nach Variation der Komponenten des experimentellen Aufbaus mit $5.755 \, \mathrm{\mu m}$ reproduziert. Die Simulationsberechnungen haben eine mittlere Standardunsicherheit aus der Kovarianzmatrix der Optimierungsrechnung von $\sigma_d = 0.080 \, \mathrm{\mu m}$ ergeben, die ihrerseits wiederum eine Standardabweichung von $\sigma_{\sigma_d} = 0.018 \, \mathrm{\mu m}$ hat.
-
-Das resultierende Vertrauensintervall bzw.\ das vollständige Messergebnis für $J_R = 1500$ hat hier
-$$
-d \in [5.554, 5.981] \, \mathrm{\mu m} \quad \text{bzw.} \quad d = (5.755 - 0.201 + 0.226) \, \mathrm{\mu m}
-$$
-ergeben.
-% python3 spalt_MonteCarlo.py 
-% Ergebnis: bar d 5.754737552967015
-% Ueberdeckungsintervall: [ 5.553724035347025 , 5.980889050514585 ]
-% 0.0794476048285493 0.017548037796986694
-
-\section{Simulation durch hybride Integrationsansätze}
-
-Je nach Anwendung kann es auch sinnvoll sein, unterschiedliche Integrationsmethoden zu kombinieren, also einen hybriden Ansatz zu wählen. Hier zeigen wir einen Ansatz, bei dem ein Teil der Wahrscheinlichkeitsdichteverteilungen durch diskrete Klassierung integriert und ein Teil durch Auswürfeln von Stichproben. Die Wahl, von welchen direkten Messgrößen welche Verteilungen wie integriert werden, hängt von der Zweckmäßigkeit hinsichtlich des Rechenaufwands und der Modellbildung ab. 
-
-Bei dem Beispiel \textsl{Beugung am Spalt im Fernfeld} hat sich die zweite Monte-Carlo-Simulation mit einem Stichprobenumfang $J_R$ und einer Schleife über die $J_R$ Tupel anstelle einer Verschachtelung mehrerer Schleifen als am zweckmäßigsten erwiesen: Die Modellbildung kommt der Aufgabe in ähnlicher Weise am nächsten, wie der im folgenden dargestellte hybride Ansatz. Der Monte-Carlo-Ansatz mit $J_R$ Tupeln erfordert etwas weniger Rechenaufwand als der hybride Ansatz. Man könnte untersuchen, mit wieviel Aufwand die Berechnungen zum gleichen Ergebnis konvergieren und welche Methode dann gewinnt. 
-
-Hier soll es aber nicht darum gehen, für dieses konkrete Beispiel die beste Lösung zu finden, sondern die unterschiedliche Methodik zu illustrieren.
-
-Die Wahrscheinlichkeitsdichteverteilungen des Abstands Spalt-Objektiv $L$ und der Lichtwellenlänge der Beleuchtung $\lambda$ werden klassiert, das heißt das deterministisch diskretisierte Sampling aus Abschnitt \ref{GUMS1alternativKlassieren} eingesetzt. Es werden dieselben Verteilungen für $\lambda$ und $L$, die in den beiden Abbildungen \ref{fig:verteilungenlambda} und \ref{fig:verteilungenL} dargestellt sind, eingesetzt. Die Spaltfunktion Gl.~(\ref{eq:spaltfunktion}) bzw.\ Gl.~(\ref{eq:spaltfunktioneingesetzt}) wird hingegen mittels Monte-Carlo-Methode simuliert. 
-
-Es gibt einen Unterschied in der Modellbildung: Während in dem zweiten Monte-Carlo-Ansatz für alle $J_R = 1500$ Beobachtungen derselbe Detektor, also die identischen Positionen der Detektorelemente verwendet wurden, werden in dem nachfolgend beschriebenen Modell für $n_\mathrm{MC} = 31$ unterschiedliche Monte-Carlo-Läufe auch $n_\mathrm{MC} = 31$ unterschiedliche Detektorelementpositionen ausgewürfelt.
-
-Für die Simulation wird wieder der aus einer Messung geschätzte Wert $\bar d_\mathrm{m} = 5.75 \, \mathrm{\mu m}$ verwendet. Der Detektor, die Sensorzeile, wird wie im vorigen Abschnitt wieder mit 64 Detektorelementen simuliert, die nominell äquidistant sind, deren Positionen jedoch eine Unsicherheit von einem Zehntel der Abstände aufweisen. 
-
-\begin{lstlisting}[style=Python]
-    x_det = np.linspace(-2.5*x_min, 2.5*x_min, num_det) 
-    sigma_dx = 0.1 * (x_det[1] - x_det[0])
-\end{lstlisting}
-Es werden $n_\mathrm{MC}$ verschiedene Sensorzeilen simuliert mit 
-\begin{lstlisting}[style=Python]
-    for i_MC in range(0, n_MC):
-        x_simu = x_det + np.random.normal(0, sigma_dx, num_det)
-\end{lstlisting}
-
-Es werden die kombinierten Wahrscheinlichkeiten (Produkte) aller Klassen von $L_i$ mit $i=1,\dots,K$ und von $\lambda_j$ mit $j=1,\dots,K$ berechnet und in ein entsprechendes Array gefüllt. Den Wahrscheinlichkeiten werden die entsprechenden Klassenwerte $L_i$ und $\lambda_j$ zugeordnet, in dem diese in Arrays gleicher Größe gefüllt werden. Die Größe aller drei Arrays ist gleich der Klassenanzahl hoch zwei $K^2$. Die Potenz zwei gilt an dieser Stelle, weil es hier um zwei Größen $L$ und $\lambda$ geht:
-\begin{lstlisting}[style=Python]
-    prob_L_lambda = []
-    L_all = []
-    lambda_all = []
-    for i_L in range(0, n_sample-1):
-        prob_L_lambda = np.append(prob_L_lambda, \
-                                  prob_L[i_L]*prob_light*d_L[i_L]*d_lambda)
-        L_all = np.append(L_all, L_mid[i_L]*np.ones(n_sample-1))
-        lambda_all = np.append(lambda_all, lambda_mid)
-    n_all = len(prob_L_lambda)
-\end{lstlisting}
-
-
-Zu jeder Sensorzeile $i_\mathrm{MC} = 1,\dots,n_\mathrm{MC}$ werden alle Kombinationen aus $L_i$ und $\lambda_j$ verwendet und den Sensorelementen jeweils ein neues Pixelrauschen beaufschlagt:
-
-\begin{lstlisting}[style=Python]
-    for i_MC in range(0, n_MC):
-        x_simu = x_det + np.random.normal(0, sigma_dx, num_det)
-        for i_all in range(0, n_all):
-            r_simu =  np.sin(np.arctan(x_simu/L_all[i_all])) * np.pi/lambda_all[i_all]
-            u_simu = d_slit * r_simu
-            intens = intens_0 * (np.sin(u_simu)/u_simu)**2
-            detnoise = np.random.normal(0,pix_noise,num_det)
-            detsignal = intens * (1+detnoise)
-\end{lstlisting}
-Das Pixelrauschen wird innerhalb dieser inneren Schleife jeweils erneut gerechnet, weil sich dies für jede Messung mit genau einer Sensorzeile ändert; denn es ist ein stochastischer Prozess in der Elektronik.
-
-Die Gl.~(\ref{eq:spaltfunktioneingesetzt}) sowie die dazugehörige Funktion der Residuen $\varepsilon$ wird definiert mit:
-\begin{lstlisting}[style=Python]
-    funcBeugungsbild = lambda p, r : p[0] * (np.sin(p[1]*r) / (p[1]*r))**2
-    resiBeugungsbild = lambda p, r, g : g - funcBeugungsbild(p, r)
-\end{lstlisting}
-
-Sie werden von dem Optimierungsprogramm \texttt{leastsq} aufgerufen:
-\begin{lstlisting}[style=Python]
-            p_init = np.array([np.max(detsignal), d_nom])
-            p_fit, inv_rmatrix, infodict, errmsg, ier = leastsq(resiBeugungsbild,\
-                 p_init, args=(r_simu, detsignal), full_output=True)
-            residual_variance = np.sum(infodict['fvec']**2) / (num_det - 2)
-            covar = inv_rmatrix * residual_variance
-            sigma_dslit[i_MC][i_all] = np.sqrt(covar[1][1])
-            dslit_esti[i_MC][i_all] = p_fit[1]
-\end{lstlisting}
-
-Schließlich wird Gl.~(\ref{eq:spaltfunktioneingesetzt}) eingepasst mit:
-\begin{lstlisting}[style=Python]
-            p_init = np.array([np.max(detsignal), d_nom])
-            p_fit, inv_rmatrix, infodict, errmsg, ier = leastsq(resiBeugungsbild,\
-                 p_init, args=(r_simu, detsignal), full_output=True)
-            residual_variance = np.sum(infodict['fvec']**2) / (num_det - 2)
-            covar = inv_rmatrix * residual_variance
-            sigma_dslit[i_MC][i_all] = np.sqrt(covar[1][1])
-            dslit_esti[i_MC][i_all] = p_fit[1]
-\end{lstlisting}
-
-Die resultierende indirekte Messgröße Spaltbreite $d$ wird wie in dem Abschnitt, in dem die Integration mit diskreten Klassen durchgeführt wird, ebenfalls diskret klassiert und die Heavisidefunktion wieder durch die Numpy-Funktion \texttt{where} realisiert. Zu jeder Klasse $k$ der Größe Spalt $d_k$ werden die gemäß der Heavisidefunktion gefundenen Wahrscheinlichkeiten addiert mit \texttt{np.sum(prob\_L\_lambda[idx\_list])}.
-\begin{lstlisting}[style=Python]
-    d_spalt = np.linspace(np.min(dslit_esti), np.max(dslit_esti), n_spalt)
-    d_d = d_spalt[1] - d_spalt[0]
-    prob_d = np.zeros(n_spalt)
-    for i_d in range(0, n_spalt-1):
-        idx_list = np.where((d_spalt[i_d] <= dslit_esti[i_MC]) & \
-                            (dslit_esti[i_MC] < d_spalt[i_d+1]))[0]
-        if len(idx_list) > 0:
-            prob_d[i_d] += np.sum(prob_L_lambda[idx_list])
-    idx_list = np.where(d_spalt[n_spalt-1] <= dslit_esti[i_MC])[0]
-    if len(idx_list) > 0:
-        prob_d[n_spalt-1] += np.sum(prob_L_lambda[idx_list])
-\end{lstlisting}
-
-Das gesamte Programm sieht wie folgt aus:
-\lstinputlisting[style=Python]{11_vorlesung_GUMS1/code/spalt_hybridmethod.py}
-
-Die aus der Messung im Labor ermittelte Spaltbreite $\bar d_\mathrm{m} = 5.750 \, \mathrm{\mu m}$ wurde in die Simulationsrechnung als Eingabeparameter hineingesteckt und nach Variation der Komponenten des experimentellen Aufbaus mit $5.751 \, \mathrm{\mu m}$ reproduziert. Die Simulationsberechnungen haben eine mittlere Standardunsicherheit aus der Kovarianzmatrix der Optimierungsrechnung von $\sigma_d = 0.081 \, \mathrm{\mu m}$ ergeben, die ihrerseits wiederum eine Standardabweichung von $\sigma_{\sigma_d} = 0.018 \, \mathrm{\mu m}$ hat.
-
-Das resultierende Vertrauensintervall bzw.\ das vollständige Messergebnis für $n_\mathrm{MC} = 31$ und $K = 86$ hat hier
-$$
-d \in [5.540, 5.971] \, \mathrm{\mu m} \quad \text{bzw.} \quad d = (5.751 - 0.211 + 0.219) \, \mathrm{\mu m}
-$$
-ergeben.
-
-% 7396 7396
-% Ergebnis: bar d 5.751246361287737
-% Ueberdeckungsintervall: [ 5.540607388742082 , 5.970463930820996 ]
-% 0.08097772082738994 0.017640294605355118
-
-\begin{figure}[!ht]
-\begin{center}
-\includegraphics[width=150mm, angle = 0]{11_vorlesung_GUMS1/media/dslit_hybrid_probdens_cumprob.pdf}
-  \caption{\label{fig:Spaltergebnishybrid} \textit{Links:} Wahrscheinlichkeitsdichteverteilung (Posterior) der Spaltbreitensimulation, \textit{rechts:} die kumulative Verteilung dazu.}
-\end{center}
-\end{figure}

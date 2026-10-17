@@ -1,20 +1,22 @@
 \section{Konzepte von Optimierungsverfahren für nichtlineare Modelle}
-Während dieser Vorlesungsreihe beleuchten wir die Thematik physikalische Größen zu ermitteln, die
-indirekt zugänglich sind. Sie werden über eine Modellbildung als Modellparameter approximiert.
-In den bisherigen Kapiteln hatten wir uns damit befasst, Modellparameter linearer Modelle, zu schätzen.
-Die Besonderheit dabei ist, dass die \textsl{Kostenfunktion} $Q$ eine lineare Abhängigkeit von den
-Modellparametern hat, so dass die Modellparameter
-im Fall der Ausgleichsrechnung nach der Methode der kleinsten Quadrate durch Lösen eines
-linearen Gleichungssystems ermittelt werden können.
-Im vorangegangen Kapitel wurde in Gl.~(\ref{linRegGleichungssystem}), Gl.~(\ref{GleichungssytemKostenfkt})
- und Gl.~(\ref{LsgRegressionGlSys}) gezeigt, dass das Gleichungssystem
-aufgestellt wird, indem der Gradient, der die Kostenfunktion nach den Modellparametern ableitet, gleich Null
-gesetzt wird, um das Maximum zu finden.
+Während dieser Vorlesungsreihe behandeln wir die Ermittlung physikalischer Größen, die
+nicht direkt zugänglich sind. Sie werden mithilfe eines Modells durch Modellparameter
+beschrieben und aus den Beobachtungen geschätzt.
+In den bisherigen Kapiteln haben wir Modellparameter linearer Modelle geschätzt. Die
+Besonderheit besteht darin, dass das Modell beziehungsweise die Residuen linear von den
+Modellparametern abhängen. Die \textsl{Kostenfunktion} $Q$ ist dann im Allgemeinen quadratisch in
+den Parametern, sodass die Schätzwerte im Fall der Ausgleichsrechnung nach der Methode der
+kleinsten Quadrate durch das Lösen eines linearen Gleichungssystems bestimmt werden können.
+Im vorangegangenen Kapitel wurde in Gl.~(\ref{linRegGleichungssystem}),
+Gl.~(\ref{GleichungssytemKostenfkt}) und Gl.~(\ref{LsgRegressionGlSys}) gezeigt, dass
+dieses Gleichungssystem aus der Bedingung entsteht, dass der Gradient der Kostenfunktion
+nach den Modellparametern gleich null gesetzt wird. Bei einer Minimierungsaufgabe wird
+damit ein Minimum gesucht, nicht ein Maximum.
 
-Für den Fall, dass die Modellparameter nicht linear in die Kostenfunktion $Q$,
-auch \textsl{Zielfunktional} genannt, eingehen,
-erfolgt die Schätzung der Modellparameter durch Variation, also durch Optimierung derart, um
-das Minimum der Optimierungszielfunktion $Q$ zu finden.
+Wenn die Modellparameter nichtlinear in das Modell beziehungsweise in die Residuen der
+Kostenfunktion $Q$ (auch \textsl{Zielfunktion} genannt) eingehen, führt die
+Schätzaufgabe im Allgemeinen auf ein nichtlineares Optimierungsproblem. Die Parameter
+werden dann iterativ variiert, um ein Minimum von $Q$ zu finden.
 
 Wir sind von normalverteilten Abweichungen ausgegangen und haben uns
 die Likelihoodverteilungen angeschaut. Als Beispiel nehmen wir ein Modell mit 2 Parametern, bei
@@ -28,7 +30,7 @@ Ein Punkt $\mathbf{r}$, der exakt auf der Geraden liegt, erfülle
 \mathbf{u}(\alpha,\theta) \; = \; \left(\begin{array}{c}
 \cos(\alpha) \sin(\theta)\\
 \sin(\alpha) \sin(\theta)\\
-\cos(\theta) \end{array}\right) \qquad \mathrm{und} \qquad \lambda \in I \!\! R.
+\cos(\theta) \end{array}\right) \qquad \mathrm{und} \qquad \lambda \in \mathbb{R}.
 \end{equation}
 \begin{figure}
 \begin{center}
@@ -38,22 +40,29 @@ Ein Punkt $\mathbf{r}$, der exakt auf der Geraden liegt, erfülle
 Likelihood für normalverteilte Residuen (\textsl{rechts}).\label{LSoptiExample1}}
 \end{figure}
 
-Abb.~\ref{LSoptiExample1} zeigt das Modell als schwarz gestrichelte Gerade und die Beobachtungen als blaue Kreise, sowie rechts die Likelihoodverteilung. Wir hatten bereits ausführlich darüber gesprochen, dass die Suche des Maximums der Likelihood in die Suche des Minimums übergeht. Es gelte nun diejenige Geradenrichtung zu finden, für die die senkrechten Abstände,
-die Residuen $\varepsilon_j$,  der beobachteten Punkte (Messpunkte) $\mathbf{r}_{\mathrm{Mess},j} = (X_{1,j}, X_{2,j}, X_{3,j})^\mathsf{T}$ minimal sind. Für das Kriterium für minimale Abstände, also die Kostenfunktion $Q$, setzen wir wieder voraus, dass die Messpunkte gaußverteilt um eine Gerade streuen. Den Betrag für die senkrechten Abstände berechnen wir mit
+Abb.~\ref{LSoptiExample1} zeigt das Modell als schwarz gestrichelte Gerade und die
+Beobachtungen als blaue Kreise sowie rechts die zugehörige Likelihoodverteilung. Die Suche
+nach dem Maximum der Likelihood kann als Suche nach dem Minimum der negativen
+Log-Likelihood formuliert werden. Gesucht ist die Geradenrichtung, für die die
+senkrechten Abstände der Messpunkte
+$\mathbf{r}_{\mathrm{Mess},j}=(X_{1,j},X_{2,j},X_{3,j})^\mathsf{T}$ minimal sind.
+Für dieses Anschauungsbeispiel nehmen wir isotrope, normalverteilte Abweichungen
+senkrecht zur Geraden an. Der Betrag des senkrechten Abstands ist
 \begin{equation}
-\varepsilon(\alpha,\theta)_j \; = \; \left| \mathbf{r}_{\mathrm{Mess},j} \; - \;
-( \mathbf{r}_{\mathrm{Mess},j} \cdot \mathbf{u}(\alpha,\theta) ) \, \mathbf{u}(\alpha,\theta) \right|
+\varepsilon_j(\alpha,\theta) \; = \; \left\lVert \mathbf{r}_{\mathrm{Mess},j} \; - \;
+( \mathbf{r}_{\mathrm{Mess},j} \cdot \mathbf{u}(\alpha,\theta) ) \, \mathbf{u}(\alpha,\theta) \right\rVert_2
 \end{equation}
-mit $|$ als Betrag gemäß $| \mathrm{a} | = \sqrt{a_1^2 + a_2^2 + a_3^2}$.
-Für die Likelihoodverteilung auf der rechten Seite von Abb.~\ref{LSoptiExample1} verwenden wir
-die Wahrscheinlichkeitsdichte gemäß
+mit $\lVert\mathbf{a}\rVert_2=\sqrt{a_1^2+a_2^2+a_3^2}$. Die Größe
+$\varepsilon_j$ ist hier ein nichtnegativer Abstand. Für die in Abb.~\ref{LSoptiExample1}
+dargestellte Likelihoodverteilung verwenden wir daher bis auf einen von $\alpha$ und
+$\theta$ unabhängigen Faktor
 \begin{equation}
-p(\varepsilon_1,\dots,\varepsilon_J | \alpha, \theta)
+p(\varepsilon_1,\dots,\varepsilon_J \mid \alpha, \theta)
 \propto e^{-\frac{1}{2} \, \sum\limits_{j=1}^J \, \left(\frac{\varepsilon(\alpha,\theta)_j}{\sigma} \right)^2} .
 \end{equation}
-Für den Schätzvorgang wählen wir wieder für das Zielfunktional $Q$ die Summe der Quadrate der Residuen $Q = \sum \varepsilon_j^2$,
-also einen Optimierungsvorgang gemäß der Methode der kleinsten
-Residuenquadratsumme (RQS).
+Für den Schätzvorgang wählen wir die Summe der Quadrate der Abstände,
+$Q=\sum_j\varepsilon_j^2$, also die Methode der kleinsten Quadrate beziehungsweise
+die Minimierung der Residuenquadratsumme (RQS):
 \begin{equation}
 \min_{\alpha,\theta} \, \sum\limits_{j=1}^J \, \varepsilon(\alpha,\theta)_j^2 .
 \end{equation}
@@ -66,11 +75,12 @@ mehreren Vor\-gänger\-tupeln mit den dazugehörigen Werten der Kostenfunktion $
 \item oder ob nicht nur die Kostenfunktion $Q$ direkt, sondern auch deren Gradienten bestimmt
 werden.
 \end{itemize}
-Ein möglicher, vielfach genutzer Ansatz für das Verwenden mehrerer Vorgängertupel mit den dazugehörigen Werten der RQS
-ist die \textbf{Simplexmethode nach Nelder und Mead} aus dem Jahr 1965. Er wird als Bibliotheksfunktion \texttt{fminsearch} in Gnu-Octave oder
-in Matlab zur Verfügung gestellt. Mit Simplex ist ein Vieleck gemeint, das $M+1$ Ecken hat für $M$
-Parameter, in unserem Beispiel also drei Ecken für zwei Parameter, was in Abb.~\ref{LSoptiExample1NM} durch
-schwarz umrandete weiße Punkte, die mit schwarzen, durchgezogenen Linien verbunden sind, skizziert ist. Zum Aufbau eines
+Ein möglicher, vielfach genutzter Ansatz, bei dem mehrere bisherige Parametertupel mit
+den zugehörigen Werten der RQS verwendet werden, ist die \textbf{Simplexmethode nach
+Nelder und Mead} aus dem Jahr 1965. Sie wird als Bibliotheksfunktion \texttt{fminsearch}
+in GNU Octave und in Matlab zur Verfügung gestellt. Mit Simplex ist ein Vieleck gemeint,
+das für $M$ Parameter $M+1$ Ecken hat, in unserem Beispiel also drei Ecken für zwei Parameter. In Abb.~\ref{LSoptiExample1NM} ist dies durch
+schwarz umrandete weiße Punkte, die mit schwarzen, durchgezogenen Linien verbunden sind, skizziert. Zum Aufbau eines
 Startsimplex wird ein Startwerttupel $\mathbf{p}_{0,0}$ des Modellparametervektors gewählt und zu jedem Parameter ein
 weiterer Vektor, der eine Variation $\Delta P_m$ repräsentiert:
 \begin{equation}
@@ -104,38 +114,35 @@ weiterer Vektor, der eine Variation $\Delta P_m$ repräsentiert:
 und Simplex für Optimierungsverfahren nach Nelder und Mead.\label{LSoptiExample1NM}}
 \end{figure}
 
-Die Strategie ist es, diesen Simplex durch Zusammenziehen oder durch Umklappen dazu zu bewegen, in
-die Minimumsmulde herunter zu klettern, was in Abb.~\ref{LSoptiExample1NM} durch hellgrau umrandete
-weiße Punkte und durch Pfeile skizziert ist. Die Entscheidung, wann er sich zusammen zieht und dadurch
-auch verkleinert und wann er umklappt und wann er notfalls auch wieder gestreckt (vergrößert) werden
-muss wird anhand dessen getroffen, ob die Werte des Zielfunktionals $Q$ kleiner werden oder nicht.
-Wenn er klein und flach im Tal angekommen ist, terminiert der Algorithmus. Hierzu gibt es dann noch
-verschiedene Ansätze, wie überprüft wird, ob er zu weit über dem Tal waagerecht festhakt und eigentlich
-noch eine zu große Mulde darunter liegt und eines der Simplexbeine angezogen werden muss.
+Die Strategie besteht darin, den Simplex durch Reflexion (Umklappen), Expansion, Kontraktion und
+gegebenenfalls Verkleinerung schrittweise in Richtung einer Minimumsmulde zu bewegen.
+Diese Operationen sind in Abb.~\ref{LSoptiExample1NM} durch die hellgrau umrandeten
+Punkte und schwarze Pfeile angedeutet. Welche Operation ausgeführt wird, hängt von den
+Funktionswerten an den Simplex-Ecken ab. Der Algorithmus terminiert, wenn sich der
+Simplex und die Funktionswerte gemäß den vorgegebenen Toleranzen nur noch wenig ändern. Hierzu gibt es dann
+noch verschiedene Ansätze, wie überprüft wird, ob er zu weit über dem Tal waagerecht festhakt und
+eigentlich noch eine zu große Mulde darunter liegt und eines der Simplexbeine angezogen werden muss.
 
-Dieses Verfahren eignet sich auch für zu minimierende Zielfunktionale, die nicht so schön stetig
-differenzierbar, d.h.\ glatt, in der Talmulde sind. Für Messungen mit Beobachtungen, die nicht gaußverteilt
-streuen, sondern stark abweichende Punkte aufweisen, greift man auf andere Verteilungen zurück.
-Eine mögliche Verteilung kann die Laplaceverteilung sein
+Dieses Verfahren benötigt keine Ableitungen und eignet sich daher auch für Zielfunktionen,
+die nicht glatt oder nur schwer differenzierbar sind. Für Messungen mit nicht
+normalverteilten Abweichungen kann beispielsweise eine Laplace-artige Verlustfunktion
+verwendet werden:
 \begin{equation}
-p(\varepsilon_1,\dots,\varepsilon_J | \alpha, \theta)
-\propto e^{-\frac{1}{2} \, \sum\limits_{j=1}^J \, \frac{| \varepsilon(\alpha,\theta)_j |}{\sigma} }
+p(\varepsilon_1,\dots,\varepsilon_J \mid \alpha, \theta)
+\propto \exp\!\left(-\frac{1}{b}\sum\limits_{j=1}^J
+|\varepsilon_j(\alpha,\theta)|\right),\qquad b>0,
 \end{equation}
-was bedeutet, dass sie eine Exponentialverteilung der Absolutbeträge der
-Residuen ist. Bei dem zu minimierenden Exponenten
+was zu einer Minimierung der Absolutbeträge der Residuen führt. Bei dem zu minimierenden
+Ausdruck
 \begin{equation}
 \min_{\alpha,\theta} \, \sum\limits_{j=1}^J \, | \varepsilon(\alpha,\theta)_j |
 \end{equation}
-bildet sich die Minimumsmulde durch die Betragsbildung zu einer ausgeprägt scharfen Spitze aus.
-Im Minimum gibt es also keine einheitliche Steigung. Je nach Richtung, von der man sich ihr nähert,
-gibt es sehr unterschiedliche Steigungen, was soviel bedeutet wie die Nichtstetigkeit der
-Steigungsfunktion. Steigungen im mehrdimensionalen Raum heißen Gradienten. Die Gradientenfunktion
-ist nicht stetig, die Funktion selber also nicht stetig differenzierbar. Für das Simplexverfahren
-spielt dies aber keine Rolle. Das Simplexverfahren hat aber den Nachteil, dass es sehr
-empfindlich darauf reagiert, welchen Startsimplex man zu Beginn auswählt. Es kann dadurch
-im harmlosen Fall relativ langsam werden, aber im ungünstigsten Fall in die Irre laufen und gar
-nicht konvergieren. Auch kann das Problem des Festhakens bei Optimierungsaufgaben mit vielen
-Parametern zu einem schwerwiegenderen werden.
+bildet sich durch die Betragsbildung eine ausgeprägt scharfe Spitze. Die Zielfunktion ist
+an solchen Stellen nicht differenzierbar; der Gradient\footnote{Ein Gradient ist eine Steigung im mehrdimensionalen Raum} ist dort nicht definiert. Für das
+Simplexverfahren ist das unproblematisch. Ein Nachteil ist jedoch seine Empfindlichkeit
+gegenüber der Wahl des Startsimplex. Es kann im günstigen Fall lediglich langsam sein,
+im ungünstigen Fall aber an einer nicht optimalen Stelle stagnieren oder nicht
+konvergieren. Bei vielen Parametern kann dieses Verhalten zusätzlich problematisch werden.
 
 \begin{figure}
 \begin{center}
@@ -145,295 +152,477 @@ Parametern zu einem schwerwiegenderen werden.
 und Gradienten eingezeichnet als Pfeile (\textsl{links}) und Beträge der
 Gradienten als Funktion der 2 zu schätzenden Parameter (\textsl{rechts}).\label{LSoptiExample1Grad}}
 \end{figure}
-Für zu minimierende Zielfunktionale wie wir sie bei normalverteilten Residuen, also bei
-den rundlichen, stetig differenzierbaren Kostenfunktionen als Residuenquadratsummen haben, können wir Verfahren
+Für Zielfunktionen wie die Residuenquadratsumme bei normalverteilten Residuen,
+die rundlich und stetig differenzierbar sind, können wir Verfahren
 einsetzen, die nicht nur die Kostenfunktion $Q$ direkt, sondern auch deren Gradienten $\nabla Q$ verwenden.
 Hierzu wird \textsl{ein} Startwertetupel (nicht wie bei der Simplexmethode $M+1$)
-für die Modellparameter gebracht. Es wird der Gradient, also die Richtung des steilsten
-Abhangs der Kostenfunktion zusammen mit dem Wert der Steigung an der Position des Startwerttupels
-bestimmt. Dieses Verfahren beleuchten wir im folgenden Abschnitt anhand unseres Beispiels etwas genauer.
+für die Modellparameter festgelegt. Es wird der Gradient, also die Richtung des
+steilsten Abstiegs der Kostenfunktion, an der Position des Startwerttupels
+bestimmt. Dieses Verfahren wird im folgenden Abschnitt anhand des Beispiels erläutert.
 
-\section{Gradientenverfahren für nichtlineare Zielfunktionale}
+\section{Gradientenverfahren für nichtlineare Kostenfunktionen}
 
-Das Gradientenverfahren braucht wie alle anderen Methoden zur Schätzung von Parametern, die
-nicht linear in die Residuen eingehen, ein Tupel von Startwerten der Parameter, was wir in
-Abb.~\ref{LSoptiExample1Grad} als schwarz umrandeten weißen Punkt dargestellt haben.
-In Abb.~\ref{LSoptiExample1Grad} ist die Idee illustriert, wie sich die Position des
-Parametervektors verändert. Die Änderungsvektoren $\Delta \mathbf{p}$ werden aus der Richtung
-des steilsten Abhangs ermittelt, wie durch die Pfeile mit gestrichtelter Linie skizziert.
-Der Gradient des Betrags eines Residuums an der Stelle des Startwertevektors $(\alpha_0, \theta_0)$
-ist der Vektor der partiellen Ableitungen
+Das Gradientenverfahren beziehungsweise das Gauß-Newton-Verfahren benötigt, wie andere
+iterative Verfahren zur Schätzung von Parametern, die nichtlinear in die Residuen eingehen,
+einen Startwertvektor der Parameter. Dieser ist in Abb.~\ref{LSoptiExample1Grad} als schwarz
+umrandeter weißer Punkt dargestellt. In Abb.~\ref{LSoptiExample1Grad} ist die Idee illustriert,
+wie sich die Position des Parametervektors während der Iteration verändert. Die
+Änderungsvektoren $\Delta \mathbf{p}$ werden so bestimmt, dass sich die Kostenfunktion
+verringert. Anschaulich erfolgt die Bewegung in Richtung der Talsohle der durch die
+Kostenfunktion gebildeten Mulde, wie durch die gestrichelten Pfeile skizziert.
+
+Die Ableitung eines Residuums nach den Parametern an der Stelle des Startwertvektors
+$(\alpha_0,\theta_0)$ ist der Vektor der partiellen Ableitungen
 \begin{equation}
-\left. \nabla_{\alpha,\theta} \varepsilon_j \right|_{\alpha_0, \theta_0} \; = \;
+\left. \nabla_{\alpha,\theta} \varepsilon_j \right|_{\alpha_0,\theta_0}
+=
+\left.
 \left(\begin{array}{c}
-\frac{\partial}{\partial \alpha} \\
-\frac{\partial}{\partial \theta}
-\end{array}\right) \left. \varepsilon_j \right|_{\alpha_0, \theta_0} .
+\dfrac{\partial \varepsilon_j}{\partial \alpha} \\[1.0ex]
+\dfrac{\partial \varepsilon_j}{\partial \theta}
+\end{array}\right)
+\right|_{\alpha_0,\theta_0}.
 \end{equation}
-Das auf die Spitze gestellte Dreieck heißt Nablaoperator.
-Die Schreibweise $|_{\alpha_0, \theta_0}$ lesen wir \glqq an der Stelle\grqq ~$(\alpha_0, \theta_0)$.
-Für die Minimierung bestimmen wir die Stelle $(\hat \alpha, \hat \theta)$, an der sich die Talsohle
-der Mulde der RQS-Funktion befinden. Anders gesagt suchen wir die Position im Modellparameterraum,
-die unten in der Mulde RQS-Funktion liegt,
-in der keine Steigung mehr vorhanden ist, d.h.\ der Gradient ein Nullvektor ist, d.h.
+Das auf die Spitze gestellte Dreieck heißt Nablaoperator. Die Schreibweise
+$\left. \cdot \right|_{\alpha_0,\theta_0}$ lesen wir als \glqq an der Stelle
+$(\alpha_0,\theta_0)$\grqq.
+
+Für die Minimierung bestimmen wir die Stelle $(\hat\alpha,\hat\theta)$, an der sich die
+Talsohle der Mulde der RQS-Funktion befindet. Anders gesagt suchen wir die Position im
+Modellparameterraum, an der die Kostenfunktion minimal wird. Eine notwendige Bedingung für ein
+Minimum ist, dass der Gradient der Kostenfunktion verschwindet:
 \begin{equation}
-\lim_{\alpha \rightarrow \hat \alpha, \theta \rightarrow \hat \theta}
-\left\{\nabla_{\alpha,\theta} \,
-\sum\limits_{j=1}^J \, \varepsilon(\alpha,\theta)_j^2
-\right\} \; = \;
+\left.
+\nabla_{\alpha,\theta}
+\sum_{j=1}^{J} \varepsilon_j^2(\alpha,\theta)
+\right|_{\hat\alpha,\hat\theta}
+=
 \left(\begin{array}{c}
 0 \\
 0
-\end{array}\right) .
+\end{array}\right).
 \label{LSschaetzung1}
 \end{equation}
-Hierbei müssen wir uns aber darüber im Klaren sein, dass Gradient gleich Nullvektor nicht nur
-bei einem Minimum vorliegt, sondern auch bei einem Maximum und bei einem Sattelpunkt, weshalb wir
-im letzten Abschnitt ein Verfahren kurz vorstellen, das sich mit dieser Problematik besser
-auseinander setzt.
+Dabei müssen wir beachten, dass ein verschwindender Gradient nur eine notwendige, aber keine
+hinreichende Bedingung für ein Minimum ist. Auch Sattelpunkte erfüllen diese Bedingung. Deshalb
+muss zusätzlich geprüft oder durch das Verfahren sichergestellt werden, dass tatsächlich ein
+Minimum der Kostenfunktion erreicht wird.
 
-Wir ziehen den Nablaoperator in die Summe rein und
-verwenden die Kettenregel, äußere Ableitung mal innere Ableitung:
+Wir ziehen den Nablaoperator in die Summe hinein und verwenden die Kettenregel:
 \begin{equation}
-\nabla_{\alpha,\theta} \,
-\sum\limits_{j=1}^J \, \varepsilon(\alpha,\theta)_j^2
- \; = \;
-\sum\limits_{j=1}^J \, \nabla_{\alpha,\theta} \, \varepsilon(\alpha,\theta)_j^2
- \; = \;
-2 \, \sum\limits_{j=1}^J \, \varepsilon(\alpha,\theta)_j \nabla_{\alpha,\theta} \, \varepsilon(\alpha,\theta)_j
- \; \overset{!}{=} \;
+\nabla_{\alpha,\theta}
+\sum_{j=1}^{J} \varepsilon_j^2(\alpha,\theta)
+=
+\sum_{j=1}^{J}
+\nabla_{\alpha,\theta} \varepsilon_j^2(\alpha,\theta)
+=
+2 \sum_{j=1}^{J}
+\varepsilon_j(\alpha,\theta)
+\nabla_{\alpha,\theta} \varepsilon_j(\alpha,\theta)
+\overset{!}{=}
 \left(\begin{array}{c}
 0 \\
 0
-\end{array}\right) .
+\end{array}\right).
 \label{GradientQ2params}
 \end{equation}
 
-Die beiden Parameter $\alpha,\theta$ fassen wir zusammen in einen Parametervektor $\mathbf{p}$ und
-betrachten im folgenden den Allgemeinfall für $M$ Parameter $\mathbf{p} = (P_1,\dots,P_M)^\mathsf{T}$.
-Die Residuen sind dann jeweils Funktion des Parametervektors
-$\boldsymbol \varepsilon(\mathbf{p}) = (\varepsilon_1(\mathbf{p}), \dots, \varepsilon_J(\mathbf{p}))^\mathsf{T}$,
-so dass die Kostenfunktion $Q$ entsprechend Funktion des Parametervektors ist
+Die beiden Parameter $\alpha$ und $\theta$ fassen wir nun in einem Parametervektor zusammen und
+betrachten den allgemeinen Fall mit $M$ Parametern
 \begin{equation}
-Q(\mathbf{p}) \; = \; \boldsymbol \varepsilon^\mathsf{T}(\mathbf{p}) \, \boldsymbol \varepsilon(\mathbf{p}),
+\mathbf{p}
+=
+(P_1,\dots,P_M)^\mathsf{T}.
+\end{equation}
+Die Residuen sind dann Funktionen dieses Parametervektors:
+\begin{equation}
+\boldsymbol{\varepsilon}(\mathbf{p})
+=
+\left(
+\varepsilon_1(\mathbf{p}),
+\dots,
+\varepsilon_J(\mathbf{p})
+\right)^\mathsf{T}.
+\end{equation}
+Die Kostenfunktion $Q$ ist damit ebenfalls eine Funktion des Parametervektors:
+\begin{equation}
+Q(\mathbf{p})
+=
+\boldsymbol{\varepsilon}^\mathsf{T}(\mathbf{p})
+\boldsymbol{\varepsilon}(\mathbf{p})
+=
+\sum_{j=1}^{J} \varepsilon_j^2(\mathbf{p}).
 \label{Zielfunktional}
 \end{equation}
-für die wir das Minimum suchen mit
+Gesucht ist das Minimum
 \begin{equation}
-\min_{\mathbf{p}} \left\{ Q(\mathbf{p}) \right\}
+\min_{\mathbf{p}} \left\{ Q(\mathbf{p}) \right\}.
 \end{equation}
-indem wir nach dem Nullstellenvektor der Gradientenfunktion
+Dazu suchen wir eine Nullstelle des Gradienten der Kostenfunktion,
 \begin{equation}
-\nabla_{\mathbf{p}} Q(\mathbf{p}) \; = \;
- 2 \, \boldsymbol \varepsilon^\mathsf{T} \, \left( \nabla_{\mathbf{p}}^\mathsf{T} \boldsymbol \varepsilon \right)
+\nabla_{\mathbf{p}} Q(\mathbf{p})
+=
+2\,\boldsymbol{J}^\mathsf{T}(\mathbf{p})\,
+\boldsymbol{\varepsilon}(\mathbf{p}),
 \label{ZielfunktionalGrad}
 \end{equation}
-suchen, für den $Q$ ein Minimum und nicht ein Maximum oder Sattelpunkt annimmt.\\
-(Hinweis zu Gl.~(\ref{ZielfunktionalGrad}): $\frac{\partial}{\partial p} \varepsilon^2(p) =
-2 \varepsilon(p) \frac{\partial}{\partial p} \varepsilon(p)$ )\\
-Dabei ist $\nabla_{\mathbf{p}}$ Spaltenvektor und $\nabla_{\mathbf{p}}^\mathsf{T}$ Zeilenvektor
-mit den partiellen Ableitungsoperatoren $\frac{\partial}{\partial P_m}$.
-Wir suchen dasjenige $\mathbf{p}$ für das
+für die $Q$ ein Minimum und nicht nur einen stationären Punkt annimmt. Dabei ist
+$\nabla_{\mathbf{p}}$ als Spaltenvektor der partiellen Ableitungsoperatoren
+$\partial/\partial P_m$ aufgefasst. Die Matrix $\boldsymbol{J}$ ist \textsl{Jacobi-Matrix}
+der Residuen. 
 \begin{equation}
-\lim_{\mathbf{p} \rightarrow \mathbf{\hat p}}
-\nabla_{\mathbf{p}} Q(\mathbf{p}) \; = \; \left(\begin{array}{c} 0\\ \vdots \\ 0 \end{array}\right)
+\mathbf{J}
+=
+\begin{pmatrix}
+ & \vdots & \\
+\cdots & \frac{\partial \varepsilon_j}{\partial P_m} & \cdots\\
+ & \vdots & \\
+\end{pmatrix}
+\label{eq:JacobimatrixResi}
+\end{equation}
+Für ein einzelnes Residuum gilt entsprechend
+\begin{equation}
+\frac{\partial}{\partial P_m}\varepsilon_j^2(\mathbf{p})
+=
+2\varepsilon_j(\mathbf{p})
+\frac{\partial \varepsilon_j(\mathbf{p})}{\partial P_m}.
+\end{equation}
+Wir suchen also dasjenige $\hat{\mathbf{p}}$, für das
+\begin{equation}
+\nabla_{\mathbf{p}} Q(\hat{\mathbf{p}})
+=
+\left(\begin{array}{c}
+0 \\
+\vdots \\
+0
+\end{array}\right)
 \label{ZielfunktionalGrad1}
 \end{equation}
-Bei der Suche nach dem Minimum wird mit einem Tupel von Parametern angefangen, also
-mit einem Startwertvektor $\mathbf{p}_0$. Dann wird ein Schrittvektor $\Delta \mathbf{p}_0$ ermittelt,
-der gegangen wird, um
-zu einem Nachfolgepunkt im Raum der Modellparamter zu gelangen $\mathbf{p}_1 = \mathbf{p}_0 + \Delta \mathbf{p}_0$.
-Dies erfolgt solange, bis der Parametervektor beliebig dicht an das Minimum von $Q$ gelangt sind. Es gibt damit eine
-gewisse Anzahl $K$ von Iterationschritten, derart dass der Vektor $\mathbf{p}_K = \mathbf{\hat p}$ für minimales
-$Q$ als Tupel von Schätzwerten für die Modellparameter verwendet wird.
-Die einzelnen Iterationsschritte $\kappa$ bedeuten eine Revision des Modellparametervektors
+gilt.
+
+Bei der Suche nach dem Minimum wird mit einem Startwertvektor $\mathbf{p}_0$ begonnen. Dann wird
+ein \textsl{Inkrementvektor} $\Delta \mathbf{p}_0$ bestimmt, mit dem man zu einem Nachfolgepunkt im Raum
+der Modellparameter gelangt:
 \begin{equation}
-\mathbf{p}_\kappa = \mathbf{p}_{\kappa-1} + \Delta \mathbf{p}_{\kappa-1}
+\mathbf{p}_1
+=
+\mathbf{p}_0
++
+\Delta \mathbf{p}_0.
+\end{equation}
+Dies wird iterativ fortgesetzt, bis der Parametervektor hinreichend nahe am Minimum von $Q$
+liegt. Nach einer gewissen Anzahl $K$ von Iterationsschritten wird der Vektor
+$\mathbf{p}_K$ als Schätzwertvektor $\hat{\mathbf{p}}$ für die Modellparameter verwendet:
+\begin{equation}
+\hat{\mathbf{p}}
+\approx
+\mathbf{p}_K.
+\end{equation}
+Die einzelnen Iterationsschritte $\kappa$ beschreiben jeweils eine Revision des
+Modellparametervektors:
+\begin{equation}
+\mathbf{p}_{\kappa+1}
+=
+\mathbf{p}_{\kappa}
++
+\Delta \mathbf{p}_{\kappa}.
 \label{Revisionsschritt}
 \end{equation}
-mittels \textsl{Inkrementvektoren}
-$\Delta \mathbf{p}_1, \dots, \Delta \mathbf{p}_{\kappa}, \dots, \Delta \mathbf{p}_{K-1}$.
+Die zugehörigen \textsl{Inkrementvektoren} sind
+$$
+\Delta \mathbf{p}_0,\dots,\Delta \mathbf{p}_{\kappa},\dots,\Delta \mathbf{p}_{K-1}.
+$$
 
-Wir nehmen eine Taylorreihenentwicklung vor, über die wir die Gradientenfunktion des Zielfunktionals
-als lineare Funktion eines \textsl{Inkrementvektors} $\Delta \mathbf{p}$ darstellen. Dazu entwickeln
-wir die Residuen $\varepsilon_j$ in Taylorreihe bis zum linearen Term
+Wir nehmen nun eine Taylorreihenentwicklung vor, mit der wir die Residuen in linearer Näherung
+als Funktion eines Inkrementvektors $\Delta \mathbf{p}$ darstellen. Dazu entwickeln wir die
+Residuen $\varepsilon_j$ um die aktuelle Parameterposition $\mathbf{p}_\kappa$ bis zum linearen
+Term:
 \begin{equation}
 \left(\begin{array}{c}
-\varepsilon_1(\mathbf{p}) \\
+\varepsilon_1(\mathbf{p}_\kappa+\Delta\mathbf{p}) \\
 \vdots \\
-\varepsilon_j(\mathbf{p}) \\
+\varepsilon_j(\mathbf{p}_\kappa+\Delta\mathbf{p}) \\
 \vdots \\
-\varepsilon_J(\mathbf{p})
+\varepsilon_J(\mathbf{p}_\kappa+\Delta\mathbf{p})
 \end{array}\right)
-\; = \;
+\approx
 \left(\begin{array}{c}
-\varepsilon_1(\mathbf{p}_\kappa) \; + \; \nabla_{\mathbf{p}} \left. \varepsilon_1 \right|_{\mathbf{p}_\kappa} \cdot \Delta \mathbf{p}\\
+\varepsilon_1(\mathbf{p}_\kappa)
++
+\left.
+\nabla_{\mathbf{p}}^\mathsf{T} \varepsilon_1
+\right|_{\mathbf{p}_\kappa}
+\Delta \mathbf{p}
+\\
 \vdots \\
-\varepsilon_j(\mathbf{p}_\kappa) \; + \; \nabla_{\mathbf{p}} \left. \varepsilon_j \right|_{\mathbf{p}_\kappa} \cdot \Delta \mathbf{p}\\
+\varepsilon_j(\mathbf{p}_\kappa)
++
+\left.
+\nabla_{\mathbf{p}}^\mathsf{T} \varepsilon_j
+\right|_{\mathbf{p}_\kappa}
+\Delta \mathbf{p}
+\\
 \vdots \\
-\varepsilon_J(\mathbf{p}_\kappa) \; + \; \nabla_{\mathbf{p}} \left. \varepsilon_J \right|_{\mathbf{p}_\kappa} \cdot \Delta \mathbf{p}
+\varepsilon_J(\mathbf{p}_\kappa)
++
+\left.
+\nabla_{\mathbf{p}}^\mathsf{T} \varepsilon_J
+\right|_{\mathbf{p}_\kappa}
+\Delta \mathbf{p}
 \end{array}\right).
 \label{TaylorResi1}
 \end{equation}
-Hier bilden die partiellen Ableitungen der einzelnen Residuen nach allen Parametern eine $J \times M$-Matrix, die \textsl{Jakobimatrix}
-genannt wird:
+Die partiellen Ableitungen der einzelnen Residuen nach allen Parametern bilden eine
+$J\times M$-Matrix, die \textsl{Jacobi-Matrix}:
 \begin{equation}
-\boldsymbol{J}^{(\kappa)} \; = \; \left(\begin{array}{ccc}
-\left. \frac{\partial \varepsilon_1}{\partial P_1} \right|_{\mathbf{p}_\kappa} & \dots & \left. \frac{\partial \varepsilon_1}{\partial P_M} \right|_{\mathbf{p}_\kappa} \\
- & \ddots & \\
-\left. \frac{\partial \varepsilon_J}{\partial P_1}\right|_{\mathbf{p}_\kappa} & \dots & \left. \frac{\partial \varepsilon_J}{\partial P_M}\right|_{\mathbf{p}_\kappa}
-\end{array}\right) ,\; \textrm{bzw.} \; J_{jm}^{(\kappa)}= \left. \frac{\partial \epsilon_j}{\partial p_m}\right|_{\mathbf{p}_\kappa}
-\;\textrm{mit} \; j=1\ldots J; \;\; m=1\ldots M.
+\boldsymbol{J}^{(\kappa)}
+=
+\left(\begin{array}{ccc}
+\left. \dfrac{\partial \varepsilon_1}{\partial P_1} \right|_{\mathbf{p}_\kappa}
+&
+\dots
+&
+\left. \dfrac{\partial \varepsilon_1}{\partial P_M} \right|_{\mathbf{p}_\kappa}
+\\[2.0ex]
+\vdots
+&
+\ddots
+&
+\vdots
+\\[1.0ex]
+\left. \dfrac{\partial \varepsilon_J}{\partial P_1} \right|_{\mathbf{p}_\kappa}
+&
+\dots
+&
+\left. \dfrac{\partial \varepsilon_J}{\partial P_M} \right|_{\mathbf{p}_\kappa}
+\end{array}\right),
+\qquad
+J_{jm}^{(\kappa)}
+=
+\left.
+\frac{\partial \varepsilon_j}{\partial P_m}
+\right|_{\mathbf{p}_\kappa},
 \label{eq:JakobimatrixDefinition}
 \end{equation}
-Der hochgestellte und in Klammern gesetzte Index $\kappa$
-an dem Symbol für die \textsl{Jacobimatrix}, soll bedeuten,
-dass dies die \textsl{Jacobimatrix} für den Parametervektor an der Stelle
-$\mathbf{p}_\kappa$ ist, also für die Position der Modellparameter beim $\kappa$-ten Interationsschritt.
-Der Begriff Jacobimatrix bedeutet nur, dass es
-sich um eine Matrix partieller Ableitungen handelt.
+mit $j=1,\dots,J$ und $m=1,\dots,M$.
+
+Der hochgestellte und in Klammern gesetzte Index $\kappa$ am Symbol der \textsl{Jacobi-Matrix} bedeutet, dass die Jacobi-Matrix an der aktuellen Parameterposition $\mathbf{p}_\kappa$ ausgewertet wird.
+Der Begriff Jacobi-Matrix bedeutet, dass es sich um eine Matrix erster
+partieller Ableitungen handelt. Die Jacobi-Matrix ist nach Carl Gustav Jacob Jacobi benannt und wird auch \textsl{Funktionalmatrix}, \textsl{Ableitungsmatrix} oder \textsl{Jacobische} genannt.
 \begin{quote}
-Die \textsl{Jacobimatrix} (benannt nach Carl Gustav Jacob Jacobi; auch
-\textsl{Funktionalmatrix}, \textsl{Ableitungsmatrix} oder \textsl{Jacobische} genannt)
-einer differenzierbaren Funktion
-$f\colon I \! \! R^{n} \mapsto I \! \! R ^{m}$ ist die
+Die Jacobi-Matrix einer differenzierbaren Funktion
+$f\!: \mathrm{I\!R}^{n} \to \mathrm{I\!R}^{m}$ ist die
 $m\times n$-Matrix sämtlicher erster partieller Ableitungen.
 \end{quote}
 
-
-Einsetzen dieser Jacobimatrix in Gl.~(\ref{TaylorResi1}) liefert dann
+Einsetzen der Jacobi-Matrix in Gl.~(\ref{TaylorResi1}) liefert
 \begin{equation}
 \left(\begin{array}{c}
-\varepsilon_1(\mathbf{p}) \\
+\varepsilon_1(\mathbf{p}_\kappa+\Delta\mathbf{p}) \\
 \vdots \\
-\varepsilon_J(\mathbf{p})
+\varepsilon_J(\mathbf{p}_\kappa+\Delta\mathbf{p})
 \end{array}\right)
-\; = \;
+\approx
 \left(\begin{array}{c}
 \varepsilon_1(\mathbf{p}_\kappa) \\
 \vdots \\
 \varepsilon_J(\mathbf{p}_\kappa)
 \end{array}\right)
-\; + \; \boldsymbol{J}^{(\kappa)} \Delta \mathbf{p} .
++
+\boldsymbol{J}^{(\kappa)}
+\Delta \mathbf{p}.
 \label{TaylorResi2}
 \end{equation}
-Wir schreiben Gl.~(\ref{TaylorResi2}) in Vektorschreibweise, mit $\boldsymbol{\varepsilon}$ hier als Spaltenvektor
-der einzelnen Residuen.
+In Vektorschreibweise lautet diese linearisierte Residuenfunktion
 \begin{equation}
-\boldsymbol{\varepsilon}(\mathbf{p})
-\; = \;
+\boldsymbol{\varepsilon}(\mathbf{p}_\kappa+\Delta\mathbf{p})
+\approx
 \boldsymbol{\varepsilon}(\mathbf{p}_\kappa)
-\; + \; \boldsymbol{J}^{(\kappa)} \Delta \mathbf{p} .
++
+\boldsymbol{J}^{(\kappa)}
+\Delta \mathbf{p}.
 \label{TaylorResi3}
 \end{equation}
-Ferner setzen wir die Jacobimatrix in Gl.~(\ref{ZielfunktionalGrad}) ein
+
+Mit der Jacobi-Matrix kann der Gradient der Kostenfunktion geschrieben werden als
 \begin{equation}
-\frac{1}{2} \nabla_{\mathbf{p}} Q(\mathbf{p})  \; = \; \boldsymbol{\varepsilon}^\textsf{T}(\mathbf{p})
- \, \boldsymbol{J}
+\frac{1}{2}
+\nabla_{\mathbf{p}} Q(\mathbf{p})
+=
+\boldsymbol{J}^\mathsf{T}(\mathbf{p})
+\boldsymbol{\varepsilon}(\mathbf{p}).
 \label{ZielfunktionalGradJ}
 \end{equation}
-% \; \overset{!}{=} \; \left(\begin{array}{c} 0\\ \vdots \\ 0 \end{array}\right)
-% \label{GradientQv}
-Wir setzen die Reihenentwicklung der Residuen Gl.~(\ref{TaylorResi3}) ein und
-den Gradienten Gl.~(\ref{ZielfunktionalGradJ}) in Gl.~(\ref{ZielfunktionalGrad1}) ein.
-So erhalten wir ein in $\Delta \mathbf{p}$ lineares Gleichungssystem:
+Diese Gleichung ist die Vektorform der Beziehung
+$$
+\frac{\partial Q}{\partial P_m}
+=
+2
+\sum_{j=1}^{J}
+\varepsilon_j(\mathbf{p})
+\frac{\partial \varepsilon_j(\mathbf{p})}{\partial P_m}.
+$$
+
+Für den Gauß-Newton-Schritt wird die linearisierte Residuenfunktion aus
+Gl.~(\ref{TaylorResi3}) in die Bedingung für einen verschwindenden Gradienten eingesetzt.
+Dabei wird die Jacobi-Matrix an der aktuellen Position $\mathbf{p}_\kappa$ ausgewertet und
+innerhalb dieses Schrittes als konstant betrachtet:
 \begin{equation}
-\left( \boldsymbol{\varepsilon}(\mathbf{p}_\kappa)
-\; + \; \boldsymbol{J}^{(\kappa)} \Delta \mathbf{p}_\kappa \right)^\textsf{T} \, \boldsymbol{J}^{(\kappa)}
-\; \overset{!}{=} \; \left( 0 \dots  0 \right)
+\left(\boldsymbol{J}^{(\kappa)}\right)^\mathsf{T}
+\left[
+\boldsymbol{\varepsilon}(\mathbf{p}_\kappa)
++
+\boldsymbol{J}^{(\kappa)}
+\Delta \mathbf{p}_\kappa
+\right]
+\overset{!}{=}
+\left(\begin{array}{c}
+0 \\
+\vdots \\
+0
+\end{array}\right).
 \label{GradientQlinGl1}
 \end{equation}
-wobei hier der Nullvektor wie der transponierte Modellparametervektor ein
-Zeilenvektor im $I \! \! R^{M}$ ist.
-Wir formen diese Gleichung, die in Zeilenvektorschreibweise ist, um in
+Daraus folgt
 \begin{equation}
-\left( \boldsymbol{J}^{(\kappa)} \Delta \mathbf{p}_\kappa \right)^\textsf{T} \, \boldsymbol{J}^{(\kappa)}
-\; \overset{!}{=} \;
-- \boldsymbol{\varepsilon}(\mathbf{p}_\kappa)^\textsf{T} \, \boldsymbol{J}^{(\kappa)}
-\label{GradientQlinGl2}
-\end{equation}
-und transponieren diese, um sie als lineares Gleichungssytem mit Spaltenvektoren vorliegen zu haben
-d.h.
-\begin{equation}
- \boldsymbol{J}^{(\kappa) \textsf{T}} \, \boldsymbol{J}^{(\kappa)} \, \Delta \mathbf{p}_\kappa
-\; \overset{!}{=} \;
--  \boldsymbol{J}^{(\kappa) \textsf{T}} \, \boldsymbol{\varepsilon}(\mathbf{p}_\kappa) .
+\left(\boldsymbol{J}^{(\kappa)}\right)^\mathsf{T}
+\boldsymbol{J}^{(\kappa)}
+\Delta \mathbf{p}_\kappa
+\overset{!}{=}
+-
+\left(\boldsymbol{J}^{(\kappa)}\right)^\mathsf{T}
+\boldsymbol{\varepsilon}(\mathbf{p}_\kappa).
 \label{GradientQlinGl3}
 \end{equation}
-Die Lösung dieses linearen Gleichungssystems liefert den Inkrementvektor $\Delta \mathbf{p}_\kappa$,
-mit dem wir den Schritt zur nächsten Position $\mathbf{p}_{\kappa+1} \; = \; \mathbf{p}_{\kappa} \, + \,
-\Delta \mathbf{p}_{\kappa}$ gehen. Die Iterationen enden, wenn der Betrag der Gradientenfunktion oder
-das Quadrat nahe Null, also kleiner als eine sehr kleine Zahl $\varepsilon$ ist:
+Dies sind die Normalgleichungen für den Gauß-Newton-Schritt. In der numerischen Praxis
+wird dieses System nicht durch die explizite Bildung einer Inversen gelöst, sondern
+beispielsweise mit einer QR- oder Cholesky-Zerlegung beziehungsweise mit einem
+geeigneten linearen Gleichungslöser. Die Lösung liefert den Inkrementvektor
+$\Delta \mathbf{p}_\kappa$, mit dem die nächste
+Parameterposition bestimmt wird:
 \begin{equation}
- \boldsymbol{\varepsilon}(\mathbf{p}_\kappa)^\mathsf{T}
-\, \boldsymbol{J}^{(\kappa)} \, \boldsymbol{J}^{(\kappa) \textsf{T}} \, \boldsymbol{\varepsilon}(\mathbf{p}_\kappa) \;
-< \; \varepsilon
+\mathbf{p}_{\kappa+1}
+=
+\mathbf{p}_{\kappa}
++
+\Delta \mathbf{p}_{\kappa}.
 \end{equation}
 
-Für Kostenfunktionen, die wie in Abb.~\ref{LSoptiExample1Grad}, ein sauber ausgeprägtes Minimum
-haben, und für die ein Startwerttupel zu den Modellparametern, das nah genug an der Mulde dran ist und
-sehr weit weg von irgendwelchen Maxima und Sattelpunkten, lässt sich auf diese Weise das Minimum
-finden.
+Die Iteration kann beendet werden, wenn die Norm des Gradienten der Kostenfunktion hinreichend
+klein ist. Da
+\begin{equation}
+\nabla_{\mathbf{p}} Q(\mathbf{p}_\kappa)
+=
+2
+\left(\boldsymbol{J}^{(\kappa)}\right)^\mathsf{T}
+\boldsymbol{\varepsilon}(\mathbf{p}_\kappa),
+\end{equation}
+kann als Abbruchkriterium zum Beispiel verwendet werden:
+\begin{equation}
+\left\|
+\left(\boldsymbol{J}^{(\kappa)}\right)^\mathsf{T}
+\boldsymbol{\varepsilon}(\mathbf{p}_\kappa)
+\right\|^2
+=
+\boldsymbol{\varepsilon}^\mathsf{T}(\mathbf{p}_\kappa)
+\boldsymbol{J}^{(\kappa)}
+\left(\boldsymbol{J}^{(\kappa)}\right)^\mathsf{T}
+\boldsymbol{\varepsilon}(\mathbf{p}_\kappa)
+<
+\eta .
+\label{AbbruchGradient}
+\end{equation}
+Hierbei ist $\eta$ eine vorgegebene kleine positive Toleranz. Alternativ oder zusätzlich kann
+auch geprüft werden, ob sich der Parametervektor oder der Wert der Kostenfunktion zwischen zwei
+Iterationsschritten nur noch sehr wenig ändert.
 
-\section{Beispiel zu Gradienten-Verfahren nach Gauß-Newton für den Fall gleicher Varianzen}
+Für Kostenfunktionen, die wie in Abb.~\ref{LSoptiExample1Grad} eine gut ausgeprägte
+Minimumsmulde haben, und für Startwerte der Modellparameter, die hinreichend nahe an
+diesem Minimum liegen, kann das Gauß-Newton-Verfahren das Minimum effizient bestimmen.
+Eine globale Konvergenz ist daraus jedoch nicht abzuleiten; bei ungünstigen Startwerten
+kann eine Schrittweitensteuerung oder ein gedämpftes Verfahren erforderlich sein.
+\section{Beispiel zum Gauß-Newton-Verfahren bei gleichen Varianzen}
 
 Gegeben ist die Gl.(\ref{GradientQlinGl3}) mit
-\[
- \boldsymbol{J}^{(\kappa) \textsf{T}} \, \boldsymbol{J}^{(\kappa)} \, \Delta \mathbf{p}_\kappa
+$$
+ \left(\boldsymbol{J}^{(\kappa)}\right)^\mathsf{T}
+ \boldsymbol{J}^{(\kappa)} \, \Delta \mathbf{p}_\kappa
 \; \overset{!}{=} \;
--  \boldsymbol{J}^{(\kappa) \textsf{T}} \, \boldsymbol{\varepsilon}(\mathbf{p}_\kappa)
-\]
-zur Bestimmung der Modellparameter. Mit dieser Gleichung wird mit jeder Iteration die Änderung des Modellparameters
-$\Delta \mathbf{p}_\kappa$ bestimmt. Nach jeder Iteration $\kappa$  erhält man einen neuen Modellparameter  $\mathbf{p}_{\kappa +1}$ erhält.
-\[
+-\left(\boldsymbol{J}^{(\kappa)}\right)^\mathsf{T}
+\boldsymbol{\varepsilon}(\mathbf{p}_\kappa)
+$$
+zur Bestimmung der Modellparameter. Mit dieser Gleichung wird in jeder Iteration
+die Änderung $\Delta \mathbf{p}_\kappa$ des Parametervektors bestimmt. Anschließend
+erhält man den neuen Parametervektor
+$$
 \mathbf{p}_{\kappa+1} \; = \; \mathbf{p}_{\kappa} \, + \,
 \Delta \mathbf{p}_{\kappa}
-\]
+$$
 
-Die Optimierung endet entweder wenn die Residuen kleiner sind als vorgegeben oder
-bei einer vorgegebenen Interationsanzahl.
-Die Jakobimatrix $J$ sind die partiellen Ableitungen (=Gradienten) nach den
-Modellparametern $\boldsymbol{p}$:
-\[ (\mathbf{J})_{jl} = \frac{\D \partial \varepsilon_j (\boldsymbol p_{(\kappa)})}{\D \partial  p_l}\]
+Die Optimierung endet beispielsweise, wenn die Schrittweite, die Änderung der
+Kostenfunktion oder der Gradient hinreichend klein ist oder eine vorgegebene
+maximale Iterationsanzahl erreicht wurde. Die Jacobi-Matrix $J$ enthält die
+partiellen Ableitungen der Residuen nach den Modellparametern:
+$$ 
+J_{jl}^{(\kappa)}
+=\left.\frac{\partial \varepsilon_j(\boldsymbol p)}
+{\partial p_l}\right|_{\boldsymbol p=\boldsymbol p_\kappa}
+$$
 Hierbei läuft der Index der Wertepaare von $j=1,\ldots,J$  und der Index
-der gesuchten Modellparamter von $l=1,\ldots,M$.
-(Weitere Infos zum Gauß-Newton Verfahren, siehe z.B. \cite{Wiki02})
+der gesuchten Modellparameter von $l=1,\ldots,M$.
 
 Die Gl. (\ref{GradientQlinGl3}) kann in einen Programmiercode
 umgesetzt werden.
 
-\textbf{Algorithmus des Gauß-Newton-Verfahrendes}
+\textbf{Algorithmus des Gauß-Newton-Verfahrens}
 
-Input: Startwert: $\boldsymbol p_0$, Zielfunktional $F(p_\kappa):= \boldsymbol\epsilon (\boldsymbol p^{(\kappa)}) $, Partielle Ableitungen $F'(\boldsymbol p_{\kappa}) := \mathbf J$ \\
+Input: Startwert $\boldsymbol p_0$, Residuenvektor
+$F(\boldsymbol p_\kappa):=\boldsymbol\varepsilon(\boldsymbol p_\kappa)$ und
+Jacobi-Matrix $F'(\boldsymbol p_\kappa):=\boldsymbol J(\boldsymbol p_\kappa)$ \\
 \hspace*{1em}\textit{for} $\kappa = 0,1, \ldots$ \\[-3ex]
 \begin{itemize}
-	\item[i)] Berechne $F(\theta_\kappa)$, $F'(\theta_\kappa)$
-	\item[ii)] Bestimme den Korrekturvektor~$s_\kappa := \Delta \boldsymbol p^{(\kappa)}$~über~
-	$F^\prime(x_k)^T\;F^\prime(x_\kappa)\; s_\kappa = -F^\prime(x_\kappa)^T\;F(x_\kappa)$
-	\item[iii)] Setze~$\boldsymbol p_{\kappa+1} = \boldsymbol p_\kappa + s_\kappa$
+	\item[i)] Berechne $F(\boldsymbol p_\kappa)$ und $F'(\boldsymbol p_\kappa)$.
+	\item[ii)] Bestimme den Korrekturvektor $s_\kappa$ aus
+	$F'(\boldsymbol p_\kappa)^\mathsf{T}F'(\boldsymbol p_\kappa)s_\kappa
+	= -F'(\boldsymbol p_\kappa)^\mathsf{T}F(\boldsymbol p_\kappa)$.
+	\item[iii)] Setze $\boldsymbol p_{\kappa+1}=\boldsymbol p_\kappa+s_\kappa$.
 \end{itemize}
 \hspace*{1em}\textit{end} \\
 
 Eine einfache mögliche Realisierung in Octave-/Matlab ist nachfolgend dargestellt:
-\begin{verbatim}
-	function theta = gauss_newton(F,DF,p0,maxit,tol)
-	% F: Zielfunktional,DF:Ableitung des Zielfunktionals (Jakobimatrix)
-	% p0: Startwerte für die gesuchten Modellparamter
-	% maxit: Anzahl der maximalen Iterationen
-	% tol: Toleranz / Residuum
-	k=0;
-	p=p0;
-	s=-(DF(p0)'*DF(p0))\(DF(p0)'*F(p0));
-	while norm(s)>tol && k<maxit
-	k=k+1;
-	p=p+s;
-	s=-(DF(p)'*DF(p))\(DF(p)'*F(p));
-	end
-	end
-\end{verbatim}
-\textbf{Nichtlinearer Fit eines Kreises mit dem Gauß-Newton-Verfahren} \\
-Es soll im folgenden ein Kreisfit, d.h. nichtlinearer Fit mit dem Gauß-Newton-Verfahren durchgeführt werden.
-Gegeben ist die Punktwolke mit den Wertepaaren $X_j,Y_j$ mit $j =1,\ldots J$.
+
+\begin{lstlisting}[style=Matlab]
+function p = gauss_newton(F,DF,p0,maxit,tol)
+% F:      Residuenvektor
+% DF:     Jacobi-Matrix des Residuenvektors
+% p0:     Startwert des Parametervektors
+% maxit:  maximale Anzahl von Iterationen
+% tol:    relative Toleranz fuer die Schrittweite
+p=p0;
+for k=1:maxit
+    r=F(p);
+    J=DF(p);
+    s=-(J'*J)\(J'*r);
+    if norm(s)<=tol*(1+norm(p))
+        break
+    end
+        p=p+s;
+end
+end
+\end{lstlisting}
+\texttt{F} muss dabei den $J$-dimensionalen Residuenvektor und
+\texttt{DF} seine $J\times M$-Jacobi-Matrix liefern; die skalare Kostenfunktion
+$Q=\boldsymbol{\varepsilon}^{\mathsf T}\boldsymbol{\varepsilon}$ darf nicht an
+die Stelle des Residuenvektors treten. Die Normalgleichungen werden in realen
+Anwendungen vorzugsweise mit einer stabilen Faktorisierung gelöst. Das
+Minimalbeispiel enthält außerdem noch keine Schrittweitensteuerung, sodass eine
+Konvergenz nicht für beliebige Startwerte garantiert ist.
+
+\textbf{Nichtlinearer Fit eines Kreises mit dem Gauß-Newton-Verfahren}
+
+Im Folgenden wird ein Kreisfit, also ein nichtlinearer Fit, mit dem
+Gauß-Newton-Verfahren durchgeführt. Gegeben sei die Punktwolke mit den
+Wertepaaren $(X_j,Y_j)$ für $j=1,\ldots,J$.
 Alle Punkte sollen näherungsweise auf einem Kreis liegen.
 Geht man von einem Kreis mit Mittelpunkt $M=(x_\mathrm{c},y_\mathrm{c})$ und einem Radius
 $r>0$ aus, so müssten die Punkte die folgende Bedingung erfüllen:
@@ -441,18 +630,19 @@ $r>0$ aus, so müssten die Punkte die folgende Bedingung erfüllen:
 	\sqrt{(X_j-x_\mathrm{c})^2+(Y_j-y_\mathrm{c})^2} \approx r; \quad j=1,\ldots,J
 	\label{eq:Bedingung}
 \end{equation}
-Die Aufgabe besteht also darin, den Mittelpunkt $M$ und den Radius $r$
-so zu bestimmen, dass die Summe über die Quadrate der einzelnen Abstände
-mininmiert wird. Die Residuen sind gegeben durch:
+Die Aufgabe besteht darin, den Mittelpunkt $M$ und den Radius $r$ so zu bestimmen,
+dass die Summe der Residuenquadrate minimal wird. Die Residuen sind
 \begin{equation}
-	\epsilon = \sqrt{(X_j-x_\mathrm{c})^2+(Y_j-y_\mathrm{c})^2} - r ; \quad j=1,\ldots,J
+	\varepsilon_j =
+	\sqrt{(X_j-x_\mathrm{c})^2+(Y_j-y_\mathrm{c})^2} - r,
+	\qquad j=1,\ldots,J
 \end{equation}
-Gesucht ist das Minimum der Summe der Residuenquadrate . Das Problem lässt sich
-dann wie folgt formulieren:
+Das Problem lässt sich damit wie folgt formulieren:
 \begin{equation}
-	||\boldsymbol \varepsilon||^2 \rightarrow \min  \quad \leftrightarrow \quad
-	g(x_\mathrm{c},y_\mathrm{c},r) = Q := \sum_{j=1}^{J} \left( \sqrt{(X_j-x_\mathrm{c})^2+(Y_j-y_\mathrm{c})^2}-r\right)^2
-	\rightarrow \min
+	Q(x_\mathrm{c},y_\mathrm{c},r)
+	\;=\;\sum_{j=1}^{J}
+	\left(\sqrt{(X_j-x_\mathrm{c})^2+(Y_j-y_\mathrm{c})^2}-r\right)^2
+	\;\longrightarrow\;\min
 \end{equation}
 \begin{figure}[!htp]
 	\begin{center}
@@ -461,87 +651,78 @@ dann wie folgt formulieren:
 		\label{fig:KreisfitSkizze}
 	\end{center}
 \end{figure}
-Es besteht also \textbf{kein linearer} Zusammenhang zwischen den Parametern
-$\boldsymbol\theta = [x_\mathrm{c},y_\mathrm{c},r]$ und den
-Residuen.
-Zur Demonstration des Gauß-Newton Algorithmus nehmen wir zur Vereinfachung an, das wir nur den ersten Parameter, also den
-x-Wert des Mittelpunktes $x_c$ schätzen. Die beiden anderen
-Parameter setzen wir zu $y_c=0$ und $r=1$.
-Dann besteht die Jakobi-Matrix nur aus einer partiellen Ableitung nach dem x-Wert des Mittelpunktes $x_c$. Wenn alle drei Parameter geschätzt werden sollen, müssten entsprechend die partiellen Ableitungen nach $y_c$ und $r$ mitverwendet werden.
+Es besteht kein linearer Zusammenhang zwischen den Parametern
+$\boldsymbol\theta=(x_\mathrm{c},y_\mathrm{c},r)^\mathsf{T}$ und den Residuen.
+Zur Demonstration des Gauß-Newton-Verfahrens wird zunächst nur der erste Parameter,
+also der Mittelpunktparameter $x_\mathrm{c}$, geschätzt. Die beiden anderen
+Parameter werden zu $y_\mathrm{c}=0$ und $r=1$ gesetzt. Dann besteht die
+Jacobi-Matrix aus einer Spalte. Bei einer Schätzung aller drei Parameter müssten
+zusätzlich die Ableitungen nach $y_\mathrm{c}$ und $r$ verwendet werden.
 
-Die Messpunkte erfüllen annäherend die Bedingung in Gl.(\ref{eq:Bedingung}):
-\[
-\sqrt{(X_j-x_\mathrm{c})^2+(Y_j-y_\mathrm{c})^2} \approx r; \quad j=1,\ldots,J
-\]
-
-Die Zielfunktion $Q$ lautet dann:
+Für die eingeschränkte Aufgabe ist der Residuenvektor
 \begin{equation}
-	F(x_c) = Q(x_c) := \sum_{j=1}^{J} \left( \sqrt{(X_j-x_\mathrm{c})^2+(Y_j-y_\mathrm{c})^2}-r\right)^2
-	\rightarrow \min
+	F(x_c)_j=\sqrt{(X_j-x_c)^2+Y_j^2}-r,\qquad j=1,\ldots,J.
 \end{equation}
-Die partielle Ableitung nach $x_c$ lautet:
+Die zugehörige Jacobi-Matrix enthält die Ableitung jedes Residuums:
 \begin{equation}
-	DF(x_c) = \frac{\partial Q(x_c)}{\partial x_c} = \D\sum_{j=1}^{J} \left[
-	\frac{-2(X_j-x_c)\cdot \left( \sqrt{(X_j-x_c)^2 +(Y_j-y_c)^2}-r\right)}
-	{\sqrt{(X_j-x_c)^2+(Y_j-y_c)^2}} \right]
+	DF(x_c)_j
+	=-\frac{X_j-x_c}{\sqrt{(X_j-x_c)^2+Y_j^2}}.
 \end{equation}
 \begin{figure}[!htp]
 	\begin{center}
 		\includegraphics[width=140mm]{03_vorlesung/media/Kreisfit_Gauss_Newton.png}
-		\caption{Ergebnis des Gauss Newton Fits}
+\caption{Ergebnis des Gauß-Newton-Fits}
 		\label{fig:Kreisfit_Gauss_Newton}
 	\end{center}
 \end{figure}
-Als Ergebnis erhält man den Halbkreisfit in Abb.~\ref*{fig:Kreisfit_Gauss_Newton} mit einem Schätzwert $x_c$ in dem dargestellten Beispiel von -0.0067.
+Im dargestellten Beispiel ergibt sich für den Mittelpunktparameter näherungsweise
+$x_\mathrm{c}=-0.0067$.
 Das Octave-/Matlab-Skript lautet:
-\begin{verbatim}
-	% Anzahl der Messpunkte
-	M = 41;
-	Xj=linspace(-0.95,0.95,M);
-	r=1;
-	Yj = sqrt(r.^2-Xj.^2);
+\begin{lstlisting}[style=Matlab]
+% Anzahl der Messpunkte
+M = 41;
+Xj=linspace(-0.95,0.95,M)';
+r=1;
+Yj = sqrt(r.^2-Xj.^2);
 
-	figure
-	plot(Xj,Yj,'*')
+figure
+plot(Xj,Yj,'*')
 
-	Xj_Noise = (1-0.01*randn(1,M)).*Xj;
-	Yj_Noise = (1-0.01*randn(1,M)).*Yj;
+Xj_Noise = (1-0.01*randn(M,1)).*Xj;
+Yj_Noise = (1-0.01*randn(M,1)).*Yj;
 
-	figure
-	plot(Xj_Noise,Yj_Noise,'ro','linewidth',2)
-	hold on
-	Xj=Xj_Noise;
-	Yj=Yj_Noise;
-	yc = 0;
-	r=1;
-	% Suche das Minimum der Funktion F(theta), die xc minimiert
-	F = @(theta) sum((sqrt((Xj-theta).^2+(Yj-yc).^2)-r).^2);
+figure
+plot(Xj_Noise,Yj_Noise,'ro','linewidth',2)
+hold on
+Xj=Xj_Noise;
+Yj=Yj_Noise;
+yc = 0;
+r=1;
+% F liefert den Residuenvektor, DF seine Jacobi-Matrix
+F = @(xc) sqrt((Xj-xc).^2+(Yj-yc).^2)-r;
+DF = @(xc) -(Xj-xc)./sqrt((Xj-xc).^2+(Yj-yc).^2);
+% Startparameter
+theta0 = 0.1;
+maxit = 1000; % maximale Anzahl der Iterationen
+tol = 1E-12; % relative Abbruchbedingung
+xc_estimate = gauss_newton(F,DF,theta0,maxit,tol);
+disp(xc_estimate);
 
-	DF = @(theta) sum(2*(sqrt((Xj-theta).^2+(Yj-yc).^2)-r) .*...
-	((1/2) * ((Xj-theta).^2 +(Yj-yc).^2).^(-0.5)) .*...
-	(2*(Xj-theta)*(-1)));
-	% Startparameter
-	theta0 = 0.1;
-	maxit = 1000; % Anzahl der Interationen
-	tol = 1E-15; % Abruchbedingung
-	xc_estimate = gauss_newton(F,DF,theta0,maxit,tol);
-	disp(xc_estimate);
-
-	Xjfit=linspace(-0.95,0.95,101);
-	%
-	Yjfit = sqrt(r.^2-(Xjfit-xc_estimate).^2)+ yc;
-	plot(Xjfit,Yjfit,'-','linewidth',2)
-	grid on;
-	xlim([-1,1])
-	ylim([0,1.05])
-	legend('Messpunkte','Gauss Newton Fit','Location','South')
-	xlabel('X_j','fontsize',14)
-	ylabel('Y_j','fontsize',14)
-	set(gcf, 'PaperUnits', 'centimeters');
-	x_width=15 ;y_width= 10;
-	set(gcf, 'PaperPosition', [0 0 x_width y_width]);
-	print '-dpng' Kreisfit_Gauss_Newton.png
-\end{verbatim}
+Xjfit=linspace(-0.95,0.95,101);
+%
+Yjfit = sqrt(r.^2-(Xjfit-xc_estimate).^2)+ yc;
+plot(Xjfit,Yjfit,'-','linewidth',2)
+grid on;
+xlim([-1,1])
+ylim([0,1.05])
+legend('Messpunkte','Gauss-Newton-Fit','Location','South')
+xlabel('X_j','fontsize',14)
+ylabel('Y_j','fontsize',14)
+set(gcf, 'PaperUnits', 'centimeters');
+x_width=15 ;y_width= 10;
+set(gcf, 'PaperPosition', [0 0 x_width y_width]);
+print '-dpng' Kreisfit_Gauss_Newton.png
+\end{lstlisting}
 
 \newpage
 \section{Levenberg-Marquardt-Verfahren}
@@ -560,48 +741,46 @@ in drei verschiedenen Perspektiven dargestellt (\textsl{oben} und \textsl{unten 
  und die Beträge der
 Gradienten als Funktion der 2 zu schätzenden Parameter (\textsl{unten rechts}).\label{LSoptiExample1SinusRQS}}
 \end{figure}
-Um eine sinnvolle Konvergenz zu erzielen, ist eine gute Vorkenntnis, also ein geeignetes
-Modellparametertupel $\mathbf{p}_0$ erforderlich, das in einigen Problemstellungen
-nur schwerlich, oder gar nicht verfügbar ist. Das bedeutet, dass nicht klar ist, ob
-der Gradient dazu führt, dass der Parametervektor in eine Mulde hinab klettert, oder auf
-einen Berggipfel oder entlang eines Sattelpunktes spaziert.
+Eine sinnvolle Konvergenz des Gauß-Newton-Verfahrens setzt häufig einen geeigneten
+Startvektor $\mathbf{p}_0$ voraus. Dieser ist in manchen Problemstellungen nur schwer
+zu bestimmen. Bei ungünstigen Startwerten kann ein Gauß-Newton-Schritt die
+Zielfunktion vergrößern oder in eine ungeeignete Minimumsmulde führen.
 
-Die Numeriker haben Verfahren entwickelt, die auf dieser Grundidee den Gradienten
-der Zielfunktion (Summe der Quadrate der Residuen) zu berechnen
-basieren, aber ausgereiferter sind hinsichtlich Stabilität und Konvergenz.
-Der sog.\ der \textsl{Levenberg-Marquardt}-Algorithmus ist eine solche gradientenbasierte Methode,
-die in den Numerikbibliotheken zu Matlab, Gnu-Octave, Python bis hin zu Labview, für nichtlineare
-Regression zur Verfügung gestellt wird. Die Grundidee dieser Methode wollen wir im Folgenden skizzieren.
-Die Problematik, dass sich der Vektor $\Delta \mathbf{p}_{\kappa}$, den wir im
-Folgenden \textsl{Inkrementvektor} nennen, verirrt und auf
-einen Berggipfel oder entlang eines Sattelpunktes spaziert, soll anhand eines Beispielsignals
+Gedämpfte Verfahren verbinden die lokale Gauß-Newton-Näherung mit einer robusteren
+Schrittweitensteuerung. Der \textsl{Levenberg-Marquardt}-Algorithmus ist ein solches
+Verfahren und steht in vielen numerischen Bibliotheken für nichtlineare
+Ausgleichsprobleme zur Verfügung. Die Grundidee wird im Folgenden skizziert.
+Die Möglichkeit, dass sich der Inkrementvektor $\Delta \mathbf{p}_{\kappa}$ verirrt,
+soll anhand eines Beispielsignals
 illustriert werden. Das Beispiel ist ein zeitabhängiges Spannungssignal mit sinusförmigem Verlauf,
 dem als Störung zum einen ein Signal mit höherer Frequenz und kleinerer Amplitude aufmoduliert ist
 und zum anderen ein normalverteiltes weißes Rauschen.
-Die Amplitude von $5 \, V$ sei fest vorgegeben, aber die zu schätzenden Modellparameter seien
+Die Amplitude von $5\,\mathrm{V}$ sei fest vorgegeben, aber die zu schätzenden Modellparameter seien
 die Wellenlänge und die Phasenlage des Signals. Abb.~\ref{LSoptiExampleSinus} zeigt das Signal als
 schwarze Rauten und in Rot das gesuchte \glqq wahre\grqq ~Signal und als blaue, gestrichelte Kurve
 das Signal superponiert mit der höherfrequenten Modulation.
 
-Abb.~\ref{LSoptiExample1SinusRQS} zeigt die Summe der Quadrate der Residuen RQS als
-Kostenfunktion in drei verschiedenen Ansichten, die zeigen, dass es eine ausgeprägte Minimumsmulde gibt,
-aber ebenso ein ausgeprägtes Maximum und noch kleine Rippeln als Nebenminima und Nebenmaxima.
-Das Diagramm unten rechts zeigt die Betragsfunktion des Gradienten mit den vielen Nullstellen.
-Hier sehen wir, dass sowohl die Maxima als auch die Minima die Nullstellen bilden.
+Abb.~\ref{LSoptiExample1SinusRQS} zeigt die Summe der Quadrate der Residuen (RQS) als Kostenfunktion in drei
+verschiedenen Ansichten. Neben einer ausgeprägten Minimumsmulde sind weitere lokale
+Strukturen erkennbar. Das Diagramm unten rechts zeigt den Betrag des Gradienten.
+Sowohl an lokalen Minima als auch an lokalen Maxima und Sattelpunkten kann der
+Gradient verschwinden; aus einer Nullstelle des Gradienten allein folgt daher noch
+kein Minimum.
 
-Der \textsl{Levenberg-Marquardt}-Algorithmus ist ein Gradientenverfahren, bei dem das lineare
-Gleichungssystems (\ref{GradientQlinGl3})
+Der \textsl{Levenberg-Marquardt}-Algorithmus ist ein Verfahren für nichtlineare
+Ausgleichsprobleme, bei dem das lineare Gleichungssystem
+(\ref{GradientQlinGl3})
 durch Einführen eines Dämpfungsterms erweitert wird.
 
-Mit der Gauss-Newton-Methode kann also passieren, dass die Summe der Residuen $Q$, siehe  nicht bei jedem Iterationsschritt kleiner
-wird. Wenn jedoch der Richtungsvektor $\Delta \mathbf{p}_{\kappa}$ in die abfallende Richtung
-zeigt, so kann auch nur ein Bruchteil $\alpha$ des Richtungsvektors gegangen
+Mit der Gauß-Newton-Methode kann die Kostenfunktion $Q$ bei einem Schritt größer
+werden. Wenn der Korrekturvektor $\Delta \mathbf{p}_{\kappa}$ jedoch grundsätzlich
+in eine abfallende Richtung zeigt, so kann auch nur ein Bruchteil $\alpha$ des Richtungsvektors gegangen
 werden, solange gilt:
 \begin{equation}
 Q(\mathbf{p}_{\kappa} + \alpha \cdot \Delta \mathbf{p}_{\kappa}) < Q(\mathbf{p}_{\kappa})
 \end{equation}
-D.~h., wenn bei der Gauß-Newton Methode Divergenz auftritt, so ist eine
-mögliche Verbesserung des Verfahrens, einen Bruchteil $\alpha$ des Richtungsvektors $\Delta\mathbf{p}_{\kappa}$ zu nehmen:
+D.~h., bei einer Divergenz kann zunächst ein Bruchteil $\alpha$ des
+Korrekturvektors verwendet werden:
 \begin{equation}
 \mathbf{p}_{\kappa+1}= \mathbf{p}_{\kappa} + \alpha \cdot \Delta\mathbf{p}_{\kappa}
 \end{equation}
@@ -609,13 +788,14 @@ In anderen Worten, wenn der Inkrement-Vektor zu lang ist, dann muss man diesen
 eben kürzen. Das geht natürlich nur unter der Voraussetzung, dass die Richtung
 des Vektors auch die Summe der Residuen weiter verkleinert. Der Bruchteil $\alpha$
 liegt zwischen
-\[
+$$
 0 < \alpha < 1
-\]
-Wenn der optimale Bruchanteil $\alpha$ annähernd Null ist, wird eine alternative Methode zur Behandlung der Divergenz verwendet, der sog. \textbf{Levenberg-Marquardt}
-Algorithmus.
-Die Normalengleichung wird modifiziert, indem der Inkrementvektor $\mathbf{p}_{\kappa}$ in Richtung des steilsten Abfalls gedreht wird. Der Dämpfungsterm stellt einen Schrittweitenfaktor dar, der den Inkrementvektor
-so modifiziert, dass das Optimierungsverfahren besser konvergiert. Dieser
+$$
+Wenn der erforderliche Bruchteil $\alpha$ sehr klein ist, kann stattdessen eine
+Dämpfung verwendet werden. Beim \textbf{Levenberg-Marquardt}-Algorithmus wird die
+Normalgleichung so modifiziert, dass für große Dämpfung ein kurzer, skaliert
+gradientenähnlicher Schritt entsteht. Der Dämpfungsterm ist daher kein bloßer
+Schrittweitenfaktor, sondern verändert auch die Richtung des Schrittes. Dieser
 Algorithmus wurde unabhängig voneinander von Levenberg (1944), Girard (1958), Wynne (1959),
 Morrison (1960) und Marquardt (1963) vorgeschlagen. In der Literatur wird heutzutage meist vom
 Levenberg-Marquardt-Algorithmus gesprochen.
@@ -643,41 +823,45 @@ Damit hatten wir im vorigen Abschnitt einen Ansatz erhalten, der
 ein bezüglich des Inkrementvektors $\Delta \mathbf{p}_\kappa$ lineares Gleichungssystem
 geliefert hatte. Wir notieren Gl.~(\ref{GradientQlinGl3}) hier noch einmal
 \begin{equation*}
- \boldsymbol{J}^{(\kappa) \textsf{T}} \, \boldsymbol{J}^{(\kappa)} \, \Delta \mathbf{p}_\kappa
+ \left(\boldsymbol{J}^{(\kappa)}\right)^\mathsf{T}
+ \boldsymbol{J}^{(\kappa)} \, \Delta \mathbf{p}_\kappa
 \; \overset{!}{=} \;
--  \boldsymbol{J}^{(\kappa) \textsf{T}} \, \boldsymbol{\varepsilon}(\mathbf{p}_\kappa) .
+- \left(\boldsymbol{J}^{(\kappa)}\right)^\mathsf{T}
+ \boldsymbol{\varepsilon}(\mathbf{p}_\kappa) .
 \end{equation*}
 
 Nun modifizieren wir das Gleichungssystem durch Hinzufügen eines Dämpfungsterms
 wie folgt
 \begin{equation}
 \left(
-\boldsymbol{J}^{(\kappa) \textsf{T}} \, \boldsymbol{J}^{(\kappa)}
- + \mu \, \mathrm{diag}\left(\boldsymbol{J}^{(\kappa) \textsf{T}} \, \boldsymbol{J}^{(\kappa)}\right)
+\left(\boldsymbol{J}^{(\kappa)}\right)^\mathsf{T} \, \boldsymbol{J}^{(\kappa)}
+ + \mu \, \mathrm{diag}\left(\left(\boldsymbol{J}^{(\kappa)}\right)^\mathsf{T}
+ \boldsymbol{J}^{(\kappa)}\right)
  \right) \Delta \mathbf{p}_\kappa \;
-\overset{!}{=} \; - \boldsymbol{J}^{(\kappa)^\textsf{T}} \, \boldsymbol{\varepsilon}(\mathbf{p}_\kappa)
+\overset{!}{=} \; - \left(\boldsymbol{J}^{(\kappa)}\right)^\mathsf{T}
+ \boldsymbol{\varepsilon}(\mathbf{p}_\kappa)
 \label{ZielfunktionalGradTaylorResiDaempf}
 \end{equation}
-wobei $\mathrm{diag}\left(\boldsymbol{J}^{(\kappa) \textsf{T}} \, \boldsymbol{J}^{(\kappa)}\right)$
-eine Diagonalmatrix ist, die aus den Matrixelementen auf der Hauptdiagonalen von
-$\boldsymbol{J}^{(\kappa) \textsf{T}} \, \boldsymbol{J}^{(\kappa)}$ besteht und die
-Nebendiagonalelemente alle mit Null besetzt hat.
+wobei $\mathrm{diag}\!\left(\left(\boldsymbol{J}^{(\kappa)}\right)^\mathsf{T}
+\boldsymbol{J}^{(\kappa)}\right)$ die Diagonalmatrix bezeichnet, deren
+Hauptdiagonale mit den Diagonalelementen von
+$\left(\boldsymbol{J}^{(\kappa)}\right)^\mathsf{T}\boldsymbol{J}^{(\kappa)}$
+besetzt ist und deren übrige Elemente null sind.
 
 Der Parameter $\mu$ wird Dämpfungsparameter oder \textsl{Marquardtparameter} genannt.
-Die Dämpf\-ungs\-strategie besteht darin, dass für große Werte von $\mu$ die Länge
+Für große Werte von $\mu$ werden die Schritte klein; bei der hier verwendeten
+diagonal skalierten Dämpfung nähern sie sich einem skalierten Gradientenverfahren an.
+Die Dämpfungsstrategie bewirkt daher, dass die Länge
 $\sqrt{\Delta \mathbf{p}_\kappa^\mathsf{T} \, \Delta \mathbf{p}_\kappa}$
 der Inkrementschritte $\Delta \mathbf{p}_\kappa$ entsprechend verringert wird.
 
-Diese Methode, die  Länge des Inkrementvektors
-$\Delta \mathbf{p}_\kappa$ zu verbessern, also die Werte für den
-Dämpf\-ungs\-parameter $\mu$ zu wählen, ist heuristisch.
-Es gibt eine Vielzahl von Methoden und Möglichkeiten und wir gucken uns
-eine davon an, um einen Einblick zu erhalten, wie soetwas aussehen kann.
+Die Wahl und Anpassung des Dämpfungsparameters $\mu$ ist in vielen einfachen
+Implementierungen heuristisch. Es gibt dafür verschiedene Strategien; im Folgenden
+wird eine davon als anschauliches Beispiel vorgestellt.
 
-Es wird eine Prüfgröße $\rho_{\mu}$ definiert, bei der die Differenz der
-Kostenfunktion $Q$ für unterschiedliche Modellparametertupel
-verglichen wird mit der Differenz der die Kostenfunktion an der Nachfolgerstelle
-zu dem entsprechenden Punkt auf der approximierenden Tangentialebenen
+Es wird eine Prüfgröße $\rho_{\mu}$ definiert. Sie vergleicht die tatsächliche
+Abnahme der Kostenfunktion mit der durch das linearisierte Residuenmodell
+vorhergesagten Abnahme:
 \begin{equation}
 \rho_{\mu} :=\frac{Q(\mathbf{p}_\kappa) -
 Q(\mathbf{p}_\kappa + \Delta \mathbf{p}_\kappa)}
@@ -697,7 +881,7 @@ $\mathbf{p}_\kappa + \Delta \mathbf{p}_\kappa$
 des Parametervektors
 \item relativ zu der Differenz $\Delta \tilde{R}$ zwischen dem $Q$ an der
 Stelle der Vorgängerposition $\mathbf{p}_\kappa$ und dem Wert der Residuenquadratsumme
-an der Position auf der Tangentialfläche die an der
+an der Position auf der Tangentialfläche, die an der
 Stelle $\mathbf{p}_\kappa$ an die Kostenfunktion $Q$ angelegt wird,
 \end{itemize}
 um dort das Zielfunktional zu approximieren.
@@ -710,65 +894,72 @@ Wertes $\mu$ verwendet werden, um den Inkrementvektor geeignet zu manipulieren.
 Für diese beiden heuristischen Schwell\-wert\-para\-meter $\beta_0$, $\beta_1$
 können wir beispielsweise die Werte $\beta_0 = 0.2$, $\beta_1 = 0.8$ wählen.
 
-Tabelle 1: Entscheidungen zur Behandlung des Marquadtparameters
+Tabelle 1: Entscheidungen zur Behandlung des Marquardtparameters
 
 \begin{tabular}{ll}
 \hline\hline
 $\rho_{\mu} \le \beta_0 $: &
-$\Delta \mathbf{p}_\kappa$ wird nicht akzeptiert \textsl{Gewährleistung der Konvergenz} \\
- & $\mu$ wird vergrößert, z.B.\ durch Verdoppeln  $\mu \rightarrow 2 \mu$,\\
+$\Delta \mathbf{p}_\kappa$ wird nicht akzeptiert; $\mu$ wird erhöht \\
+& $\mu$ wird vergrößert, z.B.\ durch Verdoppeln $\mu \rightarrow 2\mu$,\\
  & und die neue zugehörige Korrektur $\Delta \mathbf{p}_\kappa$ wird berechnet\\
 \hline
 $\beta_0 < \rho_{\mu} < \beta_1$: & $\Delta \mathbf{p}_\kappa$ wird akzeptiert \\
  & bei der Berechnung von $\Delta \mathbf{p}_{\kappa+1}$
   wird als Anfangswert dasselbe $\mu$ gewählt \\
 \hline
-$\rho_{\mu} \ge \beta_1$: & $\Delta \mathbf{p}_\kappa$ wird akzeptiert \textsl{Effektivität}\\
- & bei der Berechnung  von $\Delta \mathbf{p}_\kappa$ wird \\
+$\rho_{\mu} \ge \beta_1$: & $\Delta \mathbf{p}_\kappa$ wird akzeptiert; $\mu$ wird verringert \\
+& bei der Berechnung von $\Delta \mathbf{p}_{\kappa+1}$ wird \\
  & als Anfangswert ein kleinerer Wert für $\mu$ gewählt, z.B.\ durch Halbieren $\mu / 2$ \\
 \hline\hline
 \end{tabular}
 
 \newpage
 \textbf{Ein möglicher Algorithmus des Levenberg-Marquardt-Verfahrens} \\
-Input: Startwert $\mathbf{p}_0$, Zielfunktion $\varepsilon(\mathbf{p}_{\kappa})$, Partielle Ableitungen $J=\varepsilon'(\mathbf{p}_{\kappa})$, Marquardt-Parameter $\mu$, weitere Parameter $0 < \beta_0 < \beta_1 < 1$  \\
+Input: Startwert $\mathbf{p}_0$, Residuenvektor
+$\boldsymbol{\varepsilon}(\mathbf{p}_{\kappa})$, Jacobi-Matrix
+$\boldsymbol{J}(\mathbf{p}_{\kappa})$, Dämpfungsparameter $\mu$ und
+$0<\beta_0<\beta_1<1$ \\
 \hspace*{1em} \textit{for} $k = 0,1, \ldots$
 \begin{itemize}
-	\item[i)] Berechne $\varepsilon(\mathbf{p}_{\kappa})$, $F'(\mathbf{p}_{\kappa})$
-	\item[ii)] Bestimme den Korrekturvekor $\Delta \mathbf{p}_\kappa$
-	\item[iii)] Test, ob die Korrektur $\Delta \mathbf{p}_\kappa$  akzeptabel ist: \\
-	$\bullet$ $\rho_{\mu} \le \beta_0: \;$ Setze $\mu = 2 \mu $ und berechne $ \Delta \mathbf{p}_\kappa$ gemäß ii) neu \\
-	$\bullet$  $\rho_{\mu} \ge \beta_1: \;$ Setze $\mu = \mu / 2 $ und behalte
-	$\Delta \mathbf{p}_\kappa$
-	\item[iv)] Setze $\mathbf{p}_{\kappa +1} = \mathbf{p}_\kappa +  \Delta \mathbf{p}_\kappa $
+	\item[i)] Berechne $\boldsymbol{\varepsilon}(\mathbf{p}_{\kappa})$ und
+	$\boldsymbol{J}(\mathbf{p}_{\kappa})$.
+	\item[ii)] Bestimme $\Delta\mathbf{p}_\kappa$ aus
+	Gl.~(\ref{ZielfunktionalGradTaylorResiDaempf}).
+	\item[iii)] Berechne $\rho_\mu$. Falls $\rho_\mu\le\beta_0$ gilt,
+	erhöhe $\mu$ und berechne den Schritt in derselben Iteration erneut.
+	Falls $\rho_\mu>\beta_0$ gilt, akzeptiere den Schritt; für
+	$\rho_\mu\ge\beta_1$ kann $\mu$ für die nächste Iteration verringert werden.
+	\item[iv)] Setze bei akzeptiertem Schritt
+	$\mathbf{p}_{\kappa+1}=\mathbf{p}_\kappa+\Delta\mathbf{p}_\kappa$.
 \end{itemize}
 \hspace*{1em} \textit{end} \\
 
 Diese Methode wird nun auf das zuvor beschriebene Beispiel des in Abb.~\ref{LSoptiExampleSinus}
-dargestellten sinusförmigen Signals mit einem Gnu-Octave/Matlab-Skript getestet.
-Ziel ist es, durch die gegebenen Spannungswerte $(s_j,t_j)$ eine Sinusfunktion
-durchzulegen. Der Modellansatz für dieses Beispiel lautet:
+dargestellten sinusförmigen Signals mit einem GNU-Octave-/Matlab-Skript getestet.
+Ziel ist es, durch die gegebenen Beobachtungspaare $(t_j,s_j)$ eine Sinusfunktion
+zu legen. Der Modellansatz für dieses Beispiel lautet:
 \begin{equation}
-	s(t) \; = \; a \sin(2\pi \frac{t}{\lambda} + \varphi) \; + \; \varepsilon \qquad
-	\textrm{mit} \qquad \varepsilon \sim {\cal N}(0,\sigma)
+	s(t) \; = \; a \sin\!\left(2\pi \frac{t}{\lambda} + \varphi\right) \; + \; \varepsilon
+	\qquad \textrm{mit} \qquad \varepsilon \sim {\cal N}(0,\sigma^2)
 \end{equation}
-bei dem die Residuen in Richtung von $s$ streuen und bei dem die Abtastpunkte
+wobei die Residuen in Richtung von $s$ streuen und die Abtastpunkte
 entlang der Zeitachse $t$ als Regressor vorgegeben sind, so dass
 wir einen Regressionsansatz der Gestalt
 \begin{equation}
 	\varepsilon_j \; = \; Y_j \; - \; f(X_j, \boldsymbol{p}) \qquad \textrm{mit} \qquad
 	j=1, 2,\dots, J
 \end{equation}
-vorliegen haben. $\boldsymbol{p}$ sind die gesuchten Modellparameter. Die Kostenfunktion sieht damit wie folgt aus
+vorliegen haben. Der Vektor $\boldsymbol{p}$ enthält die gesuchten Modellparameter. Die
+Kostenfunktion lautet damit
 \begin{equation}
 	Q(\boldsymbol{p}) \; = \; \sum\limits_{j=1}^J \left(Y_j \; - \; f(X_j, \boldsymbol{p})\right)^2.
 \end{equation}
-In dem vorliegenden Fall haben wir zwei Modellparameter $p(1) = \lambda$ und $p(2) = \varphi$
+In dem vorliegenden Fall haben wir zwei Modellparameter $p_1 = \lambda$ und $p_2 = \varphi$
 \begin{equation}
 \boldsymbol{p} =
 \left(\begin{array}{c}
-	p(1) \\
-	p(2)
+	p_1 \\
+	p_2
 \end{array}\right)
 = \left(\begin{array}{c}
 	\lambda \\
@@ -777,40 +968,41 @@ In dem vorliegenden Fall haben wir zwei Modellparameter $p(1) = \lambda$ und $p(
 \end{equation}
 Die Residuen sind wie folgt gegeben:
 \begin{equation}
-\varepsilon_j = s_j - a \cdot \sin \left[ \frac{2 \pi}{p(1)}t_j +p(2)\right]
+\varepsilon_j = s_j - a \cdot \sin \left[ \frac{2 \pi}{p_1}t_j +p_2\right]
 \end{equation}
-Für die Jakobimatrix benötigen wir die beiden partiellen Ableitungen nach den Modellparametern
-$p(1)$ und $p(2)$:
-\begin{equation} \boldsymbol{J} =
-	\left(	\begin{array}{c} J_{11} \\ J_{21} \end{array}
-	\right)
-	= \left(
-	\begin{array}{c}
-		\frac{\D \partial \varepsilon}{\D \partial p(1)} \\
-		\frac{\D \partial \varepsilon}{\D \partial p(2)}
-	\end{array}
-\right)
+Für die Jacobi-Matrix benötigen wir die beiden partiellen Ableitungen nach den
+Modellparametern $p_1$ und $p_2$. Für $j=1,\ldots,J$ gilt:
+\begin{equation}
+J_{j1}=\frac{\partial\varepsilon_j}{\partial p_1}
+=\frac{2a\pi t_j}{p_1^2}
+\cos\!\left[\frac{2\pi t_j}{p_1}+p_2\right],
+\label{eq:JakobiMatrix_J11}
+\end{equation}
+\begin{equation}
+J_{j2}=\frac{\partial\varepsilon_j}{\partial p_2}
+=-a\cos\!\left[\frac{2\pi t_j}{p_1}+p_2\right].
+\label{eq:JakobiMatrix_J21}
 \end{equation}
 
 \begin{eqnarray}
- \nonumber J_{11} = \frac{\partial\varphi(\boldsymbol{p})}{\partial p(1)} &=&
-	- a\cdot \cos \left[ \frac{2\pi}{p(1)} \cdot t +p(2) \right] \cdot
-	\left(\frac{-2\pi t}{p(1)^2} \right) \\
-	&=& \frac{4a\cdot \pi}{p(1)^2}\cdot t \cdot \cos \left[\frac{2 \pi}{p(1)} t +p(2) \right]
+ \nonumber J_{11} = \frac{\partial\varphi(\boldsymbol{p})}{\partial p_1} &=&
+	- a\cdot \cos \left[ \frac{2\pi}{p_1} \cdot t +p_2 \right] \cdot
+	\left(\frac{-2\pi t}{p_1^2} \right) \\
+	&=& \frac{4a\cdot \pi}{p_1^2}\cdot t \cdot \cos \left[\frac{2 \pi}{p_1} t +p_2 \right]
 	\label{eq:JakobiMatrix_J11}
 \end{eqnarray}
 \begin{equation}
-	J_{21} = \frac{\partial\varphi(\boldsymbol{p})}{\partial p(2)} = - a \cos \left[
-	\frac{2 \pi}{p(1)} t + p(2) \right]
+	J_{21} = \frac{\partial\varphi(\boldsymbol{p})}{\partial p_2} = - a \cos \left[
+	\frac{2 \pi}{p_1} t + p_2 \right]
 		\label{eq:JakobiMatrix_J21}
 \end{equation}
 
  Das Octave/Matlab-Skript sieht wir folgt aus:
 
-\begin{verbatim}
+\begin{lstlisting}[style=Matlab]
 function fit_sin_LMAC(gen_new)
-% Stand: 191105
-% Läuft unter Matlab und Octave
+% Stand: 2019-11-05
+% Laeuft unter Matlab und Octave
 t = [0:99]'; % Sekunden
 N = length(t);
 a = 5; % Volt
@@ -825,7 +1017,7 @@ lamm = 0.3*lam;
 st = a*sin(2*pi*t/lam + phi);
 if gen_new
 smod = st + am*sin(2*pi*t/lamm + phim);
-s = smod + sigma*0.5*randn(1,N)';
+s = smod + sigma*randn(N,1);
 save('pltSS_nonlin_leastsquare_sin_zB2.mat','t','s','sigma','a');
 else
 load('pltSS_nonlin_leastsquare_sin_zB2.mat');
@@ -844,9 +1036,9 @@ epsi = @(x, p) (x(:,2) - a*sin(2*pi*x(:,1)/p(1) + p(2)));
 % muss M Spalten und J Zeilen haben, wobei M die Anzahl der Fitparameter
 % und J die Anzahl der Messpunkte ist
 %
-\end{verbatim}
+\end{lstlisting}
 siehe Gl.(\ref{eq:JakobiMatrix_J11}) und (\ref{eq:JakobiMatrix_J21})
-\begin{verbatim}
+\begin{lstlisting}[style=Matlab]
 Jac = @(x, p) [(4*a*pi/p(1)^2)*x(:,1).*cos(2*pi*x(:,1)/p(1)+p(2)),...
 -a*cos(2*pi*x(:,1)/p(1)+p(2))];
 %
@@ -900,7 +1092,7 @@ end
 gradQabs = abbruchkrit(F,DF,x,p);
 k=k+1;
 end
-disp(['Anzahl Interationen: ', num2str(k)]);
+	disp(['Anzahl Iterationen: ', num2str(k)]);
 end
 %
 function [s,mu,sflag] = korrektur(F,DF,x,p,mu,beta0,beta1,tol)
@@ -929,11 +1121,14 @@ end
 function gradQabs = abbruchkrit(F,DF,x,p)
 gradQabs = ( F(x,p)'*DF(x,p) * DF(x,p)'*F(x,p) );
 end
-\end{verbatim}
+\end{lstlisting}
 
-Dieses Gnu-Octave-/Matlab-Skript hat dazu das in Abb.~\ref{LSoptiExampleSinusFitted} dargestellte Ergebnis mit den Werten
+Ein Lauf des GNU-Octave-/Matlab-Skripts liefert das in
+Abb.~\ref{LSoptiExampleSinusFitted} dargestellte Ergebnis. Die konkreten
+Iterationszahlen und Schätzwerte hängen bei der Datengenerierung vom
+Zufallszahlengenerator ab:
 \begin{verbatim}
-Anzahl Interationen: 1878
+Anzahl Iterationen: 1878
 gefittete Werte: lambda = 30.0505; phi/pi = 0.2051
 \end{verbatim}
 geliefert.
@@ -941,25 +1136,25 @@ geliefert.
 \begin{center}
 \includegraphics[width=0.8\textwidth, angle = 0]{03_vorlesung/media/pltSS_nonlin_leastsquare_sin_zB2.png}
 \end{center}
-\caption{Beispiel eines sinusförmigen Signals mit Levenberg-Marquadt-Fit gemäß
+\caption{Beispiel eines sinusförmigen Signals mit Levenberg-Marquardt-Fit gemäß
 Gln.~(\ref{ZielfunktionalGradTaylorResiDaempf}) und (\ref{DaempfTuning}) zusammen mit
 den Entscheidungen aus Tabelle 1.\label{LSoptiExampleSinusFitted}}
 \end{figure}
 
 
-Für die nichtlineare Regression gibt es in Gnu-Octave  beispielsweise folgende
-Funktion:
+Im GNU-Octave-Paket \textsf{optim} steht für die nichtlineare Regression
+beispielsweise folgende Funktion zur Verfügung:
 \begin{verbatim}
 [f, p, cvg, iter] =leasqr (x, y, init, F);
 \end{verbatim}
 Angewendet auf unser Beispiel vom sinusförmigen Signal kann sie in folgender Weise
 verwendet werden
-\begin{verbatim}
+\begin{lstlisting}[style=Matlab]
 function fit_sin(gen_new)
- % Stand: 191105
- % Läuft nur unter Octave, da leasqr nur unter Octave
- % frei zur Verfügung steht. Bei Matlab gibt es
- % einen ähnlichen Befehl, der heisst nlinfit
+ % Stand: 2019-11-05
+ % Laeuft nur unter Octave, da leasqr nur unter Octave
+ % frei zur Verfuegung steht. Bei Matlab gibt es
+ % einen aehnlichen Befehl, der heisst nlinfit
   load('pltSS_nonlin_leastsquare_sin_zB2.mat');
   p0 = [34; 0.23*pi];
   sf = @(x, p) a*sin(2*pi*x/p(1) + p(2));
@@ -990,7 +1185,7 @@ function fit_sin(gen_new)
   set(gca,'fontsize',12);
   grid on;
   end
-\end{verbatim}
+\end{lstlisting}
 und wir erhalten folgendes Ergebnis
 \begin{verbatim}
 gefittete Werte: lambda = 30.0505;  phi/pi = 0.2051
@@ -998,8 +1193,13 @@ gefittete Werte: lambda = 30.0505;  phi/pi = 0.2051
 
 \newpage
 \section{Matlabfunktionen zur Berechnung nichtlinearer Fits}
-Es gibt eine Vielzahl an Matlab-Bibliotheksfunktionen, die nichtlineare Optimierungsverfahren implementiert haben. Der Levenberg-Marquardt-Algorithmus ist in Matlab in der Funktion \textsf{lsqnonlin(fun,x0,lb,ub, options)} mit
-\textsf{options.Algorithm = 'levenberg-marquardt'} implementiert.
+Es gibt eine Vielzahl von Matlab-Bibliotheksfunktionen, die nichtlineare
+Optimierungsverfahren implementieren. Nichtlineare Ausgleichsprobleme können
+beispielsweise mit \textsf{lsqnonlin(fun,x0,lb,ub,options)} gelöst werden.
+Der Algorithmus wird über
+\textsf{options = optimoptions('lsqnonlin','Algorithm','levenberg-marquardt')}
+ausgewählt. Die konkrete Verfügbarkeit von Randbedingungen und Optionen hängt
+von der gewählten Matlab-Version und dem Algorithmus ab.
 % siee evtl auch mal das Beispiel:
 % https://octave.sourceforge.io/optim/function/lsqnonlin.html
 Für unser Beispiel mit dem Sinusfit verwenden wir beispielhaft die Funktion \textsf{fminsearch(fun,x0,options)}, in der die Simplexmethode nach Nelder und Mead implementiert ist. Es muss ein Schätzwert
@@ -1010,7 +1210,7 @@ Q(\boldsymbol{p}) = \sum_{j=1}^{J} (a \cdot \sin(2\cdot \pi \cdot t(j) /p(1) + p
 \;\rightarrow \;\textrm{Min.}
 \end{equation}
 Der dazugehörige Matlab-Code lautet:
-\begin{verbatim}
+\begin{lstlisting}[style=Matlab]
 load('pltSS_nonlin_leastsquare_sin_zB2.mat');
 a = 5; % Volt
 p0 = [34; 0.23*pi];
@@ -1021,7 +1221,7 @@ maxit =1000;
 p1= fminsearch(Q, p0, optimset('TolX',tol, 'MaxIter', maxit));
 disp(['gefittete Werte: lambda =', num2str(p1(1)),';  ', ...
 num2str(p1(2)/pi)])
-\end{verbatim}
+\end{lstlisting}
 Als Ergebnis erhält man:
 \begin{verbatim}
 gefittete Werte: lambda =30.0505; phi/pi=0.2051
@@ -1030,7 +1230,8 @@ gefittete Werte: lambda =30.0505; phi/pi=0.2051
 	\begin{center}
 		\includegraphics[width=0.9\textwidth, angle = 0]{03_vorlesung/media/OptimToolMatlab.png}
 	\end{center}
-	\caption{Optimtool von Matlab: Ergebnis $p(1)=30,05$ und $p(2)=0,644$} \label{fig:Optimtool_von_Matlab}
+\caption{Historisches Matlab-Optimtool: Ergebnis $p_1=30{,}05$ und
+$p_2=0{,}644$} \label{fig:Optimtool_von_Matlab}
 \end{figure}
 
 \newpage
@@ -1041,81 +1242,80 @@ S.~S.~Rao \cite{Rao09}. $\mathbf{lb}$ steht für \glq lower bound\grq~ und $\mat
 \begin{table}[!ht]
 	\caption{Optimierungsverfahren mit Matlab}
 	\centering
-	\begin{tabular}{p{5cm} | >{\centering\arraybackslash} p{6cm} | p{4cm}}  \hline
-		Typ des Optimierungs- \newline problem &  Standardform für die Lösung unter Matlab/Octave &  Matlab/Octave Funktion um das Problem zu lösen \\[1ex]
-		\hline \hline
-		Funktion von einer  \newline Variablen  & Finde $x$, indem $f(x)$ minimiert wird mit
-		$x_1 < x < x_2$ & \textsf{fminbnd} \\[1ex] \hline
-		Minimierung ohne Randbedingung von einer Funktion oder mehreren Variablen &
-		Finde $\mathbf x$, so dass $f(\mathbf x)$ minimiert wird.
-		Hinweis: Simplexmethode nach Nelder und Mead &
-		\textsf{fminunc} oder \newline \textsf{fminsearch} \\[1ex] \hline
-		Lineares Problem & Finde $\mathbf x $ durch Minimierung von $\mathbf{f^T x}$ mit $A \mathbf x \le b$, $A_{eq} \mathbf x = \mathbf b_{eq}$, \newline
-		$\mathbf{lb} \le \mathbf{x} \le \mathbf{ub}$ & \textsf{linprog} \\[1ex] \hline
-		Quadratisches Problem & Finde $\mathbf x $ durch Minimierung von $\frac{1}{2} \mathbf{x^T}\mathbf{f^T x}$ mit $A \mathbf x \le \mathbf b$,
-		\newline $A_{eq}$ $\mathbf x = \mathbf b_{eq}$, \newline
-		$\mathbf{lb} \le \mathbf{x} \le \mathbf{ub}$ & \textsf{quadprog} \\[1ex] \hline
-		Minimierung von Funktionen von mehreren Variablen mit Nebenbedingungen &
-		Finde $\mathbf x $ durch Minimierung von $\frac{1}{2} \mathbf{x^T}\mathbf{f^T x}$ mit $\mathbf{c(x) \le 0}$,
-		$\mathbf{c_{eq} = 0}$ \newline
-		$A \mathbf x \le \mathbf b$,
-		$A_{eq}$ $\mathbf x = \mathbf b_{eq}$, \newline
-		$\mathbf{lb} \le \mathbf x \le \mathbf{ub}$ & \textsf{fmincon} \\[1ex] \hline
-		Minimax Problem & Finde das  $\mathbf x $ welches die Maxima
-		von mehreren gegeben Funktionen $F_i(\mathbf x)$ minimiert,
-		so dass  $\mathbf{c(x) \le 0}$,
-		$\mathbf{c_{eq} = 0}$ \newline
-		$A \mathbf x \le \mathbf b$,
-		$A_{eq}$ $\mathbf x = \mathbf b_{eq}$, \newline
-		$\mathbf{lb} \le \mathbf x \le \mathbf{ub}$ & \textsf{fminimax} \\[1ex] \hline
-	\end{tabular}
+\begin{tabular}{p{4.5cm}|p{7.2cm}|p{3.0cm}}
+\hline
+Problemtyp & Standardform unter Matlab & Matlab-Funktion \\[1ex]
+\hline\hline
+Skalare Minimierung &
+$\min f(x)$ mit $x_\mathrm{L}\leq x\leq x_\mathrm{U}$ &
+\textsf{fminbnd} \\[1ex]\hline
+Unbeschränkte Minimierung &
+$\min f(\mathbf{x})$; bei glatten Funktionen \textsf{fminunc},
+bei Ableitungsfreiheit \textsf{fminsearch} &
+\textsf{fminunc}, \textsf{fminsearch} \\[1ex]\hline
+Lineare Optimierung &
+$\min \mathbf{f}^{\mathsf T}\mathbf{x}$ mit
+$A\mathbf{x}\leq\mathbf{b}$, $A_\mathrm{eq}\mathbf{x}=\mathbf{b}_\mathrm{eq}$,
+$\mathbf{lb}\leq\mathbf{x}\leq\mathbf{ub}$ &
+\textsf{linprog} \\[1ex]\hline
+Quadratische Optimierung &
+$\min \frac{1}{2}\mathbf{x}^{\mathsf T}\mathbf{H}\mathbf{x}
++\mathbf{f}^{\mathsf T}\mathbf{x}$ mit linearen Nebenbedingungen &
+\textsf{quadprog} \\[1ex]\hline
+Nichtlineare Optimierung &
+$\min f(\mathbf{x})$ mit Gleichungs- und Ungleichungsnebenbedingungen &
+\textsf{fmincon} \\[1ex]\hline
+Minimax-Problem &
+$\min_{\mathbf{x}}\max_i F_i(\mathbf{x})$ mit Nebenbedingungen &
+\textsf{fminimax} \\[1ex]\hline
+\end{tabular}
 	\label{tab:Optimierungsverfahren}
 \end{table}
 
-Bei Matlab gibt es die in Abb. \ref{fig:Optimtool_von_Matlab} gezeigte graphische Oberfläche, das sog.
-\glq Optimization tool\grq~(Funktionsaufruf: \glq optimtool\grq),
-die die in Tab. \ref*{tab:Optimierungsverfahren} aufgeführten
-Optimierungsverfahren und noch einige mehr zur Verfügung stellt.
-Dieses Tool eignet sich ganz gut, wenn man sich einen ersten Überblick
-über die in Matlab implementierten Optimierungsverfahren verschaffen will. \\
+In älteren Matlab-Versionen gab es mit \textsf{optimtool} eine graphische
+Oberfläche, über die verschiedene Optimierungsverfahren ausgewählt werden
+konnten. In aktuellen Versionen übernimmt unter anderem die Optimize-Live-Editor-
+Aufgabe diese Funktion. Abb.~\ref{fig:Optimtool_von_Matlab} und
+Tab.~\ref*{tab:Optimierungsverfahren} dienen daher als versionsabhängige
+Orientierung; die genaue Auswahl und Bezeichnung der Algorithmen kann sich
+zwischen Matlab-Versionen ändern.
 
-\newpage
 \section{Gradientenverfahren mit unterschiedlichen Varianzen}
 \label{unterschiedVar}
-Die Varianzen (und Kovarianzen) der Residuen sind immer auch Funktion der Modellparameter. Als wir die
-Maximum-Likelihood-Methode eingeführt haben, hatten wir sie ausgeklammert und bei der Bestimmung
-des Minimums über die Summer der kleinsten Residuenquadrate weggekürzt. Sie
-lassen sich für den Fall ausklammern, bei dem die Streuung bezüglich des Modells
-für alle Messpunkte gleich ist, also
+Im Folgenden nehmen wir zunächst an, dass die Varianzen bekannt und unabhängig von
+den Modellparametern sind. Sind die Residuen aller Beobachtungen gleich verteilt,
+ist die Streuung durch einen gemeinsamen Faktor $\sigma^2$ beschrieben, also
 \begin{equation}
 Q(\mathbf{p}) \; = \;
- \frac{\boldsymbol{\varepsilon}(\mathbf{p})^\mathsf{T} \, \boldsymbol{\varepsilon}(\mathbf{p})}{\sigma^2(\mathbf{p}))}
+ \frac{\boldsymbol{\varepsilon}(\mathbf{p})^\mathsf{T} \,
+ \boldsymbol{\varepsilon}(\mathbf{p})}{\sigma^2}.
 \end{equation}
-und
+Damit gilt
 \begin{equation}
 \nabla_{\mathbf{p}} Q(\mathbf{p})  \; = \;
-\frac{2}{\sigma^2(\mathbf{p})} \boldsymbol{\varepsilon}^\textsf{T}(\mathbf{p})
- \, \boldsymbol{J} \overset{!}{=} \; \left(\begin{array}{ccc} 0 & \dots & 0 \end{array}\right)
+\frac{2}{\sigma^2} \boldsymbol{J}^\mathsf{T}(\mathbf{p})
+ \boldsymbol{\varepsilon}(\mathbf{p})
+\overset{!}{=} \; \left(\begin{array}{c} 0 \\ \vdots \\ 0 \end{array}\right)
 \label{ZielfunktionalGradJmitSigma}
 \end{equation}
-was einfach mit $\frac{\sigma^2(\mathbf{p})}{2}$ multipliziert werden kann, so dass wir mit
-den Residuen wie oben beschreiben weiter arbeiten können, indem wir diese in Taylorreihe entwickeln.
+Der konstante Faktor $1/\sigma^2$ ändert die Lage des Minimums nicht. Daher kann
+für die Bestimmung der Parameter mit der ungewichteten RQS weitergearbeitet werden.
+Falls $\sigma$ von $\mathbf p$ abhängt, gilt diese Vereinfachung nicht; dann muss
+die Ableitung der Varianz beziehungsweise zusätzlich die logarithmische
+Normierung der Likelihood berücksichtigt werden.
 
-Für den Fall, dass es unterschiedliche Varianzen für Residuen der verschiedenen Beobachtungstupel
-$(X_{1,j},\dots,X_{N,j})$ gibt, ordnen wir $\sqrt{\sigma_j^2} = \sigma_j$
-den Residuen zu mit
+Für den Fall, dass die verschiedenen Beobachtungen unterschiedliche, bekannte
+Standardunsicherheiten $\sigma_j$ besitzen, werden die Residuen standardisiert:
 \begin{equation}
 Q(\mathbf{p}) \; = \;
   \left(\begin{array}{ccc}
-  \frac{\varepsilon_1(\mathbf{p})}{\sigma_1(\mathbf{p})} & \dots &
- \frac{\varepsilon_J(\mathbf{p})}{\sigma_J(\mathbf{p})} \end{array} \right)
-\, \left(\begin{array}{c} \frac{\varepsilon_1(\mathbf{p})}{\sigma_1(\mathbf{p})}\\
- \vdots\\ \frac{\varepsilon_J(\mathbf{p})}{\sigma_J(\mathbf{p})}\end{array} \right)
+  \frac{\varepsilon_1(\mathbf{p})}{\sigma_1} & \dots &
+ \frac{\varepsilon_J(\mathbf{p})}{\sigma_J} \end{array} \right)
+\, \left(\begin{array}{c} \frac{\varepsilon_1(\mathbf{p})}{\sigma_1}\\
+ \vdots\\ \frac{\varepsilon_J(\mathbf{p})}{\sigma_J}\end{array} \right)
 \label{ZielfunktionalJmitW}
 \end{equation}
-d.h.\ kurz ohne jedesmal das \glqq Funktion von $\mathbf{p}$\grqq oder
-\glqq abhängig von $\mathbf{p}$\grqq, also $(\mathbf{p})$,
-mitzuschreiben
+d.h.\ mit der Diagonalmatrix
 \begin{equation}
 Q(\mathbf{p}) \; = \;
   \boldsymbol{\varepsilon}^\textsf{T}
@@ -1124,7 +1324,7 @@ Q(\mathbf{p}) \; = \;
  0 & & \dots &  \frac{1}{\sigma_J^2} \end{array} \right) \, \boldsymbol{\varepsilon}
 \label{ZielfunktionalJmitW1}
 \end{equation}
-Je stärker eine Beobachtung $j$ abweicht, also je größer die Varianz $\sigma_j^2$,
+Je größer die Varianz $\sigma_j^2$ einer Beobachtung $j$ ist,
 desto geringer fällt der Summand $\frac{\varepsilon_j^2}{\sigma_j^2}$ in der Kostenfunktion $Q$
 ins Gewicht, weshalb man diese auch als Gewichte $w_j = \frac{1}{\sigma_j^2}$ bezeichnet
 und die Matrix als Gewichtsmatrix $\mathbf{W}$ also
@@ -1134,62 +1334,305 @@ Q(\mathbf{p}) \; = \;
 \, \mathbf{W} \, \boldsymbol{\varepsilon}
 \label{ZielfunktionalJmitW2}
 \end{equation}
-und mit
+mit
 \begin{equation}
-\frac{1}{2} \nabla_{\mathbf{p}} Q(\mathbf{p})  \; = \; \boldsymbol{\varepsilon}^\textsf{T}(\mathbf{p})
- \, \mathbf{W} \, \boldsymbol{J}
+\frac{1}{2} \nabla_{\mathbf{p}} Q(\mathbf{p})  \; = \;
+ \boldsymbol{J}^\mathsf{T} \, \mathbf{W} \,
+ \boldsymbol{\varepsilon}(\mathbf{p})
 \label{ZielfunktionalGradJW}
 \end{equation}
 sieht unser Optimierungsproblem wie folgt aus
 \begin{equation}
-\lim_{\mathbf{p} \rightarrow \mathbf{\hat p}}
-\boldsymbol{\varepsilon}^\textsf{T}(\mathbf{p})
- \, \mathbf{W}(\mathbf{p}) \, \boldsymbol{J}(\mathbf{p})
- \; = \; \left(\begin{array}{ccc} 0 & \dots & 0 \end{array}\right) .
+\boldsymbol{J}^\mathsf{T}(\mathbf{\hat p})\,
+\mathbf{W}\,\boldsymbol{\varepsilon}(\mathbf{\hat p})
+\; = \; \left(\begin{array}{c} 0 \\ \vdots \\ 0 \end{array}\right) .
 \label{ZielfunktionalGrad1W}
 \end{equation}
 Die Gleichungen (\ref{GradientQlinGl3}) und (\ref{ZielfunktionalGradTaylorResiDaempf})
 werden damit zu
 \begin{equation}
- \boldsymbol{J}^{(\kappa) \textsf{T}} \, \mathbf{W}(\mathbf{p}_\kappa) \,
+\left(\boldsymbol{J}^{(\kappa)}\right)^\mathsf{T} \, \mathbf{W} \,
 \boldsymbol{J}^{(\kappa)} \, \Delta \mathbf{p}_\kappa
 \; \overset{!}{=} \;
--  \boldsymbol{J}^{(\kappa) \textsf{T}} \, \mathbf{W}(\mathbf{p}_\kappa) \,
+-  \left(\boldsymbol{J}^{(\kappa)}\right)^\mathsf{T} \, \mathbf{W} \,
 \boldsymbol{\varepsilon}(\mathbf{p}_\kappa) .
 \label{GradientQlinGl3W}
 \end{equation}
 und mit Dämpfungs- bzw.\ Marquardtparameter
 \begin{equation}
 \left(
-\boldsymbol{J}^{(\kappa) \textsf{T}} \, \mathbf{W}(\mathbf{p}_\kappa) \, \boldsymbol{J}^{(\kappa)}
- + \mu \, \mathrm{diag}(\boldsymbol{J}^{(\kappa) \textsf{T}} \, \mathbf{W}(\mathbf{p}_\kappa) \, \boldsymbol{J}^{(\kappa)}) \right) \Delta \mathbf{p}_\kappa \;
-\overset{!}{=} \; - \boldsymbol{J}^{(\kappa)^\textsf{T}} \,
-\mathbf{W}(\mathbf{p}_\kappa) \, \boldsymbol{\varepsilon}(\mathbf{p}_\kappa) .
+\left(\boldsymbol{J}^{(\kappa)}\right)^\mathsf{T} \mathbf{W}
+\boldsymbol{J}^{(\kappa)}
+ + \mu\,\mathrm{diag}\!\left(\left(\boldsymbol{J}^{(\kappa)}\right)^\mathsf{T}
+\mathbf{W}\boldsymbol{J}^{(\kappa)}\right)\right)\Delta\mathbf p_\kappa
+\overset{!}{=}
+-\left(\boldsymbol{J}^{(\kappa)}\right)^\mathsf{T}\mathbf W
+\boldsymbol\varepsilon(\mathbf p_\kappa).
 \label{ZielfunktionalGradTaylorResiDaempfW}
 \end{equation}
 
-\section{Unsicherheit der geschätzten Modellparameter}
-Bei der Behandlung der linearen Regression in Kapitel \ref{KapitellinReg} wurde auch die Bestimmung der Unsicherheit
-der Regressionsparameter, die die Modellparameter dieser speziellen Art linearer Modelle darstellen und die
-indirekten Messgrößen sind, dargelegt. Die Quadrate $u^2(\theta_i)$ der Standardunsicherheiten $u(\theta_i)$ sind
-die Varianzen der indirekten Messgrößen $\theta_i$, also die Hauptdiagonalelement der Kovarianzmatrix
-Gl.~(\ref{UnsicherheitRegressparams}). Um ein Zurückblättern oder Zurückscrollen zu vermeiden, werden die
-Lösungsgleichung Gl.~(\ref{eq:schaetzwerte_fuer_theta}) des Regressionsproblems und die dazugehörige
-Kovarianzmatrix Gl.~(\ref{UnsicherheitRegressparams}) hier nochmal aufgeführt
+Wichtig ist die umgekehrte Beziehung: Je stärker die Kostenfunktion am Minimum gekrümmt ist, desto **kleiner** ist die Parameterunsicherheit. In flachen Richtungen ist die Unsicherheit dagegen groß.
+
+\section{\label{sec:UnsicherheitNichtlinParameter}
+Unsicherheit der geschätzten Modellparameter}
+
+Bei einer nichtlinearen Ausgleichsrechnung kann die Unsicherheit der geschätzten
+Modellparameter in erster Ordnung durch eine Linearisierung am gefundenen
+Minimum abgeschätzt werden. Die Quadrate $u^2(p_i)$ der
+Standardunsicherheiten sind die Diagonalelemente der Kovarianzmatrix.
+
+Zur Einordnung werden zunächst die bekannten Beziehungen der linearen
+Regression wiederholt:
 \begin{equation*}
 \boldsymbol{\hat \theta} \; = \;
-\left( \mathbf{X}^\mathsf{T}  \, \mathbf{X} \right)^{-1} \mathbf{X}^\mathsf{T} \, \mathbf{Y}
+\left( \mathbf{X}^\mathsf{T} \mathbf{X} \right)^{-1}
+\mathbf{X}^\mathsf{T} \mathbf{Y},
 \qquad
-\boldsymbol{\hat \Sigma}_{\boldsymbol{\theta}} \; = \; \hat \sigma_{\varepsilon}^2
-\left( \mathbf{X}^\mathsf{T}  \, \mathbf{X} \right)^{-1}
+\boldsymbol{\hat \Sigma}_{\boldsymbol{\theta}} \; = \;
+\hat \sigma_{\varepsilon}^2
+\left( \mathbf{X}^\mathsf{T} \mathbf{X} \right)^{-1}.
 \end{equation*}
-Die Regressormatrix $\mathbf{X}$, deren Spalten die Regressoren darstellen. Diese sind gemäß Gl.~(\ref{eq:partielleAblRegressoren}) die Gradienten der Residuen, bzw.\ die Spalten mit den
-partiellen Ableitungen, d.h.\ sie ist also die Jakobimatrix Gl.~(\ref{eq:JakobimatrixDefinition})
-zur Modellgleichung (\ref{eq:Kap2ModellglmitResiduenlinearReg}) und der Kostenfunktion
-Gl.~(\ref{eq:Kap2KostenfktlinearReg}).
+Die Regressormatrix $\mathbf{X}$ besteht aus den Spalten der Regressoren. In der
+linearen Regression entspricht sie der Jacobi-Matrix der Modellgleichung
+beziehungsweise der Residuen, bis auf ein mögliches Vorzeichen je nach Definition
+des Residuenvektors.
 
-So wie wir die Kovarianzmatrix der Regressionskoeffizienten Gl.~(\ref{eq:COVRegressionsparameter})
-berechnet haben, wird auch die Kovarianzmatrix der Modellparameter bestimmt:
+Bei der nichtlinearen Ausgleichsrechnung ist die Unsicherheit der geschätzten
+Modellparameter eng mit der Krümmung der Kostenfunktion in der Umgebung ihres
+Minimums verbunden. Diese Krümmung wird durch die Hesse-Matrix der Kostenfunktion beschrieben,
+deren Elemente die zweiten partiellen Ableitungen der Kostenfunktion nach den
+Modellparametern sind. Eine starke Krümmung bedeutet, dass bereits kleine
+Änderungen der Parameter zu einer deutlichen Zunahme der Kostenfunktion führen.
+Die betreffenden Parameter sind daher vergleichsweise genau bestimmt. Eine
+geringe Krümmung kennzeichnet dagegen eine flache Richtung der Kostenfunktion
+und damit eine größere Unsicherheit der entsprechenden Parameterkombination.
+Die Kovarianzmatrix ist deshalb näherungsweise proportional zur Inversen der
+Hesse-Matrix Kostenfunktion.
+
+Für die Summe der quadrierten Residuen
+\begin{equation*}
+Q(\mathbf p)
+=
+\boldsymbol{\varepsilon}^{\mathsf T}(\mathbf p)
+\boldsymbol{\varepsilon}(\mathbf p)
+=
+\sum_{j=1}^{J} \varepsilon_j^2(\mathbf p)
+\end{equation*}
+ist die Hesse-Matrix der Kostenfunktion definiert durch
+\begin{equation}
+\boldsymbol H_Q(\mathbf p)
+=
+\left(
+\frac{\partial^2 Q(\mathbf p)}
+     {\partial p_k\,\partial p_l}
+\right)_{k,l=1,\ldots,M}.
+\label{eq:Hessematrix}
+\end{equation}
+
+% The Hessian describes the local curvature of the objective surface around a point $\hat{\mathbf p}$.Near an unconstrained local minimum, where $\nabla Q(\hat{\mathbf p})=\mathbf 0$, the second-order Taylor expansion is
+% $$
+% Q(\mathbf p)
+% \approx
+% Q(\hat{\mathbf p})
+% +
+% \frac{1}{2}
+% (\mathbf p-\hat{\mathbf p})^T \,
+% \mathbf H_{Q}(\mathbf p) \,
+% (\mathbf p-\hat{\mathbf p})
+% $$
+
+
+Ihre einzelnen Matrixelemente lauten
+\begin{equation*}
+\left[\boldsymbol H_Q(\mathbf p)\right]_{kl}
+=
+\frac{\partial^2 Q(\mathbf p)}
+     {\partial p_k\,\partial p_l}
+=
+2\sum_{j=1}^{J}
+\left[
+\frac{\partial \varepsilon_j(\mathbf p)}{\partial p_k}
+\frac{\partial \varepsilon_j(\mathbf p)}{\partial p_l}
++
+\varepsilon_j(\mathbf p)
+\frac{\partial^2 \varepsilon_j(\mathbf p)}
+     {\partial p_k\,\partial p_l}
+\right].
+\end{equation*}
+Mit den Elementen der Jacobi-Matrix
+\begin{equation*}
+\left[\boldsymbol J(\mathbf p)\right]_{jk}
+=
+\frac{\partial \varepsilon_j(\mathbf p)}{\partial p_k}
+\end{equation*}
+und der Hesse-Matrix des einzelnen Residuums
+\begin{equation*}
+\boldsymbol H_{\varepsilon_j}(\mathbf p)
+=
+\left(
+\frac{\partial^2 \varepsilon_j(\mathbf p)}
+     {\partial p_k\,\partial p_l}
+\right)_{k,l=1,\ldots,M}
+\end{equation*}
+beziehungsweise explizit
+\begin{equation*}
+\boldsymbol H_{\varepsilon_j}(\mathbf p)
+=
+\begin{pmatrix}
+\dfrac{\partial^2\varepsilon_j}{\partial p_1^2}
+&
+\dfrac{\partial^2\varepsilon_j}{\partial p_1\partial p_2}
+&
+\cdots
+&
+\dfrac{\partial^2\varepsilon_j}{\partial p_1\partial p_M}
+\\[1.2ex]
+\dfrac{\partial^2\varepsilon_j}{\partial p_2\partial p_1}
+&
+\dfrac{\partial^2\varepsilon_j}{\partial p_2^2}
+&
+\cdots
+&
+\dfrac{\partial^2\varepsilon_j}{\partial p_2\partial p_M}
+\\
+\vdots & \vdots & \ddots & \vdots
+\\[0.8ex]
+\dfrac{\partial^2\varepsilon_j}{\partial p_M\partial p_1}
+&
+\dfrac{\partial^2\varepsilon_j}{\partial p_M\partial p_2}
+&
+\cdots
+&
+\dfrac{\partial^2\varepsilon_j}{\partial p_M^2}
+\end{pmatrix}
+\end{equation*}
+lässt sich die Hesse-Matrix der Kostenfunktion kompakt schreiben als
+\begin{equation}
+\boldsymbol H_Q(\mathbf p)
+=
+2\boldsymbol J^{\mathsf T}(\mathbf p)\boldsymbol J(\mathbf p)
++
+2\sum_{j=1}^{J}
+\varepsilon_j(\mathbf p)\,
+\boldsymbol H_{\varepsilon_j}(\mathbf p).
+\label{eq:HessematrixKompakt}
+\end{equation}
+
+Bei der Gauß-Newton-Näherung wird der zweite Term vernachlässigt. Dies ist
+insbesondere dann gerechtfertigt, wenn die Residuen am Minimum klein sind oder
+die Nichtlinearität des Modells in dessen Umgebung nur schwach ausgeprägt ist.
+Damit ergibt sich
+\begin{equation}
+\boldsymbol H_Q(\hat{\mathbf p})
+\approx
+2\hat{\boldsymbol J}^{\mathsf T}\hat{\boldsymbol J}.
+\label{eq:HessematrixApprox}
+\end{equation}
+Für eine mit dem Faktor $1/2$ definierte Kostenfunktion
+$Q(\mathbf p)/2$ entfällt der Faktor $2$.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=150mm]{03_vorlesung/media/orthogonal_line_cost_curvature.pdf}
+\caption{Veranschaulichung des Zusammenhangs zwischen der Krümmung der Kostenfunktion in der 
+Umgebung ihres Minimums und der Unsicherheit des Modellparameters $\phi$}
+\label{HQCovBeziehung}
+\end{center}
+\end{figure}
+
+Bei homoscedastischen\footnote{Homoscedastisch (auch:
+\emph{homoskedastisch}) bedeutet, dass die Residuen für alle Messpunkte dieselbe
+Varianz besitzen. Ihre zufällige Streuung hängt somit nicht systematisch von der
+unabhängigen Variablen, dem vorhergesagten Wert oder der Größe des Messsignals
+ab. In einem Residuenplot zeigt sich dies näherungsweise als ein über den
+gesamten Bereich gleich breites Streuband.} und unabhängigen Residuen gilt somit
+in linearer beziehungsweise Gauß-Newton-Näherung
+\begin{equation}
+\widehat{\operatorname{Cov}}(\hat{\mathbf p})
+\approx
+\hat{\sigma}_{\varepsilon}^{\,2}
+\left(
+\hat{\boldsymbol J}^{\mathsf T}\hat{\boldsymbol J}
+\right)^{-1},
+\qquad
+\hat{\sigma}_{\varepsilon}^{\,2}
+=
+\frac{Q(\hat{\mathbf p})}{J-M},
+\label{eq:CovNichtlinParameter}
+\end{equation}
+sofern die gemeinsame Varianz aus den Residuen geschätzt wird. Dabei bezeichnet
+$J$ die Anzahl der Beobachtungen und $M$ die Anzahl der geschätzten
+Modellparameter.
+
+Abbildung~\ref{HQCovBeziehung} veranschaulicht den Zusammenhang zwischen der
+Krümmung der Kostenfunktion und der Unsicherheit der Modellparameter am Beispiel
+einer Geraden. Diese wird in Normalform durch
+\[
+-x\sin\varphi+y\cos\varphi=d
+\]
+beschrieben. Dabei sind $x$ und $y$ die Koordinaten der Geraden (die direkten Messgrößen),
+$\varphi$ der Modellparameter \glqq Steigungswinkel der Geraden\grqq ~und $d$ der Modellparameter \glqq vorzeichenbehafteter senkrechter Abstand vom Koordinatenursprung\grqq. Da
+$(-\sin\varphi,\cos\varphi)^{\mathsf T}$ ein Einheitsnormalenvektor ist, sind
+die Residuen
+\[
+\varepsilon_j
+=
+-x_j\sin\varphi+y_j\cos\varphi-d
+\]
+die vorzeichenbehafteten senkrechten Abstände der Beobachtungen / Messungen 
+der Größen von der Geraden.
+
+Im linken Teil der Abbildung erstrecken sich die Beobachtungspunkte nur über
+einen kurzen Abschnitt der Geraden. Aufgrund dieser geringen Basisbreite führt
+eine Änderung des Steigungswinkels $\varphi$ nur zu einer vergleichsweise
+geringen Zunahme der Kostenfunktion. Diese bildet daher in Richtung von
+$\varphi$ ein flaches Tal, und der Steigungswinkel ist nur mit einer
+vergleichsweise großen Unsicherheit bestimmt. Im rechten Teil der Abbildung
+sind die Beobachtungspunkte dagegen über einen längeren Abschnitt der Geraden
+verteilt. Der dadurch entstehende größere Hebelarm führt zu einer stärkeren
+Krümmung der Kostenfunktion und somit zu einer kleineren Unsicherheit des
+geschätzten Steigungswinkels.
+
+Am jeweiligen Minimum ergeben sich für die Krümmung in Richtung von
+$\varphi$
+\[
+\left.
+\frac{\partial^2 Q(\varphi,d)}
+     {\partial \varphi^2}
+\right|_{(\hat{\varphi},\hat d)}
+\approx
+\begin{cases}
+20{,}9 & \text{geringe Basisbreite},\\
+533{,}7 & \text{große Basisbreite}.
+\end{cases}
+\]
+Dabei wird der Winkel $\varphi$ im Bogenmaß eingesetzt. In Richtung des
+Abstandsparameters $d$ ist die Krümmung in beiden Beispielen gleich:
+\[
+\left.
+\frac{\partial^2 Q(\varphi,d)}
+     {\partial d^2}
+\right|_{(\hat{\varphi},\hat d)}
+=60.
+\]
+Dies folgt daraus, dass beide Datensätze aus jeweils $J=30$ Beobachtungspunkten
+bestehen und $d$ mit
+$\partial\varepsilon_j/\partial d=-1$ linear in die Residuen eingeht. Daher
+gilt allgemein
+\[
+\frac{\partial^2 Q}{\partial d^2}=2J.
+\]
+
+Sind die
+Standardunsicherheiten bekannt, wird bei
+$\mathbf W=\boldsymbol\Sigma^{-1}$ stattdessen näherungsweise
+$(\hat{\boldsymbol J}^{\mathsf T}\mathbf W\hat{\boldsymbol J})^{-1}$
+verwendet; eine zusätzliche Schätzung von $\hat\sigma_\varepsilon^2$ ist dann
+nicht erforderlich. Diese Kovarianz ist eine lokale Linearisation und berücksichtigt
+weder starke Nichtlinearität noch mehrere getrennte Minima.
+
+Die lokale Korrektur und die daraus abgeleiteten Standardunsicherheiten können
+zusammengefasst werden als:
 \begin{center}
 \setlength{\extrarowheight}{1.2em}
 \begin{tabular}{ccc}
@@ -1221,46 +1664,28 @@ $\hat \sigma_l \; = \;
 
 \section{Robuste Schätzverfahren}
 \label{robustEstimation}
-Mit Gl.~(\ref{ZielfunktionalJmitW2}) haben wir eine Kostenfunktion $Q$ mit Gewichtsfaktoren $w_j$ kennengelernt,
-bei der die Gewichte die Kehrwerte der Varianzen sind $w_j = \frac{1}{\sigma_j^2}$, die sich eigentlich
-aus der Abweichung der Beobachtungen vom Modell ergeben. Wenn kein {\`a} priori Wissen über
-diese Varianzen vorliegt, aber bekannt ist, dass die Verteilung der
-Residuen aller Beobachtungen nicht gauß\-ver\-teilt ist, soll das Problem dennoch mit der
-Maximum-Likelihood-Methode gelöst werden. Es kommt vor, dass einzelne Beobachtungen
-sehr weit von der Erwartung entfernt sind. Man sagt, dass sie signifikant abweichen. Die Gaußverteilung erlaubt dieses auch, denn sie hat einen Definitionsbereich für die Residuen $\varepsilon$,
-der von minus Unendlich bis plus Unendlich geht. Ihre Ausläufer, auch \textsl{Tails} genannt,
-sind unbegrenzt. Die Wahrscheinlichkeit ist aber sehr gering, kleiner als $5~\%$, dass der Betrag der
-Residuen $\varepsilon$ einen Wert annimmt, der größer als
-$1.64 \, \sigma$ ist, aber er kann auftreten. Liegen deutlich mehr als $5~\%$
-der Beobachtungen außerhalb eines Vertrauensintervalls von beispielsweise $[-3 \sigma, 3 \sigma]$,
-dann ist dies ein Indiz dafür sein, dass das Modell unzureichend ist. Es kann sein, dass es auch nicht
-um ein vollständigeres Modell geht, sondern darum, nur die zum betrachteten Modell passenden Beobachtungen
-berücksichtigen zu wollen. Die übrigen Beobachtungen sollen als Ausreißer, die nicht zum
-eigentlichen zu untersuchenden Prozess gehören, nicht an dem \textsl{Least-Square-Fit}
-beteiligt werden oder zumindest ihre Beteiligung daran (ihr Gewicht) reduziert wird.
+Mit Gl.~(\ref{ZielfunktionalJmitW2}) haben wir eine gewichtete
+Residuenquadratsumme kennengelernt. Bei der robusten Schätzung sind die Gewichte
+jedoch nicht als bekannte Varianzanteile vorgegeben, sondern werden aus den
+Residuen abgeleitet. Das Ziel besteht nicht darin, die Residuenverteilung
+formal in eine Normalverteilung zu transformieren. Vielmehr sollen Beobachtungen
+mit großen standardisierten Residuen einen geringeren Einfluss auf die Schätzung
+erhalten. Dies entspricht einer robusten Maximum-Likelihood- beziehungsweise
+M-Schätzung.
 
-Die Idee für die Realisierung dieser Aufgabe ist, die Verteilung der Residuen durch Umgewichten so zu verändern, das
-sie wieder die Gestalt einer Normalverteilung bekommt. Wir führen Gewichtsfaktoren $w = \delta$ ein,
-die eine Funktion des Abstands $\varepsilon$ einer Beobachtung vom Modell ist, so dass die Wahrscheinlichkeitsdichte
-der Abweichung $\tilde \varepsilon$ einer Normalverteilung folgt. Gesucht ist eine Gewichtsfunktion
-$\delta \! : \varepsilon \mapsto \delta(\varepsilon)$ für die gilt
+Für die robuste Iteration betrachten wir zunächst
 \begin{equation}
-\tilde \varepsilon \; = \; \delta(\varepsilon) \; \varepsilon \quad \Rightarrow
-\quad \tilde \varepsilon \sim {\cal N}(0,\sigma) .
-\end{equation}
-Mit Hilfe der Gewichtsfunktion werden aus den Residuen die Gewichtsfaktoren
-$w_j = \delta_j = \delta(\varepsilon_j)$ berechnet. Da man die Residuen erst nach
-Schätzung der Modellparameter gewinnt, erfordert dies wie bei der nichtlinearen Optimierung
-auch sonst, einen iterativen Prozess.
-
-Wir betrachten folgende Kostenfunktion
-\begin{equation}
-Q(\mathbf{p}) \; = \; \sum_{j=1}^J \, \delta_j \, \varepsilon_j(\mathbf{p})^2 .
+Q^{(\kappa)}(\mathbf{p}) \; = \;
+\sum_{j=1}^J \delta_j^{(\kappa)}
+\varepsilon_j(\mathbf{p})^2 ,
 \label{robustEstim}
 \end{equation}
+wobei die Gewichte $\delta_j^{(\kappa)}$ während der jeweiligen
+Ausgleichsrechnung festgehalten werden. Nach der Parameteraktualisierung werden
+die Residuen neu berechnet und die Gewichte aktualisiert.
 
-Zunächst werden die Parameter ungeachtet möglicher Ausreißer mittels \textsl{Least Square}-Methode
-ohne Gewichte
+Zunächst werden die Parameter ungeachtet möglicher Ausreißer mit der
+ungewichteten Least-Squares-Methode
 \begin{equation}
  \min_{\mathbf{p}} Q(\mathbf{p}) \qquad \mathrm{mit} \qquad
 Q(\mathbf{p}) \; = \; \sum_{j=1}^J \, \varepsilon_j(\mathbf{p})^2 .
@@ -1293,63 +1718,76 @@ deren Indizes wir von Null bis $K$ zählen:
 \end{equation}
 und die Mitte in der jeweiligen Klasse für den Wert der Klasse verwenden
 \begin{equation}
- \xi_k \; = \; k \, \Delta \xi  \, + \, \frac{1}{2} \Delta \xi  \; + \; \min \left\{X_{1,j}\right\}
+ \xi_k \; = \; \left(k-\frac{1}{2}\right)\Delta \xi
+ \; + \; \min \left\{X_{1,j}\right\}
 \qquad k = 1, \dots, K
 \label{kthbin}
 \end{equation}
-wobei die Anzahl der Klassen $K$ ist.
+wobei $k=1,\ldots,K$ die jeweilige Klasse bezeichnet.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=100mm]{03_vorlesung/media/learn_robust_2.pdf}
+\caption{\label{RobustIter} Iterative robuste Gewichtung der Beobachtungen}
+\end{center}
+\end{figure}
 
 Die Anzahl der Einzelbeobachtungen, für die gilt
 \begin{equation}
 \xi_{\mathrm{G}, k-1} \; \leq \; X_{1,j} \; <  \xi_{\mathrm{G}, k},
 \end{equation}
 nennen wir \textsl{Häufigkeit} $n_k$. Bei der letzten Klasse, also für
-$k = K$ wird auch bei der rechten Intervallgrenze ein $\leq$.
+$k = K$ wird auch bei der rechten Intervallgrenze ein $\leq$ verwendet.
 Damit ist die diskrete Funktion $n(\xi)$ die Häufigkeitsverteilung.
 
-Der Schätzwert für den Parameter ist nach der Maximum-Likelihood / Least-Square-Methode der
-Mittelwert, der hier den Wert $25.47$ annimmt. In Wirklichkeit gehören die Beobachtungswerte gar nicht zu
-nur einer Grundgesamtheit, sondern $1750$ gehören zu dem Parameter $\mu_1 \, = \, 23.00$ und $450$ zu $\mu_2 \, = \, 35.00$.
-Diese Wirklichkeit kennt aber niemand. Bei Betrachten des Histogramms sieht der Messtechniker jedoch, dass ein
-Nebenmaximum vorliegt, es keine reine Gaußverteilung ist. Die weiter entfernt liegenden Beobachtungen sollen unterdrückt werden
-durch entsprechende Wahl zugehöriger Gewichtsfaktoren $\delta_j$.
+Der Schätzwert für den Parameter ist bei einer normalverteilten Lageverteilung
+der Mittelwert; im dargestellten Beispiel nimmt er den Wert $25.47$ an. Die
+Beobachtungen stammen hier jedoch aus zwei überlagerten Gruppen: $1750$ Werte
+gehören zur Lage $\mu_1=23.00$ und $450$ Werte zur Lage $\mu_2=35.00$.
+Das Nebenmaximum im Histogramm weist auf diese Modellverletzung hin. Soll die
+dominante Gruppe geschätzt werden, kann der Einfluss der zweiten Gruppe durch
+eine robuste Gewichtung verringert werden.
 
-Eine mögliche Wahl für die Gewichtsfaktoren ist die \textsl{Tuckey biweight}-Funktion.
+Eine mögliche Wahl ist die \textsl{Tukey-Bisquare}- beziehungsweise
+\textsl{Tukey-Biweight}-Funktion. Für den standardisierten Residuenwert
+$u_j^{(\kappa)}$ lautet das Gewicht
 \begin{equation}
-\delta_j \; = \;
+\delta_j^{(\kappa)} \; = \;
 \left\{ \begin{array}{cl}
-\left( 1 \, - \, \left( \frac{X_{1,j} \, - \, y^{(\kappa)}}{c^{(\kappa)}} \right)^2 \right)^2 &
-	\mathrm{falls} \; \mid X_{1,j} \, - \, y^{(\kappa)} \mid \, \leq \, c^{(\kappa)} \\
+\left(1-\left(u_j^{(\kappa)}\right)^2\right)^2 &
+\mathrm{falls}\; |u_j^{(\kappa)}|\leq 1,\\
 0 & \mathrm{sonst}
 \end{array} \right.
 \end{equation}
-wobei $\kappa$ der Zähler für den Iterationsschritt ist und $c^{(\kappa)}$ ein passend zur Anwendung zu wählender Faktor ist, hier beispielsweise
+mit
 \begin{equation}
-c^{(\kappa)} \; = \; \mathrm{median} \mid X_{1,j} \, - \, y^{(\kappa)} \mid
+u_j^{(\kappa)}
+=\frac{X_{1,j}-y^{(\kappa)}}{c\,s^{(\kappa)}},
+\qquad
+s^{(\kappa)}
+=1.4826\,\mathrm{median}_j
+\left|X_{1,j}-\mathrm{median}_i(X_{1,i})\right|.
 \end{equation}
-Die Kostenfunktion, deren Gewichte von den iterativ bestimmten Residuen und damit von den
-iterativ geschätzten Parametern abhängt, stellt ein nichtlineares Optimierungsproblem
-$ \min_{\mathbf{p}} Q(\mathbf{p}) $ dar, mit
+Der Faktor $1.4826$ macht die Median-absolut-Abweichung für normalverteilte
+Residuen zu einem konsistenten Skalenwert. Ein häufig verwendeter Grenzwert ist
+$c=4.685$; er kann an die gewünschte Robustheit angepasst werden. Wichtig ist,
+dass die Gewichte in der anschließenden gewichteten Ausgleichsrechnung als
+fest vorgegeben gelten. Die Gewichtsaktualisierung führt zu einer iterativ 
+die Gewichte anpassender Methode der kleinsten Quadrate, dem
+\textsl{iteratively reweighted least-squares} (IRLS)-Verfahren:
 \begin{equation}
-Q(\mathbf{p}) \; = \; \sum_{j=1}^J \; \varepsilon_j^2 \;
-\left( 1 \, - \, \left( \frac{\varepsilon_j(\mathbf{p}) }{c(\mathbf{p})} \right)^2 \right)^2 \;
-H(\mid \varepsilon_j(\mathbf{p}) \mid - c(\mathbf{p})) \;
-H(c(\mathbf{p}) - \mid \varepsilon_j(\mathbf{p}) \mid ),
+\mathbf{p}_{\kappa+1}
+=\underset{\mathbf p}{\arg\min}\;
+\sum_{j=1}^J\delta_j^{(\kappa)}
+\varepsilon_j(\mathbf p)^2.
 \label{robustEstim2}
 \end{equation}
-wobei $H$ für \textsl{Heaviside}- oder Sprungfunktion steht.
 
-\begin{figure}
-\begin{center}
-\includegraphics[width=100mm]{03_vorlesung/media/learn_robust_2.pdf}
-\caption{\label{RobustIter} Umgewichten um die Verteilungform der Normalverteilung anzupassen}
-\end{center}
-\end{figure}
-
-Der Median von den Absolutbeträgen der Residuen $\varepsilon_j \, = \, X_{1,j} \, - \, y^{(\kappa)}$ wird dadurch gewonnen,
-dass man die Werte der Größe nach sortiert und dann den mittleren nimmt, also den, auf dem Platz in der Mitte der sortierten
-Anordnung liegt.
-Abb.~\ref{RobustIter} stellt die ursprüngliche Häufigkeitsverteilung aus Abb.~\ref{biasExampleKap3} als
-durchgezogene, schwarze Linie dar. Nach dem ersten Iterationsschritt der Umgewichtung, hat sich die Verteilung so verändert,
-wie es durch die blaue gestrichpunktete Linie gezeigt wird, zu der ein Mittelwert von $24.20$ gehört. Nach mehr als acht Iterationen
-wurde ein Mittelwert von $23.23$ erzielt und die mit rot gestrichelter Verteilungskurve eingezeichnet sind.
+Der Median der Absolutabweichungen wird durch Sortieren der Werte und Auswahl
+des mittleren Wertes bestimmt. Abb.~\ref{RobustIter} zeigt die ursprüngliche
+Häufigkeitsverteilung aus Abb.~\ref{biasExampleKap3} als durchgezogene schwarze
+Kurve sowie die Verteilungen nach der ersten und nach mehreren
+Gewichtsaktualisierungen. Im dargestellten Beispiel verschiebt sich der
+Lageschätzwert dabei zunächst auf $24.20$ und nach mehr als acht Iterationen
+auf $23.23$. Diese Zahlen sind beispielabhängig und dienen der Illustration
+des IRLS-Verfahrens.

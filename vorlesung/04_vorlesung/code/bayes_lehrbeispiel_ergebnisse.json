@@ -1,0 +1,33 @@
+{
+  "data_ohm": [
+    32.0,
+    38.0,
+    41.0,
+    45.0,
+    48.0,
+    53.0,
+    58.0
+  ],
+  "J": 7,
+  "sample_mean_ohm": 45.0,
+  "sample_sd_ohm": 8.906926143924924,
+  "prior_mu_mean_ohm": 44.0,
+  "prior_mu_sd_ohm": 5.0,
+  "prior_sigma_uniform_ohm": [
+    2.0,
+    20.0
+  ],
+  "posterior_mean_ohm": 44.62637653851928,
+  "posterior_sd_ohm": 3.058879349569265,
+  "credible_interval_95_ohm": [
+    38.48886928637094,
+    50.642084260068884
+  ],
+  "confidence_interval_95_ohm": [
+    36.7624672252082,
+    53.2375327747918
+  ],
+  "posterior_density_integral": 0.9999999999999627,
+  "credible_interval_probability": 0.9500000000000002,
+  "quadrature_nodes": 320
+}

@@ -293,14 +293,22 @@ indirekten Messgrößen zu schätzen sind:
 (X_1, \dots, X_N) \xrightarrow{\mathrm{inverses \; Problem}} (Y_1, \dots, Y_M)
 \label{inverseProblem}
 \end{equation}
-Beispiel:
-\begin{quote}
-Eine Gitterstruktur wird mit kohärentem Licht beleuchtet. Das transmittierte Licht fällt auf eine CCD-Kamera, die
-die Intensitäten in Abhängigkeit von der Position auf dem CCD-Chip aufnimmt. Es gibt dabei $N = 3$ direkte Größen:
-zwei Ortskoordinaten $(x, y)$ auf dem CCD und der dazugehörige Intensitätswert $I$. Die Anzahl der CCD-Pixel ist die
-Anzahl $J$ der Beobachtungen, $(x_1, y_1, I_1), \dots, (x_J, y_J, I_J)$.
 
-Die gesuchte Information ist die Gitterkonstante, sie ist die indirekte Größe.
+\begin{figure}
+\begin{center}
+  \includegraphics[width=0.65\textwidth, angle = 0]{01_vorlesung/media/fraunhoferdiffr_singleslit-DE.pdf}
+\end{center}
+\caption{\label{fig:beugungspaltVorl01}Veranschaulichung der Lösung eines inversen Problems anhand der Bestimmung einer Spaltbreite basierend auf dem Modell zur Beugung am Spalt in der Fraunhofernäherung.}
+\end{figure}
+
+Abbildung \ref{fig:beugungspaltVorl01} zeigt ein anschauliches Beispiel, das den Zusammenhang zwischen zwischen Modellierung und dem Lösen inverser Probleme vermitteln soll:
+\begin{quote}
+Ein Spalt wird mit kohärentem Licht beleuchtet. Das transmittierte Licht fällt auf eine CCD-Zeile, die
+die Intensitäten in Abhängigkeit von der Position auf dem CCD-Zeilendetektor aufnimmt. Es gibt dabei $N = 2$ direkte Größen:
+die Positionskoordinate $x$ auf dem Detektor und der dazugehörige Intensitätswert $I$. Die Anzahl der CCD-Pixel ist die
+Anzahl $J$ der Beobachtungen, $(x_1, I_1), \dots, (x_J, I_J)$.
+
+Die gesuchte Information ist die Spaltbreite, sie ist die indirekte Größe.
 
 Zum Modell gehören die physikalischen Gesetze der Fraunhofer-Beugung, zudem auch weitere Größen, wie die Wellenlänge
 der Beleuchtung, der Abstand zwischen CCD-Chip und dem zu untersuchenden Gitters, der groß genug sein muss, damit die
@@ -813,9 +821,11 @@ Zufallsgröße $X$ mit einem konstanten, festen reellen Faktor $b$ multipliziere
  & =\;  b^2 \, \underbrace{\int\limits_{-\infty}^{\infty} \,
  (X^\prime)^2 \, p(X^\prime) \, \operatorname{d} X^\prime}_{\operatorname {Var}(X)}
 \end{array}
+\label{eq:skalierungvarianzherl}
 \end{equation}
 \begin{equation}
 \operatorname {Var}(b X) \; := \; b^2 \, \operatorname {Var}(X)
+\label{eq:skalierungvarianz}
 \end{equation}
 \end{itemize}
 
