@@ -8,6 +8,8 @@
 %\usepackage{lmodern}
 \usepackage{longtable}
 \usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
 \usepackage{enumerate}
 \usepackage{graphicx}
 \usepackage[hidelinks]{hyperref}
@@ -93,6 +95,8 @@
 Physikalisch-Technische Bundesanstalt\\
 Modulverantwortlicher: Prof. Dr.-Ing. R. Tutsch\\
 iprom, TU Braunschweig}
+
+
 \begin{document}
 \frontmatter                            % only in book class (roman page #s)
 \maketitle                              % Print title page.
@@ -100,6 +104,7 @@ iprom, TU Braunschweig}
 \mainmatter                             % only in book class (arabic page #s)
 
 \chapter{Einführung: Messtechnik und Statistik}
+\label{Einfuehrung}
 \include{01_vorlesung/01_mda_vorlesung}
 %
 \chapter{Lineare Regression (Ausgleichsrechnung)}
@@ -147,7 +152,7 @@ iprom, TU Braunschweig}
 \include{08_vorlesung/08_Infrastrukturen_der_Metrologie}
 %
 \chapter{Messunsicherheitsfortpflanzung: Konzepte und Methoden}
-\label{unsicherheitsfortpfLin}
+\label{unsicherheitsfortKonzepteMethoden}
 \include{09_vorlesung/09_Konzepte_der_MUfortpfl}
 %
 \include{09_vorlesung/09_Numerik_fuer_MU}
@@ -184,7 +189,7 @@ iprom, TU Braunschweig}
     \bibitem[Cox02]{Cox02} M.G. Cox: The evaluation of key comparison data, Metrologia 39, 589-595 (2002)
 
     \bibitem[Cox06]{Cox06} M.G. Cox, B.R.L. Siebert: The use of
-    a Monte Carlo method for evaluating uncertainty and expanded uncertainty, Metrologie 43, S178-88, (2006)
+    a Monte Carlo method for evaluating uncertainty and expanded uncertainty, Metrologie 43, S178-88, (2006), doi: 10.1088/0026-1394/43/4/S03
 
     \bibitem[Els07]{Els07} C. Elster: Calculation of uncertainty in the presence of prior knowledge, Metrologia 44, 111-116, (2007)
 
