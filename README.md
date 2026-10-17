@@ -8,8 +8,8 @@ Der Modulverantwortliche ist Prof. Dr.-Ing Rainer Tutsch, Leiter des Instituts f
 
 ## [Vorlesungsskript](https://github.com/dhueser/MDA-Vorlesung-iprom-tu-bs/releases)
 - Das pdf-File des jeweils aktuellen Vorlesungsskriptes liegt innerhalb des zip bzw. des tar.gz-Archivs.
-- Das Skript wird laufend überarbeitet, zuletzt wurde es am 4. Dez 2023 ge&auml;ndert und liegt unter dem Datenamen `MDA_iprom_TUbraunschweig_v2023-12-04.pdf` hier im Hauptverzeichnis [MDA_iprom_TUbraunschweig_v2023-12-04.pdf](MDA_iprom_TUbraunschweig_v2023-12-04.pdf). Ab dem WS 2023/24 wurde das Skript neu gegliedert und die Nummerierung der Kapitel mit den Vorlesungen in Einklang gebracht.
-- Wer Vorschläge zur Verbesserung hat, ist herzlich eingeladen, die LaTeXquellen des gesamten Skripts zu clonen und Änderungen in einem separaten Branch in das github-Repository zu laden und einen pull Request zu setzen. [Tutorial](https://help.github.com/en/articles/setting-guidelines-for-repository-contributors); [Beispiel](https://github.com/tensorflow/tensorflow/blob/master/CONTRIBUTING.md)
+- Das Skript wird laufend überarbeitet, zuletzt wurde es am 17. Oktober 2026 ge&auml;ndert. Es wird im Laufe des WS 2026/27 weiter überarbeitet und danach erst ein neues Release angefertigt.
+- Wer Vorschläge zur Verbesserung hat, ist herzlich eingeladen, und ein issue mit den Vorschägen zu erzeugen.
 
 ## Inhalt
 Das Modul gibt einen umfangreichen Überblick über die Grundlagen der Messdatenauswertung und der rechnerischen Ermittlung der zugeordneten Unsicherheiten.
@@ -27,11 +27,3 @@ Das Modul gibt einen umfangreichen Überblick über die Grundlagen der Messdaten
 11. Monte-Carlo-Methoden für die Messunsicherheitsfortpflanzung
 12. Messunsicherheitsfortpflanzung mit Bayesstatistik                      
 
-# Interaktive Code-Beispiele
-
-Die interaktiven Code-Beispiele sind in folgender Tabelle zusammengefasst. Diese können mit einem Klick auf den Link geöffnet werden. Der Code wird auf einem Server ausgeführt und die Anzeige findet im Browser statt. Es ist also nicht notwendig zusätzliche Programme zu installieren. Es kann mitunter ein paar Minuten dauern bis die passende Programmierumgebung erstellt wird.
-
-| Kapitel | Titel         | Beschreibung                                                 | Link                                                         |
-| ------- | ------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| 2       | Kubischer Fit | Matlab/Octave-Code, um einen kubischen Fit zu bestimmen mit anschließender Visualisierung in einem Plot. | [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/dhueser/MDA-Vorlesung-iprom-tu-bs/master?urlpath=/lab/tree/vorlesung/02_vorlesung/code/cubic_fit.ipynb) |
-| 5       | Hypothesentests | Python-Code für Hypothesentests. | [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/dhueser/MDA-Vorlesung-iprom-tu-bs/master?urlpath=/lab/tree/vorlesung/05_vorlesung/code/hypothesentests.ipynb) |
