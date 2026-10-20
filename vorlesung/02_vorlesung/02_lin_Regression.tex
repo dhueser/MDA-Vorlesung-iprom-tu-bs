@@ -1267,7 +1267,7 @@ $t$-Verteilung mit $J-2$ Freiheitsgraden.
 
 Das \textbf{Bestimmtheitsmaß} beschreibt, welcher Anteil der
 beobachteten Streuung des Regressanden durch das angepasste
-Modell beschrieben wird. Bei der gewöhnlichen, ungewichteten
+Modell beschrieben wird und kann als Maß für die Güte einer Anpassung verwednet werden. Bei der gewöhnlichen, ungewichteten
 Regression einer Geraden mit frei geschätztem Achsenabschnitt
 stimmt es mit dem Quadrat des empirischen
 Korrelationskoeffizienten $\rho_{XY}$ überein.
@@ -1296,7 +1296,7 @@ Für den empirischen Korrelationskoeffizienten $\rho_{XY}$ gilt folgendes:
 
 F\"{u}r die Bestimmung des Bestimmtheitsma{\ss}es oder des
 empirischen Korrelationskoeffizienten f\"{u}hrt man eine Streuungs-
-bzw. Varianzanalyse durch. Man kann bei der linearen Regression 3
+bzw.\ Varianzanalyse durch. Man kann bei der linearen Regression drei
 Arten von Streuungen unterscheiden:
 
 \begin{itemize}
@@ -1308,20 +1308,26 @@ Arten von Streuungen unterscheiden:
 Die totale Streuung des Regressanden ist gegeben durch:
 \begin{equation}
 s_{\mathrm{T}}^2 = \frac{1}{J - 1}\sum\limits_{j = 1}^J {(Y_j - \bar {Y})^2}
-\quad \mathrm{mit~} Y_j : \mathrm{Messwert ~zu~}  X_j
+\quad \mathrm{mit~} Y_j : \mathrm{Messwert ~zu~} \; (X_{1,j},\dots,X_{N,j})
 \end{equation}
-Die empirische Varianz auf Grund des Modells beschreibt die
+Die empirische Varianz auf Grund eines Regressionsmodells, hier beispielsweise formuliert mit einem konstanten Offset
+$$
+ Y_j =\theta_0+\sum_{i=1}^{N}\theta_i X_{i,j} + \varepsilon_j,
+$$
+beschreibt die
 Streuung der Y-Werte auf der Regressionsgeraden in Bezug zum
 Mittelwert $\bar{Y}$, d.~h.
 \begin{equation}
-s_{\mathrm{M}}^2 = \frac{1}{J - 1}\sum\limits_{j = 1}^J {(\hat{\theta}_0 + \hat{\theta}_1 X_j - \bar
-	{Y})^2}
+s_{\mathrm{M}}^2 = \frac{1}{J - 1}\sum\limits_{j = 1}^J {\left((\hat{\theta}_0 + \sum_{i=1}^N \hat{\theta}_i X_{i,j}) - \bar{Y}\right)^2} = 
+\frac{1}{J - 1}\sum\limits_{j = 1}^J {(\widehat Y_j - \bar{Y})^2}
 \end{equation}
-Die Differenzen zwischen $Y_j$ und $\hat{\theta}_0 + \hat{\theta}_1 X_j $ bleiben im
+dabei ist $\widehat Y_j = \hat{\theta}_0 + \sum_{i=1}^N \hat{\theta}_i X_{i,j}$.
+Die Differenzen zwischen $Y_j$ und $\widehat Y_j$ bleiben im
 Modell unerkl\"{a}rt; sie werden als restliche Streuung bezeichnet:
 \begin{equation}
-s_{\mathrm{R}}^2 = \frac{1}{J - 1}\sum\limits_{j = 1}^J {(Y_j - (\hat{\theta}_0
-	+ \hat{\theta}_1 X_j))^2}
+s_{\mathrm{R}}^2 = \frac{1}{J - 1}\sum\limits_{j = 1}^J {\left(Y_j - (\hat{\theta}_0
+	+ \sum_{i=1}^N \hat{\theta}_i X_{i,j} )\right)^2}
+  = \frac{1}{J - 1}\sum\limits_{j = 1}^J {(Y_j - \widehat Y_j)^2}
 \end{equation}
 Die Normierung mit $J-1$ wird hier für alle drei
 Streuungsanteile einheitlich verwendet. Die Größe
@@ -1330,11 +1336,6 @@ $\hat\sigma_\varepsilon^2$ zu unterscheiden, bei dem
 die Residuenquadratsumme durch $J-2$ dividiert wird,
 weil zwei Modellparameter geschätzt wurden.
 
-Für das angepasste lineare Modell mit $N$ Regressoren gilt
-\begin{equation}
-  \widehat Y_j
-  =\widehat\theta_0+\sum_{i=1}^{N}\widehat\theta_iX_{i,j}.
-\end{equation}
 Die angepassten Residuen bezeichnen wir mit
 \begin{equation}
   \hat\varepsilon_j=Y_j-\widehat Y_j.
