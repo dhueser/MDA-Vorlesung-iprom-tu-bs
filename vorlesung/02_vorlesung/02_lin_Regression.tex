@@ -4,9 +4,9 @@
 
 Regression beschreibt den Zusammenhang zwischen vorgegebenen Eingangsgrößen und einer beobachteten Ausgangsgröße. In der Schreibweise dieses Kapitels heißen die Eingangsgrößen \textbf{Regressoren} und die Ausgangsgröße \textbf{Regressand}. Die Eingangsgrößen sind die unabhängigen Größen, die Ausgangsgröße ist die abhängige Größe.
 
-In einem \textsl{Regressionsmodell} geht es um den statistischen Zusammenhang zwischen den betrachteten Größen wird angenommen, bei der lineare Regression insbesondere um den linearen Zusammenhang, der über den Korrelationskoeffizientencharakterisiert wird.
+In einem \textsl{Regressionsmodell} geht es um den statistischen Zusammenhang zwischen den betrachteten Größen, bei der \emph{linearen} Regression insbesondere um den linearen Zusammenhang, der über den Korrelationskoeffizientencharakterisiert wird.
 
-Andere Methoden zur Beschreibung von Messmodellen und ihren Parametern sind historisch parallel dazu entwickelt worden, so die Optimierungsrechnung im Allgemeinen, die en Kriterium aufstellt, nach dem das Modell an Beobachtungswerte (Messdaten) angepasst wird. Solch ein Kriterium, das wir \textsl{Kostenfunktion} nennen, verwendet auch die Regressionsrechnung. Historisch haben die beiden Richtungen etwas unterschiedliche Wege genommen.
+Andere Methoden zur Beschreibung von Messmodellen und ihren Parametern sind historisch parallel dazu entwickelt worden, so die Optimierungsrechnung im Allgemeinen, die ein Kriterium aufstellt, nach dem das Modell an Beobachtungswerte (Messdaten) angepasst wird. Solch ein Kriterium, das wir \textsl{Kostenfunktion} nennen, verwendet auch die Regressionsrechnung. Historisch haben die beiden Richtungen etwas unterschiedliche Wege genommen.
 
 Für $J$ Beobachtungen schreiben wir allgemein
 \begin{equation}
@@ -62,7 +62,7 @@ Abb.~\ref{regressionNormalResi} veranschaulicht die Annahme normalverteilter Res
 
 \section{Lineare Regression als Methode der kleinsten Abweichungsquadrate}
 
-Die Modellparameter werden so bestimmt, dass die Summe der quadrierten \textbf{Residuen} möglichst klein wird. Mit dem Begriff \textbf{Residuum} wird die Abweichung eines Datenpunktes von dem Modell bezeichnet, das Formelsymbol dafür ist $\varepsilon_j$. Für ein Modell $f(X)$ lautet die \textbf{Kostenfunktion} bzw. \textbf{Zielfunktion}
+Die Modellparameter werden so bestimmt, dass die Summe der quadrierten \textbf{Residuen} möglichst klein wird. Mit dem Begriff \textbf{Residuum} wird die Abweichung eines Datenpunktes von dem Modell bezeichnet, das Formelsymbol dafür ist $\varepsilon_j$. Für ein Modell $f(X)$ lautet die \textbf{Kostenfunktion} (\textsl{cost function}) bzw. \textbf{Zielfunktion} (\textsl{objective function})
 \begin{equation}
 Q := \sum\limits_{j = 1}^J \varepsilon_j^2
 = \sum\limits_{j = 1}^J \left(Y_j - f(X_j)\right)^2 \; \longrightarrow \; \min .
@@ -95,13 +95,13 @@ Das Minimum erhält man, indem alle partiellen Ableitungen nach den Modellparame
 \quad i = 0,1,\ldots,m .
 \label{linRegGleichungssystem}
 \end{equation}
-So entstehen $m+1$ lineare Gleichungen für die $m+1$ unbekannten Parameter $\hat\theta_i$.
+So entstehen $m+1$ lineare Gleichungen für die $M = m+1$ unbekannten Parameter $\hat\theta_i$.
 
 Für ein quadratisches Polynom
 \begin{equation}
 Y_j = \theta_0 + \theta_1 X_j + \theta_2 X_j^2 + \varepsilon_j
 \end{equation}
-ergeben sich aus Gl.~(\ref{linRegGleichungssystem}) folgendes lineare Gleichungssystem
+ergibt sich aus Gl.~(\ref{linRegGleichungssystem}) folgendes lineare Gleichungssystem
 \begin{align}
 J\hat\theta_0 + \hat\theta_1 \sum\limits_{j=1}^J X_j + \hat\theta_2 \sum\limits_{j=1}^J X_j^2
 &= \sum\limits_{j=1}^J Y_j, \nonumber\\
@@ -125,66 +125,121 @@ Ein Schätzwert für die Varianz der Residuen ist
 \end{equation}
 
 \subsection{Regressionsgerade ohne Matrixschreibweise}
+
 Die Gerade ist der Spezialfall $m=1$:
 \begin{equation}
-Y = \theta_0 + \theta_1 X .
+  Y = \theta_0 + \theta_1 X.
 \end{equation}
-Hier ist $\theta_0$ der Achsenabschnitt und $\theta_1$ die Steigung. Für die Messwerte gilt
+Hier ist $\theta_0$ der Achsenabschnitt und $\theta_1$ die
+Steigung. Für die Messwerte gilt
 \begin{equation}
-Y_j = \theta_0 + \theta_1 X_j + \varepsilon_j .
+  Y_j = \theta_0 + \theta_1 X_j + \varepsilon_j.
 \end{equation}
 Die Kostenfunktion lautet
 \begin{equation}
-Q(\theta_0,\theta_1) = \sum\limits_{j = 1}^J
-\left(Y_j - (\theta_0 + \theta_1 X_j)\right)^2 \; \longrightarrow \; \min .
-\label{eq:linRegrMinimierung}
+  Q(\theta_0,\theta_1)
+  = \sum_{j=1}^{J}
+    \left(Y_j-(\theta_0+\theta_1 X_j)\right)^2
+  \longrightarrow \min.
+  \label{eq:linRegrMinimierung}
 \end{equation}
-Zum Auffinden des Minimums werden die partiellen Ableitungen nach $\theta_0$ und $\theta_1$ gleich Null gesetzt:
+
+Zum Auffinden des Minimums werden die partiellen Ableitungen
+nach $\theta_0$ und $\theta_1$ gleich null gesetzt:
 \begin{equation}
-\renewcommand*{\arraystretch}{1.5}
-\begin{array}{lcl}
-\left. {\frac{\partial Q}{\partial \theta_0 }}\right|_{\theta_0 = \hat\theta_0,\,\theta_1 = \hat\theta_1} &=& 0, \\
-\left. {\frac{\partial Q}{\partial \theta_1 }}\right|_{\theta_0 = \hat\theta_0,\,\theta_1 = \hat\theta_1} &=& 0 .
-\end{array}
-\label{GleichungssytemKostenfkt}
+  \begin{aligned}
+    \left.
+      \frac{\partial Q}{\partial\theta_0}
+    \right|_{\theta_0=\hat\theta_0,\,
+             \theta_1=\hat\theta_1}
+    &=0,\\
+    \left.
+      \frac{\partial Q}{\partial\theta_1}
+    \right|_{\theta_0=\hat\theta_0,\,
+             \theta_1=\hat\theta_1}
+    &=0.
+  \end{aligned}
+  \label{GleichungssytemKostenfkt}
 \end{equation}
-Aus den Ableitungen folgen die Normalgleichungen
+Aus den Ableitungen folgen die sogenannten
+\textsl{Normalgleichungen}:
 \begin{align}
-J\hat\theta_0 + \hat\theta_1 \sum\limits_{j=1}^{J} X_j
-&= \sum\limits_{j=1}^{J} Y_j, \\
-\hat\theta_0 \sum\limits_{j=1}^{J} X_j + \hat\theta_1 \sum\limits_{j=1}^{J} X_j^2
-&= \sum\limits_{j=1}^{J} X_jY_j .
+  J\hat\theta_0
+  +\hat\theta_1\sum_{j=1}^{J}X_j
+  &=\sum_{j=1}^{J}Y_j,\\
+  \hat\theta_0\sum_{j=1}^{J}X_j
+  +\hat\theta_1\sum_{j=1}^{J}X_j^2
+  &=\sum_{j=1}^{J}X_jY_j.
 \end{align}
+
+Die Bezeichnung lässt sich geometrisch erklären:
+\emph{Normal} bedeutet hier \emph{senkrecht} oder
+\emph{orthogonal} und hat nichts mit einer Normalverteilung
+zu tun. Dazu schreiben wir die beiden Gleichungen mithilfe
+der Residuen nach der Anpassung, also aus den geschätzten Parametern $\hat\theta_0, \hat\theta_1$
+\[
+  \hat\varepsilon_j
+  =Y_j-\hat\theta_0-\hat\theta_1X_j
+\]
+in der Form
+\begin{equation}
+  \sum_{j=1}^{J}\hat\varepsilon_j=0,
+  \qquad
+  \sum_{j=1}^{J}X_j\hat\varepsilon_j=0.
+\end{equation}
+Die geometrische Interpretation ist hier, dass die 
+Skalarprodukte zwischen dem $J$-dimensionalen \mbox{Vektor}, der die Residuen 
+zusammenfasst, und den beiden 
+$J$-dimenstionalen Vektoren $(1,\ldots,1)$ und $(X_1,\ldots,X_J)$ 
+jeweils Null werden, was heißt dass sie senkrecht aufeinander stehen.
+
+Daher stammt die Bezeichnung \textsl{Normalgleichungen}.
+
+Diese senkrechte Stellung betrifft Vektoren mit $J$
+Komponenten. Im gewöhnlichen $X$-$Y$-Diagramm werden
+weiterhin die Abweichungen in $Y$-Richtung minimiert,
+nicht die senkrechten Abstände zur Geraden.
+
 Mit den Mittelwerten
-$$
-\bar X = \frac{1}{J}\sum\limits_{j=1}^{J}X_j
-\quad \mathrm{und} \quad
-\bar Y = \frac{1}{J}\sum\limits_{j=1}^{J}Y_j
-$$
+\[
+  \bar X=\frac{1}{J}\sum_{j=1}^{J}X_j
+  \qquad\text{und}\qquad
+  \bar Y=\frac{1}{J}\sum_{j=1}^{J}Y_j
+\]
 ergibt die erste Normalgleichung
 \begin{equation}
-\hat\theta_0 = \bar Y - \hat\theta_1 \bar X .
+  \hat\theta_0=\bar Y-\hat\theta_1\bar X.
 \end{equation}
-Setzt man dies in die zweite Normalgleichung ein, erhält man für die Steigung
+Setzt man dies in die zweite Normalgleichung ein,
+erhält man für die Steigung
 \begin{equation}
-\hat\theta_1 =
-\frac{\sum\limits_{j=1}^{J}(X_j-\bar X)(Y_j-\bar Y)}
-{\sum\limits_{j=1}^{J}(X_j-\bar X)^2} .
+  \hat\theta_1
+  =
+  \frac{\sum_{j=1}^{J}(X_j-\bar X)(Y_j-\bar Y)}
+       {\sum_{j=1}^{J}(X_j-\bar X)^2}.
 \end{equation}
+Voraussetzung ist, dass mindestens zwei unterschiedliche
+$X_j$-Werte vorliegen, sodass der Nenner größer als null ist.
+
 Damit lauten die Schätzgleichungen der Regressionsgeraden
 \begin{equation}
-\hat{\theta}_0 = \bar {Y} - \hat{\theta}_1 \bar {X}
-\quad \mathrm{und} \quad
-\hat{\theta}_1 = \frac{s_{XY}}{s_X^2},
-\label{eq:Lineare_Regressionskonstanten}
+  \hat\theta_0=\bar Y-\hat\theta_1\bar X
+  \qquad\text{und}\qquad
+  \hat\theta_1=\frac{s_{XY}}{s_X^2},
+  \label{eq:Lineare_Regressionskonstanten}
 \end{equation}
 wobei
-$$
-s_X^2 = \frac{1}{J-1}\sum\limits_{j=1}^{J}(X_j-\bar X)^2
-\quad \mathrm{und} \quad
-s_{XY} = \frac{1}{J-1}\sum\limits_{j=1}^{J}(X_j-\bar X)(Y_j-\bar Y)
-$$
-die empirische Varianz von $X$ und die empirische Kovarianz von $X$ und $Y$ sind. Der Punkt $(\bar X,\bar Y)$ liegt immer auf der Regressionsgeraden.
+\[
+  s_X^2
+  =\frac{1}{J-1}\sum_{j=1}^{J}(X_j-\bar X)^2
+  \qquad\text{und}\qquad
+  s_{XY}
+  =\frac{1}{J-1}
+    \sum_{j=1}^{J}(X_j-\bar X)(Y_j-\bar Y)
+\]
+die empirische Varianz von $X$ und die empirische
+Kovarianz von $X$ und $Y$ sind. Der Punkt
+$(\bar X,\bar Y)$ liegt immer auf der Regressionsgeraden.
 
 Für die Residuenvarianz der Geraden folgt aus Gl.~(\ref{eq:s_quadrat_Regresssion}) mit $M=2$:
 \begin{equation}
@@ -393,11 +448,11 @@ d.h.
 
 Die numerische Lösung des Gleichungssystems liefert dann die Schätzwerte zu
 den Regressionsparametern $\boldsymbol{\theta}$. Ein mögliches Verfahren zum
-Lösen des linearen Gleichungssystems ist das Gauß-Jordan-Eliminationsverfahren, zu
-dem im Anhang dieses Skripts der Quellcode gemäß den \textsl{Numerical Recipes}
-\cite{Fla02} abgedruckt ist.
-Formal notieren wir
-die Schätzer (als solche kenntlich durch das Dach) wie folgt
+Lösen des linearen Gleichungssystems ist das Gauß-Jordan-Eliminationsverfahren, wie der Quellcode zu dem Verfahren aussehen kann wird beispielsweie in den \textsl{Numerical Recipes} \cite{Fla02} gezeigt.
+
+Derartige numerische Methoden werden in den üblichen Programmbibliotheken zur Verfügung gestellt. In Python ist das Lösen linearer Gleichungssystem in der \texttt{scipy} als \texttt{linalg.solve} verfügbar.
+
+Formal notieren wir die Schätzwerte (als solche kenntlich durch das Dach) wie folgt
 \begin{equation}
 \boldsymbol{\hat \theta} \; = \;
 \left( \mathbf{X}^\mathsf{T}  \, \mathbf{X} \right)^{-1} \mathbf{X}^\mathsf{T} \, \mathbf{Y}
@@ -573,20 +628,33 @@ oder einzeln aufgeschrieben, die Varianz des Achsenabschnitts
 \begin{equation}
 \hat \sigma^2_{\theta_0} \; = \;
 \frac{\hat \sigma^2_\varepsilon \, \sum\limits_{j=1}^J X_{1,j}^2}{J \,
-	\sum\limits_{j=1}^J X_{1,j}^2 \; - \; \left(\sum\limits_{j=1}^J X_{1,j}\right)^2}
-\label{eq:Varianz des Achsenabschnitts}
+	\sum\limits_{j=1}^J X_{1,j}^2 \; - \; \left(\sum\limits_{j=1}^J X_{1,j}\right)^2} = \sigma_\varepsilon^2
+    \left(\frac{1}{J}+\frac{\overline{X}^{\,2}}{S_{XX}}\right)
+\label{eq:VarianzAchsenabschnitt}
 \end{equation}
-die Kovarianz für Achsenabschnitt und Steigung
+mit 
+$$
+\overline{X}_1 = \frac{1}{J} \sum\limits_{j=1}^J X_{1,j}, \qquad
+S_{XX}
+= \sum_{j=1}^{J}(X_{1,j}-\overline{X}_1)^2
+= \sum_{j=1}^{J}X_{1,j}^2
+  - \frac{1}{J}\left(\sum_{j=1}^{J}X_{1,j}\right)^2.
+$$
+Die Kovarianz für Achsenabschnitt und Steigung ist
 \begin{equation}
 \hat \sigma_{\theta_0, \theta_1} \; = \;
 \frac{- \hat \sigma^2_\varepsilon \, \sum\limits_{j=1}^J X_{1,j}}{J \, \sum_{j=1}^J X_{1,j}^2 \;
-	- \; \left(\sum\limits_{j=1}^J X_{1,j}\right)^2}
+	- \; \left(\sum\limits_{j=1}^J X_{1,j}\right)^2} \; = \;
+- \, \frac{\sigma^2_\varepsilon \, \overline{X}_1}{S_{XX}}
+\label{eq:KovarianzAchsenabschnittSteigung}
 \end{equation}
 und die Varianz der Steigung
 \begin{equation}
 \hat \sigma^2_{\theta_1} \; = \;
 \frac{\hat \sigma^2_\varepsilon}{\sum\limits_{j=1}^J X_{1,j}^2 \; - \;
-	\frac{1}{J}\left(\sum\limits_{j=1}^J X_{1,j}\right)^2} .
+	\frac{1}{J}\left(\sum\limits_{j=1}^J X_{1,j}\right)^2} 
+	\; = \; \frac{\sigma^2_\varepsilon}{S_{XX}}.
+\label{eq:VarianzSteigung}
 \end{equation}
 Die Standardabweichungen zu jedem Regressionsparameter $\theta_l$ mit $l = 0,\dots,M-1$ sind
 die Wurzel aus den Varianzen, die auf der Hauptdiagonalen der Kovarianzmatrix
@@ -597,8 +665,8 @@ die Standardabweichung der Regressionsparameter \textsl{Standard Error} genannt.
 
 \subsection{Matrixansatz als allgemeiner Ansatz für lineare Regression}
 
-Die behandelten allgemeinen Formen von Problemstellungen zur Schätzung von Modellparametern
-werden wir in dieser Vorlesungsreihe nicht weiter vertiefen. Sie sollen lediglich einen Einblick und Überblick über die vielfältigen Möglichkeiten in diesem Bereich liefern.
+% Die behandelten allgemeinen Formen von Problemstellungen zur Schätzung von Modellparametern
+% werden wir in dieser Vorlesungsreihe nicht weiter vertiefen. Sie sollen lediglich einen Einblick und Überblick über die vielfältigen Möglichkeiten in diesem Bereich liefern.
 
 Um die lineare Regression universeller einsetzen zu können, ob nun Polynome oder
 Ebenen oder Paraboloide zu fitten sind, ist es erforderlich den allgemeinen Ansatz zu verstehen
@@ -801,7 +869,7 @@ diese Unsicherheit für einen vorgegebenen Regressorwert berechnen lässt.
 
 Wir betrachten das lineare Beobachtungsmodell
 \begin{equation}
-  Y_j = \theta_0+\theta_1 x_j+E_j,
+  Y_j = \theta_0+\theta_1 x_j+\varepsilon_j,
   \qquad j=1,\ldots,J.
   \label{eq:band_beobachtungsmodell}
 \end{equation}
@@ -809,9 +877,9 @@ Die Regressorwerte $x_j$ werden als fest und genau bekannt behandelt.
 Die Modellparameter $\theta_0$ und $\theta_1$ sind fest, aber unbekannt.
 Für die zufälligen Abweichungen nehmen wir zunächst an, dass
 \begin{equation}
-  \operatorname{E}(E_j)=0,\qquad
-  \operatorname{Var}(E_j)=\sigma_E^2,\qquad
-  \operatorname{Cov}(E_j,E_k)=0\quad(j\ne k).
+  \operatorname{E}(\varepsilon_j)=0,\qquad
+  \operatorname{Var}(\varepsilon_j)=\sigma_\varepsilon^2,\qquad
+  \operatorname{Cov}(\varepsilon_j,\varepsilon_k)=0\quad(j\ne k).
   \label{eq:band_momentannahmen}
 \end{equation}
 Diese Annahmen genügen für die nachfolgende Berechnung der Varianzen
@@ -820,11 +888,16 @@ mithilfe der $t$-Verteilung wird zusätzlich ein normalverteiltes
 Beobachtungsmodell vorausgesetzt:
 \begin{equation}
   E_j\overset{\mathrm{u.i.v.}}{\sim}
-  \mathcal{N}(0,\sigma_E^2).
+  \mathcal{N}(0,\sigma_\varepsilon^2).
   \label{eq:band_normalmodell}
 \end{equation}
-Ferner benötigen wir $J>2$ und mindestens zwei unterschiedliche
-Regressorwerte.
+Um die Gerade eindeutig zu bestimmen, müssen die Beobachtungen
+bei mindestens zwei unterschiedlichen Werten der unabhängigen
+Größe $x$ vorliegen. Wiederholte Beobachtungen beim selben
+$x$-Wert sind dabei zulässig. Um zusätzlich die unbekannte
+Varianz $\sigma_\varepsilon^2$ aus den Residuen zu schätzen, benötigen
+wir mehr als zwei Wertepaare $(x_j,y_j)$, also $J>2$.
+
 
 Der Erwartungswert des Regressanden bei einem vorgegebenen Wert $x$
 ist
@@ -845,7 +918,7 @@ möglicher Beobachtungen bei festem $x$.
 Für die Unterscheidung zwischen Zufallsgrößen und berechneten
 Zahlenwerten bezeichnen wir die Parameterschätzer im Folgenden mit
 $\widehat{\Theta}_0$ und $\widehat{\Theta}_1$. Ihre aus einer konkreten
-Messreihe berechneten Werte sind
+Messreihe berechneten Schätzwerte sind
 $\widehat{\theta}_0$ und $\widehat{\theta}_1$. Entsprechend ist
 \begin{equation}
   \widehat{Y}(x)
@@ -888,30 +961,30 @@ Die Kovarianz muss berücksichtigt werden, weil Achsenabschnitt und
 Steigung aus denselben Beobachtungswerten geschätzt werden und ihre
 Schätzer im Allgemeinen korreliert sind.
 
-Mit den Abkürzungen
+Setzen wir diese Schätzer entsprechend in die Gleichungen für die Kovarianzen (\ref{VarianzAchsenabschnitt}), (\ref{KovarianzAchsenabschnittSteigung}) und (\ref{VarianzSteigung}) ein, also anstelle der Modellparameter $\theta$ deren Schätzer $\widehat \Theta$ und für $X$ die Werte $x$ mit 
 \begin{equation}
   \overline{x}=\frac{1}{J}\sum_{j=1}^{J}x_j,
   \qquad
   S_{xx}=\sum_{j=1}^{J}(x_j-\overline{x})^2
 \end{equation}
-lauten die Varianzen und die Kovarianz der
+so lauten die Varianzen und die Kovarianz der
 Kleinste-Quadrate-Schätzer
 \begin{align}
   \operatorname{Var}(\widehat{\Theta}_0)
-  &=\sigma_E^2
+  &=\sigma_\varepsilon^2
     \left(\frac{1}{J}+\frac{\overline{x}^{\,2}}{S_{xx}}\right),
   \label{eq:band_var_achsenabschnitt}\\
   \operatorname{Var}(\widehat{\Theta}_1)
-  &=\frac{\sigma_E^2}{S_{xx}},
+  &=\frac{\sigma_\varepsilon^2}{S_{xx}},
   \label{eq:band_var_steigung}\\
   \operatorname{Cov}(\widehat{\Theta}_0,\widehat{\Theta}_1)
-  &=-\frac{\sigma_E^2\overline{x}}{S_{xx}}.
+  &=-\frac{\sigma_\varepsilon^2\overline{x}}{S_{xx}}.
   \label{eq:band_cov_parameter}
 \end{align}
 Die erste Beziehung kann auch als
 \begin{equation}
   \operatorname{Var}(\widehat{\Theta}_0)
-  =\sigma_E^2\,
+  =\sigma_\varepsilon^2\,
     \frac{\sum_{j=1}^{J}x_j^2}{J S_{xx}}
 \end{equation}
 geschrieben werden. Beide Formen sind wegen
@@ -926,7 +999,7 @@ und Zusammenfassen ergibt
 \begin{align}
   \operatorname{Var}\bigl(\widehat{Y}(x)\bigr)
   &=
-  \sigma_E^2\left(
+  \sigma_\varepsilon^2\left(
     \frac{1}{J}
     +\frac{\overline{x}^{\,2}}{S_{xx}}
     +\frac{x^2}{S_{xx}}
@@ -934,7 +1007,7 @@ und Zusammenfassen ergibt
   \right)
   \notag\\
   &=
-  \sigma_E^2\left(
+  \sigma_\varepsilon^2\left(
     \frac{1}{J}
     +\frac{(x-\overline{x})^2}{S_{xx}}
   \right).
@@ -951,7 +1024,7 @@ angepassten Residuen
 \end{equation}
 geschätzt:
 \begin{equation}
-  s_E^2=\widehat{\sigma}_E^2
+  s_\varepsilon^2=\widehat{\sigma}_\varepsilon^2
   =\frac{1}{J-2}
     \sum_{j=1}^{J}\widehat{\varepsilon}_j^{\,2}.
   \label{eq:band_residualvarianz}
@@ -959,8 +1032,8 @@ geschätzt:
 Der Nenner $J-2$ berücksichtigt, dass aus den $J$ Beobachtungen zwei
 Modellparameter geschätzt wurden.
 
-Ersetzt man $\sigma_E^2$ in
-Gleichung~\eqref{eq:band_varianz_gerade} durch $s_E^2$, erhält man
+Ersetzt man $\sigma_\varepsilon^2$ in
+Gleichung~\eqref{eq:band_varianz_gerade} durch $s_\varepsilon^2$, erhält man
 eine \emph{Schätzung} der Varianz von $\widehat{Y}(x)$.
 Die Quadratwurzel daraus ist der geschätzte Standardfehler des
 geschätzten mittleren Verlaufs. Wir bezeichnen ihn hier als
@@ -968,7 +1041,7 @@ Standardunsicherheit von $\widehat{y}(x)$:
 \begin{equation}
   u\bigl(\widehat{y}(x)\bigr)
   =
-  s_E\sqrt{
+  s_\varepsilon\sqrt{
     \frac{1}{J}+\frac{(x-\overline{x})^2}{S_{xx}}
   }.
   \label{eq:band_standardunsicherheit}
@@ -986,7 +1059,7 @@ Gleichung~\eqref{eq:band_geschaetzte_gerade} gegeben.
 Das Band ist bei $x=\overline{x}$ am schmalsten. Dort gilt
 \begin{equation}
   u\bigl(\widehat{y}(\overline{x})\bigr)
-  =\frac{s_E}{\sqrt{J}}.
+  =\frac{s_\varepsilon}{\sqrt{J}}.
 \end{equation}
 Mit wachsendem Abstand von $\overline{x}$ nimmt die Unsicherheit zu.
 Eine größere Streuung der vorgegebenen Regressorwerte, also ein
@@ -995,19 +1068,23 @@ Beitrag der Steigungsunsicherheit.
 
 \subsection{Punktweise Konfidenzintervalle}
 
+Hier greifen wir dem Stoff, der in den Kapiteln \ref{wahrscheinlichHyp} und \ref{unsicherheitsfortKonzepteMethoden} genauer erläutert wird, vor. Wir brauchen hier einen Faktor, der die Breite des Unsicherheitsbandes für eine vorgebene Wahrscheinlichkeit definiert, also einen Faktor, mit dem die Unsicherheit der Geraden multipliziert wird. In Kapitel \ref{wahrscheinlichHyp} wird eine Verteilung eingeführt, die Student-$t$-Verteilung genannt wird, und über die dieser Faktor, den wir hier schonmal \textsl{Quantil} nennen, spezifiziert wird. Die Verteilung und der Faktor sind abhängig von der Anzahl der Datenpaare $J$. In Kapitel \ref{wahrscheinlichHyp} wird genauer erläutert, dass ein Quantil die Integrations\-grenze einer Wahr\-schein\-lich\-keits\-dichte\-ver\-teilung ist.
+
 Unter dem normalverteilten Beobachtungsmodell aus
 Gleichung~\eqref{eq:band_normalmodell} folgt für jedes fest gewählte
 $x$ die Größe
 \begin{equation}
   T(x)=
   \frac{\widehat{Y}(x)-\mu(x)}
-       {\widehat{\sigma}_E
+       {\widehat{\sigma}_\varepsilon
         \sqrt{\frac{1}{J}+\frac{(x-\overline{x})^2}{S_{xx}}}}
   \sim t_{J-2}.
   \label{eq:band_t_statistik}
 \end{equation}
-Hier bezeichnet $\widehat{\sigma}_E$ den aus den zufälligen
-Beobachtungen berechneten Schätzer, dessen beobachteter Wert $s_E$
+Dabei bedeutet die Schreibweise $T \sim t_{J-2}$, dass die normierte Zufallsgröße $T$ Student-$t$-verteilt ist.
+
+Hier bezeichnet $\widehat{\sigma}_\varepsilon$ den aus den zufälligen
+Beobachtungen berechneten Schätzer, dessen beobachteter Wert $s_\varepsilon$
 ist. Die $t$-Verteilung und ihre Quantile werden in der Vorlesung
 über Konfidenzintervalle und Hypothesentests näher behandelt.
 
@@ -1031,7 +1108,7 @@ $t_{9,\,0{,}975}\approx2{,}262$. Die Intervallgrenzen lauten dann
 \begin{equation}
   \widehat{\theta}_0+\widehat{\theta}_1 x
   \ \pm\
-  2{,}262\,s_E
+  2{,}262\,s_\varepsilon
   \sqrt{\frac{1}{11}+\frac{(x-\overline{x})^2}{S_{xx}}}.
   \label{eq:band_konfidenzintervall_beispiel}
 \end{equation}
@@ -1075,137 +1152,144 @@ geschätzter Varianz nicht allgemein ein punktweises Vertrauensniveau
 von etwa $68\,\%$; seine genaue Überdeckung ergibt sich aus der
 $t$-Verteilung mit $J-2$ Freiheitsgraden.
 
-\subsection{Abgrenzung zur Vorhersage einer neuen Beobachtung}
+% \subsection{Abgrenzung zur Vorhersage einer neuen Beobachtung}
 
-Bisher haben wir untersucht, wie genau sich der Erwartungswert
-\[
-  \mu(x)=\theta_0+\theta_1 x
-\]
-aus den vorliegenden Messdaten bestimmen lässt. Das zugehörige
-Konfidenzintervall beschreibt die Unsicherheit, mit der die angepasste
-Gerade diesen Erwartungswert an einer fest gewählten Stelle $x$
-schätzt.
+% Bisher haben wir untersucht, wie genau sich der Erwartungswert
+% \[
+%   \mu(x)=\theta_0+\theta_1 x
+% \]
+% aus den vorliegenden Messdaten bestimmen lässt. Das zugehörige
+% Konfidenzintervall beschreibt die Unsicherheit, mit der die angepasste
+% Gerade diesen Erwartungswert an einer fest gewählten Stelle $x$
+% schätzt.
 
-Eine andere Frage lautet: In welchem Bereich ist eine neue einzelne
-Beobachtung bei diesem $x$ zu erwarten? Diese Beobachtung wird durch
-\begin{equation}
-  Y_{\mathrm{neu}}(x)=\mu(x)+E_{\mathrm{neu}}
-\end{equation}
-beschrieben. Die neue zufällige Abweichung $E_{\mathrm{neu}}$ hat
-wie die Abweichungen der bisherigen Beobachtungen den Erwartungswert
-null und die Varianz $\sigma_E^2$. Sie wird als unabhängig von den
-bisherigen Beobachtungen angenommen.
+% Eine andere Frage lautet: In welchem Bereich ist eine neue einzelne
+% Beobachtung bei diesem $x$ zu erwarten? Diese Beobachtung wird durch
+% \begin{equation}
+%   Y_{\mathrm{neu}}(x)=\mu(x)+\varepsilon_{\mathrm{neu}}
+% \end{equation}
+% beschrieben. Die neue zufällige Abweichung $\varepsilon_{\mathrm{neu}}$ hat
+% wie die Abweichungen der bisherigen Beobachtungen den Erwartungswert
+% null und die Varianz $\sigma_\varepsilon^2$. Sie wird als unabhängig von den
+% bisherigen Beobachtungen angenommen.
 
-Bei der Vorhersage einer neuen Beobachtung müssen somit zwei
-Beiträge berücksichtigt werden:
-\begin{itemize}
-  \item Die angepasste Gerade schätzt den unbekannten Erwartungswert
-        $\mu(x)$ mit einer Unsicherheit.
-  \item Die neue Beobachtung streut zusätzlich um diesen
-        Erwartungswert.
-\end{itemize}
+% Bei der Vorhersage einer neuen Beobachtung müssen somit zwei
+% Beiträge berücksichtigt werden:
+% \begin{itemize}
+%   \item Die angepasste Gerade schätzt den unbekannten Erwartungswert
+%         $\mu(x)$ mit einer Unsicherheit.
+%   \item Die neue Beobachtung streut zusätzlich um diesen
+%         Erwartungswert.
+% \end{itemize}
 
-Um beide Beiträge zusammenzuführen, betrachten wir die Differenz
-zwischen der neuen Beobachtung und ihrer Vorhersage durch die
-angepasste Gerade:
-\begin{equation}
-  Y_{\mathrm{neu}}(x)-\widehat{Y}(x)
-  =
-  E_{\mathrm{neu}}
-  -\bigl(\widehat{Y}(x)-\mu(x)\bigr).
-  \label{eq:band_vorhersageabweichung}
-\end{equation}
-Dabei bezeichnet $\widehat{Y}(x)$ den aus den zufälligen
-Beobachtungen berechneten Schätzer; sein Wert für die vorliegende
-Messreihe ist $\widehat{y}(x)$.
+% Um beide Beiträge zusammenzuführen, betrachten wir die Differenz
+% zwischen der neuen Beobachtung und ihrer Vorhersage durch die
+% angepasste Gerade:
+% \begin{equation}
+%   Y_{\mathrm{neu}}(x)-\widehat{Y}(x)
+%   =
+%   \varepsilon_{\mathrm{neu}}
+%   -\bigl(\widehat{Y}(x)-\mu(x)\bigr).
+%   \label{eq:band_vorhersageabweichung}
+% \end{equation}
+% Dabei bezeichnet $\widehat{Y}(x)$ den aus den zufälligen
+% Beobachtungen berechneten Schätzer; sein Wert für die vorliegende
+% Messreihe ist $\widehat{y}(x)$.
 
-Weil $E_{\mathrm{neu}}$ von den bisherigen Beobachtungen unabhängig
-ist, ist diese neue Abweichung auch unabhängig von der daraus
-berechneten Größe $\widehat{Y}(x)$. Deshalb addieren sich die
-Varianzen der beiden Beiträge. Das Minuszeichen in
-Gleichung~\eqref{eq:band_vorhersageabweichung} ändert daran nichts,
-weil der zugehörige Faktor bei der Varianzberechnung quadriert wird:
-\begin{align}
-  \operatorname{Var}\bigl(
-    Y_{\mathrm{neu}}(x)-\widehat{Y}(x)
-  \bigr)
-  &=
-  \operatorname{Var}(E_{\mathrm{neu}})
-  +\operatorname{Var}\bigl(\widehat{Y}(x)\bigr)
-  \notag\\
-  &=
-  \sigma_E^2
-  +\sigma_E^2
-    \left(
-      \frac{1}{J}
-      +\frac{(x-\overline{x})^2}{S_{xx}}
-    \right)
-  \notag\\
-  &=
-  \sigma_E^2
-    \left(
-      1+\frac{1}{J}
-      +\frac{(x-\overline{x})^2}{S_{xx}}
-    \right).
-  \label{eq:band_varianz_vorhersage}
-\end{align}
-Die zusätzliche $1$ entsteht also durch das Ausklammern von
-$\sigma_E^2$. Sie steht für die Streuung der neuen einzelnen
-Beobachtung. Die beiden anderen Terme beschreiben weiterhin
-die Unsicherheit der geschätzten Erwartungswertgeraden.
+% Weil $\varepsilon_{\mathrm{neu}}$ von den bisherigen Beobachtungen unabhängig
+% ist, ist diese neue Abweichung auch unabhängig von der daraus
+% berechneten Größe $\widehat{Y}(x)$. Deshalb addieren sich die
+% Varianzen der beiden Beiträge. Das Minuszeichen in
+% Gleichung~\eqref{eq:band_vorhersageabweichung} ändert daran nichts,
+% weil der zugehörige Faktor bei der Varianzberechnung quadriert wird:
+% \begin{align}
+%   \operatorname{Var}\bigl(
+%     Y_{\mathrm{neu}}(x)-\widehat{Y}(x)
+%   \bigr)
+%   &=
+%   \operatorname{Var}(\varepsilon_{\mathrm{neu}})
+%   +\operatorname{Var}\bigl(\widehat{Y}(x)\bigr)
+%   \notag\\
+%   &=
+%   \sigma_\varepsilon^2
+%   +\sigma_\varepsilon^2
+%     \left(
+%       \frac{1}{J}
+%       +\frac{(x-\overline{x})^2}{S_{xx}}
+%     \right)
+%   \notag\\
+%   &=
+%   \sigma_\varepsilon^2
+%     \left(
+%       1+\frac{1}{J}
+%       +\frac{(x-\overline{x})^2}{S_{xx}}
+%     \right).
+%   \label{eq:band_varianz_vorhersage}
+% \end{align}
+% Die zusätzliche $1$ entsteht also durch das Ausklammern von
+% $\sigma_\varepsilon^2$. Sie steht für die Streuung der neuen einzelnen
+% Beobachtung. Die beiden anderen Terme beschreiben weiterhin
+% die Unsicherheit der geschätzten Erwartungswertgeraden.
 
-Die unbekannte Standardabweichung $\sigma_E$ wird durch den aus
-den angepassten Residuen berechneten Wert $s_E$ geschätzt.
-Unter dem vorausgesetzten normalverteilten Beobachtungsmodell
-ergibt sich das zweiseitige Vorhersageintervall zum
-Vorhersageniveau $1-\alpha$:
-\begin{equation}
-  \widehat{y}(x)
-  \ \pm\
-  t_{J-2,\,1-\alpha/2}\,s_E
-  \sqrt{
-    1+\frac{1}{J}+\frac{(x-\overline{x})^2}{S_{xx}}
-  }.
-  \label{eq:band_vorhersageintervall}
-\end{equation}
-Bei wiederholter Durchführung der gesamten Messreihe mit jeweils
-einer unabhängigen neuen Beobachtung enthalten die so berechneten
-Intervalle diese neue Beobachtung mit der Wahrscheinlichkeit
-$1-\alpha$.
+% Die unbekannte Standardabweichung $\sigma_E$ wird durch den aus
+% den angepassten Residuen berechneten Wert $s_E$ geschätzt.
+% Unter dem vorausgesetzten normalverteilten Beobachtungsmodell
+% ergibt sich das zweiseitige Vorhersageintervall zum
+% Vorhersageniveau $1-\alpha$:
+% \begin{equation}
+%   \widehat{y}(x)
+%   \ \pm\
+%   t_{J-2,\,1-\alpha/2}\,s_E
+%   \sqrt{
+%     1+\frac{1}{J}+\frac{(x-\overline{x})^2}{S_{xx}}
+%   }.
+%   \label{eq:band_vorhersageintervall}
+% \end{equation}
+% Bei wiederholter Durchführung der gesamten Messreihe mit jeweils
+% einer unabhängigen neuen Beobachtung enthalten die so berechneten
+% Intervalle diese neue Beobachtung mit der Wahrscheinlichkeit
+% $1-\alpha$.
 
-Das Vorhersageintervall ist breiter als das Konfidenzintervall
-für den Erwartungswert. Selbst wenn der Erwartungswert praktisch
-genau bekannt wäre, würde eine neue einzelne Beobachtung weiterhin
-mit der Standardabweichung $\sigma_E$ um ihn streuen.
+% Das Vorhersageintervall ist breiter als das Konfidenzintervall
+% für den Erwartungswert. Selbst wenn der Erwartungswert praktisch
+% genau bekannt wäre, würde eine neue einzelne Beobachtung weiterhin
+% mit der Standardabweichung $\sigma_E$ um ihn streuen.
 
-Alle angegebenen Unsicherheiten und Intervalle gelten unter dem
-vorausgesetzten Beobachtungsmodell. Eine Abweichung des tatsächlichen
-mittleren Zusammenhangs von der Geraden wird durch diese Formeln
-nicht zusätzlich erfasst. Dies ist insbesondere bei einer
-Extrapolation über den untersuchten Regressorbereich hinaus zu
-beachten.
+% Alle angegebenen Unsicherheiten und Intervalle gelten unter dem
+% vorausgesetzten Beobachtungsmodell. Eine Abweichung des tatsächlichen
+% mittleren Zusammenhangs von der Geraden wird durch diese Formeln
+% nicht zusätzlich erfasst. Dies ist insbesondere bei einer
+% Extrapolation über den untersuchten Regressorbereich hinaus zu
+% beachten.
 
 
 \section{Das Bestimmtheitsmaß und der empirische Korrelationskoeffizient}
-Die G\"{u}te des gew\"{a}hlten linearen Ansatzes kann mit dem
-\textbf{Bestimmtheitsmaß} $\rho_{XY}^2 $ bzw. dem \textbf{empirischen
-	Korrelationskoeffizienten} $\rho_{XY}$ beurteilt werden, aber nur dann
-wenn ein solcher Zusammenhang auch existiert. Der empirische
-Korrelationskoeffizient gibt den Grad der linearen
-Abh\"{a}ngigkeit zwischen den Messwerten $(X_1 ,\ldots ,X_J )$ und
-$(Y_1 ,\ldots ,Y_J)$ an.
+
+Das \textbf{Bestimmtheitsmaß} beschreibt, welcher Anteil der
+beobachteten Streuung des Regressanden durch das angepasste
+Modell beschrieben wird. Bei der gewöhnlichen, ungewichteten
+Regression einer Geraden mit frei geschätztem Achsenabschnitt
+stimmt es mit dem Quadrat des empirischen
+Korrelationskoeffizienten $\rho_{XY}$ überein.
+
+Der empirische Korrelationskoeffizient beschreibt Stärke und
+Richtung des linearen Zusammenhangs zwischen den beobachteten
+Wertepaaren $(X_j,Y_j)$. Beide Kennzahlen liefern jedoch allein
+keine vollständige Beurteilung der Eignung des gewählten Modells.
 
 Für den empirischen Korrelationskoeffizienten $\rho_{XY}$ gilt folgendes:
 
 \begin{center}
 	\begin{tabular}
 		{|p{100pt}|p{209pt}|} \hline
-		$\rho_{XY} = \pm 1$&
-		100{\%} lineare Abh\"{a}ngigkeit  \\
+		$\rho_{XY} = + 1$&
+		Alle Wertepaare liegen exakt auf einer Geraden mit positiver Steigung. \\
+		\hline $\rho_{XY} = - 1$&
+		Alle Wertepaare liegen exakt auf einer Geraden mit negativer Steigung. \\
 		\hline $\rho_{XY} = 0$&
-		keine lineare Abh\"{a}ngigkeit \\
+		Die empirische Kovarianz ist null; es besteht kein empirischer linearer Zusammenhang. \\
 		\hline $\rho_{XY} > \mbox{bzw.} < 0$&
-		gleich-/gegenl\"{a}ufige lineare Abh\"{a}ngigkeit \\
+		Positiver beziehungsweise negativer linearer Zusammenhang. \\
 		\hline
 	\end{tabular}
 \end{center}
@@ -1214,13 +1298,14 @@ F\"{u}r die Bestimmung des Bestimmtheitsma{\ss}es oder des
 empirischen Korrelationskoeffizienten f\"{u}hrt man eine Streuungs-
 bzw. Varianzanalyse durch. Man kann bei der linearen Regression 3
 Arten von Streuungen unterscheiden:
+
 \begin{itemize}
 	\item[] $s_{\mathrm{T}}^2:$~die \textbf{totale empirische Varianz}
 	\item[] $s_{\mathrm{M}}^2:$~die \textbf{empirische Varianz auf Grund des Modells}
 	\item[] $s_{\mathrm{R}}^2:$~die \textbf{restliche empirische Varianz}
 \end{itemize}
-Die totale Streuung des Regressanden ist gegeben
-durch:
+
+Die totale Streuung des Regressanden ist gegeben durch:
 \begin{equation}
 s_{\mathrm{T}}^2 = \frac{1}{J - 1}\sum\limits_{j = 1}^J {(Y_j - \bar {Y})^2}
 \quad \mathrm{mit~} Y_j : \mathrm{Messwert ~zu~}  X_j
@@ -1238,84 +1323,173 @@ Modell unerkl\"{a}rt; sie werden als restliche Streuung bezeichnet:
 s_{\mathrm{R}}^2 = \frac{1}{J - 1}\sum\limits_{j = 1}^J {(Y_j - (\hat{\theta}_0
 	+ \hat{\theta}_1 X_j))^2}
 \end{equation}
-Man kann nun folgendes Bemerkenswerte zeigen:
+Die Normierung mit $J-1$ wird hier für alle drei
+Streuungsanteile einheitlich verwendet. Die Größe
+$s_{\mathrm R}^2$ ist daher vom Schätzwert
+$\hat\sigma_\varepsilon^2$ zu unterscheiden, bei dem
+die Residuenquadratsumme durch $J-2$ dividiert wird,
+weil zwei Modellparameter geschätzt wurden.
+
+Für das angepasste lineare Modell mit $N$ Regressoren gilt
 \begin{equation}
-s_{\mathrm{T}}^2 = s_{\mathrm{M}}^2 + s_{\mathrm{R}}^2
+  \widehat Y_j
+  =\widehat\theta_0+\sum_{i=1}^{N}\widehat\theta_iX_{i,j}.
+\end{equation}
+Die angepassten Residuen bezeichnen wir mit
+\begin{equation}
+  \hat\varepsilon_j=Y_j-\widehat Y_j.
+\end{equation}
+
+Aus dem Nullsetzen der partiellen Ableitungen der
+Kostenfunktion nach dem konstanten Term $\theta_0$
+und den übrigen Parametern $\theta_i$ folgen
+die Normalgleichungen in der Form
+\begin{equation}
+  \sum_{j=1}^{J}\hat\varepsilon_j=0,
+  \qquad
+  \sum_{j=1}^{J}X_{i,j}\hat\varepsilon_j=0
+  \quad\text{für }i=1,\ldots,N.
+  \label{eq:normalgleichungen_residuen}
+\end{equation}
+
+Damit lässt sich der gemischte Term umformen zu
+\begin{equation}
+  \sum_{j=1}^{J}
+    (Y_j-\widehat Y_j)(\widehat Y_j-\bar Y)
+  =
+    \sum_{j=1}^{J}\hat\varepsilon_j
+    \left(
+      \hat\theta_0-\bar Y
+      +\sum_{i=1}^{N}\hat\theta_iX_{i,j}
+    \right)
+ =
+    (\hat\theta_0-\bar Y)
+    \underbrace{
+      \sum_{j=1}^{J}\hat\varepsilon_j
+    }_{=\,0}
+    +
+    \sum_{i=1}^{N}\hat\theta_i
+    \underbrace{
+      \sum_{j=1}^{J}X_{i,j}\hat\varepsilon_j
+    }_{=\,0}
+ =0.
+\end{equation}
+Dabei wurden die Parameterschätzwerte und $\bar Y$,
+die nicht vom Beobachtungsindex $j$ abhängen, vor die
+jeweiligen Summen gezogen. Beide Beiträge verschwinden
+aufgrund der Normalgleichungen.
+
+Somit folgt die Streuungszerlegung
+\begin{equation}
+  \boxed{
+    s_{\mathrm T}^2
+    =s_{\mathrm R}^2+s_{\mathrm M}^2.
+  }
 \label{eq:totEmpVarianz}
 \end{equation}
-Beweis von Gl.(\ref{eq:totEmpVarianz}): 
-\begin{align}
-	s_T^2 & = \frac{1}{J-1}\sum\limits_{j = 1}^J {(Y_j - \bar {Y})^2} \\
-		&  =  \frac{1}{J-1}\sum\limits_{j = 1}^J {\left[(Y_j-\hat Y_j)+(\hat Y_j-\bar{Y})       \right]^2}\\ 
-		& = \frac{1}{J-1}\left[\sum\limits_{j = 1}^J (Y_j-\hat Y_j)^2 + \sum\limits_{j = 1}^J (\hat Y_j-\bar Y)^2 +2 \cdot \sum\limits_{j = 1}^J (Y_j-\hat Y_j)(\hat Y_j - \bar Y)  \right]  \\
-		& = s_R^2 + s_M^2 + \frac{1}{J-1} \cdot 2 \cdot \sum\limits_{j = 1}^J (Y_j-\hat Y_j)(\hat Y_j - \bar Y)
-\end{align}
-Es ist jetzt noch zu zeigen, dass
-\begin{equation}
-	\sum\limits_{j = 1}^J (Y_j-\hat Y_j)(\hat Y_j - \bar Y) \overset{!}{=} 0
-\end{equation}
-Für Punkte $\hat Y_j$ auf der Geraden gilt: 
-\begin{equation}
-	\hat Y_j = \hat \theta_0 + \hat \theta_1 X_j
-\end{equation}
-Der y-Abschnitt $\hat \theta_0$ bei der Regressionsgeraden kann  wie folgt berechnet werden (Hinweis: Schwerpunkt $(\bar X | \bar Y)$ liegt auf der Regressionsgeraden): 
-\begin{equation}
-	\hat \theta_0 = \bar Y - \hat \theta_1 \bar X
-\end{equation}
-Daraus folgt: 
-\begin{equation}
-	\hat Y_j = \bar Y - \hat \theta_1 \bar X + \hat \theta_1 X_j
-\end{equation}
-Diese Gleichung etwas umstellen und sowohl links als auch rechts $Y_j$ addieren, ergibt: 
-\begin{equation}
- Y_j - \hat Y_j = (Y_j - \bar Y)- \hat \theta_1(X_j-\bar X)
- \label{eq:1_Beweis_totale_empirische_Varianz}
-\end{equation}
-Zudem gilt: 
-\begin{equation}
-	(\hat Y_j- \bar Y) = \hat \theta_1 (X_j-\bar X)
-	 \label{eq:2_Beweis_totale_empirische_Varianz}
-\end{equation}
-Gl.(\ref{eq:1_Beweis_totale_empirische_Varianz}) und Gl.(\ref{eq:2_Beweis_totale_empirische_Varianz}) eingesetzt, ergibt: 
-\begin{align}
-\sum\limits_{j = 1}^J (Y_j-\hat Y_j)(\hat Y_j - \bar Y) & = 
-\hat \theta_1 \sum\limits_{j = 1}^J  \left[\left((Y_j-\bar Y)- \hat \theta_1 (X_j-\bar X)\right) (X_j - \bar X)\right] \\
-&= \hat \theta_1 \left[ \sum\limits_{j = 1}^J (Y_j-\bar Y)(X_j-\bar X) - \hat \theta_1 \sum\limits_{j = 1}^J  (X_j-\bar X)^2  \right]
-& = 0
-\end{align}
-Da für das hintere $\hat \theta_1$ kann folgendes eingesetzt werden: 
-$$
-\hat \theta_1 = \frac{s_{XY}}{s_X^2} = \frac{\sum\limits_{j = 1}^J (X_j-\bar X)(Y_j - \bar Y)}{\sum\limits_{j = 1}^J (X_j-\bar X)^2}
-$$
-Damit wäre Gl.(\ref{eq:totEmpVarianz}) bewiesen. \\
-% \nonumber
+Diese Beziehung gilt auch für mehrere Regressoren.
+Eine Normalverteilung der zufälligen Abweichungen
+wird für diesen Nachweis nicht benötigt.
 
-Das \textbf{Bestimmtheitsma{\ss}} ist definiert als das Verh\"{a}ltnis von
-empirischer Varianz des Modells zu der totalen Varianz:
+Das \textbf{Bestimmtheitsmaß} $R^2$ ist definiert als
+\begin{equation}
+  R^2
+  :=1-\frac{s_{\mathrm R}^2}{s_{\mathrm T}^2}
+  =1-
+  \frac{\sum_{j=1}^{J}(Y_j-\widehat Y_j)^2}
+       {\sum_{j=1}^{J}(Y_j-\overline Y)^2},
+\end{equation}
+wobei $\widehat Y_j$ die Vorhersage des angepassten Modells
+für die $j$-te Beobachtung bezeichnet. Bei mehreren
+Regressoren lautet diese Vorhersage
+\begin{equation}
+  \widehat Y_j
+  =\hat\theta_0
+   +\sum_{i=1}^{N}\hat\theta_iX_{i,j}.
+\end{equation}
+
+Für die gewöhnliche, ungewichtete lineare
+Kleinste-Quadrate-Regression mit frei geschätztem
+konstantem Term gilt die Streuungszerlegung
+$s_{\mathrm T}^2=s_{\mathrm M}^2+s_{\mathrm R}^2$.
+Damit folgt
+\begin{equation}
+  R^2=\frac{s_{\mathrm M}^2}{s_{\mathrm T}^2},
+  \qquad 0\le R^2\le1.
+\end{equation}
+Das Bestimmtheitsmaß beschreibt somit den Anteil der
+beobachteten Streuung des Regressanden, der durch das
+gesamte angepasste Modell beschrieben wird.
+
+Nur bei der einfachen Geradenregression mit frei
+geschätztem Achsenabschnitt gilt zusätzlich
+$R^2=\rho_{XY}^2$. Für mehrere Regressoren ist $R^2$
+im Allgemeinen nicht das Quadrat eines einzelnen
+Korrelationskoeffizienten zwischen einem Regressor
+und dem Regressanden.
+
+% Für Punkte $\widehat Y_j$ auf der Geraden gilt
+% \begin{equation}
+% 	\widehat Y_j = \widehat \theta_0 + \widehat \theta_1 X_j.
+% \end{equation}
+% Der y-Abschnitt $\widehat \theta_0$ bei der Regressionsgeraden kann  wie folgt berechnet werden (Hinweis: Der Schwerpunkt $(\bar X, \bar Y)$ liegt auf der Regressionsgeraden): 
+% \begin{equation}
+% 	\widehat \theta_0 = \bar Y - \widehat \theta_1 \bar X
+% \end{equation}
+% Daraus folgt: 
+% \begin{equation}
+% 	\widehat Y_j = \bar Y - \widehat \theta_1 \bar X + \widehat \theta_1 X_j
+% \end{equation}
+% Diese Gleichung etwas umstellen und sowohl links als auch rechts $Y_j$ addieren, ergibt: 
+% \begin{equation}
+%  Y_j - \widehat Y_j = (Y_j - \bar Y)- \widehat \theta_1(X_j-\bar X)
+%  \label{eq:1_Beweis_totale_empirische_Varianz}
+% \end{equation}
+% Zudem gilt: 
+% \begin{equation}
+% 	(\widehat Y_j- \bar Y) = \widehat \theta_1 (X_j-\bar X)
+% 	 \label{eq:2_Beweis_totale_empirische_Varianz}
+% \end{equation}
+% Gl.(\ref{eq:1_Beweis_totale_empirische_Varianz}) und Gl.(\ref{eq:2_Beweis_totale_empirische_Varianz}) eingesetzt, ergibt: 
+% \begin{align}
+% \sum\limits_{j = 1}^J (Y_j-\widehat Y_j)(\widehat Y_j - \bar Y) & = 
+% \widehat \theta_1 \sum\limits_{j = 1}^J  \left[\left((Y_j-\bar Y)- \widehat \theta_1 (X_j-\bar X)\right) (X_j - \bar X)\right] \\
+% &= \widehat \theta_1 \left[ \sum\limits_{j = 1}^J (Y_j-\bar Y)(X_j-\bar X) - \widehat \theta_1 \sum\limits_{j = 1}^J  (X_j-\bar X)^2  \right]
+% & = 0
+% \end{align}
+% Für das hintere $\widehat \theta_1$ kann folgendes eingesetzt werden: 
+% $$
+% \widehat \theta_1 = \frac{s_{XY}}{s_X^2} = \frac{\sum\limits_{j = 1}^J (X_j-\bar X)(Y_j - \bar Y)}{\sum\limits_{j = 1}^J (X_j-\bar X)^2}
+% $$
+% Damit wäre Gl.(\ref{eq:totEmpVarianz}) bewiesen. \\
+% % \nonumber
+
+Dass für die Geradenregression $\rho_{XY}^2 = R^2$ gilt, lässt sich wie folgt zeigen:
 $$
-\rho_{XY}^2 = \frac{s_{\mathrm{M}}^2}{s_{\mathrm{T}}^2} = \frac{\sum\limits_{j = 1}^J {(\hat{\theta}_0 + \hat{\theta}_1 X_j - \bar {Y})^2} }{\sum\limits_{j = 1}^J {(Y_j - \bar{Y})^2} }
+R^2 = \frac{s_{\mathrm{M}}^2}{s_{\mathrm{T}}^2} = \frac{\sum\limits_{j = 1}^J {(\hat{\theta}_0 + \hat{\theta}_1 X_j - \bar {Y})^2} }{\sum\limits_{j = 1}^J {(Y_j - \bar{Y})^2} }
 $$
 Mit dem Schwerpunkt $\bar {Y} = \hat{\theta}_0 + \hat{\theta}_1 \bar {X}$ ergibt sich:
 $$
-\rho_{XY}^2 = \frac{\hat{\theta}_1^2 \cdot \sum\limits_{j = 1}^J
+R^2 = \frac{\hat{\theta}_1^2 \cdot \sum\limits_{j = 1}^J
 	{(X_j - \bar X)^2} }{\sum\limits_{j = 1}^J {(Y_j - \bar {Y})^2} }
 $$
-Mit den Regressionsparametern $\hat{\theta}_1 = \frac{\sum\limits_{j =
+Mit dem Regressionsparameter $\hat{\theta}_1 = \frac{\sum\limits_{j =
 		1}^J {(X_j - \bar {X})(Y_j - \bar {Y})} }{\sum\limits_{j = 1}^J {(X_j
 		- \bar {X})^2} }$ (siehe Gl.(\ref{eq:Lineare_Regressionskonstanten})) erhält man für das
 Bestimmtheitsmaß:
 \begin{align}
-\rho_{XY}^2 &= \frac{\left[ {\sum\limits_{j = 1}^J {(X_j - \bar {X})(Y_j - \bar{Y})} } \right]^2}{\sum\limits_{j = 1}^J {(X_j - \bar {X})^2}
+R^2 &= \frac{\left[ {\sum\limits_{j = 1}^J {(X_j - \bar {X})(Y_j - \bar{Y})} } \right]^2}{\sum\limits_{j = 1}^J {(X_j - \bar {X})^2}
 	\cdot
 	\sum\limits_{j = 1}^J {(Y_j - \bar {Y})^2} } \nonumber \\[2ex]
-&= \frac{s_{XY} ^2}{s_X ^2 \cdot s_Y ^2} \quad \textrm{mit}\;
+&= \frac{s_{XY} ^2}{s_X ^2 \cdot s_Y ^2} \\[2ex]
+&= \rho_{XY}^2 \qquad \textrm{mit}\;
 0 \le \rho_{XY}^2 \le 1
 \end{align}
-Den empirischen Korrelationskoeffizienten kann man somit wie folgt
-berechnen:
+mit dem empirischen Korrelationskoeffizienten 
 \begin{equation}
-\rho_{XY} = \frac{ s_{XY} }{ s_X \cdot s_Y } \quad \mathrm{~mit~}  - 1 \le \rho_{XY} \le 1
+\rho_{XY} = \frac{ s_{XY} }{ s_X \cdot s_Y } \quad \mathrm{~mit~}  - 1 \le \rho_{XY} \le 1.
 \end{equation}
+
 \newpage
 \section{Beispiele zur linearen Regression}
 \label{section:Beispiele-lin-Regression}

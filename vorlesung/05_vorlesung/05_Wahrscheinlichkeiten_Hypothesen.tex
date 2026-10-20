@@ -706,76 +706,461 @@ einfach $t$-Verteilung.
 %==================
 
 %-----------------
-Diese Wahrscheinlichkeitsdichteverteilung wurde Anfang des 20. Jahrhunderts von
-William Sealy Gosset entwickelt. Sie wird der
-Tatsache gerecht, dass die Varianz der $t$-Verteilung mit abnehmender Zahl der
-Freiheitsgrade zunimmt, sofern sie existiert.
-Gosset veröffentlichte 1908 erstmals zu dem Thema während er als Chemiker für die Guinness-Brauerei
-in Dublin arbeitete. Er entwickelte einen Test zum Vergleich von Mittelwerten
-einzelner Stichproben als eine billige Art und Weise, die Qualität des Stout
-zu überwachen. Dieser Test wird entsprechend der zugrunde gelegten Wahrscheinlichkeitsdichtefunktion
-$t$-Test genannt.
-Da sein Arbeitgeber die Veröffentlichung nicht gestattete, veröffentlichte Gosset sie unter
-dem Pseudonym Student. Die zugehörige Theorie wurde erst durch die
-Arbeiten von R. A. Fisher belegt, der die Verteilung \textsl{Student}-Verteilung (engl.\
-\textsl{Student's distribution}) nannte.
+% Diese Wahrscheinlichkeitsdichteverteilung wurde Anfang des 20. Jahrhunderts von
+% William Sealy Gosset entwickelt. Sie wird der
+% Tatsache gerecht, dass die Varianz der $t$-Verteilung mit abnehmender Zahl der
+% Freiheitsgrade zunimmt, sofern sie existiert.
+% Gosset veröffentlichte 1908 erstmals zu dem Thema während er als Chemiker für die Guinness-Brauerei
+% in Dublin arbeitete. Er entwickelte einen Test zum Vergleich von Mittelwerten
+% einzelner Stichproben als eine billige Art und Weise, die Qualität des Stout
+% zu überwachen. Dieser Test wird entsprechend der zugrunde gelegten Wahrscheinlichkeitsdichtefunktion
+% $t$-Test genannt.
+% Da sein Arbeitgeber die Veröffentlichung nicht gestattete, veröffentlichte Gosset sie unter
+% dem Pseudonym Student. Die zugehörige Theorie wurde erst durch die
+% Arbeiten von R. A. Fisher belegt, der die Verteilung \textsl{Student}-Verteilung (engl.\
+% \textsl{Student's distribution}) nannte.
 
-Die $t$-Verteilung entsteht aus einer standardnormalverteilten Zufallsgröße
-$Z = (X-\mu)/\sigma$ und einer von ihr unabhängigen Zufallsgröße
-$Q \sim p_{\chi^2}(\nu)$. 
-Die Schreibweise $Q \sim p_{\chi^2}(\nu)$ bedeutet \glqq $Q$ ist $\chi^2$-verteilt\grqq.
+% Die $t$-Verteilung entsteht aus einer standardnormalverteilten Zufallsgröße
+% $Z = (X-\mu)/\sigma$ und einer von ihr unabhängigen Zufallsgröße
+% $Q \sim p_{\chi^2}(\nu)$. 
+% Die Schreibweise $Q \sim p_{\chi^2}(\nu)$ bedeutet \glqq $Q$ ist $\chi^2$-verteilt\grqq.
 
-Dann ist
+% Dann ist
+% \begin{equation}
+% \frac{Z}{\sqrt{\frac{1}{\nu} Q}} \quad \text{t-verteilt mit} \; \nu \; \text{Freiheitsgraden.}
+% \end{equation}
+% Die $t$-Verteilung sieht wie folgt aus:
+% \begin{equation}
+% p_\mathrm{t}(Z,\nu) \; = \;
+% {\frac {\Gamma \left({\frac {\nu+1}{2}}\right)}{{\sqrt {\nu \pi }} \;
+% \Gamma \left({\frac {\nu}{2}}\right)}} \, \left(1+{\frac {Z^2}{\nu}}\right)^{-{\frac {\nu+1}{2}}} ,
+% \end{equation}
+% mit $\nu$ für die Anzahl der Freiheitsgrade. Die Gammafunktion ist dabei die allgemeine
+% Gammafunktion; für ganzzahlige Argumente gilt insbesondere $\Gamma(n)=(n-1)!$.
+% Wir werden auf den theoretischen Hintergrund aus der Wahrscheinlichkeitstheorie nicht
+% genau eingehen, also ist die Definition dieser Verteilung auch kein Klausurstoff.
+% Für die Klausur werden die dazugehörigen Quantiltabellen zur Verfügung gestellt, d.h.\
+% den Aufgabenstellungen beigefügt.
+
+% Je kleiner der Stichprobenumfang ist desto flacher wird die Verteilung, mit entsprechend
+% längeren Ausläufern, \textsl{Tails}, siehe
+% Abb.~\ref{studentt}.
+% \begin{figure}
+% \begin{center}
+% \includegraphics[width=90mm]{05_vorlesung/media/learn_Student_tpdf.pdf}
+% \caption{\label{studentt} \textsl{Student-t}-Verteilungen für unterschiedliche Stichprobenumfänge.}
+% \end{center}
+% \end{figure}
+% Um zu verdeutlichen, wie sich die Gaußverteilung und die \textsl{Student-t}-Verteilung hinsichtlich
+% Breite und lange Ausläufer unterscheiden, haben wir hier dies im Vergleich berechnet.
+% Dabei haben wir bewusst sehr wenige Freiheitsgrade gewählt, nämlich nur $5$.
+% Wir verwenden jetzt mal den empirischen Mittelwert und die empirische Standardabweichung,
+% die wir aus der Gesamtheit aller Stichproben gewonnen hatten, also $y = 41.57$
+% und $s = 4.88$. Daraus rechnen wir sowohl die Normalverteilung als auch die
+% \textsl{Student-t}-Verteilung für fünf Freiheitsgrade. Für eine $t$-Verteilung mit
+% $\nu=5$ sind Varianz und Kurtosis endlich und betragen, bezogen auf den Skalenparameter,
+% $\nu/(\nu-2)=5/3$ bzw. $3(\nu-2)/(\nu-4)=9$:
+% \begin{center}
+% \begin{tabular}{l||c|c}
+% \hline
+% Verteilung & $\sigma$ & Kurt\\
+% \hline
+% Gauß-/Normalverteilung &   4.88 &  3.00 \\
+% Student-$t$-Verteilung &  6.30 &  9.00 \\
+% \hline
+% \end{tabular}
+% \end{center}
+% Dementsprechend sind auch die Quantile größer.
+
+
+% Für die $t$-Verteilung existiert die Varianz nur für $\nu>2$ und die Kurtosis nur für
+% $\nu>4$. Soweit sie existiert, nimmt die Kurtosis mit abnehmender Zahl der Freiheitsgrade
+% zu; für $\nu\leq4$ ist sie nicht definiert.
+
+%------
+
+Die $t$-Verteilung wurde Anfang des 20. Jahrhunderts von William Sealy Gosset
+entwickelt. Er \mbox{arbeitete} als Chemiker für die Guinness-Brauerei in Dublin
+und veröffentlichte seine Arbeit 1908 unter dem Pseudonym \textsl{Student}.
+Daher wird die Verteilung auch \textsl{Student-t}-Verteilung genannt.
+Sie spielt insbesondere dann eine Rolle, wenn der Erwartungswert einer
+normalverteilten Grundgesamtheit anhand einer Stichprobe beurteilt wird
+und die unbekannte Varianz aus derselben Stichprobe geschätzt werden muss.
+Der darauf beruhende Test wird als $t$-Test bezeichnet.
+
+\paragraph{Darstellung als Quotient zweier Zufallsgrößen.}
+Wir betrachten eine standardnormalverteilte Zufallsgröße $Z$ und eine davon
+unabhängige, $\chi^2$-verteilte Zufallsgröße $Q$:
 \begin{equation}
-\frac{Z}{\sqrt{\frac{1}{\nu} Q}} \quad \text{t-verteilt mit} \; \nu \; \text{Freiheitsgraden.}
+  Z\sim\mathcal N(0,1),
+  \qquad Q\sim\chi^2_\nu.
+  \label{eq:t_ausgangsgroessen}
 \end{equation}
-Die $t$-Verteilung sieht wie folgt aus:
+Die Schreibweise $Q\sim\chi^2_\nu$ bedeutet, dass $Q$ einer
+$\chi^2$-Verteilung mit $\nu$ Freiheitsgraden folgt. Dann ist
 \begin{equation}
-p_\mathrm{t}(Z,\nu) \; = \;
-{\frac {\Gamma \left({\frac {\nu+1}{2}}\right)}{{\sqrt {\nu \pi }} \;
-\Gamma \left({\frac {\nu}{2}}\right)}} \, \left(1+{\frac {Z^2}{\nu}}\right)^{-{\frac {\nu+1}{2}}} ,
+  T=\frac{Z}{\sqrt{Q/\nu}}
+  \sim t_\nu.
+  \label{eq:t_quotient}
 \end{equation}
-mit $\nu$ für die Anzahl der Freiheitsgrade. Die Gammafunktion ist dabei die allgemeine
-Gammafunktion; für ganzzahlige Argumente gilt insbesondere $\Gamma(n)=(n-1)!$.
-Wir werden auf den theoretischen Hintergrund aus der Wahrscheinlichkeitstheorie nicht
-genau eingehen, also ist die Definition dieser Verteilung auch kein Klausurstoff.
-Für die Klausur werden die dazugehörigen Quantiltabellen zur Verfügung gestellt, d.h.\
-den Aufgabenstellungen beigefügt.
+Der Faktor $\nu$ im Nenner der Wurzel ist erforderlich, weil
+$\operatorname{E}(Q)=\nu$ gilt. Die normierte Zufallsgröße $Q/\nu$
+hat daher den Erwartungswert eins.
 
-Je kleiner der Stichprobenumfang ist desto flacher wird die Verteilung, mit entsprechend
-längeren Ausläufern, \textsl{Tails}, siehe
-Abb.~\ref{studentt}.
+Hier wird mit $T$ eine Student-t-verteilte Zufallsgröße bezeichnet, mit $Z$ eine normalverteilte und mit $Q$ eine $\chi^2$-verteilte Zufallsgröße. Später werden wir das Symbol $T$ auch für Test- oder Prüfgröße verwenden.
+
+\paragraph{Bedingte Normalverteilung und gemeinsame Dichte:}
+Um aus Gleichung~\eqref{eq:t_quotient} die Dichte der $t$-Verteilung
+herzuleiten, betrachten wir zunächst einen festgehaltenen Wert $q>0$
+der Zufallsgröße $Q$. Unter dieser Bedingung wird $Z$ lediglich mit
+$\sqrt{\nu/q}$ multipliziert. Somit gilt
+\begin{equation}
+  T\mid Q=q\sim\mathcal N\!\left(0,\frac{\nu}{q}\right).
+  \label{eq:t_bedingte_normalverteilung}
+\end{equation}
+Der senkrechte Strich $\mid$ wird als \glqq unter der Bedingung\grqq{} gelesen.
+Die Schreibweise $T\mid Q=q$ bedeutet, dass wir die Zufallsgröße $T$
+unter der Bedingung betrachten, dass $Q$ den festgehaltenen Wert $q$
+annimmt. Die Gleichung besagt, dass 
+für jeden festgehaltenen Wert $q>0$ ist $T$ normalverteilt mit dem
+Erwartungswert null ist.
+Die zugehörige Varianz ist das zweite zentrale Moment der
+bedingten Verteilung von $T$. Da der bedingte Erwartungswert
+null ist, ergibt sie sich aus
+\[
+  \operatorname{Var}(T\mid Q=q)
+  =\operatorname{E}(T^2\mid Q=q)
+  =\frac{\nu}{q}\,
+    \underbrace{\operatorname{E}(Z^2\mid Q=q)}_{=1}
+  =\frac{\nu}{q}.
+\]
+Dabei wurde $T=\sqrt{\nu/q}\,Z$ eingesetzt. Wegen der
+Unabhängigkeit von $Z$ und $Q$ bleibt das zweite Moment von $Z$
+auch unter der Bedingung $Q=q$ gleich eins.
+
+Beim Multiplizieren einer Zufallsgröße mit einem festen Faktor wird
+ihre Varianz mit dem Quadrat dieses Faktors multipliziert. Da $Z$
+und $Q$ unabhängig sind, bleibt die Varianz von $Z$ auch unter der
+Bedingung $Q=q$ gleich eins. Daher gilt
+\begin{equation}
+  \operatorname{Var}(T\mid Q=q)
+  =\frac{\nu}{q}\,
+    \underbrace{\operatorname{Var}(Z\mid Q=q)}_{=1}
+  =\frac{\nu}{q}.
+\end{equation}
+Beispielsweise führt $q/\nu=1/4$ zu $T=2Z$. Die bedingte
+Standardabweichung von $T$ beträgt dann zwei, ihre bedingte Varianz
+vier.
+
+Der Zusammenhang mit einer Varianzschätzung kann zunächst verwirren.
+Für eine Stichprobe aus $J$ unabhängigen, normalverteilten
+Beobachtungen mit der Varianz $\sigma^2$ gilt nämlich
+\begin{equation}
+  Q=\frac{\nu S^2}{\sigma^2},
+  \qquad
+  \frac{Q}{\nu}=\frac{S^2}{\sigma^2},
+  \qquad
+  \nu=J-1,
+\end{equation}
+wobei $S^2$ die Stichprobenvarianz bezeichnet. Die Größe $Q/\nu$
+ist somit eine dimensionslose, durch $\sigma^2$ normierte
+Stichprobenvarianz, also das Verhältnis der geschätzten Varianz zur tatsächlichen Varianz der Grundgesamtheit. In der Definition
+\[
+  T=\frac{Z}{\sqrt{Q/\nu}}
+\]
+steht ihre Quadratwurzel jedoch im Nenner. Ein kleiner Wert von
+$Q/\nu$ vergrößert deshalb die Streuung von $T$. Die bedingte
+Varianz von $T$ ist folglich der Kehrwert $\nu/q$ der festgehaltenen
+normierten Stichprobenvarianz $q/\nu$. Je kleiner $q$ ist, desto
+breiter ist diese bedingte Normalverteilung.
+
+Hier und im Folgenden bezeichnet das zweite Argument von $\mathcal N$
+die Varianz. Die zugehörige bedingte Dichte lautet
+\begin{equation}
+  p_{T\mid Q}(t\mid q)
+  =\sqrt{\frac{q}{2\pi\nu}}
+    \exp\!\left(-\frac{qt^2}{2\nu}\right).
+  \label{eq:t_bedingte_dichte}
+\end{equation}
+Für die Hilfsgröße $Q$ gilt die Dichte, die die $\chi^2$-Verteilung ist, auf die wir in Abschnitt~\ref{sec:chiquadrat} genauer eingehen werden.
+\begin{equation}
+  p_Q(q)
+  =\frac{q^{\nu/2-1}\exp(-q/2)}
+         {2^{\nu/2}\Gamma(\nu/2)},
+  \qquad q>0.
+  \label{eq:t_chi2_dichte}
+\end{equation}
+Die gemeinsame Dichte von $T$ und $Q$ ergibt sich als Produkt:
+\begin{equation}
+  p_{T,Q}(t,q)=p_{T\mid Q}(t\mid q)\,p_Q(q).
+  \label{eq:t_gemeinsame_dichte}
+\end{equation}
+Dabei sind zwar $Z$ und $Q$ unabhängig, aber $T$ und $Q$ sind abhängig,
+weil die bedingte Varianz von $T$ vom Wert $q$ abhängt.
+
+\paragraph{Auswerten des Marginalintegrals.}
+Die Dichte von $T$ allein erhalten wir, indem wir die gemeinsame Dichte
+über alle möglichen Werte der Hilfsgröße $Q$ integrieren:
+\begin{equation}
+  p_T(t)=\int_0^\infty
+    p_{T\mid Q}(t\mid q)\,p_Q(q)\,\mathrm dq.
+  \label{eq:t_marginalintegral}
+\end{equation}
+Dieser Vorgang heißt \textsl{Marginalisierung}; $p_T$ ist die
+\textsl{Marginaldichte} oder \textsl{Randdichte} der gemeinsamen Dichte.
+Die bedingten Normaldichten werden dabei mit der Dichte der Hilfsgröße
+gewichtet und über $q$ gemittelt. Nach Einsetzen erhalten wir
+\begin{align}
+  p_T(t)
+  &=\int_0^\infty
+    \sqrt{\frac{q}{2\pi\nu}}
+    \exp\!\left(-\frac{qt^2}{2\nu}\right)
+    \frac{q^{\nu/2-1}\exp(-q/2)}
+         {2^{\nu/2}\Gamma(\nu/2)}\,\mathrm dq
+    \notag\\
+  &=\frac{1}{\sqrt{2\pi\nu}\,2^{\nu/2}\Gamma(\nu/2)}
+    \int_0^\infty q^{(\nu+1)/2-1}
+    \exp\!\left[-\frac{1}{2}
+      \left(1+\frac{t^2}{\nu}\right)q\right]\,\mathrm dq.
+  \label{eq:t_marginalintegral_eingesetzt}
+\end{align}
+Das Integral lässt sich mit der Gammafunktion auswerten. Für $k>0$
+und $a>0$ gilt, wie die Substitution $u=aq$ zeigt,
+\begin{equation}
+  \int_0^\infty q^{k-1}\exp(-aq)\,\mathrm dq
+  =\frac{\Gamma(k)}{a^k}.
+  \label{eq:t_gammaintegral}
+\end{equation}
+Mit
+\[
+  k=\frac{\nu+1}{2},
+  \qquad a=\frac{1}{2}\left(1+\frac{t^2}{\nu}\right)
+\]
+folgt nach Kürzen der Zweierpotenzen die Dichte der $t$-Verteilung:
+\begin{equation}
+  \boxed{
+  p_T(t)=p_{\mathrm t}(t,\nu)
+  =\frac{\Gamma\!\left((\nu+1)/2\right)}
+         {\sqrt{\nu\pi}\,\Gamma(\nu/2)}
+    \left(1+\frac{t^2}{\nu}\right)^{-(\nu+1)/2}.}
+  \label{eq:t_dichte_marginal}
+\end{equation}
+Hier bezeichnet $t$ einen möglichen Wert der Zufallsgröße $T$ und
+$\nu>0$ die Anzahl der Freiheitsgrade. In der Stichprobenanwendung ist
+$\nu$ ganzzahlig. Für die Gammafunktion gilt bei positiven ganzzahligen
+Argumenten insbesondere $\Gamma(n)=(n-1)!$.
+
+\begin{quote}
+Die $t$-Verteilung entsteht als Marginalverteilung aus dem Produkt einer
+bedingten Normaldichte und einer $\chi^2$-Dichte. Die Varianz der bedingten
+Normalverteilung ist dabei $\nu/q$. Erst die Integration über die
+$\chi^2$-verteilte Hilfsgröße liefert die $t$-Dichte.
+\end{quote}
+
+\paragraph{Warum entstehen ausgeprägtere Ausläufer?}
+Ein kleiner Wert von $Q$ führt zu einer großen bedingten Varianz
+$\nu/Q$. In diesem Fall können auch betragsmäßig große Werte von $T$
+auftreten. Beim Mitteln über alle möglichen Werte von $Q$ werden also
+auch breite Normalverteilungen berücksichtigt. Dadurch entstehen die
+gegenüber der Standardnormalverteilung ausgeprägteren Ausläufer
+(\textsl{Tails}).
+Für die normierte Hilfsgröße gilt
+\begin{equation}
+  \operatorname{E}\!\left(\frac{Q}{\nu}\right)=1,
+  \qquad
+  \operatorname{Var}\!\left(\frac{Q}{\nu}\right)=\frac{2}{\nu}.
+\end{equation}
+Bei großen Freiheitsgraden konzentriert sich $Q/\nu$ zunehmend um eins;
+die $t$-Verteilung nähert sich dann der Standardnormalverteilung an.
+Bei wenigen Freiheitsgraden sind die Ausläufer stärker ausgeprägt,
+siehe Abb.~\ref{studentt}.
 \begin{figure}
 \begin{center}
 \includegraphics[width=90mm]{05_vorlesung/media/learn_Student_tpdf.pdf}
-\caption{\label{studentt} \textsl{Student-t}-Verteilungen für unterschiedliche Stichprobenumfänge.}
+\caption{\label{studentt} \textsl{Student-t}-Dichten für unterschiedliche
+Freiheitsgrade $\nu$. Beim später behandelten Einstichproben-$t$-Test
+gilt $\nu=J-1$ mit dem Stichprobenumfang $J$.}
 \end{center}
 \end{figure}
-Um zu verdeutlichen, wie sich die Gaußverteilung und die \textsl{Student-t}-Verteilung hinsichtlich
-Breite und lange Ausläufer unterscheiden, haben wir hier dies im Vergleich berechnet.
-Dabei haben wir bewusst sehr wenige Freiheitsgrade gewählt, nämlich nur $5$.
-Wir verwenden jetzt mal den empirischen Mittelwert und die empirische Standardabweichung,
-die wir aus der Gesamtheit aller Stichproben gewonnen hatten, also $y = 41.57$
-und $s = 4.88$. Daraus rechnen wir sowohl die Normalverteilung als auch die
-\textsl{Student-t}-Verteilung für fünf Freiheitsgrade. Für eine $t$-Verteilung mit
-$\nu=5$ sind Varianz und Kurtosis endlich und betragen, bezogen auf den Skalenparameter,
-$\nu/(\nu-2)=5/3$ bzw. $3(\nu-2)/(\nu-4)=9$:
+
+\paragraph{Lage und Skalierung; Integration über die Varianz.}
+Eine verschobene und skalierte $t$-verteilte Zufallsgröße erhalten wir
+mit einem festen Lageparameter $m_0$ und einem festen Skalenparameter
+$b>0$ durch
+\begin{equation}
+  M=m_0+bT=m_0+b\frac{Z}{\sqrt{Q/\nu}}.
+  \label{eq:t_lage_skala}
+\end{equation}
+Damit lautet das entsprechende Marginalintegral
+\begin{equation}
+  p_M(m)=\int_0^\infty
+    p_{\mathcal N}\!\left(m;m_0,\frac{\nu b^2}{q}\right)
+    p_Q(q)\,\mathrm dq.
+  \label{eq:t_skaliertes_marginalintegral}
+\end{equation}
+Die Schreibweise $p_{\mathcal N}(m;m_0,v)$ bezeichnet die Normaldichte
+an der Stelle $m$ mit Erwartungswert $m_0$ und Varianz $v$.
+Wir können daher auch die bedingte Varianz als eigene Zufallsgröße
+einführen:
+\begin{equation}
+  V=\frac{\nu b^2}{Q}
+    =\frac{b^2}{Q/\nu},
+  \qquad
+  \frac{\nu b^2}{V}\sim\chi^2_\nu.
+  \label{eq:t_zufaellige_varianz}
+\end{equation}
+Diese Varianz $V$ folgt einer \textsl{skalierten inversen
+$\chi^2$-Verteilung}. Ihre Dichte ist keine $\chi^2$-Dichte.
+Bei der Variablentransformation $q=\nu b^2/v$ muss der Betrag der
+Ableitung berücksichtigt werden:
+\begin{align}
+  p_V(v)
+  &=p_Q\!\left(\frac{\nu b^2}{v}\right)
+    \left|\frac{\mathrm dq}{\mathrm dv}\right|
+    =p_Q\!\left(\frac{\nu b^2}{v}\right)\frac{\nu b^2}{v^2}
+    \notag\\
+  &=\frac{(\nu b^2/2)^{\nu/2}}{\Gamma(\nu/2)}
+    v^{-\nu/2-1}
+    \exp\!\left(-\frac{\nu b^2}{2v}\right),
+    \qquad v>0.
+  \label{eq:t_inverse_chi2_dichte}
+\end{align}
+Nun kann dieselbe Marginaldichte durch Integration über die Varianz
+berechnet werden:
+\begin{equation}
+  p_M(m)=\int_0^\infty
+    \underbrace{\frac{1}{\sqrt{2\pi v}}
+      \exp\!\left[-\frac{(m-m_0)^2}{2v}\right]}
+      _{p_{M\mid V}(m\mid v)}
+    p_V(v)\,\mathrm dv.
+  \label{eq:t_marginalintegral_varianz}
+\end{equation}
+Beide Integrationswege liefern dieselbe Dichte:
+\begin{equation}
+  p_M(m)=
+  \frac{\Gamma\!\left((\nu+1)/2\right)}
+       {\Gamma(\nu/2)\sqrt{\nu\pi}\,b}
+  \left[1+\frac{(m-m_0)^2}{\nu b^2}\right]^{-(\nu+1)/2}.
+  \label{eq:t_dichte_lage_skala}
+\end{equation}
+Die Division durch $Q/\nu$ folgt also aus der Quotientendarstellung
+\eqref{eq:t_quotient}. Sie ergibt sich nicht allein daraus, dass die
+Varianz im Nenner des Exponenten der Normaldichte steht.
+
+\paragraph{Anschluss an den Stichprobenmittelwert.}
+Für unabhängige Beobachtungen
+$X_1,\ldots,X_J\sim\mathcal N(\mu,\sigma^2)$ betrachten wir die
+Schätzer
+\begin{equation}
+  \overline X=\frac{1}{J}\sum_{j=1}^J X_j,
+  \qquad
+  S^2=\frac{1}{J-1}\sum_{j=1}^J(X_j-\overline X)^2.
+\end{equation}
+Der Mittelwert $\overline X$ und die Stichprobenvarianz $S^2$ sind
+in diesem Normalmodell unabhängig. Deshalb erfüllen
+\begin{equation}
+  Z=\frac{\overline X-\mu}{\sigma/\sqrt J},
+  \qquad
+  Q=\frac{(J-1)S^2}{\sigma^2},
+  \qquad \nu=J-1
+\end{equation}
+genau die Voraussetzungen aus Gleichung~\eqref{eq:t_ausgangsgroessen}.
+Einsetzen in Gleichung~\eqref{eq:t_quotient} ergibt
+\begin{equation}
+  T=\frac{\overline X-\mu}{S/\sqrt J}
+    \sim t_{J-1}.
+  \label{eq:t_stichprobenmittelwert}
+\end{equation}
+Dies ist die Grundlage für den Einstichproben-$t$-Test und das
+Vertrauensintervall für $\mu$. Die Beobachtungen $X_j$ und ihr Mittelwert
+$\overline X$ bleiben in diesem Modell normalverteilt; $t$-verteilt
+ist die mit $S/\sqrt J$ standardisierte Abweichung des Mittelwerts.
+
+Für die tatsächlich beobachtete Stichprobe bezeichnen wir die
+Schätzwerte mit $\overline x$ und $s^2$. Dabei ist
+\begin{equation}
+  \overline s=\frac{s}{\sqrt J}
+  \label{eq:t_empirische_standardabweichung_mittelwert}
+\end{equation}
+die empirische Standardabweichung des Mittelwerts.
+Wird in der Verteilungskonstruktion~\eqref{eq:t_lage_skala}
+der Skalenparameter $b=\overline s$ gewählt, lautet die zufällige
+bedingte Varianz
+\begin{equation}
+  V=\frac{\overline s^{\,2}}{Q/\nu}.
+\end{equation}
+Der Faktor $1/\sqrt J$ ist dann bereits in $\overline s$ enthalten.
+Durch $Q/\nu$ wird zusätzlich dividiert, um die $t$-Verteilung zu
+erzeugen. Eine Division allein durch $Q$ würde bei gleichem
+Lageparameter eine um den Faktor $\sqrt\nu$ kleinere Skala ergeben.
+
+Die Mischdarstellung ist zunächst eine mathematische Darstellung
+einer Verteilung. Soll eine um $\overline x$ zentrierte $t$-Verteilung
+dem unbekannten Erwartungswert selbst zugeordnet werden, sind dafür
+zusätzliche Annahmen zur statistischen Inferenz erforderlich. Im
+frequentistischen Beobachtungsmodell ist $\mu$ ein fester Parameter;
+die Verteilungsaussage~\eqref{eq:t_stichprobenmittelwert} bezieht
+sich auf die Zufallsgröße $T$ bei wiederholter Stichprobenentnahme.
+
+Die Herleitung der Dichte dient dem Hintergrundverständnis und ist
+kein Klausurstoff. Für die Klausur werden die erforderlichen
+Quantiltabellen den Aufgabenstellungen beigefügt.
+
+\paragraph{Skalenparameter, Standardabweichung und Kurtosis.}
+Der Skalenparameter $b$ ist bei der $t$-Verteilung nicht mit ihrer
+Standardabweichung gleichzusetzen. Für $\nu>2$ gilt
+\begin{equation}
+  \operatorname{Var}(M)=b^2\frac{\nu}{\nu-2},
+  \qquad
+  \sigma_M=b\sqrt{\frac{\nu}{\nu-2}}.
+  \label{eq:t_varianz_skala}
+\end{equation}
+Beispielsweise beträgt für $b=\overline s$ und $\nu=8$ die
+Standardabweichung dieser $t$-Verteilung
+$\overline s\sqrt{8/6}$, während ihr Skalenparameter
+$\overline s$ ist. Der Lageparameter ist für $\nu>1$ zugleich
+der Erwartungswert; für $\nu\leq1$ existiert der Erwartungswert nicht.
+
+Für $\nu>4$ beträgt die Kurtosis
+\begin{equation}
+  \operatorname{Kurt}(M)=\frac{3(\nu-2)}{\nu-4}.
+\end{equation}
+Hier ist die Kurtosis als standardisiertes viertes zentrales Moment
+definiert, also mit dem Wert drei für die Normalverteilung; gemeint
+ist nicht der Exzess, bei dem drei abgezogen wird.
+
+Zum Vergleich der Breite und der Ausläufer verwenden wir den zuvor
+aus den Daten bestimmten Mittelwert $y=41{,}57$ und die empirische
+Standardabweichung $s=4{,}88$. Wir setzen für die Normalverteilung
+den Lageparameter $y$ und die Standardabweichung $s$ ein. Für die
+$t$-Verteilung wählen wir denselben Lageparameter und den
+Skalenparameter $b=s$ sowie $\nu=5$ Freiheitsgrade.
+Hier vergleichen wir Verteilungsformen bei gleicher Skala; eine
+Division durch $\sqrt J$ wird für diesen Vergleich nicht vorgenommen.
+Für die $t$-Verteilung folgen
+\[
+  \sigma_M=4{,}88\sqrt{\frac{5}{3}}\approx6{,}30,
+  \qquad \operatorname{Kurt}(M)=9.
+\]
 \begin{center}
 \begin{tabular}{l||c|c}
 \hline
-Verteilung & $\sigma$ & Kurt\\
+Verteilung & Standardabweichung & Kurtosis\\
 \hline
-Gauß-/Normalverteilung &   4.88 &  3.00 \\
-Student-$t$-Verteilung &  6.30 &  9.00 \\
+Gauß-/Normalverteilung & $4{,}88$ & $3{,}00$\\
+Student-$t$-Verteilung ($\nu=5$) & $6{,}30$ & $9{,}00$\\
 \hline
 \end{tabular}
 \end{center}
-Dementsprechend sind auch die Quantile größer.
+Bei gleicher Lage und Skala liegen die oberen Quantile der
+$t$-Verteilung für Wahrscheinlichkeiten größer als $0{,}5$ weiter
+rechts als diejenigen der Normalverteilung. Entsprechend sind die
+zentralen symmetrischen Überdeckungsintervalle breiter.
 
-
-Für die $t$-Verteilung existiert die Varianz nur für $\nu>2$ und die Kurtosis nur für
-$\nu>4$. Soweit sie existiert, nimmt die Kurtosis mit abnehmender Zahl der Freiheitsgrade
-zu; für $\nu\leq4$ ist sie nicht definiert.
+Die Varianz der $t$-Verteilung ist nur für $\nu>2$ endlich, ihre
+Kurtosis nur für $\nu>4$ definiert. Soweit diese Größen existieren,
+nehmen beide bei festgehaltenem Skalenparameter mit abnehmender
+Zahl der Freiheitsgrade zu.
 
 %----
 
