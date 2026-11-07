@@ -130,7 +130,7 @@ statistische Beobachtungsmodell. Das statistische Beobachtungsmodell ergänzt di
 \section{Zufällige Abweichungen, Residuen und Modellabweichungen}
 \label{V4Abweichungen}
 
-Für die Herleitung der gewöhnlichen \glqq Methode der kleinsten Quadrate\grqq (kurze Sprechweise für die Methode der Minimierung der Residuenquadratsumme) betrachten wir zunächst skalare Beobachtungen ohne zusätzliche Modellabweichung\footnote{Mit Modellabweichung ist hier gemeint, dass das Modell selber die physikalischen Zusammenhänge nur näherungsweise beschreibt.}:
+Für die Herleitung der gewöhnlichen \glqq Methode der kleinsten Quadrate\grqq{} (kurze Sprechweise für die Methode der Minimierung der Residuenquadratsumme) betrachten wir zunächst skalare Beobachtungen ohne zusätzliche Modellabweichung\footnote{Mit Modellabweichung ist hier gemeint, dass das Modell selber die physikalischen Zusammenhänge nur näherungsweise beschreibt.}:
 \begin{equation}
 X_j=f_j(\mathbf{p}_0)+E_j,
 \qquad E_j\overset{\mathrm{u.i.v.}}{\sim}\mathcal{N}(0,\sigma^2).
@@ -326,9 +326,10 @@ Wahrscheinlichkeitsverteilung zugeordnet werden.
 
 Für einen einzelnen zu schätzenden Modellparameter $\theta$ und einen Vektor
 beobachteter Messwerte $\mathbf x$ schreiben wir
-\[
+\begin{equation}
 l(\theta;\mathbf x)=p(\mathbf x\mid\theta).
-\]
+\label{likelihoodvsWahrschdichte}
+\end{equation}
 
 Wir betrachten hier Beobachtungen, deren Verteilung durch eine
 Wahrscheinlichkeitsdichte beschrieben wird.
@@ -342,13 +343,61 @@ Ausdruck als \textsl{Likelihood} $l(\theta;\mathbf x)$ bezeichnet.
 Der Strich in $p(\mathbf x\mid\theta)$ bedeutet hier \glqq unter der Annahme des Parameterwerts $\theta$\grqq. Das Semikolon in $l(\theta;\mathbf x)$ trennt den betrachteten Parameter von den festgehaltenen Daten;
 es bezeichnet keine zusätzliche Rechenoperation.
 
-Die Likelihood erlaubt einen relativen Vergleich verschiedener
-Parameterwerte: Bei welchen Werten besitzt das Modell eine größere
-Dichte für die beobachteten Daten? Eine Likelihood ist jedoch
-\textbf{keine Wahrscheinlichkeitsdichte für den Parameter}.
-Sie muss über dem Parameterbereich nicht das Integral $1$ besitzen.
-Auch eine nachträgliche Normierung allein rechtfertigt noch keine
-Wahrscheinlichkeitsaussage über den zu schätzenden Modellparameter.
+Auf beiden Seiten der Gleichung~(\ref{likelihoodvsWahrschdichte}) steht derselbe mathematische Ausdruck; er wird aber auf unterschiedliche Weise betrachtet:
+\begin{enumerate}
+\item \underline{Betrachtung als Wahrscheinlichkeitsdichte der möglichen Daten}
+
+Für einen vorgegebenen Parameterwert $\theta$ beschreibt
+
+\[
+p(\mathbf x\mid\theta)
+\]
+
+die Wahrscheinlichkeitsdichte der möglichen Beobachtungsdaten $\mathbf x$. Deshalb ist sie \textbf{über den Datenbereich} normiert:
+
+\[
+\int p(\mathbf x\mid\theta)\,\mathrm d\mathbf x=1
+\qquad\text{für jedes festgehaltene }\theta.
+\]
+
+Bei kontinuierlichen Daten ist $p(\mathbf x\mid\theta)$ eine \emph{Dichte}, nicht die Wahrscheinlichkeit, genau den Wert $\mathbf x$ zu beobachten.
+
+\item \underline{Betrachtung als Likelihood der Parameterwerte}
+
+Nachdem die Daten beobachtet wurden, betrachten wir dieselbe Funktion bei festgehaltenem $\mathbf x$ als Funktion von $\theta$:
+
+\[
+\theta\longmapsto l(\theta;\mathbf x)
+=p(\mathbf x\mid\theta).
+\]
+
+Nun können wir vergleichen, für welche Parameterwerte die beobachteten Daten eine größere oder kleinere Dichte besitzen. \textbf{Eine Normierung über $\theta$ ist dafür weder gefordert noch immer möglich:}
+
+\[
+\int l(\theta;\mathbf x)\,\mathrm d\theta
+\quad\text{muss nicht gleich }1\text{ sein.}
+\]
+
+Die Likelihood wird zwar aus der Wahrscheinlichkeitsdichte der Daten gebildet. Als Funktion des Parameters beschreibt sie aber für sich genommen keine Wahrscheinlichkeitsverteilung über dessen mögliche Werte.
+\end{enumerate}
+
+Damit erlaubt die Likelihood einen relativen Vergleich verschiedener
+Parameterwerte: Für welche Parameterwerte besitzt das
+Beobachtungsmodell eine größere Wahrscheinlichkeitsdichte für die
+vorliegenden Daten?
+
+Obwohl die Likelihood aus der Wahrscheinlichkeitsdichte der Daten
+gebildet wird, ist sie, da sie ja nicht normiert wird,
+als Funktion des Parameters für sich genommen
+keine Wahrscheinlichkeitsdichte für diesen Parameter. Während
+$p(\mathbf x\mid\theta)$ für festes $\theta$ über den Bereich der
+möglichen Daten $\mathbf x$ normiert ist, muss das Integral der
+Likelihood über den Parameterbereich also nicht gleich $1$ sein.
+
+Selbst wenn dieses Integral endlich ist und die Likelihood
+nachträglich über dem Parameterbereich normiert wird, rechtfertigt
+dies allein noch keine Wahrscheinlichkeitsaussage über den
+Parameter. Später gehen wir dann darauf ein, dass für eine bayesische Posteriorverteilung ist zusätzlich eine Priorannahme erforderlich ist.
 
 Im Folgenden wenden wir diese Definition auf den Modellparametervektor
 $\mathbf p$ und die Beobachtungsstreuung $\sigma$ an. Das Symbol $\theta$
@@ -453,10 +502,12 @@ $\sigma^{-J}$ berücksichtigt werden. Die negative Log-Likelihood lautet
 +\frac{S(\mathbf{p})}{2\sigma^2}.
 \label{KonzepteNegLogL}
 \end{equation}
-Bei einer gemeinsamen unbekannten Varianz, die nicht von
-$\mathbf{p}$ abhängt, ergeben sich weiterhin die
-Kleinstquadrateschätzung von $\mathbf{p}$ und, sofern
-$S(\widehat{\mathbf{p}})>0$,
+Ist die gemeinsame Varianz unbekannt und wird sie unabhängig von
+den Modellparametern $\mathbf{p}$ geschätzt, so ergibt sich für
+$\mathbf{p}$ wie zuvor die Kleinstquadrateschätzung.
+
+Für die Varianz erhält man, sofern $S(\widehat{\mathbf{p}})>0$,
+den Maximum-Likelihood-Schätzwert
 \begin{equation}
 \widehat{\sigma}_{\mathrm{ML}}^2
 =\frac{S(\widehat{\mathbf{p}})}{J}.
@@ -1288,108 +1339,292 @@ Punkte in die ursprüngliche Quadratsumme. Er ist \emph{kein neuer
 Normierungsfaktor} der Likelihood. Deshalb wird der Kostenfunktion
 kein zusätzlicher Logarithmus dieses Ausdrucks hinzugefügt.
 
-% \paragraph{Abgrenzung zur Integration über mögliche Modellpunkte.}
-% Hier wurden die Modellpunkte geschätzt, indem für jede Gerade die
-% Likelihood bezüglich ihrer Positionen maximiert wurde.
-% Eine \emph{Integration} über mögliche Modellpunkte wäre ein anderes
-% Vorgehen; damit ist tatsächlich eine Rechnung mit dem
-% Integraloperator $\int$ gemeint. Dafür müsste man zusätzlich angeben,
-% mit welcher Verteilung bzw. welchem Integrationsmaß die verschiedenen
-% Positionen entlang der Geraden berücksichtigt werden sollen.
-% Eine solche Verteilung der Modellpunkte ist im hier verwendeten
-% Beobachtungsmodell nicht vorgegeben. Die oben hergeleitete
-% Kostenfunktion beruht auf der Minimierung bezüglich der Modellpunkte,
-% nicht auf einer solchen Integration.
 
-\section{Bayesische Auswertung: vom Vorwissen zur Parameterverteilung}
+\section{Bayesische Auswertung: Vorwissen, Posteriordichte und Kredibilitätsintervall}
 \label{V4Bayes}
 
-Bislang wurden Verteilungen möglicher Beobachtungen (von direkten Messgrößen) und daraus
-berechneter Schätzwerte von Modellparamtern (von indirekten Messgrößen) betrachtet. Eine Likelihood ließ sich auswerten
-und maximieren, ohne den festen Parametern selbst Wahrscheinlichkeiten
-zuzuordnen. Nun ergänzen wir das Beobachtungsmodell um eine Beschreibung
-des Kenntnisstands über die zu schätzenden Modellparameter.
+Bislang wurden Verteilungen möglicher Beobachtungen direkter
+Messgrößen und daraus berechneter Schätzwerte von Modellparametern (indirekten Messgrößen)
+betrachtet. Eine Likelihood ließ sich auswerten und maximieren,
+ohne den festen unbekannten Parametern selbst eine
+Wahrscheinlichkeitsdichte zuzuordnen. Insbesondere wurden
+damit keine Wahrscheinlichkeiten dafür angegeben, dass die
+unbekannten Parameterwerte in bestimmten Wertebereichen liegen.
 
-Im \textsl{bayesischen Ansatz} lässt sich die Unsicherheit über den
-Wert einer indirekten Messgröße, die durch einen Modellparameter
-beschrieben wird, durch eine
-\textsl{Wahrscheinlichkeitsverteilung} beschreiben. Ausgangspunkt ist die
-Frage: Welche Werte kommen nach unserem gegenwärtigen Kenntnisstand für
-den gesuchten Parameter infrage, und wie plausibel sind sie? Dazu werden
-Wertebereichen Wahrscheinlichkeiten zugeordnet. Eine Wahrscheinlichkeit
-von beispielsweise $90\,\%$ für einen bestimmten Bereich drückt aus, wie
-stark die verfügbare Information unter den getroffenen Annahmen dafür
-spricht, dass der unbekannte Wert in diesem Bereich liegt.
+Als Nächstes betrachten wir, wie weitere Beobachtungen in die
+Auswertung einbezogen werden können. Dabei aktualisieren wir
+unsere Schätzwerte und Unsicherheitsangaben; die unbekannten
+Parameterwerte selbst werden zunächst als unverändert angenommen.
+Auch frequentistische Verfahren können physikalisches Vorwissen
+und Ergebnisse früherer Messungen berücksichtigen.
 
-Betrachten wir als Beispiel die indirekte Messgröße Widerstand $R$ eines Bauteils
-bei festgelegten Umgebungsbedingungen. Aus einer früheren Kalibrierung
-und unserem Wissen über die Stabilität des Bauteils erwarten wir einen
-Wert nahe $100\,\Omega$. Dieses Vorwissen könnte durch eine Verteilung
-beschrieben werden, die dem Bereich von $99\,\Omega$ bis $101\,\Omega$
-eine Wahrscheinlichkeit von $90\,\%$ zuordnet. Auf die Werte außerhalb
-dieses Bereichs entfallen dann zusammen die übrigen $10\,\%$. Diese
-Zahlen dienen nur der Veranschaulichung; in einer konkreten Aufgabe muss
-die Verteilung aus der verfügbaren Information begründet werden.
-Die Angabe eines einzigen Bereichs und seiner Wahrscheinlichkeit legt
-die gesamte Verteilung noch nicht fest.
+Wir fassen die unbekannten Parameter des physikalischen Modells
+und des statistischen Beobachtungsmodells im Parametervektor
+$\mathbf q$ zusammen. Dazu gehören beispielsweise die
+Modellparameter $\mathbf p$ und eine unbekannte
+Standardabweichung $\sigma$ oder unbekannte Einträge einer
+Kovarianzmatrix $\boldsymbol\Sigma$.
 
-Für die hier betrachteten kontinuierlichen Parameter beschreiben wir
-solche Verteilungen durch eine \textsl{Dichtekurve}. Die Fläche unter der
-Kurve über einem Wertebereich gibt dessen Wahrscheinlichkeit an;
-die gesamte Fläche beträgt $1$, entsprechend $100\,\%$.
-Eine starke Konzentration der Fläche in der Nähe von $100\,\Omega$
-würde ausdrücken, dass wir den Widerstand dort mit hoher
-Wahrscheinlichkeit vermuten. Eine stärker um denselben Wert gestreute
-Verteilung würde eine größere Unsicherheit über seinen Wert ausdrücken.
-Dabei kann der Widerstand selbst während der Messung konstant sein:
-Die Verteilung beschreibt hier unseren unvollständigen Kenntnisstand
-über diesen festen Wert.
+Wir bezeichnen frühere Beobachtungen mit $\mathbf x^{(1)}$
+und neue Beobachtungen mit $\mathbf x^{(2)}$.
+Beide Datensätze sollen dieselben unveränderten Parameter
+$\mathbf q$ betreffen.
+
+\subsection{Gemeinsame Liklihood, ohne Bayesische Deutung}
+
+Sind die Beobachtungen $\mathbf x^{(1)}$ und 
+$\mathbf x^{(2)}$ bei vorgegebenem $\mathbf q$
+unabhängig, lautet ihre gemeinsame Likelihood
+\begin{equation}
+l_{\mathrm{gesamt}}(\mathbf q;\mathbf x^{(1)},\mathbf x^{(2)})
+=
+\underbrace{l_1(\mathbf q;\mathbf x^{(1)})}_{\text{frühere Daten}}
+\,
+\underbrace{l_2(\mathbf q;\mathbf x^{(2)})}_{\text{aktuelle Daten}}.
+\label{eq:likelihoodgesamt}
+\end{equation}
+Für jeden betrachteten Parametervektor $\mathbf q$ werden
+die beiden Likelihoodwerte multipliziert. Damit gehen beide
+Datensätze gemeinsam in die Auswertung ein.
+
+Die Maximierung dieser gemeinsamen Likelihood $l_{\mathrm{gesamt}}$ liefert den
+Maximum-Likelihood-Schätzwert $\widehat{\mathbf q}_{\mathrm{ML}}$.
+Wir wollen nun untersuchen, wie stattdessen eine Verteilung
+zur Beschreibung des Kenntnisstands über $\mathbf q$
+verwendet werden kann.
+
+Alternativ zur Maximierung der Likelihood kann auch der
+Erwartungswert einer Parameterverteilung als Schätzwert
+angegeben werden. Dazu müssen wir zunächst eine
+Wahrscheinlichkeitsdichte für die Parameter festlegen.
+
+Wir wählen hier einen begrenzten Bereich $\mathcal D$
+zulässiger Parameterwerte und normieren die gemeinsame
+Likelihood über diesem Bereich. Dabei setzen wir voraus,
+dass das Normierungsintegral endlich und positiv ist.
+
+Für $\mathbf q\in\mathcal D$ definieren wir die
+Wahrscheinlichkeitsdichte
+\begin{equation}
+p(\mathbf q;\mathbf x^{(1)},\mathbf x^{(2)})
+=
+\frac{
+l_{\mathrm{gesamt}}(\mathbf q;\mathbf x^{(1)},\mathbf x^{(2)})
+}{
+\displaystyle\int_{\mathcal D}
+l_{\mathrm{gesamt}}(\mathbf q';\mathbf x^{(1)},\mathbf x^{(2)})
+\,\mathrm d\mathbf q'
+}.
+\label{eq:normiertelikelihoodgesamt}
+\end{equation}
+Außerhalb von $\mathcal D$ setzen wir $p=0$.
+
+Der Erwartungswert dieser Parameterverteilung liefert
+den Schätzwert
+\begin{equation}
+\widehat{\mathbf q}_{\mathrm E}
+=
+\int_{\mathcal D}
+\mathbf q\,p(\mathbf q;\mathbf x^{(1)},\mathbf x^{(2)})
+\,\mathrm d\mathbf q.
+\label{eq:erwartungswertauslikelihoods}
+\end{equation}
+Dieser Schätzwert muss nicht mit dem
+Maximum-Likelihood-Schätzwert übereinstimmen.
+Die Normierung der Likelihood verändert innerhalb des
+betrachteten Parameterbereichs die Lage ihres Maximums nicht.
+Der Erwartungswert beschreibt dagegen den Schwerpunkt
+der gesamten Wahrscheinlichkeitsdichte.
+Bei einer asymmetrischen Dichte kann dieser Schwerpunkt
+gegenüber der Lage des Maximums verschoben sein.
+
+Neben dem Schätzwert lässt sich auch die Streuung der
+Parameterverteilung beschreiben. Für den Parametervektor
+$\mathbf q$ verwenden wir dazu die Kovarianzmatrix
+\begin{equation}
+\mathbf C_{\mathbf q}
+=
+\int_{\mathcal D}
+(\mathbf q-\widehat{\mathbf q}_{\mathrm E})
+(\mathbf q-\widehat{\mathbf q}_{\mathrm E})^{\mathsf T}
+\,p(\mathbf q;\mathbf x^{(1)},\mathbf x^{(2)})
+\,\mathrm d\mathbf q.
+\label{eq:kovarianzauslikelihoods}
+\end{equation}
+Ihre Diagonalelemente sind die Varianzen der einzelnen
+Parameter. Die übrigen Elemente beschreiben die
+Kovarianzen zwischen den Parametern.
+
+Verwenden wir diese Parameterverteilung zur Beschreibung
+unserer Unsicherheit über die unbekannten Parameterwerte,
+so ergibt sich die Standardunsicherheit des Schätzwerts
+für den Parameter $q_l$ als
+\begin{equation}
+u(\widehat q_{\mathrm E,l})
+=
+\sqrt{(\mathbf C_{\mathbf q})_{ll}}.
+\label{eq:standardunsicherheitausparameterdichte}
+\end{equation}
+Eine größere Varianz bedeutet eine stärkere Streuung
+der dem jeweiligen Parameter zugeordneten Werte und
+damit eine größere Standardunsicherheit.
+
+Die Begrenzung des Integrationsbereichs kann auch durch
+eine Maske beschrieben werden. Dazu definieren wir
+die \textsl{Indikatorfunktion} des Bereichs $\mathcal D$:
+\[
+I_{\mathcal D}(\mathbf q)
+=
+\begin{cases}
+1,&\text{falls }\mathbf q\in\mathcal D,\\
+0,&\text{sonst}.
+\end{cases}
+\]
+Damit gilt
+\[
+\int_{\mathcal D}
+l_{\mathrm{gesamt}}(\mathbf q';\mathbf x^{(1)},\mathbf x^{(2)})
+\,\mathrm d\mathbf q'
+=
+\int
+l_{\mathrm{gesamt}}(\mathbf q';\mathbf x^{(1)},\mathbf x^{(2)})
+\,I_{\mathcal D}(\mathbf q')\,\mathrm d\mathbf q'.
+\]
+Integrale ohne ausdrücklich angegebenen Bereich erstrecken
+sich hier über den gesamten Parameterbereich, auf dem das
+Beobachtungsmodell definiert ist.
+
+Aus dieser Maske bilden wir eine normierte Gewichtsfunktion:
+\[
+G(\mathbf q)
+=
+c_{\mathrm G}\,I_{\mathcal D}(\mathbf q)
+=
+\begin{cases}
+c_{\mathrm G},&\text{falls }\mathbf q\in\mathcal D,\\
+0,&\text{sonst}.
+\end{cases}
+\]
+Die positive Konstante $c_{\mathrm G}$ wird so gewählt, dass
+\[
+\int G(\mathbf q)\,\mathrm d\mathbf q=1.
+\]
+
+Da sich $c_{\mathrm G}$ zwischen Zähler und Nenner herauskürzt,
+können wir Gl.~\eqref{eq:normiertelikelihoodgesamt} auch schreiben als
+\begin{equation}
+p(\mathbf q;\mathbf x^{(1)},\mathbf x^{(2)})
+=
+\frac{
+l_{\mathrm{gesamt}}(\mathbf q;\mathbf x^{(1)},\mathbf x^{(2)})
+\,G(\mathbf q)
+}{
+\displaystyle\int
+l_{\mathrm{gesamt}}(\mathbf q';\mathbf x^{(1)},\mathbf x^{(2)})
+\,G(\mathbf q')\,\mathrm d\mathbf q'
+}.
+\label{eq:normiertelikelihoodgesamtG}
+\end{equation}
+Diese Gleichheit gilt für die hier gewählte, innerhalb von
+$\mathcal D$ konstante Gewichtsfunktion. Eine innerhalb des
+Bereichs unterschiedlich gewichtende Funktion würde im
+Allgemeinen eine andere normierte Funktion ergeben.
+
+\subsection{Bayesische Sichtweise}
+
+Nun geben wir der Gewichtsfunktion $G(\mathbf q)$ eine \textsl{bayesische Bedeutung}:
+Sie beschreibt unseren
+Kenntnisstand vor Einbeziehung der ersten Beobachtungen:
+Wir nehmen an, dass die Parameterwerte innerhalb des Bereichs
+$\mathcal D$ liegen und dort durch eine konstante
+Wahrscheinlichkeitsdichte beschrieben werden.
+Außerhalb dieses Bereichs ist die Dichte null.
+
+Damit ist $G(\mathbf q)$ bereits eine Beschreibung unseres
+anfänglichen Kenntnisstands durch eine Wahrscheinlichkeitsdichte.
+In der bayesischen Statistik wird sie als
+\textsl{Anfangspriordichte} bezeichnet:
+\[
+\pi_0(\mathbf q)=G(\mathbf q).
+\]
 
 Die Verteilung, die unseren Kenntnisstand \textbf{vor Einbeziehung
 der jetzt betrachteten Daten} beschreibt, heißt
 \textsl{Priorverteilung} oder kurz \textsl{Prior}. Das Wort
 \textsl{prior} bedeutet hier \textsl{vorhergehend}.
 \glqq A priori\grqq ~bedeutet in diesem Zusammenhang somit nicht
-\glqq vor jeder experimentellen Erfahrung\grqq. Eine Priorverteilung kann
-gerade auf früheren Messungen beruhen. Beispielsweise kann die
-Parameterverteilung aus einer früheren bayesischen Auswertung als Prior
-für eine neue Auswertung dienen, sofern die damalige Information auf
+\glqq vor jeder experimentellen Erfahrung\grqq.
+
+Nach Einbeziehung der ersten Beobachtungen ergibt sich
+\begin{equation}
+\pi_1(\mathbf q\mid\mathbf x^{(1)})
+=
+\frac{
+l_1(\mathbf q;\mathbf x^{(1)})\,\pi_0(\mathbf q)
+}{
+\displaystyle\int
+l_1(\mathbf q';\mathbf x^{(1)})\,\pi_0(\mathbf q')
+\,\mathrm d\mathbf q'
+}.
+\end{equation}
+Diese \textsl{Posteriordichte} beschreibt den aktualisierten
+Kenntnisstand über die Parameter nach der ersten Messung.
+Bei unserer konstanten Anfangspriordichte entspricht sie
+der über $\mathcal D$ normierten ersten Likelihood.
+
+Für die Einbeziehung der neuen Beobachtungen
+$\mathbf x^{(2)}$ verwenden wir diese erste Posteriordichte
+als Prior. Dabei bleibt die Funktion
+$\pi_1(\mathbf q\mid\mathbf x^{(1)})$ unverändert.
+Insbesondere werden die Argumente vor und hinter dem
+Bedingungsstrich nicht vertauscht.
+
+Eine Priorverteilungsdichte, kurz Prior genannt, kann also auf früheren Messungen beruhen.
+So kann die Posteriorverteilungsdichte, kurz Posterior genannt,
+aus einer früheren bayesischen Auswertung,
+als Priordichte für eine neue Auswertung dienen, sofern die damalige Information auf
 die aktuelle Messaufgabe übertragbar ist.
 
-Weitere Grundlagen können physikalische Zusammenhänge oder begründete
-Angaben über mögliche Wertebereiche sein. Die Information legt nicht
-immer eine einzige Verteilung eindeutig fest. Die Wahl der Prior gehört
-deshalb zu den Annahmen der Auswertung und muss offengelegt und begründet
-werden. Auch eine sehr breite Verteilung ist eine solche Annahme; sie
-bedeutet nicht automatisch, dass keinerlei Vorwissen eingebracht wird.
-Eine Verteilung wird dabei nicht allein deshalb zur Prior, weil sie vor
-dem Experiment bekannt ist: Eine bekannte Verteilung der Streuung
-künftiger Beobachtungen gehört zunächst zum Beobachtungsmodell.
-Eine Prior beschreibt dagegen den Kenntnisstand über die Werte der
-zu schätzenden Modellparameter.
-
-\subsection{Aktualisierung durch die Bayes-Regel}
-
-Wir fassen alle zu schätzenden Modellparameter in $\boldsymbol\theta$ zusammen.
-Dieser Vektor kann beispielsweise die Modellparameter $\mathbf p$
-und eine unbekannte Beobachtungsstreuung $\sigma$ enthalten.
-Sei $p_0(\boldsymbol\theta)$ die Prior vor Einbeziehung der aktuellen
-Daten $\mathbf x$. Die Bayes-Regel lautet für Dichten
+Unter der angenommenen bedingten Unabhängigkeit der
+Datensätze erhalten wir
 \begin{equation}
-p_1(\boldsymbol\theta\mid\mathbf x)
-=\frac{l(\boldsymbol\theta;\mathbf x)\,p_0(\boldsymbol\theta)}
-{\displaystyle\int_{\Theta}
-l(\boldsymbol\theta';\mathbf x)\,p_0(\boldsymbol\theta')
-\,\mathrm d\boldsymbol\theta'}.
-\label{V4BayesDichten}
+\pi_2(\mathbf q\mid\mathbf x^{(1)},\mathbf x^{(2)})
+=
+\frac{
+l_2(\mathbf q;\mathbf x^{(2)})
+\,\pi_1(\mathbf q\mid\mathbf x^{(1)})
+}{
+\displaystyle\int
+l_2(\mathbf q';\mathbf x^{(2)})
+\,\pi_1(\mathbf q'\mid\mathbf x^{(1)})
+\,\mathrm d\mathbf q'
+}.
+\label{eq:posteriorinterpretation}
 \end{equation}
-Der Nenner integriert über alle zulässigen Parameterwerte
-$\boldsymbol\theta'\in\Theta$. Er ist bei gegebenen Daten eine Konstante
-und sorgt dafür, dass die resultierende Dichte die Gesamtwahrscheinlichkeit
-$1$ besitzt. Wir setzen voraus, dass dieses Integral positiv und endlich
-ist. Die Verteilung $p_1$ heißt \textsl{Posteriorverteilung} oder kurz
-\textsl{Posterior}. Sie beschreibt den aktualisierten Kenntnisstand
-\textbf{nach} Einbeziehung der Daten.
+
+Setzen wir den Ausdruck für $\pi_1$ ein, kürzt sich dessen
+Normierungsfaktor heraus. Es folgt
+\begin{equation}
+\pi_2(\mathbf q\mid\mathbf x^{(1)},\mathbf x^{(2)})
+=
+\frac{
+l_2(\mathbf q;\mathbf x^{(2)})
+\,l_1(\mathbf q;\mathbf x^{(1)})\,\pi_0(\mathbf q)
+}{
+\displaystyle\int
+l_2(\mathbf q';\mathbf x^{(2)})
+\,l_1(\mathbf q';\mathbf x^{(1)})\,\pi_0(\mathbf q')
+\,\mathrm d\mathbf q'
+}.
+\label{eq:posteriorwielikelihoodgesamtG}
+\end{equation}
+Die Posteriordichte $\pi_2(\mathbf q\mid\mathbf x^{(1)},\mathbf x^{(2)})$
+stimmt mit der Wahrscheinlichkeitsdichte
+$p(\mathbf q;\mathbf x^{(1)},\mathbf x^{(2)})$ aus
+Gl.~\eqref{eq:normiertelikelihoodgesamtG} überein.
+Die gemeinsame Auswertung beider Datensätze mit der
+Anfangspriordichte und die schrittweise Aktualisierung
+liefern somit dieselbe Posteriordichte.
 
 Bei gegebenem Beobachtungsmodell verstärkt die Multiplikation mit der
 Likelihood diejenigen Parameterbereiche relativ zu anderen, die besser
@@ -1397,185 +1632,348 @@ mit den neuen Daten vereinbar sind. Die Prior trägt die zuvor verfügbare
 Information bei. Erst ihre Verknüpfung und die Normierung liefern die
 hier verwendete Parameterdichte.
 
-Aus der Posteriorverteilung lassen sich beispielsweise ein Erwartungswert
-als Schätzwert und eine Standardabweichung als Unsicherheitsmaß berechnen,
-sofern diese Größen existieren. Diese Standardabweichung beschreibt
-die verbleibende Unsicherheit über den Parameter bei gegebenen Daten.
-Allgemeiner bestimmt man zu einer vorgegebenen Wahrscheinlichkeit $1-\alpha$ die Integrationsgrenzen der Posterior, um das Überdeckungsintervall zu erhalten. Dazu kommen wir dann etwas später.
+Die zuvor eingeführten Erwartungswerte, Varianzen und
+Kovarianzen werden nun als Kenngrößen der Posteriorverteilung
+interpretiert. In Gl.~\eqref{eq:erwartungswertauslikelihoods}
+und Gl.~\eqref{eq:kovarianzauslikelihoods} steht entsprechend
+die Posteriordichte
+$\pi_2(\mathbf q\mid\mathbf x^{(1)},\mathbf x^{(2)})$
+an der Stelle von $p$.
 
-Frequentistisch wird die Standardunsicherheit der geschätzten
-Modellparameter aus der Streuung der Parameterschätzwerte bestimmt,
-die das Beobachtungsmodell und das Schätzverfahren gemeinsam ergeben.
-Die genauen
-Integrale und ein Beispiel folgen in Abschnitt~\ref{V4Lehrbeispiel}.
+\begin{equation}
+\widehat{\mathbf q}_{\mathrm E}
+=
+\operatorname E[
+\mathbf q\mid\mathbf x^{(1)},\mathbf x^{(2)}]
+=
+\int
+\mathbf q\,
+\pi_2(\mathbf q\mid\mathbf x^{(1)},\mathbf x^{(2)})
+\,\mathrm d\mathbf q.
+\end{equation}
 
-\subsection{Frühere Messungen: gemeinsame Auswertung oder Aktualisierung}
-\label{V4FruehereMessungen}
+Der Erwartungswert liefert einen Schätzwert für die
+unbekannten Parameter. Die posterioren Varianzen und
+Kovarianzen beschreiben die verbleibende Unsicherheit
+über diese Parameter unter Berücksichtigung beider
+Datensätze und der getroffenen Modell- und Priorannahmen.
+Die Quadratwurzeln der posterioren Varianzen ergeben
+die zugehörigen Standardunsicherheiten.
 
-Auch frequentistische Verfahren können physikalisches Vorwissen und
-Ergebnisse früherer Messungen berücksichtigen. Physikalisches Vorwissen
-kann beispielsweise in die Modellgleichungen oder in Einschränkungen
-des zulässigen Parameterbereichs eingehen. Frühere und aktuelle
-Messergebnisse lassen sich gemeinsam auswerten, wenn ein statistisches
-Modell ihren Zusammenhang mit den gesuchten Parametern beschreibt.
-Dabei müssen auch mögliche Änderungen der Messgröße und Abhängigkeiten
-zwischen den Messungen berücksichtigt werden.
+Das Formelsymbol $\pi$ ist eine Notationskonvention.
+Für Prior- und Posteriordichten kann auch das Symbol $p$
+verwendet werden. Hier unterscheiden wir die Rollen durch
+die Symbole:
+\begin{itemize}
+\item $p(\mathbf x\mid\mathbf q)$:
+Dichte der Beobachtungswerte bei vorgegebenen Parameterwerten;
+bei feststehenden Daten als Funktion von $\mathbf q$
+die Likelihood.
+\item $\pi_0(\mathbf q)$:
+Anfangspriordichte der Parameter.
+\item $\pi_1(\mathbf q\mid\mathbf x^{(1)})$:
+Posteriordichte nach den ersten Beobachtungen und zugleich
+Prior für die Einbeziehung der zweiten Beobachtungen.
+\item $\pi_2(\mathbf q\mid\mathbf x^{(1)},\mathbf x^{(2)})$:
+Posteriordichte nach Berücksichtigung beider Datensätze.
+\end{itemize}
 
-Wir betrachten zur Vereinfachung einen einzelnen Parameter $\theta$.
-Bezeichnen $\mathbf x^{(1)}$ frühere und $\mathbf x^{(2)}$ aktuelle
-Messdaten und sind beide Datensätze bei gegebenem $\theta$ unabhängig,
-so ist die gemeinsame Likelihood
+
+Wir haben gesehen, wie sich die Unsicherheit über den Wert
+einer indirekten Messgröße, die durch einen Modellparameter
+beschrieben wird, durch eine Wahrscheinlichkeitsdichte
+beschreiben lässt. Aus dieser Dichte können wir neben dem
+Erwartungswert und der Standardunsicherheit auch einen
+Wertebereich mit einer vorgegebenen Wahrscheinlichkeit bestimmen.
+
+Im \textsl{bayesischen Ansatz} beschreibt diese Wahrscheinlichkeit,
+ob der unbekannte Parameterwert innerhalb des angegebenen
+Bereichs liegt, unter Berücksichtigung der vorliegenden Daten
+und der getroffenen Modell- und Priorannahmen.
+
+Dazu betrachten wir den einfachen Fall
+$\mathbf q=(\theta,\sigma)^{\mathsf T}$ mit einem skalaren
+Modellparameter $\theta$ und der unbekannten
+Standardabweichung $\sigma$ der Beobachtungsabweichungen.
+Die gemeinsame Posteriordichte lautet
+$$
+\pi_2(\theta,\sigma\mid\mathbf x^{(1)},\mathbf x^{(2)}).
+$$
+Dabei beschreibt $\sigma$ die Beobachtungsstreuung.
+Gesucht ist nun ein Überdeckungsintervall für den
+Parameter $\theta$.
+
+
+Für dieses Beispiel seien bereits bei der Festlegung der
+Anfangspriordichte die Bereiche
+$$
+\theta\in[\theta_{\mathrm{min}},\theta_{\mathrm{max}}],
+\qquad
+0<\sigma\leq\sigma_{\mathrm{max}}
+$$
+vorgegeben worden. Außerhalb dieser Bereiche ist die
+Posteriordichte null.
+
+Um die Verteilung von $\theta$ allein zu erhalten,
+integrieren wir die gemeinsame Posteriordichte über den
+gesamten zugelassenen Wertebereich von $\sigma$.
+Dadurch entsteht die \textsl{Marginaldichte} bzw.\
+\textsl{Randdichte} für $\theta$:
+\begin{equation}
+p_{\theta}(\theta\mid\mathbf x^{(1)},\mathbf x^{(2)})
+=
+\int_0^{\sigma_{\mathrm{max}}}
+\pi_2(\theta,\sigma\mid\mathbf x^{(1)},\mathbf x^{(2)})
+\,\mathrm d\sigma.
+\label{eq:marginaldichtethetaposterior}
+\end{equation}
+Die Unsicherheit über $\sigma$ wird dabei berücksichtigt,
+indem über seine möglichen Werte integriert wird.
+Es wird also kein einzelner Schätzwert für $\sigma$ eingesetzt.
+
+Die Fläche unter der Marginaldichte über einem Wertebereich
+gibt dessen Wahrscheinlichkeit an. Die gesamte Fläche
+beträgt $1$.
+
+
+Wir bilden nun die kumulative Verteilungsfunktion.
+Zur Vereinfachung der Schreibweise lassen wir bei $P$
+die Bedingung auf die beiden Datensätze weg:
+\begin{equation}
+P(\theta)
+=
+\int_{\theta_{\mathrm{min}}}^{\theta}
+p_{\theta}(\theta'\mid\mathbf x^{(1)},\mathbf x^{(2)})
+\,\mathrm d\theta'.
+\label{eq:verteilungsfunktionthetaposterior}
+\end{equation}
+Sie gibt die posteriore Wahrscheinlichkeit dafür an,
+dass der unbekannte Parameterwert kleiner oder gleich
+$\theta$ ist.
+
+Die zugehörige \textsl{Quantilfunktion} bezeichnen wir mit $P^{-1}$.
+Bei einer streng monotonen Verteilungsfunktion ist sie
+deren Umkehrfunktion. Das Quantil
+\begin{equation}
+\theta_{\alpha}=P^{-1}(\alpha)
+\end{equation}
+ist derjenige
+Parameterwert, für den die Verteilungsfunktion den Wert
+$\alpha$ annimmt. Die posteriore Wahrscheinlichkeit,
+dass der unbekannte Parameterwert kleiner oder gleich
+$\theta_{\alpha}$ ist, beträgt somit $\alpha$.
+
+Für ein zentrales $95\,\%$-Intervall lassen wir auf
+beiden Seiten jeweils $2.5\,\%$ der Wahrscheinlichkeit
+außerhalb des Intervalls. Seine Grenzen sind deshalb
+\begin{equation}
+\theta_{\mathrm u}=P^{-1}(0.025),
+\qquad
+\theta_{\mathrm o}=P^{-1}(0.975).
+\label{eq:grenzenueberdeckungsintervall}
+\end{equation}
+Damit gilt
+\begin{equation}
+\int_{\theta_{\mathrm u}}^{\theta_{\mathrm o}}
+p_{\theta}(\theta\mid\mathbf x^{(1)},\mathbf x^{(2)})
+\,\mathrm d\theta
+=
+0.95.
+\end{equation}
+
+Das Intervall $[\theta_{\mathrm u},\theta_{\mathrm o}]$
+ist ein zentrales $95\,\%$-\textsl{Kredibilitätsintervall}
+(Glaubwürdigkeitsintervall). Als Intervall zur Angabe
+der Messunsicherheit sprechen wir auch von einem
+\textsl{Überdeckungsintervall} mit einer Überdeckungswahrscheinlichkeit
+von $95\,\%$.
+
+Die Bezeichnung \glqq zentral\grqq{} bezieht sich hier auf
+die gleich großen Wahrscheinlichkeiten außerhalb der beiden
+Intervallgrenzen. Sie bedeutet nicht, dass beide Grenzen
+gleich weit vom Erwartungswert entfernt liegen.
+
+Ist die Marginaldichte symmetrisch um ihren Erwartungswert
+\begin{equation}
+\widehat\theta_{\mathrm E} = \int_{\theta_{\mathrm{min}}}^{\theta_{\mathrm{max}}} \, \theta' \,
+p_{\theta}(\theta'\mid\mathbf x^{(1)},\mathbf x^{(2)})
+\,\mathrm d\theta',
+\end{equation}
+so ist auch das zentrale
+Intervall um diesen Schätzwert symmetrisch. Seine
+Halbbreite beträgt
+\begin{equation}
+U
+=
+\theta_{\mathrm o}-\widehat\theta_{\mathrm E}
+=
+\widehat\theta_{\mathrm E}-\theta_{\mathrm u}
+=
+\frac{\theta_{\mathrm o}-\theta_{\mathrm u}}{2}.
+\end{equation}
+Dann kann das Intervall in der üblichen Form
 \[
-l_{\mathrm{gesamt}}(\theta;\mathbf x^{(1)},\mathbf x^{(2)})
-=l_1(\theta;\mathbf x^{(1)})\,
- l_2(\theta;\mathbf x^{(2)}).
+[\widehat\theta_{\mathrm E}-U,\,
+ \widehat\theta_{\mathrm E}+U]
 \]
-Die einzelnen Likelihoods dürfen unterschiedliche Formen besitzen,
-beispielsweise aufgrund verschiedener Messverfahren oder unterschiedlich
-großer Streuungen. Bei abhängigen Datensätzen muss ihre gemeinsame
-Beobachtungsverteilung verwendet werden; das einfache Produkt der
-einzelnen Likelihoods ist dann im Allgemeinen nicht zulässig.
+angegeben werden.
 
-\textbf{Auch frequentistisch wird also das Produkt von Likelihoods
-verwendet.} Bei der Maximum-Likelihood-Methode wählt man als Schätzwert
-den Parameterwert, bei dem die gemeinsame Likelihood am größten ist.
-Die Fläche unter der Likelihood über einem Parameterbereich wird dabei
-nicht als Wahrscheinlichkeit dafür interpretiert, dass der feste
-Parameterwert in diesem Bereich liegt.
+Die Beziehung zwischen der erweiterten Unsicherheit $U$
+und der Standardunsicherheit
+$u(\widehat\theta_{\mathrm E})$ schreiben wir als
+\begin{equation}
+U=k\,u(\widehat\theta_{\mathrm E}).
+\label{eq:erweiterteunsicherheitposterior}
+\end{equation}
+Der Erweiterungsfaktor $k$ richtet sich nach der Form
+der Verteilung und der gewählten Überdeckungswahrscheinlichkeit.
+Für eine Normalverteilung beträgt er bei einem zentralen
+$95\,\%$-Intervall ungefähr $1.96$.
 
-Bayesisch können dieselben Datensätze gemeinsam nach
-Gl.~\eqref{V4BayesDichten} oder nacheinander ausgewertet werden.
-Dabei bezeichnet $p_0(\theta)$ jetzt den Kenntnisstand
-\textbf{vor beiden Datensätzen}:
-\begin{align*}
-p_1(\theta\mid\mathbf x^{(1)})
-&\propto l_1(\theta;\mathbf x^{(1)})\,p_0(\theta),\\
-p_2(\theta\mid\mathbf x^{(1)},\mathbf x^{(2)})
-&\propto l_2(\theta;\mathbf x^{(2)})\,
-         p_1(\theta\mid\mathbf x^{(1)}).
-\end{align*}
-Das Zeichen $\propto$ bedeutet \glqq proportional zu\grqq; der jeweils noch
-fehlende Faktor normiert die Dichte auf die Gesamtfläche $1$.
-Die Indizes $0$, $1$ und $2$ kennzeichnen die aufeinanderfolgenden
-Kenntnisstände. Die erste Posteriorverteilung $p_1$ übernimmt bei der
-zweiten Auswertung die Rolle der Prior.
-\textbf{Bereits in dieser Prior enthaltene Messdaten dürfen nicht
-nochmals als zusätzliche Daten in die Likelihood eingehen.}
-Bei abhängigen Datensätzen muss die Likelihood der aktuellen Daten
-zusätzlich die früheren Daten als Bedingung berücksichtigen.
+Bei einer asymmetrischen Marginaldichte liegt das zentrale
+Überdeckungsintervall im Allgemeinen nicht symmetrisch um
+$\widehat\theta_{\mathrm E}$. Seine halbe Breite darf dann
+nicht einfach als symmetrische Unsicherheit zum
+Erwartungswert angegeben werden, weil dadurch die
+Intervallgrenzen verändert würden.
+In diesem Fall geben wir den Schätzwert, seine
+Standardunsicherheit und die beiden Grenzen
+$[\theta_{\mathrm u},\theta_{\mathrm o}]$ mit der zugehörigen
+Überdeckungswahrscheinlichkeit an.
+
+Wir haben gelernt, dass die Wahrscheinlichkeitsdichte, 
+die unseren Kenntnisstand \textbf{vor Einbeziehung
+der jetzt betrachteten Daten} beschreibt, die \textsl{Priordichte} ist.
+Dabei hatten wir im ersten Schritt die Annahme einer konstanten Prior $\pi_0$, 
+die auf einem begrenzten Bereich definiert ist, eingeführt. Unter Einbeziehen
+des früheren Datensatzes $\mathbf x^{(1)}$ haben wir aus der Verknüpfung mit der 
+Likelihood zu den Daten und der korrekten Normierung die Posteriordichte $\pi_1$
+erhalten. Diese nimmt im nächsten Schritt, in dem wir einen neuen, unabhängigen
+Datensatz von Beobachtungen mit Likelihood entsprechender erhalten haben, die Rolle einer Priordichte ein, so dass daraus die nächste Posterior $\pi_2$ gewonnen wird.
+
+Weitere Priorannahmen können physikalische Zusammenhänge oder begründete
+Angaben über mögliche Wertebereiche sein. Die Information legt nicht
+immer eine einzige Verteilung eindeutig fest. Die Wahl der Priordichte 
+(kurz auch einfach Prio genannt) gehört deshalb zu den Annahmen der Auswertung 
+und muss offengelegt und begründet werden. 
+
+Auch eine sehr breite Verteilung, wie beispielsweise eine konstante, normierte
+Indikatorfunktion, ist eine solche Annahme. Sie
+bedeutet nicht automatisch, dass keinerlei Vorwissen eingebracht wird.
+
+Eine Verteilung wird dabei nicht allein deshalb zur Prior, weil sie vor
+dem Experiment bekannt ist: Eine bekannte Verteilung der Streuung
+künftiger Beobachtungen gehört zunächst zum Beobachtungsmodell.
+Eine Prior beschreibt dagegen den Kenntnisstand über die Werte der
+zu schätzenden Modellparameter und der Parameter des Beobachtungsmodells.
 
 \subsection{Wann beide Ansätze dieselben Zahlen liefern}
 \label{V4GleicheZahlen}
-Wenn $p_0(\theta)$ im betrachteten Parameterbereich konstant ist, gilt
-\[
-p_1(\theta\mid\mathbf x^{(1)})
-\propto l_1(\theta;\mathbf x^{(1)}).
-\]
-Dann hat die aus der ersten Auswertung gewonnene Prior für die zweite
-Auswertung dieselbe Form wie der frühere Likelihood-Beitrag.
-Auch $p_2$ ist dann proportional zur gemeinsamen Likelihood.
-Eine konstante Prior auf einem unbeschränkten Parameterbereich ist
-allerdings nicht zu einer Dichte normierbar. Sie kann als formaler Ansatz
-verwendet werden, wenn daraus eine normierbare Posteriorverteilung
-entsteht; sie ist nicht mit dem Verzicht auf Annahmen gleichzusetzen.
 
-Unter geeigneten Voraussetzungen können beide Ansätze dieselben
-Schätzwerte, numerisch gleiche Standardunsicherheiten der geschätzten
-Modellparameter und dieselben Intervallgrenzen liefern. Die
-Standardunsicherheiten werden dabei frequentistisch aus der Streuung
-der Parameterschätzer und bayesisch aus der Posteriorverteilung bestimmt.
-Das ist jedoch keine allgemeine Eigenschaft. Schon eine andere Prior
-kann die Ergebnisse verändern. Auch aus proportionalen Kurven allein
-folgt keine allgemeine Übereinstimmung aller Schätz- und
-Intervallverfahren.
+Unter den bisher vorausgesetzten Bedingungen stimmt die
+Posteriordichte
+$\pi_2(\mathbf q\mid\mathbf x^{(1)},\mathbf x^{(2)})$
+aus Gl.~\eqref{eq:posteriorwielikelihoodgesamtG}
+mit der Dichte
+$p(\mathbf q;\mathbf x^{(1)},\mathbf x^{(2)})$
+aus Gl.~\eqref{eq:normiertelikelihoodgesamtG} überein.
+Dabei verwenden wir in beiden Ausdrücken dieselbe
+Gewichtsfunktion $G(\mathbf q)=\pi_0(\mathbf q)$.
+Die Datensätze betreffen dieselben unveränderten Parameter
+und sind bei vorgegebenem $\mathbf q$ unabhängig.
+Die Normierungsintegrale seien endlich und positiv.
+Dann gilt
+\begin{equation}
+\begin{aligned}
+&\pi_2(\mathbf q\mid\mathbf x^{(1)},\mathbf x^{(2)})
+\\[1mm]
+&=
+\frac{
+l_2(\mathbf q;\mathbf x^{(2)})
+\,l_1(\mathbf q;\mathbf x^{(1)})\,\pi_0(\mathbf q)
+}{
+\displaystyle\int
+l_2(\mathbf q';\mathbf x^{(2)})
+\,l_1(\mathbf q';\mathbf x^{(1)})\,\pi_0(\mathbf q')
+\,\mathrm d\mathbf q'
+}
+\\[2mm]
+&=
+\frac{
+l_{\mathrm{gesamt}}(\mathbf q;\mathbf x^{(1)},\mathbf x^{(2)})
+\,G(\mathbf q)
+}{
+\displaystyle\int
+l_{\mathrm{gesamt}}(\mathbf q';\mathbf x^{(1)},\mathbf x^{(2)})
+\,G(\mathbf q')\,\mathrm d\mathbf q'
+}
+\\[2mm]
+&=p(\mathbf q;\mathbf x^{(1)},\mathbf x^{(2)}).
+\end{aligned}
+\end{equation}
+Bei der Herleitung kürzt sich der Normierungsfaktor
+der ersten Posteriordichte heraus.
+Die gemeinsame Auswertung beider Datensätze und ihre
+schrittweise Einbeziehung liefern somit dieselbe
+Parameterdichte.
 
-Ein einfaches Zahlenbeispiel verdeutlicht diese mögliche Übereinstimmung.
-Eine frühere Messung desselben konstanten Widerstands habe
-$m_0=100\,\Omega$ ergeben, eine aktuelle Messreihe den Mittelwert
-$\overline x=102\,\Omega$. Das Beobachtungsmodell nimmt an, dass die möglichen Ergebnisse der früheren Messung und der aktuellen Messreihe unabhängig voneinander sind. Beide Ergebnisse werden als normalverteilt mit demselben Erwartungswert $R$, dem Wert des gesuchten Widerstands, und jeweils einer Standardabweichung von $1\,\Omega$ beschrieben. Frequentistisch werden
-die beiden Ergebnisse wegen ihrer gleichen Präzision gleich gewichtet:
-\[
-\widehat R=\frac{m_0+\overline x}{2}=101\,\Omega.
-\]
+Berechnen wir aus diesen identischen Dichten dieselben
+Kenngrößen, erhalten wir dieselben Erwartungswerte,
+Standardabweichungen und Quantile, sofern diese existieren.
+Entsprechend stimmen auch die Grenzen der auf dieselbe
+Weise bestimmten Überdeckungsintervalle überein.
 
-Die Standardunsicherheit des zusammengefassten Ergebnisses berechnen
-wir durch Unsicherheitsfortpflanzung. Da die beiden Messergebnisse
-als unabhängig angenommen werden, ist die Varianz ihrer Summe gleich
-der Summe ihrer einzelnen Varianzen, hier also
-$(1\,\Omega)^2+(1\,\Omega)^2$.
-Für den Mittelwert wird diese Summe durch $2$ geteilt.
-Bei der Unsicherheitsfortpflanzung geht dieser Faktor quadratisch ein:
-Die Varianz des Mittelwerts ist daher die Varianz der Summe geteilt
-durch $2^2=4$. Die Wurzel daraus ergibt die Standardunsicherheit
-des gemeinsam geschätzten Widerstands:
-\[
-u(\widehat R)
-=\sqrt{\frac{(1\,\Omega)^2+(1\,\Omega)^2}{4}}
-=\frac{1}{\sqrt{2}}\,\Omega
-\approx0{,}707\,\Omega.
-\]
+Diese Gleichheit betrifft zunächst die beiden Darstellungen
+derselben Parameterdichte. Sie begründet noch keine
+allgemeine Übereinstimmung frequentistischer und bayesischer
+Auswertungsergebnisse. Insbesondere ist
+$p(\mathbf q;\mathbf x^{(1)},\mathbf x^{(2)})$
+nicht die frequentistische Verteilung der möglichen
+Schätzwerte bei wiederholten Messungen.
 
-Bayesisch kann die Information aus der früheren Messung durch eine
-Normalverteilung für den Widerstand $R$ mit Erwartungswert
-$100\,\Omega$ und Standardabweichung $1\,\Omega$ beschrieben werden.
-Diese Verteilung dient als Priorverteilung für die Auswertung der
-aktuellen Messreihe.
+Frequentistisch wird die Standardunsicherheit aus der
+gegebenenfalls geschätzten Streuung des jeweiligen
+Parameterschätzers unter dem Beobachtungsmodell bestimmt.
+Bayesisch ergibt sie sich als Standardabweichung der
+durch die Posteriordichte beschriebenen Parameterverteilung.
 
-Sie ergibt sich beispielsweise, wenn man die frühere Messung mit
-normalverteilten zufälligen Abweichungen und bekannter Standardabweichung
-$1\,\Omega$ auswertet und davor eine formal konstante Priordichte
-auf der gesamten reellen Achse ansetzt. Eine solche konstante
-Funktion ist selbst keine normierte Wahrscheinlichkeitsdichte,
-weil ihr Integral über die reelle Achse unendlich ist.
-Nach Einbeziehung der früheren Messung lässt sich das Produkt aus
-dieser Funktion und der Likelihood jedoch normieren; es ergibt
-die genannte Normalverteilung.
+Unter geeigneten Voraussetzungen können beide Auswertungen
+dennoch dieselben Schätzwerte, numerisch gleiche
+Standardunsicherheiten und dieselben Intervallgrenzen liefern.
+Ob dies zutrifft, hängt vom Beobachtungsmodell, den gewählten
+Schätz- und Intervallverfahren sowie der Prior ab.
+Die Symmetrie der Parameterdichte allein genügt dafür nicht.
 
-Die Verknüpfung dieser Priorverteilung mit der Likelihood der aktuellen
-Messreihe liefert eine ebenfalls normalverteilte Posteriorverteilung
-mit Erwartungswert $101\,\Omega$ und Standardabweichung
-$1/\sqrt{2}\,\Omega\approx0{,}707\,\Omega$.
+Auch bei numerisch gleichen Intervallgrenzen unterscheiden
+sich die Wahrscheinlichkeitsaussagen:
+Das frequentistische Konfidenzniveau beschreibt die
+Überdeckung des festen Parameterwerts durch das
+Intervallverfahren bei gedachten Wiederholungen.
+Die bayesische Wahrscheinlichkeit für einen Parameterbereich
+ergibt sich dagegen durch Integration der Posteriordichte
+bei den vorliegenden Daten und den getroffenen Modell-
+und Priorannahmen.
 
-Die hier verwendeten Normalverteilungen für $R$ berücksichtigen
-die physikalische Einschränkung $R>0$ nicht ausdrücklich.
-Bei den gewählten Zahlen ist die Wahrscheinlichkeit, die sie
-negativen Widerstandswerten zuordnen, jedoch vernachlässigbar klein.
-
-Beide Auswertungen liefern somit denselben geschätzten Widerstand
-und numerisch dieselbe Standard\-un\-sicher\-heit. Frequentistisch
-beschreibt diese Standard\-un\-sicher\-heit die Streuung der möglichen
-Schätzwerte unter dem Beobachtungsmodell. Bayesisch beschreibt
-sie die Breite der Posteriorverteilung und damit die verbleibende
-Unsicherheit über den Widerstand bei den vorliegenden Daten.
-
-Auch bei identischen Zahlen bleiben die Aussagen verschieden:
-Die frequentistisch bestimmte Standard\-un\-sicher\-heit der geschätzten
-Modellparameter beschreibt die Streuung möglicher Schätzwerte unter
-dem Beobachtungsmodell. Die bayesisch bestimmte Standard\-un\-sicher\-heit
-wird aus der Streuung der Posteriorverteilung der indirekten Messgröße
-beziehungsweise des Modellparameters bei gegebenen Daten ermittelt.
-Entsprechend sind Konfidenz- und
-Kredibilitätsintervalle zu unterscheiden. Dies wird im folgenden
-Lehrbeispiel an den tatsächlich berechneten Intervallen erläutert.
-
-\section{Vollständiges Lehrbeispiel: Widerstand und unbekannte Streuung}
+\section{Bayesische Auswertung -- Anwendungsbeispiel}
 \label{V4Lehrbeispiel}
 
-Im vorigen Beispiel waren die Standardunsicherheiten der beiden
-Ausgangsschätzwerte bekannt; beide Ansätze
-lieferten dieselben Zahlen. Nun betrachten wir einen anderen, eigens
-festgelegten Lehrdatensatz. Neben dem Widerstand $\mu$ ist hier auch
-die Standardabweichung $\sigma$ der Einzelbeobachtungen unbekannt.
+Wir betrachten als Beispiel die Messung eines ohmschen Widerstands, der 
+Modellparameter ist der Widerstand bei festgelegten Umgebungsbedingungen.
+
+Neben dem Widerstand $\mu$ ist auch die Standardabweichung $\sigma$ der Einzelbeobachtungen unbekannt.
 Das Beispiel führt von den Daten über die gemeinsame Posteriorverteilung
 bis zur Ergebnisangabe und zum Vergleich der Intervalle.
 
-\subsection{Daten, Beobachtungsmodell und Priorverteilungen}
+\paragraph{Daten, Beobachtungsmodell und Priorverteilungen:}
 Die sieben beobachteten Widerstandswerte lauten
 \begin{equation}
 \mathbf x=(32,38,41,45,48,53,58)\,\Omega.
 \label{T2Lehrdaten}
 \end{equation}
-Wir verwenden das Normalmodell aus Gl.~\eqref{T2Normalmodell}.
+Wir verwenden das Beobachtungsmodell aus Gl.~\eqref{T2Normalmodell} mit 
+unabhängigen und normalverteilten Beobachtungen für die Größe ohmscher Widerstand,
+also $X_j=\mu+E_j$, $E_j\overset{\mathrm{u.i.v.}}{\sim}\mathcal N(0,\sigma^2)$, mit identischer Streuung.
+
 Die Likelihood ist der Spezialfall von Gl.~\eqref{Likelihood2}
 mit $f_j(\mathbf p)=\mu$:
 \begin{equation}
@@ -1585,46 +1983,104 @@ l(\mu,\sigma;\mathbf x)
 \qquad J=7,\quad\sigma>0.
 \label{V4LikelihoodMuSigma}
 \end{equation}
-Die Prior-Dichte für $\mu$ sei eine Normaldichte mit
-$y_0=44\,\Omega$ und $u_0=5\,\Omega$:
+
+Bevor wir die sieben neuen Messwerte auswerten, beschreiben wir
+unser Vorwissen über zwei unbekannte Größen:
+\begin{itemize}
+\item $\mu$ ist der gesuchte Widerstandswert.
+\item $\sigma$ beschreibt, wie stark die einzelnen Messwerte
+um diesen Widerstandswert streuen.
+\end{itemize}
+
+Für den Widerstand erwarten wir einen Wert in der Nähe von
+$44\,\Omega$. Wir sind uns über seinen genauen Wert aber
+nicht sicher. Diesen Kenntnisstand beschreiben wir durch
+eine Normalverteilung mit dem Erwartungswert
+$y_0=44\,\Omega$ und der Standardabweichung $u_0=5\,\Omega$.
+Die zugehörige Priordichte lautet
 \begin{equation}
-p_0(\mu)=\frac{1}{\sqrt{2\pi}\,u_0}
+\pi_0(\mu)
+=
+\frac{1}{\sqrt{2\pi}\,u_0}
 \exp\!\left[-\frac{(\mu-y_0)^2}{2u_0^2}\right].
 \label{T2PriorMittelwert}
 \end{equation}
-Für $\sigma$ setzen wir unabhängig davon eine Gleichverteilung an:
+Die Glockenform dieser Dichte drückt aus, dass wir
+Widerstandswerte in der Nähe von $44\,\Omega$ für
+plausibler halten als weit davon entfernte Werte.
+Die Angabe $u_0=5\,\Omega$ beschreibt dabei unsere
+anfängliche Unsicherheit über den Widerstandswert.
+
+Die Streuung $\sigma$ der einzelnen Messwerte kennen wir
+ebenfalls noch nicht. Für dieses Lehrbeispiel nehmen wir an,
+dass sie zwischen $2\,\Omega$ und $20\,\Omega$ liegt.
+Innerhalb dieses Bereichs bevorzugen wir zunächst
+keinen Teilbereich gegenüber einem gleich breiten anderen
+Teilbereich. Dazu verwenden wir eine Gleichverteilung.
+Ihre Priordichte ist innerhalb der Grenzen konstant:
 \begin{equation}
-p_0(\sigma)=
+\pi_0(\sigma)=
 \begin{cases}
-\dfrac1{18\,\Omega},&2\,\Omega\le\sigma\le20\,\Omega,\\[4pt]
+\dfrac{1}{18\,\Omega},
+&2\,\Omega\leq\sigma\leq20\,\Omega,\\[4pt]
 0,&\text{sonst}.
 \end{cases}
 \label{T2PriorSigmaBeispiel}
 \end{equation}
-Gleich lange Teilintervalle innerhalb dieser Grenzen haben damit dieselbe
-Priorwahrscheinlichkeit. Die Grenzen und die Unabhängigkeit sind
-\emph{für dieses Lehrbeispiel gesetzte Annahmen}. In einer realen
-Auswertung wären sie aus vorab verfügbarer Information zu begründen;
-sie werden hier nicht aus den sieben neuen Beobachtungen geschätzt.
-Die Gleichverteilung ist keine allgemeine Beschreibung fehlenden Wissens.
-Die Normalprior für den positiven Widerstand ist hier eine Näherung,
-deren Wahrscheinlichkeit für negative Werte vernachlässigbar klein ist.
+Beispielsweise nehmen wir vor der Auswertung an, dass
+$\sigma$ genauso wahrscheinlich zwischen $2\,\Omega$
+und $4\,\Omega$ liegt wie zwischen $10\,\Omega$
+und $12\,\Omega$.
 
-Aus den Daten erhalten wir $\overline x=45{,}000\,\Omega$ und
-$s\approx8{,}907\,\Omega$.
+Die beiden Verteilungen beschreiben unterschiedliche Dinge:
+Die Verteilung für $\mu$ beschreibt unsere Unsicherheit
+über den Widerstandswert. Die Verteilung für $\sigma$
+beschreibt unsere Unsicherheit darüber, wie stark die
+einzelnen Messwerte streuen.
 
-\subsection{Gemeinsame Posteriorverteilung}
+Zusätzlich nehmen wir an, dass diese beiden Angaben zum
+Vorwissen voneinander unabhängig sind. Das bedeutet hier:
+Unsere Annahmen über $\sigma$ bleiben dieselben,
+unabhängig davon, welchen Widerstandswert $\mu$ wir betrachten.
+
+Die genannten Zahlen und die angenommene Unabhängigkeit
+sind Vorgaben für dieses Lehrbeispiel. Sie werden nicht
+aus den sieben neuen Messwerten berechnet.
+In einer realen Auswertung müssten solche Annahmen
+beispielsweise durch frühere Messungen oder Erfahrungen
+mit dem Messgerät begründet werden.
+Eine Gleichverteilung ist dabei eine mögliche Wahl;
+sie folgt nicht automatisch daraus, dass wenig Vorwissen
+vorhanden ist.
+
+
+Diese ordnet auch negativen
+Widerstandswerten eine Wahrscheinlichkeit zu.
+Bei den gewählten Zahlen ist diese Wahrscheinlichkeit
+jedoch vernachlässigbar klein, sodass wir die
+Normalverteilung hier als Näherung verwenden.
+
+
+Aus den Daten erhalten wir rein frequentistisch den Mittelwert und die 
+empirische Standard\-abweichung
+$$
+\bar x= \frac{1}{J} \sum\limits_{j=1}^J x_j = 45.000\,\Omega
+\quad \text{und} \quad
+s = \sqrt{\frac{1}{J-1} \sum\limits_{j=1}^J (x_j - \bar x)^2} \, \approx \, 8.907\,\Omega.
+$$
+
+\paragraph{Gemeinsame Posteriorverteilung:}
 Aufgrund der angenommenen Unabhängigkeit in der Prior gilt
-$p_0(\mu,\sigma)=p_0(\mu)p_0(\sigma)$. Die Bayes-Regel ergibt
+$\pi_0(\mu,\sigma)=\pi_0(\mu)\pi_0(\sigma)$. Die Bayes-Regel ergibt
 \begin{equation}
-p_1(\mu,\sigma\mid\mathbf x)
-=C\,l(\mu,\sigma;\mathbf x)\,p_0(\mu)p_0(\sigma),
+\pi_1(\mu,\sigma\mid\mathbf x)
+=C\,l(\mu,\sigma;\mathbf x)\,\pi_0(\mu)\pi_0(\sigma),
 \label{ProduktWahrscheinlichkeiten}
 \end{equation}
 wobei die Normierungskonstante durch
 \[
-C^{-1}=\int_{-\infty}^{\infty}\int_0^\infty
-l(\mu',\sigma';\mathbf x)\,p_0(\mu')p_0(\sigma')
+C^{-1}=\int\limits_{-\infty}^{\infty}\int\limits_0^\infty
+l(\mu',\sigma';\mathbf x)\,\pi_0(\mu')\pi_0(\sigma')
 \,\mathrm d\sigma'\,\mathrm d\mu'
 \]
 bestimmt wird. Außerhalb des vorgegebenen Bereichs für $\sigma$
@@ -1634,28 +2090,28 @@ Aktualisierung durch diesen einen Lehrdatensatz.
 Abb.~\ref{posteriormatrix} zeigt sie als Funktion von $\mu$ und $\sigma$.
 Ihre Farbe stellt eine \emph{Dichte} dar; eine Wahrscheinlichkeit entsteht
 erst durch Integration über einen Bereich der Parameterfläche.
-Die Unabhängigkeit in der Priorverteilung muss in der Posteriorverteilung
+Die Unabhängigkeit in der Priordichte muss in der Posteriordichte
 nicht erhalten bleiben.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=.76\linewidth]{04_vorlesung/media/understand_bayes_mean_posteriormatrix.pdf}
-\caption{Gemeinsame Posterior-Dichte für den Lehrdatensatz aus
-Gl.~\eqref{T2Lehrdaten} und die angegebenen Priorverteilungen.
+\caption{Gemeinsame Posteriordichte für den Lehrdatensatz aus
+Gl.~\eqref{T2Lehrdaten} und die angegebenen Priordichte.
 $\mu$ ist der gesuchte Erwartungswert, $\sigma$ die unbekannte
 Standardabweichung der Beobachtungen. Die Dichte hat die Einheit
 $\Omega^{-2}$.}
 \label{posteriormatrix}
 \end{figure}
 
-\subsection{Randverteilung, Schätzwert und Standardunsicherheit}
+\paragraph{Randverteilung, Schätzwert und Standardunsicherheit:}
 Uns interessiert vor allem der Widerstand $\mu$. Die unbekannte
 Beobachtungsstreuung $\sigma$ darf dabei nicht einfach weggelassen
 werden. Für jeden Wert von $\mu$ integrieren wir die gemeinsame Dichte
 über alle möglichen Werte von $\sigma$:
 \begin{equation}
-p_1(\mu\mid\mathbf x)
-=\int_0^\infty p_1(\mu,\sigma'\mid\mathbf x)\,\mathrm d\sigma'.
+\pi_1(\mu\mid\mathbf x)
+=\int_0^\infty \pi_1(\mu,\sigma'\mid\mathbf x)\,\mathrm d\sigma'.
 \label{V4Marginalisierung}
 \end{equation}
 Dieses Vorgehen heißt \textsl{Marginalisierung}; das Ergebnis heißt
@@ -1669,29 +2125,29 @@ Als Schätzwert und Standardunsicherheit verwenden wir den
 Posteriorerwartungswert $y_1$ und die Posteriorstandardabweichung $u_1$:
 \begin{align}
 y_1&=\int_{-\infty}^{\infty}\mu'\,
-     p_1(\mu'\mid\mathbf x)\,\mathrm d\mu',\\
+     \pi_1(\mu'\mid\mathbf x)\,\mathrm d\mu',\\
 u_1^2&=\int_{-\infty}^{\infty}(\mu'-y_1)^2
-     p_1(\mu'\mid\mathbf x)\,\mathrm d\mu'.
+     \pi_1(\mu'\mid\mathbf x)\,\mathrm d\mu'.
 \end{align}
 Der Strich kennzeichnet jeweils die laufende Integrationsvariable.
 
-\subsection{Kredibilitätsintervall und Vergleich mit dem Konfidenzintervall}
+\paragraph{Kredibilitätsintervall und Vergleich mit dem Konfidenzintervall:}
 Ein \textsl{Kredibilitätsintervall}, auch
 \textsl{Glaubwürdigkeitsintervall} genannt, mit Wahrscheinlichkeit
 $1-\alpha$ erfüllt
 \[
 \int_{\mu_{\min}}^{\mu_{\max}}
-p_1(\mu'\mid\mathbf x)\,\mathrm d\mu'=1-\alpha.
+\pi_1(\mu'\mid\mathbf x)\,\mathrm d\mu'=1-\alpha.
 \]
 Diese Bedingung allein legt die Grenzen noch nicht eindeutig fest.
 Wir wählen hier ein zentrales Intervall, bei dem unterhalb und oberhalb
 jeweils die Wahrscheinlichkeit $\alpha/2$ verbleibt.
 Die zugehörige kumulative Verteilungsfunktion ist
 \[
-P_1(m)=\int_{-\infty}^{m}p_1(\mu'\mid\mathbf x)\,\mathrm d\mu'.
+P_1(m)=\int_{-\infty}^{m}\pi_1(\mu'\mid\mathbf x)\,\mathrm d\mu'.
 \]
 $m$ bezeichnet hier einen möglichen Grenzwert für den Parameter.
-Die Kleinschreibung $p_1$ bezeichnet die Dichte, die Großschreibung
+Die Kleinschreibung $\pi_1$ bezeichnet die Dichte, die Großschreibung
 $P_1$ die aufintegrierte, d.h. kumulierte, Wahrscheinlichkeit bis zu diesem Grenzwert.
 Für die hier stetige, streng monoton steigende Verteilungsfunktion erhalten wir
 \[
@@ -1715,10 +2171,10 @@ wie die beiden Grenzen aus den Wahrscheinlichkeiten $0.025$ und
 $0.975$ gewonnen werden.
 
 Zum Vergleich ergibt Gl.~\eqref{T2KonfidenzUnbekannt} ohne die genannten
-Priorannahmen das frequentistische $95\,\%$-Kon\-fidenz\-intervall
+Priorannahmen das frequentistische $95\,\%$-Konfidenz\-intervall
 \begin{equation}
-\overline x\pm t_{0.975,6}\frac{s}{\sqrt7}
-\approx[36.762,\;53.238]\,\Omega.
+\bar x\pm t_{0.975,6}\frac{s}{\sqrt 7}
+\approx[36.762,\;53.238]\,\Omega, \quad \text{mit } t_{0.975,6} = 2.4469  \text{ und  } \frac{s}{\sqrt 7} = 3.3665 \,\Omega.
 \end{equation}
 Die unterschiedlich breiten Intervalle beruhen auf unterschiedlichen
 Informationsgrundlagen: Nur die bayesische Rechnung verwendet hier
@@ -1736,9 +2192,9 @@ $95\,\%$ besitzen. Die Breite eines solchen Intervalls ist außerdem
 nicht mit der Standardunsicherheit $u_1$ gleichzusetzen.
 
 Die rote Kurve ist ausdrücklich nur eine Darstellungshilfe für den
-Vergleich der Intervallgrenzen. Mit $a=s/\sqrt J$ ist sie definiert als
+Vergleich der Intervallgrenzen. Mit $\bar s=s/\sqrt J$ ist sie definiert als
 \begin{equation}
-g_t(m)=\frac1a p_{t,{J-1}}\!\left(\frac{m-\overline x}{a}\right),
+g_t(m)=\frac{1}{\bar s} \, p_{t,{J-1}}\!\left(\frac{m-\overline x}{\bar s}\right),
 \end{equation}
 wobei $p_{t,{J-1}}$ die Dichte der
 Student-$t$-Verteilung mit $J-1$ Freiheitsgraden ist.
@@ -1750,7 +2206,7 @@ $$
 aus Gl.~\eqref{T2StudentGroesse}.
 
 Für die rote Kurve wird diese Dichte entlang der horizontalen Achse
-mit dem Faktor $a=s/\sqrt J$ skaliert und um den beobachteten
+mit dem Faktor $\bar s=s/\sqrt J$ skaliert und um den beobachteten
 Mittelwert $\overline x$ verschoben. Der Vorfaktor $1/a$ stellt
 sicher, dass die Fläche unter der Kurve weiterhin $1$ beträgt.
 Die Quantile zu den Wahrscheinlichkeiten $0.025$ und $0.975$
@@ -1764,10 +2220,10 @@ Wahrscheinlichkeitsverteilung zu.
 \includegraphics[width=.48\linewidth]{04_vorlesung/media/understand_bayes_mean_posteriormarginal.pdf}
 \hfill
 \includegraphics[width=.48\linewidth]{04_vorlesung/media/understand_bayes_mean_cumposterior.pdf}
-\caption{Links: Marginale Posterior-Dichte von $\mu$ mit ihrem zentralen
-$95\,\%$-Kredibilitätsintervall (blau). Die rote Referenzkurve stellt
+\caption{Links: Marginale Posteriordichte von $\mu$ mit ihrem zentralen
+$95\,\%$-Kredibilitätsintervall (blaue, durchgezogene Linien). Die rot gestrichtelte Referenzkurve stellt
 zum Vergleich die verschobene und skalierte $t$-Dichte $g_t$ dar;
-die roten Grenzen sind die des frequentistischen Konfidenzintervalls.
+die rot gestrichtelten Grenzen sind die des frequentistischen Konfidenzintervalls.
 Rechts: Posterior-Verteilungsfunktion mit den Quantilen zu
 $0.025$ und $0.975$.}
 \label{posteriorCredible}
@@ -1832,7 +2288,7 @@ auf die frequentistische Sichtweise beschränkt.
 \textbf{Frequentistisch werden Wahrscheinlichkeits\-aussagen über mögliche
 Beobachtungen und die daraus berechneten Schätzer getroffen.
 Bayesisch wird zusätzlich eine Verteilung für die Werte der
-zu schätzenden Modellparameter bei gegebener Information verwendet
+zu schätzenden Modellparameter bei gegebener \mbox{Information} verwendet
 und aktualisiert.} Abbildung \ref{fig:KonzeptFreqBayes} stellt die frequentistische und bayesische Sichtweise bei der Bestimmung
 indirekter Messgrößen aus beobachteten Messwerten gegenüber.
 
