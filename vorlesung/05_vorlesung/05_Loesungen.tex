@@ -76,11 +76,11 @@ H_1:\ \sigma_1^2\ne\sigma_2^2.
 Die Prüfgröße wird hier als Quotient in der vorgegebenen Reihenfolge
 der Stichproben gebildet:
 \[
-F=\frac{s_1^2}{s_2^2}.
+T=\frac{s_1^2}{s_2^2}.
 \]
 Unter $H_0$ gilt
 \[
-F\sim F_{\nu_1,\nu_2},
+T\sim p_\mathrm{F}({\nu_1,\nu_2}),
 \qquad
 \nu_1=J_1-1=8,
 \qquad
@@ -92,17 +92,17 @@ s_1^2=96{,}5278,
 \qquad
 s_2^2=157{,}2000,
 \qquad
-F=0{,}6140.
+T=0{,}6140.
 \]
 Der zweiseitige Annahmebereich lautet
 \[
 F_{\alpha/2;\,8,4}
-\leq F \leq
+\leq T \leq
 F_{1-\alpha/2;\,8,4}.
 \]
 Numerisch ist dies
 \[
-0{,}1979\leq F\leq8{,}9796.
+0{,}1979\leq T\leq8{,}9796.
 \]
 Da der F-Wert im Annahmebereich liegt, werden die Varianzen als gleich angesehen.
 Damit werden die Stichproben für den folgenden Test gepoolt.
@@ -111,9 +111,9 @@ Als Pythoncode:
 
 \begin{lstlisting}[style=Python]
 # F-Test. 
-# F = s1^2 / s2^2, mit nu1=J1-1 und nu2=J2-1
+# T = s1^2 / s2^2, mit nu1=J1-1 und nu2=J2-1
 # J1 Stichprobenumfang zu s1
-f_value = variance1 / variance2
+pruefgroesse = variance1 / variance2
 f_df1 = J1 - 1
 f_df2 = J2 - 1
 f_lower = stats.f.ppf(alpha / 2, f_df1, f_df2)
@@ -141,7 +141,7 @@ s_p^2=
 \]
 Die Prüfgröße lautet
 \[
-t=\frac{\overline{x}_1-\overline{x}_2}
+T=\frac{\overline{x}_1-\overline{x}_2}
 {s_p\sqrt{1/J_1+1/J_2}}
 =4{,}4210.
 \]
@@ -155,7 +155,7 @@ t_{1-\alpha/2;\,12}=2{,}1788
 \]
 verwendet. Da
 \[
-|t|=4{,}4210>2{,}1788,
+|T|=4{,}4210>2{,}1788,
 \]
 gilt:
 Die Nullhypothese gleicher Erwartungswerte wird verworfen.
@@ -170,8 +170,8 @@ H_1:\ \sigma>6.
 \]
 Bei normalverteilten Beobachtungen gilt unter $H_0$
 \[
-Q=\frac{(J_2-1)s_2^2}{\sigma_0^2}
-\sim\chi^2_{J_2-1}.
+T=\frac{(J_2-1)s_2^2}{\sigma_0^2}
+\sim p_{\chi^2}(J_2-1).
 \]
 Es handelt sich daher um einen Chi-Quadrat-Test. Für den rechten Rand
 ist das Quantil
@@ -180,9 +180,9 @@ ist das Quantil
 \]
 Die Prüfgröße beträgt
 \[
-Q=\frac{4\cdot157{,}2000}{6^2}=17{,}4667.
+T=\frac{4\cdot157{,}2000}{6^2}=17{,}4667.
 \]
-Da $Q>\chi^2_{1-\alpha;\,4}$, folgt:
+Da $T>\chi^2_{1-\alpha;\,4}$, folgt:
 Die Nullhypothese wird verworfen.
 % Der zugehörige einseitige p-Wert beträgt ungefähr
 % \[

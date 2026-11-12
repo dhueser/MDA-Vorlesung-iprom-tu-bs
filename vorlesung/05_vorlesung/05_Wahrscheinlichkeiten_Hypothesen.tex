@@ -28,66 +28,82 @@ dass wir \textsl{eine Hypothese aufstellen}.
 Die Normalverteilung (Gaußverteilung) ist ein wichtiges Modell für kontinuierliche
 Zufallsgrößen. Sie eignet sich insbesondere dann als Näherung, wenn sich eine beobachtete Größe aus vielen annähernd unabhängigen kleinen zufälligen Einflüssen zusammensetzt, die durch Zufallsgrößen modelliert werden. Dies können beispielsweise verschiedene Stör- oder Fehlerquellen sein.
 
-Nicht jeder Zufallsprozess ist normalverteilt: Zerfallsereignisse werden häufig durch Poissonverteilungen beschrieben, während Wartezeiten durch
-Exponentialverteilungen modelliert werden können. Unter geeigneten Voraussetzungen können
-auch Diffusionsprozesse normalverteilte Größen liefern. Die Wahrscheinlichkeitsdichteverteilung der Normalverteilung lautet
+Nicht jede Zufallsgröße ist normalverteilt. Beispielsweise lässt
+sich die Anzahl guter Bauteile bei einer Gut-/Schlecht-Prüfung
+durch eine Binomialverteilung beschreiben, wenn die Prüfungen
+unabhängig sind und die Wahrscheinlichkeit für ein gutes Bauteil
+gleich bleibt. Die Anzahl der in einem festen Zeitintervall
+detektierten Gammaquanten lässt sich unter geeigneten Bedingungen
+durch eine Poissonverteilung beschreiben.
+
+Die Wahrscheinlichkeitsdichte einer normalverteilten Zufallsgröße
+$X$ mit Erwartungswert $\mu$ und Standardabweichung $\sigma$ lautet
 \begin{equation}
-p(X) \; = \; \frac{1}{\sqrt{2 \pi} \, \sigma} \, e^{-\frac{1}{2}\left(\frac{X - \mu}{\sigma}\right)^2}.
+  p_X(x)
+  = \frac{1}{\sqrt{2\pi}\,\sigma}
+    \exp\!\left[-\frac{1}{2}
+      \left(\frac{x-\mu}{\sigma}\right)^2\right].
 \end{equation}
-Je nach Art eines Zufallsprozesses folgt die entsprechende Zufallsgröße aber auch einer ganz
-anderen Art von Verteilungsfunktion. Ist die Zufallsgröße beispielsweise die Anzahl der
-guten Bauteile bei der Gut-/Schlecht-Prüfung in der Qualitätssicherung, so ist die
-Binomialverteilung möglicherweise die Verteilungsfunktion, mit der die Wahrscheinlichkeit hierfür
-zu beschreiben ist. Ein anderes Beispiel ist die Anzahl der in einem Zeitintervall von
-einer Millisekunde mit Zählrohr detektierter Gammaquanten, bei dem die Wahrscheinlichkeitsverteilung
-für die Anzahl Gammaquanten mit einer Poissonverteilung beschrieben werden kann.
-Wird das Zeitintervall vergrößert oder werden viele derartige Messungen durchgeführt und
-dann über mehrere Zeitintervalle integriert, so dass die Anzahl der Gammaquanten entsprechend
-vergrößert wird, nähert sich die Poissonverteilung der Gaußverteilung an.
+Warum ist diese Verteilung auch dann wichtig, wenn die einzelnen
+Beobachtungen einer anderen Verteilung folgen?
 
-Je nach Prozess bedeuten viele Messkampagnen oder viele Stichprobenentnahmen,
-deren Ergebnisse anschließend addiert werden oder höhere Integrationszeiten die
-Summation vieler unabhängiger, identisch verteilter Zufallsgrößen. Eine zentrierte und
-durch ihre Standardabweichung normierte Summe vieler unabhängiger, identisch verteilter
-Zufallsgrößen mit endlicher, positiver Varianz ist approximativ standardnormalverteilt.
+Betrachten wir dazu noch einmal die Zählmessung. Wir teilen eine
+längere Integrationszeit in gleich lange Zeitabschnitte ein.
+Die Gesamtzahl der detektierten Gammaquanten ist dann die Summe
+der Anzahlen in den einzelnen Zeitabschnitten. Sind die Anzahlen
+in den Zeitabschnitten unabhängig und bleibt die Zählrate konstant,
+so addieren wir unabhängige, identisch verteilte Zufallsgrößen.
+Je größer die erwartete Gesamtzahl der detektierten Gammaquanten
+ist, desto besser lässt sich ihre Poissonverteilung durch eine
+Normalverteilung annähern.
 
-In der Wahrscheinlichkeitstheorie wird diese Tatsache exakt formuliert und ist der
-\textsl{zentrale Grenzwertsatz} (engl.\ \textsl{central limit theorem}) CLT.
-In einfacheren Worten können wir sagen:
-\begin{quote}
-Die zentrierte und normierte Summe einer großen Anzahl unabhängiger Zufallsgrößen
-folgt unter geeigneten Voraussetzungen asymptotisch der Standardnormalverteilung.
+Dieses Beispiel veranschaulicht den \textsl{zentralen Grenzwertsatz}
+(engl.\ \textsl{central limit theorem}, kurz CLT).
 \label{zentralesGrenzwerttheorem}
-\end{quote}
-Bei endlicher und positiver Varianz der Zufallsgrößen ist ihre Summe annähernd
-normalverteilt, was die Sonderstellung der Normalverteilung erklärt.
+Seien $X_1,\ldots,X_J$ unabhängige und identisch verteilte
+Zufallsgrößen mit Erwartungswert $\mu$ und endlicher, positiver
+Varianz $\sigma^2$. Zentrieren wir ihre Summe, indem wir deren
+Erwartungswert $J\mu$ abziehen, und teilen wir anschließend durch
+die Standardabweichung $\sigma\sqrt{J}$ der Summe, erhalten wir
+\begin{equation}
+  \frac{\sum_{j=1}^{J}X_j-J\mu}{\sigma\sqrt{J}}
+  =\frac{\overline X-\mu}{\sigma/\sqrt{J}}.
+\end{equation}
+Die Verteilung dieser Größe nähert sich mit wachsendem
+Stichprobenumfang $J$ der Standardnormalverteilung an. Daher ist
+auch der Stichprobenmittelwert $\overline X$ für hinreichend großes
+$J$ näherungsweise normalverteilt, mit Erwartungswert $\mu$ und
+Varianz $\sigma^2/J$. Sind bereits die einzelnen Beobachtungen
+normalverteilt, gilt diese Aussage für den Mittelwert exakt.
 
-Betrachten wir eine Stichprobe als Folge von Zufallsgrößen und sind die Elemente
-der betrachteten Stichprobe Zufallsgrößen, die \textsl{unabhängig und identisch verteilt} (Abkürzung: u.i.v.)
-sind, so ist auch ihre Summe eine Zufallsgröße, die für genügend großen Stichprobenumfang
-annähernd normalverteilt ist; exakt normalverteilt ist sie im Allgemeinen nicht.
-In der englischsprachigen Literatur ist
-\textsl{unabhängig und identisch verteilt} unter dem Begriff
-\textsl{independent and identically distributed}, kurz i.i.d., zu finden.
+Die Abkürzung \textsl{u.i.v.} steht für \textsl{unabhängig und
+identisch verteilt}; in der englischsprachigen Literatur wird
+\textsl{i.i.d.} für \textsl{independent and identically distributed}
+verwendet.
 
-Liegt nun eine Einzelbeobachtung innerhalb der flachen
-Ausläufer (\textsl{tails}) der Wahrscheinlichkeitsdichteverteilung,
-also außerhalb des Vertrauensintervalls, so
-spricht man dann davon, dass der Wert (die Einzelbeobachtung)
-signifikant von dem abweicht, was unter der \textsl{Nullhypothese} zu erwarten wäre. Eine solche
-Beobachtung ist jedoch nicht automatisch ein Beleg für ein Problem. \textsl{Hypothesentests}
-quantifizieren vielmehr, wie ungewöhnlich die Beobachtung unter einer \textsl{Nullhypothese} ist.
-Da die Normalverteilung
-lange Ausläufer hat, gibt es eine kleine Wahrscheinlichkeit $\alpha$ dafür, dass es
-weiter abseits liegende Werte gibt. Deshalb gilt es zu untersuchen,
-ob solch ein Wert in der Tat im Rahmen der Normalverteilung weiter weg liegt
-oder aber ob er auf Basis eines anderen Effektes gewonnen
-wurde, ob er - statistisch formuliert - zu einer anderen Grundgesamtheit gehören könnte.
+Damit kommen wir zur Frage des Hypothesentests: Wie stark darf der
+beobachtete Stichprobenmittelwert $\bar x$ vom angenommenen
+Erwartungswert $\mu_0$ abweichen, bevor wir die Nullhypothese
+$H_0:\mu=\mu_0$ verwerfen? Dazu vergleichen wir die beobachtete
+Abweichung mit den Schwankungen, die unter $H_0$ bei wiederholter
+Stichprobenentnahme zu erwarten sind. Beim zweiseitigen Test
+legen wir die Grenzen so fest, dass die Prüfgröße bei zutreffender
+Nullhypothese mit der Wahrscheinlichkeit $\alpha$ in einen der
+beiden äußeren Bereiche ihrer Verteilung fällt. Diese
+Wahrscheinlichkeit heißt \textsl{Signifikanzniveau}. Das
+zugehörige Vertrauensintervall für $\mu$ enthält alle Werte
+$\mu_0$, für die der Test die Nullhypothese nicht verwirft.
+Sein \textsl{Vertrauensniveau} beträgt $1-\alpha$.
 
-Die \textsl{Kolmogorow-Smirnow-} und \textsl{Lilliefors-Tests} dienen der Prüfung, ob aus Beobachtungen
-empirisch ermittelte Verteilungen zu einer für die statistische Analyse der Beobachtungen
-zugrundegelegten (erwarteten) Wahrscheinlichkeitsdichtefunktion passen, oder zu einer empirisch ermittelten Verteilung einer anderen Stichprobe.
-
+Eine andere Frage ist, ob die Form einer angenommenen Verteilung
+zu den Beobachtungen passt. Der Einstichproben-Kolmogorow-Smirnow-Test
+vergleicht dazu eine empirische Verteilungsfunktion mit einer
+vollständig vorgegebenen theoretischen Verteilungsfunktion.
+Werden Erwartungswert und Standardabweichung einer angenommenen
+Normalverteilung aus derselben Stichprobe geschätzt, kann der
+Lilliefors-Test verwendet werden. Der
+Zweistichproben-Kolmogorow-Smirnow-Test vergleicht dagegen die
+empirischen Verteilungsfunktionen zweier Stichproben.
 
 \section{Kolmogorow-Smirnow- und Lilliefors-Tests}
 
@@ -145,7 +161,7 @@ vollständig spezifizierten Normalverteilung vereinbar sind:
 Für eine vollständig spezifizierte Normalverteilung mit bekanntem Erwartungswert $\mu_0$ und
 bekannter Standardabweichung $\sigma_0$ ist die zu vergleichende Verteilungsfunktion
 \begin{equation}
-F_0(X) \; = \;  \frac{1}{\sqrt{2\pi} \sigma_0}
+P_0(X) \; = \;  \frac{1}{\sqrt{2\pi} \sigma_0}
 \int\limits_{-\infty}^X \, e^{-\frac{1}{2}\left(\frac{X^\prime \, - \, \mu_0}{\sigma_0}\right)^2} \, \mathrm{d} X^\prime.
 \label{cdfKS}
 \end{equation}
@@ -156,7 +172,7 @@ $s^2 \,=\,(J-1)^{-1}\sum_{j=1}^J(X_{1,j}-y)^2$ (Stichprobenvarianz) als Paramete
 
 Hierfür ist die zu vergleichende Verteilungsfunktion
 \begin{equation}
-F_0(X) \; = \;  \frac{1}{\sqrt{2\pi} s}
+P_0(X) \; = \;  \frac{1}{\sqrt{2\pi} s}
 \int\limits_{-\infty}^X \, e^{-\frac{1}{2}\left(\frac{X^\prime \, - \, y}{s}\right)^2} \, \mathrm{d} X^\prime.
 \label{cdfKSempirisch}
 \end{equation}
@@ -176,7 +192,7 @@ Während die kumulierte Gaußverteilung einen Wertebereich von $0$ bis $1$ hat, 
 definiert, dass sie einen Wertebereich von $-1$ bis $1$ hat. Sie lassen sich wie folgt ineinander
 überführen
 \begin{equation}
-F_0(X) \; = \; \frac{1}{2} \left(1 \, + \, \mathrm{erf}(\frac{X - \mu_0}{\sqrt{2} \, \sigma_0})\right).
+P_0(X) \; = \; \frac{1}{2} \left(1 \, + \, \mathrm{erf}(\frac{X - \mu_0}{\sqrt{2} \, \sigma_0})\right).
 \end{equation}
 Für standardnormalverteilte Zufallszahlen $Z = \frac{X-\mu}{\sigma}$ oder $Z = \frac{X-y}{s}$
 wird für die kumulierte Gaußverteilung der Bezeichner $\Phi$ verwendet
@@ -220,26 +236,26 @@ gestrichelte Kurve).}
 \end{figure}
 
 Abb.~\ref{cdf4KStest} stellt zum Vergleich die Wahrscheinlichkeitsfunktion
-(kumulierte Verteilungsfunktion) $F_0(X)$ gemäß Gl.~(\ref{cdfKS})
+(kumulierte Verteilungsfunktion) $P_0(X)$ gemäß Gl.~(\ref{cdfKS})
 als rote, gestrichelte Kurve und die kumulierte, relative Häufigkeit
 $H(X_{1,k_j}) \; = \; \frac{j}{J}$
 als schwarze, durchgezogen gezeichnete Kurve in einem Diagramm dar.
 
 
-Für eine stetige, vollständig spezifizierte Nullverteilung $F_0$ ist die Prüfgröße des
+Für eine stetige, vollständig spezifizierte Verteilung $P_0$ der Grundgesamtheit ist die Prüfgröße des
 Einstichproben-\textsl{Kolmogorow-Smirnow}-Tests
 \begin{equation}
- D \; = \; \sup_X \left|H_J(X)-F_0(X)\right|
+ D \; = \; \sup_X \left|H_J(X)-P_0(X)\right|
  \; = \; \max_{1\leq j\leq J}\left\{
- \max\left[\frac{j}{J}-F_0(X_{1,k_j}),\,
- F_0(X_{1,k_j})-\frac{j-1}{J}\right]\right\} .
+ \max\left[\frac{j}{J}-P_0(X_{1,k_j}),\,
+ P_0(X_{1,k_j})-\frac{j-1}{J}\right]\right\} .
  \label{KSTestgroesseD}
 \end{equation}
 Dabei steht $\sup$ für Supremum, also die kleinste obere Schranke. Die beiden Terme
 berücksichtigen die Abweichung direkt an einer Stufe der empirischen Verteilungsfunktion
 und unmittelbar davor. Für eine nichtklassierte, sortierte Stichprobe werden daher beide
 Seiten benötigt; die einseitige Betrachtung nur von
-$\left|H(X_{1,k_j})-F_0(X_{1,k_j})\right|$ kann den maximalen Abstand unterschätzen.
+$\left|H(X_{1,k_j})-P_0(X_{1,k_j})\right|$ kann den maximalen Abstand unterschätzen.
 
 Das Signifikanzniveau $\alpha$ ist beim Test die maximal zulässige Wahrscheinlichkeit,
 die Nullhypothese zu verwerfen, obwohl sie wahr ist. Es ist nicht allgemein gleich der
@@ -281,7 +297,7 @@ Beim Zweistichproben-Kolmogorow-Smirnow-Test, also dem Vergleich zweier unabhän
 \begin{equation}
 D_{J_1,J_2}
 =
-\sup_x
+\sup\limits_x
 \left|H_{J_1}(x)-G_{J_2}(x)\right|.
 \end{equation}
 
@@ -793,14 +809,14 @@ Wir betrachten eine standardnormalverteilte Zufallsgröße $Z$ und eine davon
 unabhängige, $\chi^2$-verteilte Zufallsgröße $Q$:
 \begin{equation}
   Z\sim\mathcal N(0,1),
-  \qquad Q\sim\chi^2_\nu.
+  \qquad Q\sim p_{\chi^2}(\nu).
   \label{eq:t_ausgangsgroessen}
 \end{equation}
 Die Schreibweise $Q\sim\chi^2_\nu$ bedeutet, dass $Q$ einer
 $\chi^2$-Verteilung mit $\nu$ Freiheitsgraden folgt. Dann ist
 \begin{equation}
   T=\frac{Z}{\sqrt{Q/\nu}}
-  \sim t_\nu.
+  \sim p_t(\nu).
   \label{eq:t_quotient}
 \end{equation}
 Der Faktor $\nu$ im Nenner der Wurzel ist erforderlich, weil
@@ -908,7 +924,7 @@ Die Dichte von $T$ allein erhalten wir, indem wir die gemeinsame Dichte
 \end{equation}
 Dieser Vorgang heißt \textsl{Marginalisierung}; $p_T$ ist die
 \textsl{Marginaldichte} oder \textsl{Randdichte} der gemeinsamen Dichte.
-Die bedingten Normaldichten werden dabei mit der Dichte der Hilfsgröße
+Die bedingten Normalverteilungsdichten werden dabei mit der Dichte der Hilfsgröße
 gewichtet und über $q$ gemittelt. Nach Einsetzen erhalten wir
 \begin{align}
   p_T(t)
@@ -951,10 +967,7 @@ $\nu$ ganzzahlig. Für die Gammafunktion gilt bei positiven ganzzahligen
 Argumenten insbesondere $\Gamma(n)=(n-1)!$.
 
 \begin{quote}
-Die $t$-Verteilung entsteht als Marginalverteilung aus dem Produkt einer
-bedingten Normaldichte und einer $\chi^2$-Dichte. Die Varianz der bedingten
-Normalverteilung ist dabei $\nu/q$. Erst die Integration über die
-$\chi^2$-verteilte Hilfsgröße liefert die $t$-Dichte.
+Unter der Bedingung $Q=q$ ist $T$ normalverteilt mit Erwartungswert null und Varianz $\nu/q$. Multipliziert man die bedingte Wahrscheinlichkeitsdichte von $T$ mit der Wahrscheinlichkeitsdichte der $\chi^2$-verteilten Hilfsgröße $Q$, erhält man die gemeinsame Wahrscheinlichkeitsdichte von $T$ und $Q$. Durch Integration dieser gemeinsamen Wahrscheinlichkeitsdichte über $q$ erhält man die Randdichte von $T$. Sie ist eine $t$-Verteilung mit $\nu$ Freiheitsgraden.
 \end{quote}
 
 \paragraph{Warum entstehen ausgeprägtere Ausläufer?}
@@ -1006,7 +1019,7 @@ einführen:
   V=\frac{\nu b^2}{Q}
     =\frac{b^2}{Q/\nu},
   \qquad
-  \frac{\nu b^2}{V}\sim\chi^2_\nu.
+  \frac{\nu b^2}{V}p_{\chi^2}(\nu).
   \label{eq:t_zufaellige_varianz}
 \end{equation}
 Diese Varianz $V$ folgt einer \textsl{skalierten inversen
@@ -1068,7 +1081,7 @@ genau die Voraussetzungen aus Gleichung~\eqref{eq:t_ausgangsgroessen}.
 Einsetzen in Gleichung~\eqref{eq:t_quotient} ergibt
 \begin{equation}
   T=\frac{\overline X-\mu}{S/\sqrt J}
-    \sim t_{J-1}.
+    \sim p_\mathrm{t}(J-1).
   \label{eq:t_stichprobenmittelwert}
 \end{equation}
 Dies ist die Grundlage für den Einstichproben-$t$-Test und das
@@ -1430,7 +1443,7 @@ annehmen. Dadurch entstehen die stärker besetzten Ausläufer
 
 Für das normalverteilte Beobachtungsmodell gilt
 \begin{equation}
-Q=\frac{\nu S^2}{\sigma^2}\sim\chi^2_\nu.
+Q=\frac{\nu S^2}{\sigma^2}\sim p_{\chi^2}(\nu).
 \end{equation}
 Außerdem sind $Z_{\mathrm N}$ und $Q$ unabhängig.
 Damit können wir schreiben
@@ -1438,7 +1451,7 @@ Damit können wir schreiben
 Z_\nu
 =
 \frac{Z_{\mathrm N}}{\sqrt{Q/\nu}}
-\sim t_\nu.
+\sim p_\mathrm{t}(\nu).
 \end{equation}
 Diese Quotientendarstellung führt zur üblichen
 Student-$t$-Verteilung.
@@ -1602,8 +1615,8 @@ T \; = \; \frac{y_1 \, - \, y_2}{\sqrt{\bar s_1^2 + \bar s_2^2}}
 mit den Freiheitsgraden 
 \begin{equation}
 \nu \; = \;
- \frac{ \left(\frac{s_1^2}{J_1} +\frac{s_2^2}{J_2}\right)^2}{
-  \frac{\left(\frac{s_1^2}{J_1}\right)^2}{J_1 - 1} + \frac{\left(\frac{s_2^2}{J_2}\right)^2}{J_2 - 1} } .
+ \frac{ \left(\bar s_1^2 +\bar s_2^2\right)^2}{
+  \frac{\bar s_1^4}{J_1 - 1} + \frac{\bar s_2^4}{J_2 - 1} } .
 \label{dofnonpooled}
 \end{equation}
 Die Herleitung zur Berechnung der Anzahl der Freiheitsgrade für nicht gepoolte Stichproben
@@ -1730,7 +1743,7 @@ ist
 Q \; \sim \; p_{\chi^2}(\nu).
 \label{Chi2verteilt}
 \end{equation}
-Wir verwenden die Schreibweise $p_{\chi^2}(\nu)$ für die $\chi^2$-Verteilungsdichtefunktion und $\chi^2_{\nu,\alpha}$ für die Quantile (Integrationsgrenzen). In der Literatur findet man häufig die Schreibweise $\chi^2(\nu)$ für die Verteilungsdichtefunktion, also $Q \; \sim \; \chi^2(\nu)$ für die Aussage \glqq $Q$ ist $\chi^2$-verteilt\grqq.
+Wir verwenden die Schreibweise $p_{\chi^2}(\nu)$ für die $\chi^2$-Verteilungsdichtefunktion und $\chi^2_{\nu,\alpha}$ für die Quantile (Integrationsgrenzen). In der Literatur findet man häufig die Schreibweise $\chi^2(\nu)$ für die Verteilungsdichtefunktion, also $Q \; \sim \; p_{\chi^2}(\nu)$ für die Aussage \glqq $Q$ ist $\chi^2$-verteilt\grqq.
 
 Die Definition der $\chi^2$-Verteilungsdichtefunktion braucht nicht auswendig gelernt zu
 werden. Der Umgang mit den Quantiltabellen ist aber zu üben.
@@ -2113,12 +2126,7 @@ function plot_entscheidungsfehler()
 end
 \end{lstlisting}
 
-
-
-%\bibliography{$BIBLIO/math}
-%\bibliographystyle{unsrt}
-%\bibliography{$BIBLIO/math}
-%\bibliographystyle{unsrt}
+\pagebreak
 
 \section{Übungsaufgaben zum Selbststudium}
 \label{AufgVorl5}
@@ -2148,8 +2156,6 @@ J1 = 200
 # Zufallszahlen aus N(mu1, s1^2) erzeugen
 Xarray = rng.normal(loc=mu1, scale=s1, size=J1)
 \end{lstlisting}
-
-\pagebreak 
 
 Das Sortieren können Sie mit
 \begin{lstlisting}[style=Python]
@@ -2185,7 +2191,6 @@ berechnen.
  zu einem Signifikanzniveau von $\alpha = 0.05$.
 \end{enumerate}
 
-\pagebreak
 
 \textbf{Aufgabe 2}
 
